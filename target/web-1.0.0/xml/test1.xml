@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<form id='form-1' name='frm1' method='POST' action='#' layout='1L' class='rbl_frm3'>
+<colonne id='f_col_1' width='209px' height='217px' layout='cLab2' class='aa'>
+  <element type_html='select' idco='1' idli='1'  label='etat'  id='nb_37' name='etat'  autoskip='O'  required='Y'  size='1'  maxlength='1'  freemask='S'  val_defaut=''>Activation de l'application (TVA DEB)</element>
+  <element type_html='text' idco='1' idli='2'  label='niveau'  id='nb_40' name='niveau'  autoskip='O'  required='Y'  size='2'  maxlength='2'  freemask='NN'  val_defaut=''>Niveau de l'application (01...99 - def 10)</element>
+  <element type_html='text' idco='1' idli='3'  label='Numéro dossier'  id='nb_36' name='ndos'  autoskip='O'  required='Y'  size='9'  maxlength='9'  freemask='999AN9999'  val_defaut=''>Numéro du dossier</element>
+</colonne>
+<colonne id='f_col_2' width='333px' layout='cLab2' class='aa'>
+  <element type_html='text' idco='2' idli='1'  label='data'  id='nb_39' name='data'  size='35'  maxlength='35'  val_defaut=''>Commentaires</element>
+  <element type_html='date' idco='2' idli='2'  label='Date fin'  id='nb_38' name='dfin'  autoskip='O'  required='Y'  size='10'  maxlength='10'  mask='dd/mm/yyyy'  val_defaut=''>Date de fin de l'activation de l'application</element>
+  <element type_html='button' idco='2' idli='3'  id='nb_43' class='bt_def'  val_defaut='Valider'></element>
+</colonne>
+</form>

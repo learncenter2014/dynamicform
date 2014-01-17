@@ -1,0 +1,228 @@
+
+
+.rbl_frm1 { 
+	background: #4f718a; 
+	padding: 10px; 
+	border: 1px solid #eee; 
+	margin: 5px auto; 
+	font-size: 1em; 
+	font-family: verdana, arial, helvetica, sans-serif;
+	}
+
+.rbl_frm1 ul { 
+	margin-top:1px; 
+	margin-bottom:1px; 
+	}
+	
+.rbl_frm1 fieldset {
+	display:block; 
+	border:1px dotted #fff; 
+	padding:5px 5px 5px 10px; 
+	font-family:verdana, sans-serif; 
+	margin-bottom:0.5em; 
+	line-height:1.5em; 
+	font-size:1em; 
+  }
+
+.rbl_frm1 legend {
+	font-size:1.1em; 
+	font-weight:bold; 
+	border-bottom:2px solid #fff; 
+	margin-bottom:15px; 
+	padding:6px; 
+	background:none; 
+	color:#fff;
+	}
+	
+* html .rbl_frm1 legend { 
+	padding:0 0 30px 0; 
+	margin:5px 0 0 0; 
+	border:none;
+	}
+
+.rbl_frm1 label {
+	text-align:left; 
+	color:#fff; 
+	margin-bottom:0.1em;
+	}
+
+.rbl_frm1 label.t1 {
+	font-size: 1.4em; 
+	font-weight:bold; 
+	width:100%;
+	}
+.rbl_frm1 label.t2 {
+	width:auto;
+	text-align:left; 
+	background: #3f617a; 
+	color:#fffff0 ; 
+	padding:3px; 
+	font-size: 1.2em; 
+	font-weight:bold; 
+	line-height:1.5em;
+	}
+.rbl_frm1 label.t3 {
+	width:auto;
+	text-align:left; 
+	background: #3f617a; 
+	padding:3px; 
+	color:#fffff0 ; 
+	font-size: 1.1em; 
+	line-height:1.2em;
+	}
+
+.rbl_frm1 input {border:1px solid #414d59; padding-left:0.2em; padding-right:0.2em; margin-bottom:0.4em; background:#c5d3e0;}
+.rbl_frm1 input:hover { background:#b80b38; border:1px solid #fff; color:#fff;}
+.rbl_frm1 input:focus {background:#fff; border:1px solid #b80b38; color:#b80b38;}
+
+.rbl_frm1 select {margin-bottom:0.4em; background:#c5d3e0;}
+.rbl_frm1 textarea {border:1px solid #fff; padding:0.5em; overflow:auto; background:#c5d3e0;}
+.rbl_frm1 textarea:hover { background:#b80b38; border:1px solid #fff; color:#fff;}
+.rbl_frm1 textarea:focus {background:#fff; border:1px solid #b80b38; color:#b80b38;}
+
+.rbl_frm1 option {background:#fff; color:#b80b38;}
+.rbl_frm1 optgroup {background:#fff; color:#000; font-style:normal;}
+.rbl_frm1 optgroup option {background:#fff; color:#b80b38;}
+
+.rbl_frm1 .bt_def  {color:#fff; padding-right:0.5em; cursor:pointer; width:205px; margin-left:8px; background:#b80b38; border:1px solid; border-color:#f11f54 #5f051c #5f051c #f11f54;}
+.rbl_frm1 .bt_def:hover {color:#fff; background:#414d59; border:1px solid; border-color:#4f718a #003 #003 #4f718a; }
+.rbl_frm1 li { color:#fff; }
+
+.rbl_frm1 span#__message__    { color:#2020A0; background:#ffffff;display:block; }
+.rbl_frm1 span#__message__ li { color:#2020A0; background:#ffffff; }
+
+.rbl_frm1 span.invalidInput{ display:compact; padding-left:4px; border-left:3px solid #ff4040; }
+.rbl_frm1 span.validInput{ display:compact;   padding-left:4px; border-left:3px none #20ff20 ; }
+
+
+.rbl_frm2 {
+	background:#d0d0e0; 
+	padding:10px; 
+	border:1px solid #000; 
+	margin:0 auto;
+}
+.rbl_frm2 fieldset {
+	display:block; 
+	border:1px solid #fff; 
+	padding:5px; 
+	font-family:verdana, sans-serif; 
+	margin-bottom:0.5em; 
+	line-height:1.5em;
+}
+
+.rbl_frm2 label.t1 { text-align: center; width:auto; margin-bottom:0.1em; 	font-size: 1.2em;  font-weight:bold; padding:4px; }
+.rbl_frm2 label.t2 { text-align:left; width:auto; padding:3px; font-size: 1.2em; font-weight:bold; line-height:1.5em; border-top:1px solid #2020A0 ; border-bottom:1px solid #2020A0 ;	}
+.rbl_frm2 label.t3 { text-align:left; width:auto; padding:3px; color:#fffff0 ; font-size: 1.1em; line-height:1.2em;   border-bottom:2px solid #2020A0 ;}
+	
+.rbl_frm2 legend {font-size:1.1em; font-weight:bold; border:3px solid #fff; margin-bottom:5px; padding:3px; width:254px; background:#2020a0; color: #d0e0ff;}
+.rbl_frm2 label  {text-align:right; padding-right:10px; color:#888; margin-bottom:0.5em; }
+.rbl_frm2 li  { color:#555; }
+.rbl_frm2 input {border:1px solid #fff; background:#fff ; padding-left:0.2em; padding-right:0.2em; margin-bottom:0.4em;}
+.rbl_frm2 select {margin-left:0.5em;}
+.rbl_frm2 textarea {border:1px solid #fff; padding:0.5em; overflow:auto; background:#fff ;}
+.rbl_frm2 option {background:#788; color:#fff;}
+.rbl_frm2 optgroup {background:#abb; color:#000; font-family:georgia, serif;}
+.rbl_frm2 optgroup option {background:#9aa; color:#fff;}
+.rbl_frm2 .bt_def {background:#2020A0; color: #FFFF50; padding-top:0.1em; padding-bottom:0.1em; padding-left:0.5em; padding-right:0.5em; cursor:pointer;	font-size: 1.2em; 	font-weight:bold; }
+
+.rbl_frm2 span.invalidInput{ display:compact; padding-left:4px; border-left:3px solid #ff4040; }
+.rbl_frm2 span.validInput{ display:compact;   padding-left:4px; border-left:3px solid #20ff20 ; }
+
+
+
+
+.imgstar { }
+.imghelp { }
+
+.cLab1 ul{ margin-top: 0px; 	margin-bottom:  0px; }
+
+.cLab1 li{ padding-left: 170px; padding-right:  2px; }
+
+.cLab1 li label {
+	margin-left: -162px;
+	width: 162px ;
+	background-color: transparent ;
+	font-weight: bold ;
+	float: left;
+}
+.cLab1b ul{ margin-top: 0px; 	margin-bottom:  0px; }
+
+.cLab1b li{ padding-left: 170px; padding-right:  2px; padding-top: 2px; padding-bottom: 2px; margin-bottom:  1px;}
+.cLab1b li label {
+	margin-left: -162px;
+	width: 162px ;
+	background-color: transparent ;
+	font-weight: bold ;
+	float: left;
+}
+
+
+.cLab2 li{ padding-left:   2px; 	padding-right:  2px; }
+
+.cLab2 li label {
+	display: block;
+	margin-left:  2px;
+	width: 100% ;
+	background-color: transparent ;
+	font-weight: bold ;
+}
+
+
+div.btWiz {
+	float: right ; 
+	width: 100% ;
+	margin-left:auto;
+	margin-right:auto;
+	border-top: 1px solid #ffff80 ;
+}
+div.btWiz input {
+	float: right ;
+	background: #606060 ;
+	color: #ffff80 ;
+	margin-left:5px;
+	margin-top: 6px;
+	margin-right:5px;
+}
+div.btWiz input.btN{
+	float: right ;
+}
+div.btWiz input.btP {
+	float: left ;
+}
+
+
+/* Input alignés a droite */
+input.in_Right {
+	text-align:	right;
+}
+
+input.in_ReadOnly {
+	text-align:	right;
+	border:0px; background:#e0e0e0 ;
+}
+
+li img.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+li img.right {
+	display: block;
+	margin-left: auto;
+	margin-right: 10px;
+	}
+li img.left {
+	display: block;
+	margin-right: auto;
+	margin-left: 10px;
+	}
+li img.right_m {
+	float: right;
+	margin: 0 ;
+	}
+li img.left_m {
+	float: left;
+	margin: 0;
+	}
+
+

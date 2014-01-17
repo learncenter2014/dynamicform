@@ -1,0 +1,119 @@
+/* calendar styles */
+#calendar_div {
+	display: none;
+	z-index: 10; 
+	margin-top: -1em;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#calendar_div a {
+	cursor: pointer;
+}
+#calendar_div, #calendar_links, #calendar_header, #calendar {
+	width: 185px;
+}
+#calendar_close{
+	float: right;
+	padding: 2px;
+	cursor: pointer;
+	font-size: 0.6em;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: #fff;
+	background: #800;
+}
+#calendar_close:hover {
+	background: #000;
+	color: #fff;
+}
+#calendar_links {
+	float: left;
+	background: #000;
+	text-align: center;
+}
+#calendar_links a {
+	color: #fff;
+	font-weight: bold;
+	font-size: 0.75em;
+	letter-spacing: 1px;
+	padding: 2px 5px;
+}
+#calendar_links a:hover {
+	background: #ddd;
+	color: #333;
+}
+#calendar_prev {
+	float: left;
+}
+#calendar_current {
+	float: left;
+	text-align: center;
+	width: 35%;
+}
+#calendar_next {
+	float: right;
+}
+#calendar_header {
+	clear: both;
+	background: #333;
+	color: #fff;
+	text-align: center;
+}
+#calendar_header select {
+	background: #333;
+	color: #fff;
+	border: 0px;
+}
+#calendar {
+	background: #ccc;
+	clear: both;
+	text-align: center;
+	font-size: 1.05em;
+	border: 1px solid #777;
+}
+#calendar a {
+	color: #333;
+}
+#calendar a:hover {
+	background: #fff;
+}
+#calendar .calendar_titleRow {
+	background: #777;
+	color: #fff;
+}
+#calendar .calendar_daysRow {
+	background: #eee;
+	color: #666;
+}
+#calendar .calendar_daysCell {
+	color: #000;
+	border: 1px solid #ddd;
+}
+#calendar .calendar_weekEndCell {
+	background: #ddd;
+}
+#calendar .calendar_daysCellOver {
+	background: #fff;
+	border: 1px solid #777;
+}
+#calendar .calendar_unselectable {
+	color: #888;
+}
+#calendar_today {
+	background: #fcc !important;
+}
+#calendar_currentDay {
+	background: #999 !important;
+}
+#calendar_cover {
+    display: none; /*sorry for IE5*/
+    display/**/: block; /*sorry for IE5*/
+    position: absolute; /*must have*/
+    z-index: -1; /*must have*/
+    filter: mask(); /*must have*/
+    top: 0; /*must have*/
+    left: -1px; /*must have*/
+    width: 187px; /*must have to match width and borders*/
+    height: 200px; /*must have to match height*/ 
+}
+
+

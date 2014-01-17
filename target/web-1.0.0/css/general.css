@@ -1,0 +1,94 @@
+html, body{
+    margin:0;
+    padding:0;
+    font: 12px Arial, Helvetica, sans-serif;
+}
+.link{
+color:#666666;
+font-size:12px;
+}
+#wrapper
+{
+    position: relative;
+    width: 750px;
+    margin: 0  auto;
+    padding-top: 10px;
+}
+
+.formDropHover{background-color:#EBEBEB;}
+.formDragging{border:1px groove #FF0000;}
+
+table.tableForm
+{
+    width:100%;
+    border:1px solid #ccc;
+    background: #fff url(../images/sm_back_mac.gif);
+}
+table.tableForm thead th
+{
+    padding:5px 5px;
+    font-size:16px;
+    background-color: #ebebeb;
+}
+table.tableForm tfoot td{padding: 4px 8px 8px;}
+table.tableForm tbody th
+{
+    text-align: right;
+    white-space:nowrap;
+    width:1%;
+    padding: 2px 4px 2px 16px;
+}
+table.tableForm tbody td{padding: 2px 16px 2px 4px;}
+
+#formControllerZone
+{
+    border:1px solid #F0F0F0;
+    background: #fff url(../images/sm_back_mac.gif);
+    border-top: 1px solid #ccc;
+}
+#tableFormController thead th
+{
+    font-size:12px;
+    font-weight: bold;
+    padding: 8px;
+}
+#tableFormController th,
+#tableFormController td{padding: 2px 2px;}
+#tableFormController tbody th
+{
+    text-align: right;
+    white-space:nowrap;
+    padding:4px 4px;
+    font-size: 11px;
+}
+#formControllerMHS
+{
+    width: 750px;
+    margin: 0  auto;
+}
+#tableFormController th a
+{
+    font-size:11px;
+    text-decoration:underline;
+    padding:4px 4px;
+}
+#formControllerLHS{}
+#formControllerRHS{}
+
+form{margin: 0;}
+input.ajaxText, input.ajaxPwd, input.ajaxRadio, input.ajaxCheckbox, input.ajaxFile
+{
+}
+
+textarea.ajaxTextarea{}
+input.text,select.ajaxMenu, select.select{font: 12px Arial, Helvetica, sans-serif;}
+input.button
+{
+    color: #FFFFFF;
+    background-color: #ADD8E6;
+    font: 12px Arial, Helvetica, sans-serif;
+}
+input.ajaxButton
+{
+    font: bold 12px Arial, Helvetica, sans-serif;
+}

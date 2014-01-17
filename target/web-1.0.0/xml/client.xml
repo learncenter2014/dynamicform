@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<form id='form-1' name='frm1' method='POST' action='#' layout='1L' class='rbl_frm1' width='579px'>
+<colonne id='f_col_1' width='571px' layout='cLab1b' class='bb'>
+  <element type_html='image' idco='1' idli='1'  label='img/rbl/rbllogo_v2.jpg'  id='nb_22' name='ax'  class='right_m'  val_defaut=''></element>
+  <element type_html='text' idco='1' idli='2'  label='Code Client'  id='nb_23' name='cli'  autoskip='O'  required='Y'  size='6'  maxlength='6'  freemask='AA9999'  accesskey='C'  val_defaut=''>Code client</element>
+  <element type_html='text' idco='1' idli='3'  label='Niveau'  id='nb_24' name='niveau'  autoskip='O'  required='Y'  size='2'  maxlength='2'  freemask='99'  class='in_Right'  accesskey='N'  val_defaut=''>Niveau de l'application (01...99 - def 10)</element>
+  <element type_html='date' idco='1' idli='4'  label='Date entrée'  id='nb_25' name='dfin'  autoskip='O'  required='Y'  size='10'  maxlength='10'  mask='dd-mm-yyyy'  class='formStd'  accesskey='D'  val_defaut=''>Date 1er contact client</element>
+  <element type_html='text' idco='1' idli='5'  label='Adresse'  id='nb_26' name='adr'  required='Y'  size='50'  maxlength='80'  accesskey='A'  val_defaut=''>Saisie de l'adresse</element>
+  <element type_html='text' idco='1' idli='6'  id='nb_27' name='adr2'  size='50'  maxlength='80'  val_defaut=''></element>
+  <element type_html='button' idco='1' idli='7'  label='save'  id='nb_28' name='save'  size='10'  class='bt_def'  val_defaut='Sauver'></element>
+</colonne>
+</form>

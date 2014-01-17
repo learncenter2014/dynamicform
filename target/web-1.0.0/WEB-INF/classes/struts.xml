@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.ui.theme" value="simple" />
+	
+	<package name="default" namespace="/" extends="struts-default">
+		<default-action-ref name="index" />
+		
+		<global-results>
+			<result name="error">/pages/generalError.jsp</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+        result="error" />
+		</global-exception-mappings>
+		<action name="form" class="actions.FormAction">
+			<result name="success">/pages/form.jsp</result>
+		</action>
+		<action name="templateFormlist" class="actions.FormAction" method="templateFormList">
+			<result name="success">/pages/templateFormList.jsp</result>
+		</action>
+		<action name="templateFileList" class="actions.FormAction" method="templateFileList">
+			<result name="success">/pages/templateFileList.jsp</result>
+		</action>
+		<action name="save*" class="actions.FormAction" method="save{1}">
+			<result name="success">/pages/saveresult.jsp</result>
+		</action>
+	</package>
+	<package name="html" namespace="/html" extends="struts-default">
+		<action name="deleteuserdata" class="actions.FormAction" method="deleteuserdata">
+			<result name="success" type="redirect">/templateFileList.action</result>
+		</action>
+		<action name="edituserdata" class="actions.FormAction" method="edituserdata">
+			<result name="success">/html/editUserDataPage.jsp</result>
+		</action>
+		<action name="storeuserdata" class="actions.FormAction" method="storeuserdata">
+			<result name="success" type="redirect">/templateFileList.action</result>
+		</action>
+	</package>
+</struts>

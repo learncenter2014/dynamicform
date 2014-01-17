@@ -1,0 +1,14 @@
+
+.invalidInput,.validInput{
+	display:compact;
+	padding:1px;
+}
+/* Style for invalid input */
+.invalidInput{
+	border:1px solid #F00;
+}
+
+/* Style for valid input */
+.validInput{
+	border:none solid #FFF;
+}

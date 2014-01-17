@@ -1,0 +1,49 @@
+.rating {
+	cursor: pointer;
+	margin: 2em;
+	clear: both;
+	display: block;
+}
+.rating:after {
+	content: '.';
+	display: block;
+	height: 0;
+	width: 0;
+	clear: both;
+	visibility: hidden;
+}
+.cancel,
+.star {
+	float: left;
+	width: 17px;
+	height: 15px;
+	overflow: hidden;
+	text-indent: -999em;
+	cursor: pointer;
+}
+.cancel,
+.cancel a {background: url(../images/delete.gif) no-repeat 0 -16px;}
+
+.star,
+.star a {background: url(../images/star.gif) no-repeat 0 0px;}
+	
+.cancel a,
+.star a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-position: 0 0px;
+	border:1 solid #FF0000;	
+
+}
+
+div.star_on a {
+	background-position: 0 -16px;
+}
+div.star_hover a,
+div.star a:hover {
+	background-position: 0 -32px;
+
+}
+
+

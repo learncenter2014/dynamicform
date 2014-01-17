@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<form id='form-1' name='frm1' method='POST' action='#' class='rbl_frm2' width='659px'>
+<colonne id='f_col_1' width='346px' height='262px' layout='cLab1' class='aa'>
+  <element type_html='text' idco='1' idli='1'  label='Numéro Dossier'  id='nb_14' name='ndos'  autoskip='O'  required='Y'  size='9'  maxlength='9'  freemask='999AN9999'  accesskey='D'  val_defaut=''>NumÃ©ro du dossier</element>
+  <element type_html='select' idco='1' idli='2'  label='Code Application'  id='nb_15' name='appli'  autoskip='O'  required='Y'  size='1'  maxlength='3'  class='formStd'  accesskey='A'  val_liste='T=Taxe;S=SAV;E=Exploitation;' val_defaut=''>Code application</element>
+  <element type_html='text' idco='1' idli='3'  label='Prix Unitaire'  id='nb_16' name='px_u'  required='Y'  size='15'  maxlength='15'  mask='money2'  class='in_Right'  accesskey='P'  val_defaut=''></element>
+  <element type_html='text' idco='1' idli='4'  label='Niveau'  id='nb_17' name='niveau'  autoskip='O'  required='Y'  size='2'  maxlength='2'  freemask='99'  class='in_Right'  accesskey='N'  val_defaut=''>Niveau de l'application (01...99 - def 10)</element>
+  <element type_html='date' idco='1' idli='5'  label='Date fin'  id='nb_18' name='dfin'  autoskip='O'  required='Y'  size='10'  maxlength='10'  mask='dd-mm-yyyy'  class='formStd'  accesskey='D'  val_defaut=''>Date de fin de l'activation de l'application</element>
+</colonne>
+<colonne id='f_col_0' width='293px' layout='cLab2'>
+  <element type_html='text' idco='2' idli='1'  label='Remarques'  id='nb_19' name='data'  size='40'  maxlength='80'  accesskey='R'  val_defaut=''></element>
+  <element type_html='textarea' idco='2' idli='2'  label='Commentaires'  id='nb_20' name='cmt'  size='8'  maxlength='35'  class='formStd'  accesskey='C'  val_defaut=''></element>
+  <element type_html='button' idco='2' idli='3'  id='nb_21' name='save'  size='10'  class='bt_def'  val_defaut='Sauver'></element>
+</colonne>
+</form>
