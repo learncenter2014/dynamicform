@@ -1,5 +1,6 @@
 package bl.mongobus;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import bl.common.BeanContext;
@@ -12,6 +13,7 @@ import bl.exceptions.MiServerException;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import com.opensymphony.xwork2.util.logging.Logger;
@@ -32,7 +34,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
 
     @Override
     public BeanContext constructLeafBean() {
-        MongoBeanContext mbc = new MongoBeanContext(new BasicDBObject());
+        MongoBeanContext mbc = new MongoBeanContext(new BasicDBObject(BusTieConstant.COLLECTIONRECORDID, SequenceUidGenerator.getNewUid(this.dbName)));
         return mbc;
     }
 
@@ -127,5 +129,25 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
         return retVal;
     }
 
+    /**
+     * return multiple DBObjects of list by condition parameter.
+     */
+    @Override
+    public BusinessResult findLeaves(BeanContext newBean) {
+        DBCollection dc = getConection();
+        BusinessResult br = new BusinessResult();
+        ArrayList<DBObject> dbs = new ArrayList<DBObject>();
+        if (newBean instanceof MongoBeanContext) {
+            MongoBeanContext castLeafBean = (MongoBeanContext) newBean;
+            DBCursor dbCorsor = dc.find(castLeafBean.getDbOjbect());
+            while (dbCorsor.hasNext()) {
+                dbs.add(dbCorsor.next());
+            }
+            br.setResponseData(dbs);
+        }
+        return br;
+    }
+
     private final static Pattern DIGIT_PATTERN = Pattern.compile("[0-9]+?");
+
 }
