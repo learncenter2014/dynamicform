@@ -2,7 +2,7 @@
 <%@ include file="commonHeader.jsp"%>
 
 <body>
-  <span>save file: <s:property name="file" /></span>
+  <span>save file: <s:property value="file"/></span>
 </body>
 </body>
 </html>

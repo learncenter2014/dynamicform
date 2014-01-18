@@ -11,6 +11,8 @@ import com.mongodb.MongoClient;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
+import dao.exceptions.FailureDBException;
+
 public class MongoDBConnectionFactory {
   protected static Logger LOG = LoggerFactory.getLogger(MongoDBConnectionFactory.class);
   private static MongoClient mongoClient = null;
