@@ -40,8 +40,6 @@ public class FormAction extends ActionSupport implements ServletContextAware {
     private static String HTMLFILEPATH = "html";
     private static String TEMPLATEFILEPATH = "html/template/templatedefinition.html";
     private static String PREFORMNAME = "form_";
-    private static String DBNAME = "form";
-    private static String DBCOLLECTIONNAME = "userdatas";
     private static String COLLECTIONRECORDID = "recordId";
     private static String TEMPLATEFORMNAME = "templateFormName";
     private List<String> filelist = new ArrayList<>();
@@ -102,11 +100,12 @@ public class FormAction extends ActionSupport implements ServletContextAware {
             String templatefile = this.sc.getRealPath(TEMPLATEFILEPATH);
             LOG.info("save html content to this [#0] file", templatefile);
             String templateString = new String(Files.readAllBytes(Paths.get(templatefile)), "UTF-8");
+
             Map<String,String> tokens = new HashMap<String,String>();
             tokens.put("file", file);
             tokens.put("data", data); 
             String patternString = "\\$\\{(" + StringUtils.join(tokens.keySet(), "|") + ")\\}";
-            //两个方法：appendReplacement, appendTail
+            //appendReplacement, appendTail
             Pattern pattern = Pattern.compile(patternString);
             Matcher matcher = pattern.matcher(templateString); 
             
