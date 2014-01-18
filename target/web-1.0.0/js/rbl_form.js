@@ -101,7 +101,12 @@ function rbl_form(_id, _name) {
         }
 
     }
-
+   
+    this.returnForm = function() {
+        var str = " onsubmit='return checkErrorSize();' ";
+        return str;
+    }
+    
     this.drawStyle = function() {
         var str = "";
         if (this.e_width && this.e_width.length > 0) {

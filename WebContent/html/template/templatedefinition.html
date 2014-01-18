@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{0}</title>
+<title>${file}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../css/local.css">
 <link rel="stylesheet" type="text/css" href="../css/rbl_forms.css">
@@ -13,12 +13,16 @@
 </head>
 <body>
 	<div id="main">
-		{1} <span id="__message__"></span>
+		${data} <span id="__message__"></span>
 	</div>
 	<script type="text/javascript">
-        initFormsValidation("rbform");
-        __setZoneMessage("__message__");
-        jQuery("#rbform").attr("action", "storeuserdata.action?templateFormName=form_" + document.title);
+	jQuery(document).ready(function(){
+    initFormsValidation("rbform");
+    __setZoneMessage("__message__");
+    jQuery("#rbform")
+    .attr("action", "storeuserdata.action?templateFormName=form_${file}")
+    .attr("onSubmit","return checkErrorSize();");
+	});
     </script>
 </body>
 </html>

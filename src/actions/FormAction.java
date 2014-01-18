@@ -1,17 +1,18 @@
 package actions;
 
-import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.util.ServletContextAware;
 
 import bl.common.MongoBeanContext;
@@ -101,7 +102,21 @@ public class FormAction extends ActionSupport implements ServletContextAware {
             String templatefile = this.sc.getRealPath(TEMPLATEFILEPATH);
             LOG.info("save html content to this [#0] file", templatefile);
             String templateString = new String(Files.readAllBytes(Paths.get(templatefile)), "UTF-8");
-            String formatResult = MessageFormat.format(templateString, file, data);
+            Map<String,String> tokens = new HashMap<String,String>();
+            tokens.put("file", file);
+            tokens.put("data", data); 
+            String patternString = "\\$\\{(" + StringUtils.join(tokens.keySet(), "|") + ")\\}";
+            //两个方法：appendReplacement, appendTail
+            Pattern pattern = Pattern.compile(patternString);
+            Matcher matcher = pattern.matcher(templateString); 
+            
+            StringBuffer sb = new StringBuffer();
+            while(matcher.find()) {
+                matcher.appendReplacement(sb, tokens.get(matcher.group(1)));
+            }
+            matcher.appendTail(sb); 
+            
+            String formatResult = sb.toString();
             // replace all 'img/ to '../img which due to customized page is stored at html directory.
             formatResult = formatResult.replaceAll("'img/", "'../img/");
             Files.write(Paths.get(requestPath), formatResult.getBytes("UTF-8"));
@@ -172,9 +187,11 @@ public class FormAction extends ActionSupport implements ServletContextAware {
         if (paraMap.get(COLLECTIONRECORDID) != null) {
             Integer recordId = Integer.valueOf(((String[]) paraMap.get(COLLECTIONRECORDID))[0]);
             paraMap.remove(COLLECTIONRECORDID);
-            BasicDBObject bdb = (BasicDBObject) fb.getLeaf(recordId).getResponseData();
+            MongoBeanContext mbc = (MongoBeanContext) fb.getLeaf(recordId).getResponseData();
+            DBObject bdb = mbc.getDbOjbect();
             bdb.putAll(paraMap);
-            BasicDBObject orginalDb = (BasicDBObject) fb.getLeaf(recordId).getResponseData();
+            MongoBeanContext orginalMbc = (MongoBeanContext) fb.getLeaf(recordId).getResponseData();
+            DBObject orginalDb = orginalMbc.getDbOjbect();
             fb.updateLeaf(new MongoBeanContext(orginalDb), new MongoBeanContext(bdb));
         } else {
             BasicDBObject bdb = (BasicDBObject) ((MongoBeanContext) fb.constructLeafBean()).getDbOjbect();
@@ -190,7 +207,8 @@ public class FormAction extends ActionSupport implements ServletContextAware {
             Map<String, Object> paraMap = ActionContext.getContext().getParameters();
             FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
             String recordId = ((String[]) paraMap.get(COLLECTIONRECORDID))[0];
-            DBObject db = (DBObject) fb.getLeaf(recordId).getResponseData();
+            MongoBeanContext mbc = (MongoBeanContext) fb.getLeaf(recordId).getResponseData();
+            DBObject db = mbc.getDbOjbect();
             String templateFormName = ((List) db.get(TEMPLATEFORMNAME)).get(0).toString();
             this.data = templateFormName;
             this.userData = db.toMap();
@@ -219,7 +237,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
         return filelist;
     }
 
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) {
     }
 
     /**
