@@ -4,5 +4,5 @@ public interface BusTieConstant {
 
     public static String COLLECTIONRECORDID = "recordId";
 
-    public static final String BUS_CPATH_FORMBUSINESS = "bl.mongobus.Business";
+    public static final String BUS_CPATH_FORMBUSINESS = "bl.mongobus.FormBusiness";
 }

@@ -69,4 +69,13 @@ public interface BusinessInterface<F extends BeanContext, L extends BeanContext>
      * @return The result of the business operation.
      */
     public BusinessResult getAllLeaves();
+
+    /**
+     * Business method to get associated leaves in the system.
+     * 
+     * @param ctx
+     *            The request context.
+     * @return The result of the business operation.
+     */
+    public BusinessResult findLeaves(L newBean);
 }
