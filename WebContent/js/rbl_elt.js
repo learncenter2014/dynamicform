@@ -595,28 +595,24 @@ function addNewElement(ui, dest) {
 
     switch (typeToAdd) {
     case 'Menu':
-        eltToAdd = "<select ><option value='sss'>&agrave; d&eacute;finir</option></select>";
+        eltToAdd = "<select></select>";
         break;
     case 'Button':
-        eltToAdd = "<input type=button size=15 value='&agrave; d&eacute;finir'>";
+        eltToAdd = "<input type=button size=15 value=''>";
         break;
     default:
-        eltToAdd = "<input type=text size=15 value='&agrave; d&eacute;finir'>";
+        eltToAdd = "<input type=text size=15 value=''>";
         break;
     }
 
-    jQuery(dest)
-            .parent()
-            .append(
-                    "<li id='f_"
-                            + _id
-                            + "' class='elt'>"
-                            + "<img src='img/arrow.png' alt='move' width='16' height='16' class='handle' />"
-                            + eltToAdd);
+    jQuery(dest).parent().append("<li id='f_" + _id + "' class='elt'>"
+                            + "<img src='img/arrow.png' alt='move' width='16' height='16' class='handle' />" + eltToAdd);
 
     rblEltArray[_id] = new rbl_elt(_id, typeToAdd);
 
     showControlPanel("f_" + _id);
+    
+    enableRowSelectable(".connectedSortable li");
 }
 
 function loadElement(elt, ncol, nbel) {
@@ -668,12 +664,7 @@ function loadElement(elt, ncol, nbel) {
     zz = jQuery(elt).attr('readonly');
     rblEltArray[_id].e_readonly = (zz == 'O' || zz == 'Y');
 
-    jQuery('#sortable' + ncol)
-            .append(
-                    "<li id='f_"
-                            + _id
-                            + "' class='elt'>"
-                            + "<img src='img/arrow.png' alt='move' width='16' height='16' class='handle' />");
+    jQuery('#sortable' + ncol).append("<li id='f_" + _id + "' class='elt'>" + "<img src='img/arrow.png' alt='move' width='16' height='16' class='handle' />");
 
     changeInput(_id);
 

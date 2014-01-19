@@ -30,20 +30,25 @@
 
   <h2>Template Form Lists</h2>
 
-  <ul class="easyui-tree" data-options="formatter:formatterFuc">
+  <ul class="easyui-tree" data-options="formatter:formatterFuc,animate:true,lines:true">
 
     <li><span>Form Lists</span>
       <ul>
         <s:iterator value="fileList" var="sup">
           <li><span><s:a href="./html/%{#sup}">
                 <s:property value="%{#sup}" />
-              </s:a></span> <s:if test="filelistrecords.size>0">
+              </s:a></span> 
+            <s:if test="filelistrecords.size>0">
               <ul>
                 <s:iterator value="filelistrecords[#sup]" var="li">
                   <li><s:property value="%{#li}" />&nbsp;&nbsp;&nbsp;<s:a href="html/edituserdata.action?recordId=%{#li}">Edit</s:a>&nbsp;&nbsp;&nbsp;<s:a href="html/deleteuserdata.action?recordId=%{#li}">Delete</s:a></li>
                 </s:iterator>
               </ul>
-            </s:if></li>
+            </s:if>
+            <s:else>
+              <ul style="display:none"></ul>
+            </s:else>
+          </li>
         </s:iterator>
       </ul></li>
   </ul>

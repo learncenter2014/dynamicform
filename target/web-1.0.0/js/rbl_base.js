@@ -129,10 +129,11 @@ function showControlPanel( _no ) {
 
 
 function enableRowSelectable(id) {
-	    jQuery(id).live("click", 
+	    jQuery(id).click( 
 			function(){
 				jQuery(selected).removeClass("selected");
 				jQuery(this).addClass("selected");
+				alert( "Handler for .click() called." );
 				selected = this;
 			});
 

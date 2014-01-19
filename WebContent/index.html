@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="css/local.css">
 <link rel="stylesheet" type="text/css" href="css/rbl_forms.css">
 
-<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.7.2.custom.css">
+<link rel="stylesheet" type="text/css" href="js/lib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.min.css">
 
 <script type="text/javascript" src="js/rbl_base.js"></script>
 <script type="text/javascript" src="js/rbl_form.js"></script>
@@ -15,8 +15,8 @@
 <script type="text/javascript" src="js/rbl_elt.js"></script>
 <script type="text/javascript" src="js/rbl_build.js"></script>
 
-<script type="text/javascript" src="js/lib/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="js/lib/jquery-ui-1.7.2.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
 
 </head>
 <body style="height: 100%">
@@ -28,7 +28,7 @@
     <!-- begin: main content area #main -->
     <div id="main" style="height: 85%;">
 
-      <div id="tabs" style="width: 95%; height: 90%; margin-left: 2%; top: 40px; z-index: 250;">
+      <div id="tabs" style="width: 95%; height: 90%; margin-left: 2%; top: 40px;">
         <ul>
           <li><a href="#tabs-1">Form</a></li>
           <li><a href="#tabs-2">Html source</a></li>
@@ -38,7 +38,7 @@
         </ul>
 
         <div id="tabs-1" style="text-align: left;">
-          <div id="formBuilderMenu" style="float: left; z-index: 500; margin-left: -10px; margin-right: 15px; width: 145px; border: 2px solid #D0D0D0; background-color: #f0f0f0;">
+          <div id="formBuilderMenu" style="float: left; margin-left: -10px; margin-right: 15px; width: 145px; border: 2px solid #D0D0D0; background-color: #f0f0f0;">
             <ul id="rbMenu" class="rb_menu">
               <li id="Label"><img src="img/new_label.png"> Label</li>
               <li id="Image"><img src="img/new_image.png"> Image</li>
@@ -102,66 +102,46 @@
   <script type="text/javascript">
             var selected = null;
 
-            jQuery(document)
-                    .ready(
+            jQuery(document).ready(
                             function() {
                                 jQuery.datepicker.setDefaults(jQuery.extend({
                                     showMonthAfterYear : false
                                 }, jQuery.datepicker.regional['us']));
-
-                                jQuery("#tabs")
-                                        .tabs(
-                                                {
-                                                    select : function(event, ui) {
-
-                                                        if (ui.index == 1) {
+                                
+                                jQuery("#tabs").tabs({ beforeActivate : function(event, ui) {
+                                                       var index = ui.newPanel[0].id;
+                                                        if (index == "tabs-2") {
                                                             // htmlStr = jQuery("#tabs-1").html() ;
                                                             htmlStr = build_html();
-                                                            jQuery("#htmsource")
-                                                                    .text(
-                                                                            htmlStr);
+                                                            jQuery("#htmsource").text(htmlStr);
                                                         }
-                                                        if (ui.index == 2) {
+                                                        if (index == "tabs-3") {
                                                             xmlStr = build_xml_elt();
-                                                            jQuery("#xmlsource")
-                                                                    .text(
-                                                                            xmlStr);
+                                                            jQuery("#xmlsource").text(xmlStr);
                                                         }
-                                                        if (ui.index == 3) {
+                                                        if (index == "tabs-4") {
                                                             xmlStr = build_html();
-                                                            jQuery(
-                                                                    "#previewdst")
-                                                                    .html(
-                                                                            xmlStr);
+                                                            jQuery("#previewdst").html(xmlStr);
                                                         }
-                                                        if (ui.index == 4) {
-                                                            jQuery(
-                                                                    "#iframefile")
-                                                                    .attr(
-                                                                            "src",
-                                                                            "templateFileList.action");
+                                                        if (index == "tabs-5") {
+                                                            jQuery("#iframefile").attr("src", "templateFileList.action");
                                                         }
                                                     }
-                                                })
-                                jQuery("#main-f1")
-                                        .resizable(
-                                                {
+                                });
+                                jQuery("#main-f1").resizable({
                                                     stop : function(event, ui) {
 
                                                         if (rblFormArray[IDFORM]) {
                                                             if (ui.size.width != ui.originalSize.width) {
-                                                                rblFormArray[IDFORM].e_width = (ui.size.width - 20)
-                                                                        + "px";
+                                                                rblFormArray[IDFORM].e_width = (ui.size.width - 20) + "px";
                                                             }
                                                             if (ui.size.height != ui.originalSize.height) {
-                                                                rblFormArray[IDFORM].e_height = (ui.size.height - 40)
-                                                                        + "px";
+                                                                rblFormArray[IDFORM].e_height = (ui.size.height - 40) + "px";
                                                             }
-                                                            rblFormArray[IDFORM]
-                                                                    .drawForm();
+                                                            rblFormArray[IDFORM].drawForm();
                                                         }
                                                     }
-                                                });
+                                });
 
                                 jQuery("#menu_elt").dialog({
                                     autoOpen : true,
@@ -229,19 +209,13 @@
                                                             var bValid = true;
 
                                                             if (bValid) {
-                                                                saveColPanel(jQuery(
-                                                                        "#c_id")
-                                                                        .val());
+                                                                saveColPanel(jQuery("#c_id").val());
 
-                                                                jQuery(this)
-                                                                        .dialog(
-                                                                                'close');
+                                                                jQuery(this).dialog('close');
                                                             }
                                                         },
                                                         Cancel : function() {
-                                                            jQuery(this)
-                                                                    .dialog(
-                                                                            'close');
+                                                            jQuery(this).dialog('close');
                                                         }
                                                     },
                                                     close : function() {
@@ -302,7 +276,7 @@
 
                                 initFormData();
                                 addCol();
-                            });
+           });
         </script>
 </body>
 </html>

@@ -92,7 +92,7 @@ function build_html( ) {
 			str = str + rblFormArray[ IDFORM ].endHtml()  + "\r\n" ;
 	}
 	else {
-		alert ( 'formulaire non definie' );
+		alert ( 'form cannot defined!' );
 	}
 	
 	return str ;
@@ -127,9 +127,12 @@ function load_xml( surl ) {
 				
 				nu_col++ ;
 			});
-			initDrop() ;
 			
 			jQuery(".connectedSortable li").removeClass("selected");
+			
+			enableRowSelectable(".connectedSortable li");
+			
+			initDrop();
 
 		}
 	});
