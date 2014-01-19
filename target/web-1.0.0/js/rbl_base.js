@@ -133,7 +133,6 @@ function enableRowSelectable(id) {
 			function(){
 				jQuery(selected).removeClass("selected");
 				jQuery(this).addClass("selected");
-				alert( "Handler for .click() called." );
 				selected = this;
 			});
 
