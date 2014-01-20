@@ -27,4 +27,5 @@ bl\mongobus\FormBusiness.class
 dao\exceptions\FailureDBException.class
 bl\common\BusinessResultScopedAttribute.class
 bl\common\BusinessInterface.class
+interceptor\MiServerExceptionInterceptor.class
 bl\common\BeanContext.class

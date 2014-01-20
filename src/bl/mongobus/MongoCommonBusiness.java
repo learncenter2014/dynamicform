@@ -45,7 +45,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
             MongoBeanContext castLeafBean = (MongoBeanContext) genLeafBean;
             WriteResult wr = getConection().save(castLeafBean.getDbOjbect());
             if (wr.getError() != null) {
-                br.setErrors("Cannot stored this data", "");
+                throw new MiServerException.General("error.mongodb.writedata",wr.getError());
             }
         }
         return br;
@@ -80,7 +80,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
         WriteResult wr = dc.remove(dob);
         BusinessResult br = new BusinessResult();
         if (wr.getError() != null) {
-            br.setErrors("Cannot removed this data", "");
+            throw new MiServerException.General("error.mongodb.writedata",wr.getError());
         }
         return br;
     }
@@ -93,7 +93,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
             MongoBeanContext castLeafBean = (MongoBeanContext) newBean;
             WriteResult wr = dc.save(castLeafBean.getDbOjbect());
             if (wr.getError() != null) {
-                br.setErrors("Cannot stored this data", "");
+                throw new MiServerException.General("error.mongodb.writedata",wr.getError());
             }
         }
         return br;
@@ -117,14 +117,11 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
     public static long convertString2Long(String theString) {
         long retVal = -1;
         if (DIGIT_PATTERN.matcher(theString).matches() == false)
-            return retVal; // fix bug#12004
+            return retVal;
         try {
             retVal = Long.parseLong(theString);
         } catch (NumberFormatException nfe) {
-            LOG.warn("Error: couldn't parse the following string into a long: [#0]", nfe);
-
-            // Throw a new exception to describe the problem in the UI.
-            throw new MiServerException.General("Error parsing the following string into a long: " + theString);
+            throw new MiServerException.General("error.numberformat.exception",theString);
         }
         return retVal;
     }

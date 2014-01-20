@@ -1,6 +1,8 @@
 package bl.exceptions;
 
-public class FailureInitialClassException extends RuntimeException {
+import util.WrappedRuntimeException;
+
+public class FailureInitialClassException extends WrappedRuntimeException {
 
     public FailureInitialClassException() {
         super();

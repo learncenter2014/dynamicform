@@ -1,45 +1,39 @@
 package bl.exceptions;
 
-import java.rmi.RemoteException;
-
 import util.WrappedRuntimeException;
 
 /**
- * This class is the base class of all exceptions generated within the Server.
+ * This class is the base class of all business exceptions generated within the Server and support i18n function.
  */
 public class MiServerException extends WrappedRuntimeException {
 
     /** Serial version UID. */
     private static final long serialVersionUID = -5735009722980521069L;
 
-    /** Default Constructor. */
-    public MiServerException() {
-        super();
+    private String keyMessage = null;
+
+    private String[] parameterMessage = null;
+
+    public String getKeyMessage() {
+        return keyMessage;
     }
 
-    /** Constructor that takes an exception to be wrapped. */
-    public MiServerException(Exception e) {
-        super(e);
+    public void setKeyMessage(String keyMessage) {
+        this.keyMessage = keyMessage;
     }
 
-    /** Constructor that takes message text. */
-    public MiServerException(String msg) {
-        super(msg);
+    public String[] getParameterMessage() {
+        return parameterMessage;
     }
 
-    /** Constructor that takes an exception and message text */
-    public MiServerException(Exception e, String msg) {
-        super(e, msg);
+    public void setParameterMessage(String[] parameterMessage) {
+        this.parameterMessage = parameterMessage;
     }
 
-    /** Constructor that takes a message format and args */
-    public MiServerException(String fmt, Object[] args) {
-        super(fmt, args);
-    }
-
-    /** Constructor that takes an exception, message format, and args */
-    public MiServerException(Exception e, String fmt, Object[] args) {
-        super(e, fmt, args);
+    /** Constructor that takes a message key and args */
+    public MiServerException(String key, String... args) {
+        this.keyMessage = key;
+        this.parameterMessage = args;
     }
 
     /****
@@ -51,8 +45,9 @@ public class MiServerException extends WrappedRuntimeException {
         /** Serial version UID. */
         private static final long serialVersionUID = -3129151581224652740L;
 
-        public Remote(String msg, RemoteException e) {
-            super(e, msg);
+        /** Constructor that takes a message key and args */
+        public Remote(String key, String... args) {
+            super(key, args);
         }
     }
 
@@ -67,6 +62,11 @@ public class MiServerException extends WrappedRuntimeException {
 
         public NotFound(String msg) {
             super("Object not found: {0}", new String[] { msg });
+        }
+
+        /** Constructor that takes a message key and args */
+        public NotFound(String key, String... args) {
+            super(key, args);
         }
     }
 
@@ -85,8 +85,9 @@ public class MiServerException extends WrappedRuntimeException {
         /** Serial version UID. */
         private static final long serialVersionUID = 480220348293948275L;
 
-        public JarBuild(Exception e) {
-            super(e);
+        /** Constructor that takes a message key and args */
+        public JarBuild(String key, String... args) {
+            super(key, args);
         }
     }
 
@@ -95,8 +96,9 @@ public class MiServerException extends WrappedRuntimeException {
         /** Serial version UID. */
         private static final long serialVersionUID = -6929545019974324509L;
 
-        public BeanUtils(Exception e) {
-            super(e);
+        /** Constructor that takes a message key and args */
+        public BeanUtils(String key, String... args) {
+            super(key, args);
         }
     }
 
@@ -105,8 +107,9 @@ public class MiServerException extends WrappedRuntimeException {
         /** Serial version UID. */
         private static final long serialVersionUID = 6293240310065660459L;
 
-        public AppTypeMisMatch() {
-            super("AppTypeMisMatch");
+        /** Constructor that takes a message key and args */
+        public AppTypeMisMatch(String key, String... args) {
+            super(key, args);
         }
     }
 
@@ -115,16 +118,9 @@ public class MiServerException extends WrappedRuntimeException {
         /** Serial version UID. */
         private static final long serialVersionUID = 7229486567107308323L;
 
-        public General(String msg) {
-            super(msg);
-        }
-
-        public General(Exception e) {
-            super(e);
-        }
-
-        public General(String msg, Exception e) {
-            super(e, msg);
+        /** Constructor that takes a message key and args */
+        public General(String key, String... args) {
+            super(key, args);
         }
     }
 
@@ -135,8 +131,9 @@ public class MiServerException extends WrappedRuntimeException {
         /** Serial version UID. */
         private static final long serialVersionUID = -1495378543164641332L;
 
-        public NYI(String msg) {
-            super(msg);
+        /** Constructor that takes a message key and args */
+        public NYI(String key, String... args) {
+            super(key, args);
         }
     }
 

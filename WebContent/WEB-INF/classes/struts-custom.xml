@@ -151,6 +151,7 @@
             <interceptor name="debugging" class="org.apache.struts2.interceptor.debugging.DebuggingInterceptor" />
             <interceptor name="execAndWait" class="org.apache.struts2.interceptor.ExecuteAndWaitInterceptor"/>
             <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
+            <interceptor name="miserverexceptioninterceptor" class="interceptor.MiServerExceptionInterceptor"/>
             <interceptor name="fileUpload" class="org.apache.struts2.interceptor.FileUploadInterceptor"/>
             <interceptor name="i18n" class="com.opensymphony.xwork2.interceptor.I18nInterceptor"/>
             <interceptor name="logger" class="com.opensymphony.xwork2.interceptor.LoggingInterceptor"/>
@@ -272,6 +273,7 @@
                  -->
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="exception"/>
+                <interceptor-ref name="miserverexceptioninterceptor"/>
                 <interceptor-ref name="alias"/>
                 <interceptor-ref name="servletConfig"/>
                 <interceptor-ref name="i18n"/>
