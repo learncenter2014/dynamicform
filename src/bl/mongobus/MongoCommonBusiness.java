@@ -136,7 +136,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
         ArrayList<DBObject> dbs = new ArrayList<DBObject>();
         if (newBean instanceof MongoBeanContext) {
             MongoBeanContext castLeafBean = (MongoBeanContext) newBean;
-            DBCursor dbCorsor = dc.find(castLeafBean.getDbOjbect());
+            DBCursor dbCorsor = dc.find(castLeafBean.getDbOjbect()).sort(new BasicDBObject(BusTieConstant.COLLECTIONRECORDID, 1));
             while (dbCorsor.hasNext()) {
                 dbs.add(dbCorsor.next());
             }
