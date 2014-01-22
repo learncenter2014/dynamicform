@@ -454,6 +454,7 @@ a:active {
 	cursor:pointer;
 	margin-left:-1000px;
 	text-align:center;
+	list-style:none;
 }
 .desktop_icon span {
 	display:block;

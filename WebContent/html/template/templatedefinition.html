@@ -2,14 +2,16 @@
 <html>
 <head>
 <title>${file}</title>
+<base href="../" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="../css/local.css">
-<link rel="stylesheet" type="text/css" href="../css/rbl_forms.css">
-<link rel="stylesheet" type="text/css" href="./css/t_calendar.css">
-<script type="text/javascript" src="./js/t_calendar.js"></script>
-<script type="text/javascript" src="./js/t_form.js"></script>
-<script type="text/javascript" src="./js/t_tools.js"></script>
-<script type="text/javascript" src="../js/lib/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
+<link rel="stylesheet" type="text/css" href="css/local.css">
+<link rel="stylesheet" type="text/css" href="css/rbl_forms.css">
+<link rel="stylesheet" type="text/css" href="js/lib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.min.css">
+<script type="text/javascript" src="html/js/t_form.js"></script>
+<script type="text/javascript" src="html/js/t_tools.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+
 </head>
 <body>
 	<div id="main">
@@ -20,7 +22,7 @@
     initFormsValidation("rbform");
     __setZoneMessage("__message__");
     jQuery("#rbform")
-    .attr("action", "storeuserdata.action?templateFormName=form_${file}")
+    .attr("action", "html/storeuserdata.action?templateFormName=form_${file}")
     .attr("onSubmit","return checkErrorSize();");
 	});
     </script>

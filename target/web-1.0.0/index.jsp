@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+<%@ include file="pages/commonHeader.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -23,19 +24,19 @@ $(window).load(function(){
 		   //in the future, we could query Json data by user privilege and subscription app.
 		   var lrBarIconData={
 				   'app0':{
-						   'title':'主页',
+						   'title':'个人主页',
 						   'url':'',
 						   'winWidth':1100,
 						   'winHeight':650
 						   },
 					'app1':{
-						   'title':'关于系统',
+						   'title':'用户管理',
 						   'url':'',
 						   'winWidth':1100,
 						   'winHeight':650
 						   },
 					'app2':{
-						   'title':'产品',
+						   'title':'文件管理',
 						   'url':'',
 						   'winWidth':1100,
 						   'winHeight':650
@@ -58,7 +59,7 @@ $(window).load(function(){
 						},
 					'dynamicform':{
 					   'title':'表单服务',
-					   'url':'dynamicform.html',
+					   'url':'dynamicform.jsp',
 					   'winWidth':950,
 					   'winHeight':480
 						},
@@ -155,10 +156,10 @@ function addIcon(data){
 
 <div id="lr_bar">
   <ul id="default_app">
-   <li id="app0"><span><img src="js/lib/desktop/icon/icon1.png" title="Space"/></span><div class="text">Space<s></s></div></li>
-   <li id="app1"><span><img src="js/lib/desktop/icon/icon2.png" title="Product"/></span><div class="text">Product<s></s></div></li>
-   <li  id="app2"><span><img src="js/lib/desktop/icon/icon3.png" title="Introduction"/></span><div class="text">Introduction<s></s></div></li>
-   <li id="app3"><span><img src="js/lib/desktop/icon/icon11.png" title="Share Resource"/></span><div class="text">Share Resource<s></s></div></li>
+   <li id="app0"><span><img src="js/lib/desktop/icon/icon1.png" title="Space"/></span><div class="text">个人主页<s></s></div></li>
+   <li id="app1"><span><img src="js/lib/desktop/icon/icon2.png" title="Product"/></span><div class="text">用户管理<s></s></div></li>
+   <li  id="app2"><span><img src="js/lib/desktop/icon/icon3.png" title="Introduction"/></span><div class="text">文件管理<s></s></div></li>
+   <li id="app3"><span><img src="js/lib/desktop/icon/icon11.png" title="Share Resource"/></span><div class="text">资源共享<s></s></div></li>
   </ul>
   <div id="default_tools"> <span id="showZm_btn" title="全屏"></span><span id="shizhong_btn" title="时钟"></span><span id="weather_btn" title="天气"></span> <span id="them_btn" title="主题"></span></div>
   <div id="start_block">

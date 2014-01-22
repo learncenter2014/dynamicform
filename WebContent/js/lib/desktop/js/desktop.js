@@ -1145,7 +1145,7 @@ myLib.desktop.deskIcon={
 					  func:function(){} 
 					  }]
 					,[{
-					  text:"关于fleiCms",
+					  text:"关于产品",
 					  func:function(){} 
 					  }]
 					];

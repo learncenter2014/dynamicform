@@ -116,8 +116,6 @@ public class FormAction extends ActionSupport implements ServletContextAware {
             matcher.appendTail(sb); 
             
             String formatResult = sb.toString();
-            // replace all 'img/ to '../img which due to customized page is stored at html directory.
-            formatResult = formatResult.replaceAll("'img/", "'../img/");
             Files.write(Paths.get(requestPath), formatResult.getBytes("UTF-8"));
         } catch (Exception e) {
             LOG.error("this exception [#0]", e.getMessage());

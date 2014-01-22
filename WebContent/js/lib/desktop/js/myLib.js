@@ -116,8 +116,8 @@ var myLib={
 	//IE全屏
 	fullscreenIE:function(){
 		if($.browser.msie){
-						var  wsh =  new  ActiveXObject("WScript.Shell");  
-						wsh.sendKeys("{F11}");
+						//var  wsh =  new  ActiveXObject("WScript.Shell");  
+						//wsh.sendKeys("{F11}");
 					}
 		}
 	}

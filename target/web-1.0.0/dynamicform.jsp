@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ include file="pages/commonHeader.jsp"%>
 <html style="height: 100%">
 <head>
 <title>Form wizard tool</title>
@@ -7,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="css/local.css">
 <link rel="stylesheet" type="text/css" href="css/rbl_forms.css">
 
-<link rel="stylesheet" type="text/css" href="js/lib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.min.css">
+<link rel="stylesheet" type="text/css" href="js/lib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.css">
 
 <script type="text/javascript" src="js/rbl_base.js"></script>
 <script type="text/javascript" src="js/rbl_form.js"></script>
@@ -82,7 +83,7 @@
           <div id="previewdst"></div>
         </div>
         <div id="tabs-5" style="text-align: left;">
-          <iframe id="iframefile" width="100%" height="600px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="yes"></iframe>
+          <iframe id="iframefile" src="about:blank" width="100%" height="600px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="yes"></iframe>
         </div>
 
       </div>
@@ -236,7 +237,7 @@
 
                                             if (bValid) {
                                                 saveInputPanel(_no);
-
+                                                enableRowSelectable(".connectedSortable li");
                                                 jQuery(this).dialog('close');
                                             }
                                         },
