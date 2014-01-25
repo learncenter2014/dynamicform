@@ -1,0 +1,8 @@
+named rule:
+page type + "_" + namespace name or function set
+
+
+page type: should be like as menu,email,fileload,etc,which could be indicated a function.
+
+namespace or function set name: will be mapping to  relative action namespace of struts.xml,
+following this rule,it explicitly represents this page scope and business.
