@@ -6,20 +6,18 @@ var PRVFS = "";
 
 function rbl_form(_id, _name) {
 
-    var e_id = _id;
-    var e_name;
-    var e_file;
+    this.e_id = _id;
+    this.e_name=_name;
+    this.e_file;
 
-    var e_label;
-    var e_action;
-    var e_method;
-    var e_css_class;
-    var e_width;
-    var e_height;
+    this.e_label;
+    this.e_action;
+    this.e_method;
+    this.e_css_class;
+    this.e_width;
+    this.e_height;
 
     this.init = function(_name, _label, _action, _method, _layout, _css) {
-        this.e_id = e_id;
-
         this.e_name = _name;
         this.e_label = _label;
         this.e_action = _action;
@@ -29,8 +27,7 @@ function rbl_form(_id, _name) {
     }
 
     this.saveForm = function() {
-        this.e_id = e_id;
-
+        
         this.e_name = jQuery("#e_name").val();
         this.e_file = jQuery("#e_file").val();
         this.e_label = jQuery("#e_label").val().replace('\'', "`");
@@ -137,7 +134,7 @@ function rbl_form(_id, _name) {
     this.drawName = function() {
         var str = "";
 
-        str = " id='" + e_id + "'";
+        str = " id='" + this.e_id + "'";
 
         if (this.e_name.length > 0) {
             str = str + " name='" + this.e_name + "'";
@@ -220,7 +217,7 @@ function rbl_form(_id, _name) {
                 + this.drawMethod() + this.drawAction() + this.drawClass()
                 + this.drawStyle() + ">" + "\r\n";
 
-        str += "<fieldset id='x" + IDFS + "'>"
+        str += "<fieldset id='x" + IDFS + "'>";
         if (this.e_label && this.e_label.length > 0) {
             str += "<legend>" + this.e_label + "</legend>";
         }
@@ -255,7 +252,7 @@ function saveFormPanel() {
         rblFormArray[IDFORM].saveForm();
         rblFormArray[IDFORM].drawForm();
     } else {
-        alert("Formulaire   null");
+        alert("FormPanel is empty");
     }
 
 }

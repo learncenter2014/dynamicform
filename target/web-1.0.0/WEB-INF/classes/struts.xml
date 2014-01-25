@@ -7,9 +7,10 @@
 	
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<constant name="struts.custom.i18n.resources" value="resources/LocaleStrings"/>
 	 
-	<package name="default" namespace="/" extends="struts-default">
+	<package name="default" namespace="/templatemenu" extends="struts-default">
 		<default-action-ref name="index" />
 		
 		<global-results>
@@ -20,9 +21,6 @@
 			<exception-mapping exception="java.lang.Exception"
         result="error" />
 		</global-exception-mappings>
-		<action name="form" class="actions.FormAction">
-			<result name="success">/pages/form.jsp</result>
-		</action>
 		<action name="templateFormlist" class="actions.FormAction" method="templateFormList">
 			<result name="success">/pages/templateFormList.jsp</result>
 		</action>

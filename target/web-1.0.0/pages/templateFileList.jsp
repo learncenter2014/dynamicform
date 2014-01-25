@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="js/lib/easyui/themes/icon.css">
 
 
-<script type="text/javascript" src="js/lib/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
 
 <script type="text/javascript" src="js/lib/easyui/jquery.easyui.min.js"></script>
 <script>

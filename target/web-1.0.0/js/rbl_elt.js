@@ -9,42 +9,40 @@ var nbelt = 0;
  */
 function rbl_elt(_id, _type) {
 
-    var e_id    = _id ;
-    var e_type  = _type.toLowerCase() ;
-    var e_name  = _id ; 
+    this.e_id    = _id ;
+    this.e_type  = _type.toLowerCase() ;
+    this.e_name  = _id ; 
     
-    var e_label = "" ;
-    var e_size  = "10" ;
+    this.e_label = "" ;
+    this.e_size  = "10" ;
 
-    var e_typeint  = "S" ;
-    var e_val_liste = "" ;
+    this.e_typeint  = "S" ;
+    this.e_val_liste = "" ;
 
-    var e_mask     = "" ;
-    var e_freemask = "" ;
-    var e_regexp   = "" ;
+    this.e_mask     = "" ;
+    this.e_freemask = "" ;
+    this.e_regexp   = "" ;
     
-    var e_maxlength  = "" ;
-    var e_accesskey  = "" ;
+    this.e_maxlength  = "" ;
+    this.e_accesskey  = "" ;
     
-    var e_help_text  = "" ;
-    var e_val_defaut = "" ;
+    this.e_help_text  = "" ;
+    this.e_val_defaut = "" ;
     
-    var e_memorytable = "" ;
-    var e_group       = "" ;
-    var e_css_class   = "" ;
+    this.e_memorytable = "" ;
+    this.e_group       = "" ;
+    this.e_css_class   = "" ;
     
-    var e_required = false ;
-    var e_readonly = false ;
-    var e_autoskip = true ;
+    this.e_required = false ;
+    this.e_readonly = false ;
+    this.e_autoskip = true ;
 
     this.getType = function() {
-        var s = e_type;
+        var s = this.e_type;
         return s;
     }
 
     this.saveForm = function() {
-        this.e_type = e_type;
-        this.e_id = e_id;
 
         this.e_name = jQuery("#name").val();
         this.e_label = jQuery("#titre").val();
@@ -105,7 +103,7 @@ function rbl_elt(_id, _type) {
 
         str = str + this.drawBeforeElt(isHt);
 
-        switch (e_type.toUpperCase()) {
+        switch (this.e_type.toUpperCase()) {
         case 'WIZARD':
             str = this.drawWizard(isHt);
             break;
@@ -201,7 +199,7 @@ function rbl_elt(_id, _type) {
     this.drawInputText = function() {
         var str = "";
 
-        str = "<input type='" + e_type + "' " + this.drawName()
+        str = "<input type='" + this.e_type + "' " + this.drawName()
                 + this.drawAutoskip() + this.drawReadonly()
                 + this.drawRequired() + this.drawSize() + this.drawMaxlength()
                 + this.drawMask() + this.drawClass() + "/>";
@@ -209,20 +207,10 @@ function rbl_elt(_id, _type) {
     }
 
     this.drawDate = function(isHt) {
-        var str = "";
-
-        str = "<input type='text' " + this.drawName() + this.drawAutoskip()
+        var str = "<input class='ui-datepicker-trigger' type='text' " + this.drawName() + this.drawAutoskip()
                 + this.drawReadonly() + this.drawRequired() + this.drawSize()
                 + this.drawMaxlength() + this.drawMask() + this.drawClass()
                 + "/>";
-        if (isHt) {
-            var z = this.e_mask;
-            if (!(z && z.length > 0))
-                z = this.e_freemask;
-            str += "<img src='img/rbl/_cal.gif' border='0' hspace='2' onclick=\"displayCalendarName('"
-                    + this.e_id + "','" + z + "',this);return false;\" >";
-        }
-
         return str;
     }
 
@@ -230,7 +218,7 @@ function rbl_elt(_id, _type) {
         var str = "";
         var ss;
 
-        if (isHt && e_type == "wizard") {
+        if (isHt && this.e_type == "wizard") {
             str += "</li></ul><div class='btWiz'>";
         }
 
@@ -282,7 +270,7 @@ function rbl_elt(_id, _type) {
                 + this.drawRequired() + this.drawSize() + this.drawClass()
                 + ">";
 
-        for (k = 0; k < elt.length; k++) {
+        for (var k = 0; k < elt.length; k++) {
             var val = elt[k].split("=");
             if (val.length > 1) {
                 if (val[0] == "$G$") {
@@ -321,10 +309,10 @@ function rbl_elt(_id, _type) {
         var str = "";
         var elt = this.e_val_liste.split(";");
 
-        for (k = 0; k < elt.length; k++) {
+        for (var k = 0; k < elt.length; k++) {
             var val = elt[k].split("=");
             if (val.length > 1) {
-                str = str + "<input type='" + e_type + "' " + this.drawName()
+                str = str + "<input type='" + this.e_type + "' " + this.drawName()
                         + this.drawReadonly() + this.drawRequired()
                         + this.drawClass() + "value='" + val[0] + "' /> "
                         + val[1];
@@ -341,7 +329,7 @@ function rbl_elt(_id, _type) {
     this.drawName = function() {
         var str = "";
 
-        str = " id='" + e_id + "'";
+        str = " id='" + this.e_id + "'";
 
         if (this.e_name && this.e_name.length > 0) {
             str = str + " name='" + this.e_name + "' ";
@@ -409,7 +397,7 @@ function rbl_elt(_id, _type) {
 
             var elt = this.e_val_liste.split(";");
 
-            for (k = 0; k < elt.length; k++) {
+            for (var k = 0; k < elt.length; k++) {
                 var val = elt[k].split("=");
                 if (val.length > 1) {
                     str += val[0] + "=" + val[1] + ";";
@@ -438,7 +426,7 @@ function rbl_elt(_id, _type) {
             str += "<img src='img/arrow.png' alt='move' width='16' height='16' class='handle' />";
         }
 
-        str += "<label for='" + e_id + "'" + this.drawAccesskey() + ">";
+        str += "<label for='" + this.e_id + "'" + this.drawAccesskey() + ">";
         if (this.e_accesskey && this.e_accesskey.length > 0) {
             str += this.e_label.replace(this.e_accesskey, "<u>"
                     + this.e_accesskey + "</u>");
@@ -612,7 +600,6 @@ function addNewElement(ui, dest) {
 
     showControlPanel("f_" + _id);
     
-    enableRowSelectable(".connectedSortable li");
 }
 
 function loadElement(elt, ncol, nbel) {
