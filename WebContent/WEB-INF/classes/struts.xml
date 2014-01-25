@@ -10,7 +10,7 @@
 	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<constant name="struts.custom.i18n.resources" value="resources/LocaleStrings"/>
 	 
-	<package name="default" namespace="/templatemenu" extends="struts-default">
+	<package name="default" namespace="/" extends="struts-default">
 		<default-action-ref name="index" />
 		
 		<global-results>
@@ -22,13 +22,13 @@
         result="error" />
 		</global-exception-mappings>
 		<action name="templateFormlist" class="actions.FormAction" method="templateFormList">
-			<result name="success">/pages/templateFormList.jsp</result>
+			<result name="success">/pages/menu_template/templateFormList.jsp</result>
 		</action>
 		<action name="templateFileList" class="actions.FormAction" method="templateFileList">
-			<result name="success">/pages/templateFileList.jsp</result>
+			<result name="success">/pages/menu_template/templateFileList.jsp</result>
 		</action>
 		<action name="save*" class="actions.FormAction" method="save{1}">
-			<result name="success">/pages/saveresult.jsp</result>
+			<result name="success">/pages/menu_template/saveresult.jsp</result>
 		</action>
 	</package>
 	<package name="html" namespace="/html" extends="struts-default">
