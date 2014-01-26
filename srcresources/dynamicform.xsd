@@ -2,10 +2,10 @@
 <!-- 
 
                        Class Inherited Tree
-                -------------------------Component
+                ——————————————————————— Component
                /                        /   |    \
               /                        /    |     \
-       ----Input-----------     FieldSet    Image  Button
+            Input              FieldSet    Image  Button
       /   / |    \    \    \      
 Checkbox /  Radio \    \   Date
        Select    Text TextArea  
