@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+                       Class Inherited Tree
+                -------------------------Component
+               /                        /   |    \
+              /                        /    |     \
+       ----Input-----------     FieldSet    Image  Button
+      /   / |    \    \    \      
+Checkbox /  Radio \    \   Date
+       Select    Text TextArea  
+        
+        
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.dynamic.org/dynamicform" targetNamespace="http://www.dynamic.org/dynamicform" elementFormDefault="unqualified">
+	<element name="form">
+		<complexType>
+			<sequence>
+				<element name="fieldset" type="tns:FieldSet" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+	<complexType name="Component" abstract="true">
+		<attribute name="id" type="string"/>
+		<attribute name="name" type="string"/>
+		<attribute name="label" type="string"/>
+	</complexType>
+	<complexType name="Input" abstract="true">
+		<complexContent>
+			<extension base="tns:Component">
+				<attribute name="value" type="string"/>
+				<attribute name="size" type="int"/>
+				<attribute name="maxlength" type="int"/>
+				<attribute name="required" type="tns:Required"/>
+				<attribute name="readonly" type="tns:ReadOnly"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="FieldSet">
+		<complexContent>
+			<extension base="tns:Component">
+				<sequence>
+					<element name="date" type="tns:Date" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="text" type="tns:Text" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="select" type="tns:Select" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="textarea" type="tns:TextArea" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="image" type="tns:Image" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="radio" type="tns:Radio" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="checkbox" type="tns:Checkbox" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="button" type="tns:Button" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+				<attribute name="width" type="string"/>
+				<attribute name="height" type="string"/>
+				<attribute name="legend" type="string"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<simpleType name="ReadOnly">
+		<restriction base="string">
+			<enumeration value="Y"/>
+			<enumeration value="N"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="Required">
+		<restriction base="string">
+			<enumeration value="Y"/>
+			<enumeration value="N"/>
+		</restriction>
+	</simpleType>
+	<complexType name="Image">
+		<complexContent>
+			<extension base="tns:Component"/>
+		</complexContent>
+	</complexType>
+	<complexType name="Button">
+		<complexContent>
+			<extension base="tns:Component"/>
+		</complexContent>
+	</complexType>
+	<complexType name="Checkbox">
+		<complexContent>
+			<extension base="tns:Input">
+				<attribute name="listvalue" type="string"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="Radio">
+		<complexContent>
+			<extension base="tns:Input">
+				<attribute name="listvalue" type="string"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="TextArea">
+		<complexContent>
+			<extension base="tns:Input"/>
+		</complexContent>
+	</complexType>
+	<complexType name="Text">
+		<complexContent>
+			<extension base="tns:Input">
+				<attribute name="regexp" type="string"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="Select">
+		<complexContent>
+			<extension base="tns:Input">
+				<attribute name="listvalue" type="string"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="Date">
+		<complexContent>
+			<extension base="tns:Input">
+				<attribute name="format" type="string"/>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>
