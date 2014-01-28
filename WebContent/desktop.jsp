@@ -4,20 +4,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>desktop桌面</title>
-<script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
-<script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
-<script type="text/javascript" src="js/lib/desktop/js/myLib.js"></script>
+<script type="text/javascript" src="jslib/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="jslib/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="jslib/desktop/js/myLib.js"></script>
 <script type="text/javascript">
 $(function(){
 		   myLib.progressBar();
 		   });
 //lazying loading css/js resources which append URI resources in the context of current page like as AMD machnizm.
-$.include(['js/lib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.min.css',
-           'js/lib/jquery-smartMenu/css/smartMenu.css',
-           'js/lib/desktop/js/jquery.winResize.js', 
-           'js/lib/jquery-smartMenu/js/jquery-smartMenu-min.js',
-           'js/lib/desktop/css/desktop.css',
-           'js/lib/desktop/js/desktop.js']);
+$.include(['jslib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.min.css',
+           'jslib/jquery-smartMenu/css/smartMenu.css',
+           'jslib/desktop/js/jquery.winResize.js', 
+           'jslib/jquery-smartMenu/js/jquery-smartMenu-min.js',
+           'jslib/desktop/css/desktop.css',
+           'jslib/desktop/js/desktop.js']);
 $(window).load(function(){
 		   myLib.stopProgress();
 		   
@@ -105,7 +105,7 @@ $(window).load(function(){
 		   myLib.desktop.desktopPanel();
  		   
 		   //初始化桌面背景
-		   myLib.desktop.wallpaper.init("js/lib/desktop/images/blue_glow.jpg");
+		   myLib.desktop.wallpaper.init("jslib/desktop/images/blue_glow.jpg");
 		   
 		   //初始化任务栏
 		   myLib.desktop.taskBar.init();
@@ -135,13 +135,13 @@ function addIcon(data){
 <div id="desktopPanel">
 <div id="desktopInnerPanel">
 <ul class="deskIcon currDesktop">
-  <li class="desktop_icon" id="youku"> <span class="icon"><img src="js/lib/desktop/icon/iconyouku.png"/></span> <div class="text">优酷<s></s></div> </li>
-  <li class="desktop_icon" id="Pixlr"> <span class="icon"><img src="js/lib/desktop/icon/icon6.png"/></span> <div class="text">Pixlr<s></s></div> </li>
-  <li class="desktop_icon" id="dubianFim"> <span class="icon"><img src="js/lib/desktop/icon/icon7.png"/></span> <div class="text">豆瓣FIM <s></s></div> </li>
-  <li class="desktop_icon" id="qidian"> <span class="icon"><img src="js/lib/desktop/icon/icon9.png"/></span> <div class="text">起点中文 <s></s></div> </li>
-  <li class="desktop_icon" id="dynamicform"> <span class="icon"><img src="js/lib/desktop/icon/icon10.png"/></span> <div class="text">表单服务<s></s></div> </li>
-  <li class="desktop_icon" id="browser"> <span class="icon"><img src="js/lib/desktop/icon/icon10.png"/></span> <div class="text">浏览网页<s></s></div> </li>
-  <li class="desktop_icon add_icon" id="addIcon0"> <span class="icon"><img src="js/lib/desktop/images/add_icon.png"/></span> <div class="text">添加 <s></s></div> </li>
+  <li class="desktop_icon" id="youku"> <span class="icon"><img src="jslib/desktop/icon/iconyouku.png"/></span> <div class="text">优酷<s></s></div> </li>
+  <li class="desktop_icon" id="Pixlr"> <span class="icon"><img src="jslib/desktop/icon/icon6.png"/></span> <div class="text">Pixlr<s></s></div> </li>
+  <li class="desktop_icon" id="dubianFim"> <span class="icon"><img src="jslib/desktop/icon/icon7.png"/></span> <div class="text">豆瓣FIM <s></s></div> </li>
+  <li class="desktop_icon" id="qidian"> <span class="icon"><img src="jslib/desktop/icon/icon9.png"/></span> <div class="text">起点中文 <s></s></div> </li>
+  <li class="desktop_icon" id="dynamicform"> <span class="icon"><img src="jslib/desktop/icon/icon10.png"/></span> <div class="text">表单服务<s></s></div> </li>
+  <li class="desktop_icon" id="browser"> <span class="icon"><img src="jslib/desktop/icon/icon10.png"/></span> <div class="text">浏览网页<s></s></div> </li>
+  <li class="desktop_icon add_icon" id="addIcon0"> <span class="icon"><img src="jslib/desktop/images/add_icon.png"/></span> <div class="text">添加 <s></s></div> </li>
 </ul>
 </div>
 </div>
@@ -156,10 +156,10 @@ function addIcon(data){
 
 <div id="lr_bar">
   <ul id="default_app">
-   <li id="app0"><span><img src="js/lib/desktop/icon/icon1.png" title="Space"/></span><div class="text">个人主页<s></s></div></li>
-   <li id="app1"><span><img src="js/lib/desktop/icon/icon2.png" title="Product"/></span><div class="text">用户管理<s></s></div></li>
-   <li  id="app2"><span><img src="js/lib/desktop/icon/icon3.png" title="Introduction"/></span><div class="text">文件管理<s></s></div></li>
-   <li id="app3"><span><img src="js/lib/desktop/icon/icon11.png" title="Share Resource"/></span><div class="text">资源共享<s></s></div></li>
+   <li id="app0"><span><img src="jslib/desktop/icon/icon1.png" title="Space"/></span><div class="text">个人主页<s></s></div></li>
+   <li id="app1"><span><img src="jslib/desktop/icon/icon2.png" title="Product"/></span><div class="text">用户管理<s></s></div></li>
+   <li  id="app2"><span><img src="jslib/desktop/icon/icon3.png" title="Introduction"/></span><div class="text">文件管理<s></s></div></li>
+   <li id="app3"><span><img src="jslib/desktop/icon/icon11.png" title="Share Resource"/></span><div class="text">资源共享<s></s></div></li>
   </ul>
   <div id="default_tools"> <span id="showZm_btn" title="全屏"></span><span id="shizhong_btn" title="时钟"></span><span id="weather_btn" title="天气"></span> <span id="them_btn" title="主题"></span></div>
   <div id="start_block">

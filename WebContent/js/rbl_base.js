@@ -1,13 +1,4 @@
 
-if (navigator.browserLanguage)
-  var xlang = navigator.browserLanguage;
-else
-  var xlang = navigator.language;
-
-var LANG = 'us' ;
-if (xlang.indexOf('fr') > -1) LANG = 'fr' ;
-
-
 function deleteElement( ) {
 	var _no = jQuery(selected).attr('id')   ;
 
@@ -94,7 +85,7 @@ function showControlPanel( _no ) {
 	
 	if ( _no.indexOf("f_col_") == 0)  
 	{
-    jQuery("#dialog_col").load("panel/"+ LANG +"/dialog_col.html",
+    jQuery("#dialog_col").load("panel/dialog_col.html",
 			function() { 
 				jQuery("#e_id").val( _no ) ;
 				rblColArray[ _no].showForm() ;
@@ -115,7 +106,7 @@ function showControlPanel( _no ) {
 		if (typeToAdd == "password") typeToAdd = "text"  ;
 		if (typeToAdd == "file") 	   typeToAdd = "text"  ;
 
-    jQuery("#dialog_elt").load("panel/"+ LANG +"/input_" + typeToAdd + ".html",
+    jQuery("#dialog_elt").load("panel/input_" + typeToAdd + ".html",
 						  function() { 
 							jQuery("#e_id").val( _no ) ;
 							if ( rblEltArray[ _no]  != null) 
