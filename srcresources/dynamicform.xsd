@@ -19,7 +19,7 @@ Checkbox /  Radio \    \   Date
 				<element name="fieldset" type="tns:FieldSet" minOccurs="0" maxOccurs="unbounded"/>
 			</sequence>
 		</complexType>
-	</element>
+	</element> 
 	<complexType name="Component" abstract="true">
 		<attribute name="id" type="string"/>
 		<attribute name="name" type="string"/>
