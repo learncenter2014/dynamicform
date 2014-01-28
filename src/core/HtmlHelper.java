@@ -1,6 +1,9 @@
 package core;
 
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 
 import java.io.File;
 import java.io.IOException;

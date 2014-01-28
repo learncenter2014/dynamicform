@@ -34,7 +34,7 @@ class FileGenerator {
 
   private static void init() {
     try {
-      String path = FileGenerator.class.getClassLoader().getResource("").toString();
+      String path = FileGenerator.class.getClassLoader().getResource("").getPath();
       cfg.setDirectoryForTemplateLoading(new File(path + "template"));
       cfg.setObjectWrapper(new DefaultObjectWrapper());
       cfg.setDefaultEncoding("UTF-8");
@@ -54,7 +54,7 @@ class FileGenerator {
       predefinedCfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
 
     } catch (IOException e) {
-
+      e.printStackTrace();
     }
   }
 
