@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:form xmlns:tns="http://www.dynamic.org/dynamicform">
-	<fieldset id="String" name="String" label="String" width="String" height="String" legend="String">
-		<date id="String" name="String" label="String" value="String" size="0" maxlength="0" required="Y" readonly="N" format="String"/>
-		<text id="String" name="peter" label="String" value="String" size="0" maxlength="0" required="N" readonly="Y" regexp="String"/>
-		<select id="String" name="String" label="String" value="String" size="0" maxlength="0" required="N" readonly="N" listvalue="String"/>
-		<textarea id="String" name="String" label="String" value="String" size="0" maxlength="0" required="N" readonly="N"/>
-		<image id="String" name="String" label="String"/>
-		<radio id="String" name="String" label="String" value="String" size="0" maxlength="0" required="Y" readonly="N" listvalue="String"/>
-		<checkbox id="String" name="String" label="String" value="String" size="0" maxlength="0" required="N" readonly="N" listvalue="String"/>
-		<button id="String" name="String" label="String"/>
+	<fieldset id="String" name="String" label="String" width="String" height="String"
+		legend="String">
+		<element type="date">
+			<date id="String" name="String" label="String" value="String" size="0" maxlength="0"
+				required="Y" readonly="N" format="String"/>
+		</element>
+		<element type="text">
+			<text id="String" name="String" label="String" value="String" size="0" maxlength="0"
+				required="N" readonly="Y" regexp="String"/>
+		</element>
+		<element type="select">
+			<select id="String" name="String" label="String" value="String" size="0" maxlength="0"
+				required="N" readonly="N" listvalue="String"/>
+		</element>
+		<element type="textarea">
+			<textarea id="String" name="String" label="String" value="String" size="0" maxlength="0"
+				required="N" readonly="N"/>
+		</element>
+		<element type="image">
+			<image id="String" name="String" label="String"/>
+		</element>
+		<element type="radio">
+			<radio id="String" name="String" label="String" value="String" size="0" maxlength="0"
+				required="Y" readonly="N" listvalue="String"/>
+		</element>
+		<element type="checkbox">
+			<checkbox id="String" name="String" label="String" value="String" size="0" maxlength="0"
+				required="N" readonly="N" listvalue="String"/>
+		</element>
+		<element type="button">
+			<button id="String" name="String" label="String"/>
+		</element>
 	</fieldset>
 </tns:form>

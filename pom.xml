@@ -102,7 +102,7 @@
         <configuration>
           <schemaDirectory>srcresources</schemaDirectory>
           <packageName>dynamicschema</packageName>
-          <staleFile>${project.build.directory}/jaxb/xjcStaleFlag</staleFile>
+          <staleFile>target/generated-sources/jaxb/xjcStaleFlag</staleFile>
         </configuration>
       </plugin>
     </plugins>
