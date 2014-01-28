@@ -35,20 +35,20 @@ class FileGenerator {
   private static void init() {
     try {
       String path = FileGenerator.class.getClassLoader().getResource("").toString();
-      cfg.setDirectoryForTemplateLoading(new File(path + "/template"));
+      cfg.setDirectoryForTemplateLoading(new File(path + "template"));
       cfg.setObjectWrapper(new DefaultObjectWrapper());
       cfg.setDefaultEncoding("UTF-8");
       cfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
       //cfg.setIncompatibleImprovements(new Version(2, 3, 20));
 
 
-      tempCfg.setDirectoryForTemplateLoading(new File(path + "/template/temp"));
+      tempCfg.setDirectoryForTemplateLoading(new File(path + "template/temp"));
       tempCfg.setObjectWrapper(new DefaultObjectWrapper());
       tempCfg.setDefaultEncoding("UTF-8");
       tempCfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
 
 
-      predefinedCfg.setDirectoryForTemplateLoading(new File(path + "/template/predefined"));
+      predefinedCfg.setDirectoryForTemplateLoading(new File(path + "template/predefined"));
       predefinedCfg.setObjectWrapper(new DefaultObjectWrapper());
       predefinedCfg.setDefaultEncoding("UTF-8");
       predefinedCfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
