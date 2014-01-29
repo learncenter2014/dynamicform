@@ -30,7 +30,7 @@
 				required="N" readonly="N" listvalue="String" helptext=""/>
 		</element>
 		<element type="button">
-			<button id="String" name="String" label="String" helptext=""/>
+			<button id="String" name="String" label="String" value="" helptext=""/>
 		</element>
 	</fieldset>
 </tns:form>

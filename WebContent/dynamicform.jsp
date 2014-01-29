@@ -38,7 +38,6 @@
               <li id="formElemEdit"><img src="img/property.png"> Edit</li>
               <li id="formElemDelete"><img src="img/delete.png"> Delete</li>
             </ul>
-            <hr/>
             <ul id="rbMenu3" class="rb_menu">
               <li id="formEdit"><img src="img/property.png"> Edit Form</li>
               <li id="saveXml"><img src="img/save_xml.png"> Save</li>
