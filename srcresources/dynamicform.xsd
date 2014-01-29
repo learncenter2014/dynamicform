@@ -11,6 +11,7 @@
     <attribute name="id" type="string" />
     <attribute name="name" type="string" />
     <attribute name="label" type="string" />
+    <attribute name="helptext" type="string" />
   </complexType>
   <complexType name="Input" abstract="true">
     <complexContent>
@@ -49,12 +50,16 @@
   </simpleType>
   <complexType name="Image">
     <complexContent>
-      <extension base="tns:Component" />
+      <extension base="tns:Component">
+        <attribute name="src" type="string" />
+      </extension> 
     </complexContent>
   </complexType>
   <complexType name="Button">
     <complexContent>
-      <extension base="tns:Component" />
+      <extension base="tns:Component">
+        <attribute name="value" type="string" />
+      </extension> 
     </complexContent>
   </complexType>
   <complexType name="Checkbox">
