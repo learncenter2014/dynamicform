@@ -44,6 +44,17 @@
 			<result name="success" type="redirect">/template/templateFileList.action
 			</result>
 		</action>
+
+        <action name="dataRecordInput" class="actions.DataPageInputAction" method="input">
+            <result name="success">/pages/menu_datainput/dataView.jsp</result>
+        </action>
+        <action name="dataRecordInputSubmit" class="actions.DataPageInputAction" method="save">
+
+        </action>
+        <action name="dataRecordDelete" class="actions.DataPageInputAction" method="save">
+
+        </action>
+
 	</package>
 	<package name="report" namespace="/report" extends="default">
 

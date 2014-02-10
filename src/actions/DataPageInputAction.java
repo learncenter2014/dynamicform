@@ -11,6 +11,11 @@ public class DataPageInputAction extends ActionSupport {
   private String targetId;
   private String userId;
 
+  public String input() {
+    // todo
+    return SUCCESS;
+  }
+
   public String save() {
     // todo save user data to database
     return SUCCESS;

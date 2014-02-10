@@ -74,7 +74,7 @@
                             <textarea rows="5" cols="60" class="form-control"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-info">Submit</button>
+                    <button type="submit" class="btn btn-info">Add</button>
                 </form>
             </div>
         </section>

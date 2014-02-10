@@ -16,7 +16,7 @@
                   </li>
                   
                   <li>
-                      <a  href="pages/menu_datainput/dataView.jsp">
+                      <a  href="/datainput/dataRecordInput.action">
                           <i class="fa fa-th"></i>
                           <span>数据录入</span>
                           <span class="label label-danger pull-right mail-info"></span>
