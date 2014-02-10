@@ -51,4 +51,10 @@
 	<package name="loginout" namespace="/loginout" extends="default">
 
 	</package>
+	
+	<package name="datatable" namespace="/datatable" extends="default">
+        <action name="queryList" class="actions.DataTableAction" method="queryList">
+			<result name="success">/pages/data_table/queryList.jsp</result>
+		</action>
+	</package>
 </struts>
