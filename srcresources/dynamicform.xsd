@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.dynamic.org/dynamicform" targetNamespace="http://www.dynamic.org/dynamicform" elementFormDefault="unqualified">
+  <complexType name="Component" abstract="true">
+    <attribute name="id" type="string" />
+    <attribute name="name" type="string" />
+  </complexType>
+  <element name="form">
+    <complexType>
+      <complexContent>
+        <extension base="tns:Component">
+          <sequence>
+            <element name="fieldset" type="tns:FieldSet" minOccurs="0" maxOccurs="unbounded" />
+          </sequence>
+          <attribute name="action" type="string" />
+          <attribute name="method" type="string" />
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  <complexType name="Input" abstract="true">
+    <complexContent>
+      <extension base="tns:Component">
+        <attribute name="label" type="string" />
+        <attribute name="value" type="string" />
+        <attribute name="size" type="int" />
+        <attribute name="maxlength" type="int" />
+        <attribute name="required" type="boolean" />
+        <attribute name="readonly" type="boolean" />
+        <attribute name="helptext" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="FieldSet">
+    <complexContent>
+      <extension base="tns:Component">
+        <sequence>
+          <element name="element" type="tns:DynamicType" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+        <attribute name="width" type="string" />
+        <attribute name="height" type="string" />
+        <attribute name="legend" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="Image">
+    <complexContent>
+      <extension base="tns:Component">
+        <attribute name="src" type="string" />
+        <attribute name="helptext" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="Button">
+    <complexContent>
+      <extension base="tns:Component">
+        <attribute name="value" type="string" />
+        <attribute name="size" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="Checkbox">
+    <complexContent>
+      <extension base="tns:Input">
+        <attribute name="listvalue" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="Radio">
+    <complexContent>
+      <extension base="tns:Input">
+        <attribute name="listvalue" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="TextArea">
+    <complexContent>
+      <extension base="tns:Input" />
+    </complexContent>
+  </complexType>
+  <complexType name="Text">
+    <complexContent>
+      <extension base="tns:Input">
+        <attribute name="regexp" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="Select">
+    <complexContent>
+      <extension base="tns:Input">
+        <attribute name="listvalue" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="Date">
+    <complexContent>
+      <extension base="tns:Input">
+        <attribute name="format" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="DynamicType">
+    <choice>
+      <element name="date" type="tns:Date" minOccurs="0" maxOccurs="1" />
+      <element name="text" type="tns:Text" minOccurs="0" maxOccurs="1" />
+      <element name="select" type="tns:Select" minOccurs="0" maxOccurs="1" />
+      <element name="textarea" type="tns:TextArea" minOccurs="0" maxOccurs="1" />
+      <element name="image" type="tns:Image" minOccurs="0" maxOccurs="1" />
+      <element name="radio" type="tns:Radio" minOccurs="0" maxOccurs="1" />
+      <element name="checkbox" type="tns:Checkbox" minOccurs="0" maxOccurs="1" />
+      <element name="button" type="tns:Button" minOccurs="0" maxOccurs="1" />
+    </choice>
+    <attribute name="type" type="string" />
+  </complexType>
+
+</schema>

@@ -1,5 +1,5 @@
-var rblFormArray = new Array();
-var IDFORM = "form-1";
+window.rblFormArray = new Array();
+var IDFORM = "form";
 var IDFS = "fs-1";
 var CURFS = IDFS;
 var PRVFS = "";
@@ -234,14 +234,6 @@ function rbl_form(_id, _name) {
     }
 }
 
-function showFormPanel() {
-
-    jQuery("#dialog_form").load("panel/" + LANG + "/dialog_form.html?b",
-            function() {
-                rblFormArray[IDFORM].showForm();
-                jQuery('#dialog_form').dialog('open');
-            });
-}
 
 /**
  * save Form Panel
@@ -264,7 +256,7 @@ function initFormData() {
     if (rblFormArray[IDFORM] == null) {
         rblFormArray[IDFORM] = new rbl_form(IDFORM, IDFORM);
     }
-    rblFormArray[IDFORM].init("frm1", "test initial", "#", "POST", "", "");
+    rblFormArray[IDFORM].init("frm1", "", "#", "POST", "", "");
 
     rblFormArray[IDFORM].drawForm();
 }

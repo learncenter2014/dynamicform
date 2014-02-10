@@ -16,8 +16,7 @@ function rbl_elt(_id, _type) {
     this.e_label = "" ;
     this.e_size  = "10" ;
 
-    this.e_typeint  = "S" ;
-    this.e_val_liste = "" ;
+    this.e_valuelist = "" ;
 
     this.e_mask     = "" ;
     this.e_freemask = "" ;
@@ -28,10 +27,6 @@ function rbl_elt(_id, _type) {
     
     this.e_help_text  = "" ;
     this.e_val_defaut = "" ;
-    
-    this.e_memorytable = "" ;
-    this.e_group       = "" ;
-    this.e_css_class   = "" ;
     
     this.e_required = false ;
     this.e_readonly = false ;
@@ -104,9 +99,6 @@ function rbl_elt(_id, _type) {
         str = str + this.drawBeforeElt(isHt);
 
         switch (this.e_type.toUpperCase()) {
-        case 'WIZARD':
-            str = this.drawWizard(isHt);
-            break;
         case 'IMAGE':
             str = this.drawImage();
             break;
@@ -132,7 +124,6 @@ function rbl_elt(_id, _type) {
             str = str + this.drawRadio();
             break;
         case 'SELECT':
-        case 'LISTE':
             str = str + this.drawListe();
             break;
         default:
@@ -582,19 +573,22 @@ function addNewElement(ui, dest) {
     var eltToAdd = "";
 
     switch (typeToAdd) {
-    case 'Menu':
-        eltToAdd = "<select></select>";
+    case 'Select':
+        eltToAdd = "<select class='form-control'></select>";
         break;
     case 'Button':
-        eltToAdd = "<input type=button size=15 value=''>";
+        eltToAdd = "<input class='form-control' type=button size=15 value=''>";
+        break;
+    case 'Checkbox':
+        eltToAdd = "<input class='form-control' type=button size=15 value=''>";
         break;
     default:
-        eltToAdd = "<input type=text size=15 value=''>";
+        eltToAdd = "<input class='form-control' type=text size=15 value=''>";
         break;
     }
 
     jQuery(dest).parent().append("<li id='f_" + _id + "' class='elt'>"
-                            + "<img src='img/arrow.png' alt='move' width='16' height='16' class='handle' />" + eltToAdd);
+                            + "<img src='img/arrow.png' alt='move' width='16' height='16' class='handle' />" + eltToAdd+'</li>');
 
     rblEltArray[_id] = new rbl_elt(_id, typeToAdd);
 

@@ -1,48 +1,37 @@
-var MAX_COL = 3 ;
+var MAX_COL = 10 ;
 var nb_col = 0 ;
 var rblColArray = new Array();
 var lastCOL = "" ;
 
 function rbl_col( _id ) { 
 
-	var e_id    = _id ;
-	var e_name   ; 
+	this.e_id    = _id ;
+	this.e_name   ; 
 
-	var e_label  ;
-	var e_layout ;
-	var e_css_class  ;
+	this.e_label  ;
 
-	var e_width  ;
-	var e_height ;
+	this.e_width  ;
+	this.e_height ;
 
   this.saveForm = function() { 
-		this.e_id		  = e_id  ;
-
-		this.e_name 	=  jQuery("#c_name").val()  ;
-
-		this.e_width	=  jQuery("#c_width").val()  ;
-		this.e_height	=  jQuery("#c_height").val()  ;
+		this.e_id		  = jQuery("#e_id").val();
+		this.e_name 	=  jQuery("#e_name").val();
+		this.e_width	=  jQuery("#e_width").val();
+		this.e_height	=  jQuery("#e_height").val();
 		
-		this.e_layout =  jQuery("#c_layout").val()  ;
-		this.e_css_class  = jQuery("#c_css_class").val() ;
   } 
 
   this.showForm = function() { 
   	
-		jQuery("#c_id").val(  e_id )  ;
-		jQuery("#c_name").val( this.e_name )  ;
+		jQuery("#e_id").val(this.e_id )  ;
+		jQuery("#e_name").val( this.e_name )  ;
 		
-		jQuery("#c_width").val( this.e_width )  ;
-		jQuery("#c_height").val( this.e_height )  ;
-		
-		jQuery("#c_css_class").val( this.e_css_class ) ;
-		jQuery("#c_layout").val( this.e_layout ) ;
+		jQuery("#e_width").val( this.e_width )  ;
+		jQuery("#e_height").val( this.e_height )  ;
   } 
 	
   this.drawCol = function() { 
-		var ma_col ;
-		
-		ma_col = jQuery("#" + e_id) ;
+		var ma_col = jQuery("#" + e_id) ;
 		
 		if ( ma_col.length == 0 ) {
 			alert("colonne null !" ) ;
@@ -50,17 +39,9 @@ function rbl_col( _id ) {
 		else {
 			ma_col.attr('id', e_id)
 	  			  .attr('name',this.e_name) ;
-
-			ma_col.removeClass( ) ;
-			ma_col.addClass(this.e_css_class) ;
-			ma_col.addClass('elt_head');
-			ma_col.addClass('selected');
 			
 			ma_col.parent().css("width", this.e_width) ;
 			ma_col.parent().css("height", this.e_height) ;
-		 
-			ma_col.parent().removeClass("cLab1 cLab2") ;
-			ma_col.parent().addClass( this.e_layout ) ;
 		 
 	  }
 	  
@@ -136,9 +117,9 @@ function rbl_col( _id ) {
 } 
 
 function showColPanel( _no ) {
-    jQuery("#dialog_col").load("panel/"+ LANG +"/dialog_col.html",
+    jQuery("#dialog_col").load("pages/panel_dialog/dialog_col.html",
 			function() { 
-				rblColArray[ _no ].showForm() ;
+				rblColArray[ _no ].showForm();
 				jQuery('#dialog_col').dialog('open');
 			});
 }
@@ -155,47 +136,12 @@ function saveColPanel(_no) {
 }
 
 function addCol(  ) {
-
-	if (nb_col < MAX_COL) {
-		jQuery(".connectedSortable ul")
-		 .each( function(){
-					jQuery(this).removeClass('p-' + nb_col + '-col') ;
-					jQuery(this).addClass('p-' + (nb_col+1) + '-col') ;
-				});
-				
-		nb_col = nb_col + 1 ;
-		var id_col = nb_col ;
-		
-		if ( jQuery("#"   + IDFS).find("#sortable" + id_col).length != 0 ) {
-			if ( jQuery("#" + IDFS).find("#sortable1" ).length == 0 ) id_col = 1 ; else
-			if ( jQuery("#" + IDFS).find("#sortable2" ).length == 0 ) id_col = 2 ; else
-			if ( jQuery("#" + IDFS).find("#sortable3" ).length == 0 ) id_col = 3 ;
-	  }
-	  
-	  var _id = "f_col_" + id_col ;
-
-		jQuery("#" + IDFS).append( "<ul id='sortable" + id_col + 
-									 "' id_n='" + _id +
-									 "' class='connectedSortable p-" + nb_col + 
-									 "-col cLab1'><li id='" + _id +  
-									 "' class='elt_head'><span><b>&nbsp;</b></span></li>" ) ;
-	
-		rblColArray[ _id ] = new rbl_col( _id );
-	//	showColPanel( _id) ;
-	
-		initDrop() ;
-		
-		
-	} 
-	else {
-		alert("exceed maxmium columns (" + MAX_COL + ") !" ) ;
-  }
+    
 }
 
 function supCol( _no ) {
 	
-	jQuery("#" + _no).parent( ).find('li')
-											  .each( function(){ supElt( jQuery(this).attr('id') ) ;	});
+	jQuery("#" + _no).parent( ).find('li').each( function(){ supElt( jQuery(this).attr('id') ) ;	});
 											  
 	jQuery("#" + _no).parent( ).fadeOut(500, function() { jQuery(this).remove(); });
 
@@ -218,17 +164,11 @@ function loadCol( elt, id_col ) {
 	rblColArray[ _id ] = new rbl_col( _id );
 
 	rblColArray[ _id ].e_name =  jQuery(elt).attr('name') ; 
-	rblColArray[ _id ].e_layout = jQuery(elt).attr('layout') ;
-	rblColArray[ _id ].e_css_class = jQuery(elt).attr('class') ;
-
 	rblColArray[ _id ].e_width = jQuery(elt).attr('width') ;
 	rblColArray[ _id ].e_height = jQuery(elt).attr('height');
 				
-	jQuery("#" + IDFS).append( "<ul id='sortable" + id_col + 
-									 "' id_n='" + _id +
-									 "' class='connectedSortable " + rblColArray[ _id ].e_layout +
-									 "'><li id='" + _id +  
-									 "' class='elt_head'><span><b>&nbsp;</b></span></li>" ) ;
+	jQuery("#" + IDFS).append( "<fieldset><legend>g1</legend><ul "+
+									 "class='connectedSortable"+ "'><li id='" + _id + "'><span><b>&nbsp;</b></span></li></fieldset>" ) ;
 				
 				
 	rblColArray[ _id ].drawCol() ;

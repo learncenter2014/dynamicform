@@ -1,5 +1,3 @@
-
-
 .rbl_frm1 { 
 	background: #4f718a; 
 	padding: 10px; 
@@ -139,8 +137,7 @@
 .cLab1 li{ padding-left: 170px; padding-right:  2px; }
 
 .cLab1 li label {
-	margin-left: -162px;
-	width: 162px ;
+	width: 100px ;
 	background-color: transparent ;
 	font-weight: bold ;
 	float: left;
@@ -149,7 +146,7 @@
 
 .cLab1b li{ padding-left: 170px; padding-right:  2px; padding-top: 2px; padding-bottom: 2px; margin-bottom:  1px;}
 .cLab1b li label {
-	margin-left: -162px;
+	margin-left: 162px;
 	width: 162px ;
 	background-color: transparent ;
 	font-weight: bold ;
@@ -191,7 +188,6 @@ div.btWiz input.btP {
 }
 
 
-/* Input alignés a droite */
 input.in_Right {
 	text-align:	right;
 }

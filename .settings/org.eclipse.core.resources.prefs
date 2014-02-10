@@ -1,8 +1,11 @@
 eclipse.preferences.version=1
+encoding//WebContent/desktop.jsp=UTF-8
+encoding//WebContent/dynamicform.jsp=UTF-8
 encoding//WebContent/html/js/t_form.js=UTF-8
 encoding//WebContent/index.jsp=UTF-8
 encoding//WebContent/pages/decorators/foot.jsp=UTF-8
 encoding//WebContent/pages/decorators/main.jsp=UTF-8
 encoding//WebContent/pages/decorators/menu.jsp=UTF-8
 encoding//WebContent/pages/decorators/top.jsp=UTF-8
+encoding//WebContent/panel/dialog_fieldset.html=UTF-8
 encoding/<project>=UTF-8
