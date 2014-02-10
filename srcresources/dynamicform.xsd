@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.dynamic.org/dynamicform" targetNamespace="http://www.dynamic.org/dynamicform" elementFormDefault="unqualified">
-  <element name="form">
-    <complexType>
-      <sequence>
-        <element name="fieldset" type="tns:FieldSet" minOccurs="0" maxOccurs="unbounded" />
-      </sequence>
-    </complexType>
-  </element>
   <complexType name="Component" abstract="true">
     <attribute name="id" type="string" />
     <attribute name="name" type="string" />
-    <attribute name="label" type="string" />
-    <attribute name="helptext" type="string" />
   </complexType>
+  <element name="form">
+    <complexType>
+      <complexContent>
+        <extension base="tns:Component">
+          <sequence>
+            <element name="fieldset" type="tns:FieldSet" minOccurs="0" maxOccurs="unbounded" />
+          </sequence>
+          <attribute name="action" type="string" />
+          <attribute name="method" type="string" />
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
   <complexType name="Input" abstract="true">
     <complexContent>
       <extension base="tns:Component">
+        <attribute name="label" type="string" />
         <attribute name="value" type="string" />
         <attribute name="size" type="int" />
         <attribute name="maxlength" type="int" />
-        <attribute name="required" type="tns:Required" />
-        <attribute name="readonly" type="tns:ReadOnly" />
+        <attribute name="required" type="boolean" />
+        <attribute name="readonly" type="boolean" />
+        <attribute name="helptext" type="string" />
       </extension>
     </complexContent>
   </complexType>
@@ -36,30 +42,20 @@
       </extension>
     </complexContent>
   </complexType>
-  <simpleType name="ReadOnly">
-    <restriction base="string">
-      <enumeration value="Y" />
-      <enumeration value="N" />
-    </restriction>
-  </simpleType>
-  <simpleType name="Required">
-    <restriction base="string">
-      <enumeration value="Y" />
-      <enumeration value="N" />
-    </restriction>
-  </simpleType>
   <complexType name="Image">
     <complexContent>
       <extension base="tns:Component">
         <attribute name="src" type="string" />
-      </extension> 
+        <attribute name="helptext" type="string" />
+      </extension>
     </complexContent>
   </complexType>
   <complexType name="Button">
     <complexContent>
       <extension base="tns:Component">
         <attribute name="value" type="string" />
-      </extension> 
+        <attribute name="size" type="string" />
+      </extension>
     </complexContent>
   </complexType>
   <complexType name="Checkbox">

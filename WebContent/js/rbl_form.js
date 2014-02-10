@@ -234,14 +234,6 @@ function rbl_form(_id, _name) {
     }
 }
 
-function showFormPanel() {
-
-    jQuery("#dialog_form").load("panel/" + LANG + "/dialog_form.html?b",
-            function() {
-                rblFormArray[IDFORM].showForm();
-                jQuery('#dialog_form').dialog('open');
-            });
-}
 
 /**
  * save Form Panel
