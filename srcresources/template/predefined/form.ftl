@@ -1,0 +1,3 @@
+<form>
+  ${form.innerHtml}
+</form>

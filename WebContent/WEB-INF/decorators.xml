@@ -5,10 +5,13 @@
 		<pattern>/login/*</pattern>
 		<pattern>/pages/menu_template/saveresult.jsp</pattern>
 		<pattern>/pages/menu_loginout/*</pattern>
+		<pattern>/panel/*.html</pattern>
 	</excludes>
 
 	<!-- 用来定义装饰器要过滤的页面 -->
 	<decorator name="main" page="/pages/decorators/main.jsp">
-		<pattern>/*</pattern>
+		<pattern>/index.jsp</pattern>
+		<pattern>/dynamicform.jsp</pattern>
+		<pattern>/pages/*.jsp</pattern>
 	</decorator>
 </decorators>  

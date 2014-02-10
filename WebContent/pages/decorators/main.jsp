@@ -20,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="jslib/flatlab/css/style.css" rel="stylesheet">
     <link href="jslib/flatlab/css/style-responsive.css" rel="stylesheet" />
+    <link href="jslib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -29,6 +30,7 @@
     
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="jslib/flatlab/js/jquery.js"></script>
+    <script src="jslib/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="jslib/flatlab/js/bootstrap.min.js"></script>
     <script class="include" type="text/javascript" src="jslib/flatlab/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="jslib/flatlab/js/jquery.scrollTo.min.js"></script>
