@@ -1,14 +1,5 @@
 function deleteControlPanel() {
-    if (jQuery.dynamicplugin.selected) {
-        var _no = jQuery(jQuery.dynamicplugin.selected).attr('id');
-
-        if (!!_no) {
-            //remove cache data from memory.
-            delete jQuery.dynamicplugin.elementArray[_no.substring("img_".length)];
-            //remove DOM node from DOM tree of Form.
-            jQuery("#block_"+_no.substring("img_".length)).remove();
-        }
-    }
+    jQuery.dynamicplugin.deleteElement();
 }
 
 function initDrop() {
@@ -124,3 +115,20 @@ function escapeH(ss) {
     return str;
 }
 
+
+function load_xml( surl ) { 
+    var htmlContent = jQuery.dynamicplugin.parseXml(surl);
+    jQuery("#maindynamicform").append(htmlContent);
+}
+
+
+/**
+ * show file panel
+ */
+function showFilePanel( ) {
+
+    jQuery("#dialog_file").load("template/templateFormlist.action",
+            function() { 
+                jQuery('#dialog_file').dialog('open');
+            });
+}
