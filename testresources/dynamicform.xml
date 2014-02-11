@@ -2,14 +2,14 @@
 <tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="" name="" action="" method="">
 	<fieldset id="String" name="String" label="String" width="String" height="String"
 		legend="String">
-		<element type="date">
-			<date id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="true" readonly="true" format="String" helptext=""/>
-		</element>
 		<element type="text">
 			<text id="String" name="String" label="String" value="String" size="0" maxlength="0"
 				required="false" readonly="true" regexp="String" helptext=""/>
 		</element>
+        <!--element type="date">
+            <date id="String" name="String" label="String" value="String" size="0" maxlength="0"
+                  required="true" readonly="true" format="String" helptext=""/>
+        </element>
 		<element type="select">
 			<select id="String" name="String" label="String" value="String" size="0" maxlength="0"
 				required="false" readonly="false" listvalue="String" helptext=""/>
@@ -31,6 +31,6 @@
 		</element>
 		<element type="button">
 			<button id="String" name="String" value="" size=""/>
-		</element>
+		</element-->
 	</fieldset>
 </tns:form>
