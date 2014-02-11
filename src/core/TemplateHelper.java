@@ -43,11 +43,11 @@ public class TemplateHelper {
   }
 
   public static void main(String[] args) {
-    Input componenet = new Text();
-    componenet.setId("1");
-    componenet.setLabel("woao");
-    componenet.setValue("adasdada");
-    //System.out.println(getHtmlForInput(componenet));
+    Input input = new Text();
+    input.setId("1");
+    input.setLabel("woao");
+    input.setValue("adasdada");
+    System.out.println(getTemplate("input", input));
 
   }
 }

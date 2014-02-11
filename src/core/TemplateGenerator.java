@@ -24,11 +24,13 @@ public class TemplateGenerator {
 
   public boolean genTemplate(String xmlFilePath, String templateId) {
     File template = new File(Constants.TEMPLATE_PATH_TEMP + "/" + templateId);
+    Writer templateWriter = null;
     try {
-      Writer templateWriter = new FileWriter(template);
+      templateWriter = new FileWriter(template);
       XmlReader reader = new XmlReader(xmlFilePath);
       Form form = reader.readForm();
       templateWriter.write(this.genTemplate(form));
+      templateWriter.close();
     } catch (XmlFileNotFoundException e) {
       e.printStackTrace();
     } catch (IOException e) {
@@ -80,5 +82,10 @@ public class TemplateGenerator {
 
     }
     return result.toString();
+  }
+
+  public static void main(String[] args) {
+    TemplateGenerator g = new TemplateGenerator();
+    g.genTemplate("/Users/wangronghua/workspace/DynamicForm/testresources/dynamicform.xml", "dynamicform.ftl");
   }
 }
