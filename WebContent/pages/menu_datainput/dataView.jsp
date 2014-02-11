@@ -1,6 +1,17 @@
 <html>
+    <head>
+        <script>
+            $(document).ready(function(){
+
+            });
+        </script>
+    </head>
     <body>
+        <form action="/datainput/dataRecordInput.action">
+            <button id="addButton" type="submit" class="btn btn-info">Add</button>
+        </form>
         <section class="panel">
+            <h2 class="page-header">Sample</h2>
             <div class="panel-body" >
                 <form role="form" class="form-horizontal">
                     <div class="form-group">
@@ -74,7 +85,7 @@
                             <textarea rows="5" cols="60" class="form-control"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-info">Add</button>
+                    <button type="submit" class="btn btn-info">Submit</button>
                 </form>
             </div>
         </section>

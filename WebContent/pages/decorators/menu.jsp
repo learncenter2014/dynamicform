@@ -16,7 +16,7 @@
                   </li>
                   
                   <li>
-                      <a  href="/datainput/dataRecordInput.action">
+                      <a  href="/datainput/dataView.action">
                           <i class="fa fa-th"></i>
                           <span>数据录入</span>
                           <span class="label label-danger pull-right mail-info"></span>
