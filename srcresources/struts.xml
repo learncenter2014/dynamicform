@@ -67,8 +67,10 @@
 	</package>
 	
 	<package name="datatable" namespace="/datatable" extends="default">
-        <action name="queryList" class="actions.DataTableAction" method="queryList">
-			<result name="success">/pages/data_table/queryList.jsp</result>
+        <action name="index" class="actions.DataTableAction" method="index">
+           <result name="success">/pages/data_table/queryList.jsp</result>
+		</action>
+		<action name="queryList" class="actions.DataTableAction" method="queryList">
 		</action>
 	</package>
 </struts>

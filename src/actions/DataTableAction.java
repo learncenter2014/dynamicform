@@ -3,52 +3,63 @@
  */
 package actions;
 
-import java.util.List;
-
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.processors.JsonValueProcessor;
-import net.sf.json.util.CycleDetectionStrategy;
+import vo.DataQueryVo;
 import vo.DataTableVo;
+import bl.common.BaseBusiness;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.util.logging.Logger;
+import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * @author gudong
  * @since $Date:2014-02-10$
  */
-public class DataTableAction extends BaseAction {
+public class DataTableAction extends BaseAction implements ModelDriven<DataQueryVo> {
+
+  private static Logger log = LoggerFactory.getLogger(DataTableAction.class);
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -5222876000116738224L;
+
+  private DataQueryVo model;
+
+  public String index() throws Exception {
+    return SUCCESS;
+  }
 
   public String queryList() throws Exception {
-    JsonConfig aoColumnsConfig = new JsonConfig();
-    aoColumnsConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-    aoColumnsConfig.registerJsonValueProcessor(DataTableVo.class, "aoColumns", new JsonValueProcessor() {
+    DataTableVo dataTable = new BaseBusiness().query(getModel());
+    dataTable.setiTotalDisplayRecords(100);
+    dataTable.setiTotalRecords(100);
 
-      @Override
-      public Object processArrayValue(Object arg0, JsonConfig arg1) {
-        List<String> colList = (List) arg0;
-        JSONArray jsonArray = new JSONArray();
-        if (colList != null && colList.size() >0) {
-          for(String col : colList){
-            jsonArray.add(new JSONObject().element("mData", col));
-          }
-        }
-        return jsonArray;
-      }
+    // if (getModel().getiDisplayLength() == 0) {
+    // getModel().setiDisplayLength(10);
+    // }
 
-      @Override
-      public Object processObjectValue(String arg0, Object arg1, JsonConfig arg2) {
-        return null;
-      }
+    TestGirdData data;
+    for (int i = 0; i < getModel().getIDisplayLength(); i++) {
+      data = new TestGirdData();
+      data.setId(getModel().getIDisplayStart() + (i+1));
+      data.setAge(1);
+      data.setUsername("test username" + data.getId());
+      data.setAddress("test address" + data.getId());
+      dataTable.getAaData().add(data);
+    }
 
-    });
-    
-    DataTableVo dataTable = new DataTableVo();
     // json
-   // JSONArray jsonArray = JSONArray.fromObject(dataTableList, aoColumnsConfig);
-    JSONObject jsonObject = JSONObject.fromObject(dataTable);
-//    jsonObject.put("data", jsonArray);
-//    jsonObject.put("success", true);
-    // jsonObject.put("total", total);
-    writeJson( jsonObject);
-    return SUCCESS;
-  }}
+    JSONObject jsonObject =  JSONObject.fromObject(dataTable);
+    writeJson(jsonObject);
+    return null;
+  }
+
+  @Override
+  public DataQueryVo getModel() {
+    if (model == null) {
+      model = new DataQueryVo();
+    }
+    return model;
+  }
+}

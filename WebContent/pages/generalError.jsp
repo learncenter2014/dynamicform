@@ -5,7 +5,6 @@
 <head>
 <title>generalError.jsp</title>
 <html:base />
-<link rel="stylesheet" href="css/camiant.css"></link>
 </head>
 
 <body>
