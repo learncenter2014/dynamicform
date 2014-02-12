@@ -1,4 +1,4 @@
-package core.componnetext;
+package core.componentext;
 
 /**
  * Created by wangronghua on 14-2-11.

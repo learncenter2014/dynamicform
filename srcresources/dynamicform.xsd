@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.dynamic.org/dynamicform" targetNamespace="http://www.dynamic.org/dynamicform" elementFormDefault="unqualified">
+
   <complexType name="Component" abstract="true">
     <attribute name="id" type="string" />
     <attribute name="name" type="string" />

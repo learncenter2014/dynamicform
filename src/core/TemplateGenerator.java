@@ -65,6 +65,7 @@ public class TemplateGenerator {
 
   String genTemplate(DynamicType[] dynamicTypes) {
     StringBuilder result = new StringBuilder();
+    ComponentEnhancer enhancer = new ComponentEnhancer();
     for(DynamicType dynamicType: dynamicTypes) {
       StringBuilder type = new StringBuilder("get").append(dynamicType.getType());
       type.setCharAt(3, Character.toUpperCase(type.charAt(3)));
@@ -72,7 +73,7 @@ public class TemplateGenerator {
         Method med = DynamicType.class.getDeclaredMethod(type.toString());
         Component component = (Component)med.invoke(dynamicType);
         //todo use vistior mode to enhance the componenet
-        result.append(TemplateHelper.getTemplate(dynamicType.getType().toLowerCase(), ComponentEnhancer.enhance(component))) ;
+        result.append(TemplateHelper.getTemplate(dynamicType.getType().toLowerCase(), component.enhance(enhancer))) ;
       } catch (NoSuchMethodException e) {
         //todo LOG.error();
       } catch (InvocationTargetException e) {
@@ -86,7 +87,18 @@ public class TemplateGenerator {
   }
 
   public static void main(String[] args) {
-    TemplateGenerator g = new TemplateGenerator();
-    g.genTemplate("/Users/wangronghua/workspace/DynamicForm/testresources/dynamicform.xml", "dynamicform.ftl");
+//    TemplateGenerator g = new TemplateGenerator();
+//    g.genTemplate("/Users/wangronghua/workspace/DynamicForm/testresources/dynamicform.xml", "dynamicform.ftl");
+      A a = new A();
+      a.set(new HashMap());
+  }
+
+}
+class A {
+  public void set(Map map) {
+    System.out.println("map");
+  }
+  public void set(HashMap map) {
+    System.out.println("hashmap");
   }
 }

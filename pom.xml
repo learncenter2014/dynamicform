@@ -109,6 +109,8 @@
           <schemaDirectory>srcresources</schemaDirectory>
           <packageName>dynamicschema</packageName>
           <staleFile>target/generated-sources/jaxb/xjcStaleFlag</staleFile>
+          <bindingDirectory>srcresources/xjb</bindingDirectory>
+          <extension>true</extension>
         </configuration>
       </plugin>
     </plugins>

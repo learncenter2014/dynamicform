@@ -1,6 +1,7 @@
 package core;
 
 import bl.exceptions.MiServerException;
+import core.componentext.ComponentBase;
 import dynamicschema.Component;
 import dynamicschema.Text;
 
@@ -9,12 +10,12 @@ import dynamicschema.Text;
  */
 public class ComponentEnhancer {
 
-  public static Component enhance(Text text) {
+  public static Component wrap(Text text) {
 
     return text;
   }
 
-  public static Component enhance(Component component) {
+  public static ComponentBase wrap(ComponentBase component) {
     return component;
   }
 }
