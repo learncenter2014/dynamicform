@@ -37,48 +37,40 @@
   </head>
   
 <body>
-
-  <section id="container" class="">
-      <!--sidebar end-->
-      <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper site-min-height">
-              <!-- page start-->
-              <section class="panel">
-                  <header class="panel-heading">
-                      DataTables hidden row details example
-                  </header>
-                  <div class="panel-body">
-                        <div class="adv-table">
-                            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
-                                <thead>
-                                <tr>
-                                       <th>ID</th>
-										<th>USERNAME</th>
-										<th>AGE</th>
-										<th>ADDRESS</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td colspan="4" class="dataTables_empty">Loading data from server</td></tr>
-                                </tbody>
-                                <tfoot>
-									<tr>
-										<th>ID</th>
-										<th>USERNAME</th>
-										<th>AGE</th>
-										<th>ADDRESS</th>
-									</tr>
-								</tfoot>
-                            </table>
-
-                        </div>
-                  </div>
-              </section>
-              <!-- page end-->
-          </section>
-      </section>
-  </section>
+  
+       <!-- page start-->
+       <section class="panel">
+           <header class="panel-heading">
+               DataTables hidden row details example
+           </header>
+           <div class="panel-body">
+                 <div class="adv-table">
+                     <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                         <thead>
+                         <tr>
+                                <th>ID</th>
+								<th>USERNAME</th>
+								<th>AGE</th>
+								<th>ADDRESS</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                          <tr><td colspan="4" class="dataTables_empty">Loading data from server</td></tr>
+                      </tbody>
+                         <tfoot>
+							<tr>
+								<th>ID</th>
+								<th>USERNAME</th>
+								<th>AGE</th>
+								<th>ADDRESS</th>
+							</tr>
+						</tfoot>
+                     </table>
+                </div>
+          </div>
+     </section>
+     <!-- page end-->
+           
 
     <!-- js placed at the end of the document so the pages load faster -->
     <!--<script src="<%=request.getContextPath()%>/jslib/flatlab/js/jquery.js"></script>-->
