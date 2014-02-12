@@ -74,9 +74,11 @@
             <result name="success" type="freemarker">/ftl/datainput/saveSuccess.ftl</result>
         </action>
         <action name="dataRecordDelete" class="actions.DataPageInputAction" method="save">
-
         </action>
 
+        <action name="dataPageInput" class="actions.DataPageInputAction" method="loadPage">
+            <result name="success" type="freemarker">/ftl/html.ftl</result>
+        </action>
 	</package>
 	<package name="report" namespace="/report" extends="default">
 

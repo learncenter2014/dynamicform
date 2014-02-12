@@ -32,6 +32,21 @@
                   </li>
                   
                   <li>
+                      <a  href="datainput/dataPageInput.action?patientId=patient&pageName=patient">
+                          <i class="fa fa-th"></i>
+                          <span>bingliguanli</span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
+                  <li>
+                      <a  href="datainput/dataPageInput.action?patientId=patient&pageName=followup">
+                          <i class="fa fa-th"></i>
+                          <span>suifangguanli</span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
+                  
+                  <li>
                       <a  href="">
                           <i class="fa fa-bar-chart-o"></i>
                           <span>数据报表</span>
