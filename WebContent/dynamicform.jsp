@@ -18,6 +18,7 @@
 </head>
 <body>
   <!-- begin: main content area #main -->
+ <div style="position:relative;">
   <div id="formBuilderMenu" style="float: left; margin-right: 15px; width: 180px;">
     <ul id="rbMenu" class="rb_menu">
       <li id="Label"><img src="img/new_label.png"> Label</li>
@@ -42,10 +43,10 @@
       <li id="saveXml"><img src="img/save_xml.png"> Save</li>
     </ul>
   </div>
-  <div id="maindynamicform"></div>
+  <div id="maindynamicform" style="position:absolute;left:0px;top:10px;width:80%;height:80%"></div>
   <div id="dialog_elt" title="Input zone definition"></div>
   <div id="dialog_file" title="Load a form"></div>
-  
+  </div>
   <script type="text/javascript">
             jQuery(document).ready(function() {
                 
@@ -114,23 +115,6 @@
                 jQuery('#saveXml').click(function() {
                     save_xml();
                 });
-
-                jQuery.dynamicplugin.initForm("maindynamicform");
-                jQuery("#maindynamicform").resizable({
-                    stop : function(event, ui) {
-                        var fieldsetObj = jQuery.dynamicplugin.elementArray["maindynamicform"];
-                        if (fieldsetObj) {
-                            if ( ui.size.width  != ui.originalSize.width)  {
-                                fieldsetObj.width  = (ui.size.width);
-                            }
-                            if ( ui.size.height  != ui.originalSize.height)  {
-                                fieldsetObj.height = (ui.size.height);
-                            }
-                        }
-                    }
-                });
-                initDrop();
-                enableRowSelectable(".handle");
             });
         </script>
 </body>

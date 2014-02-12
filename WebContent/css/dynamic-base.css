@@ -36,13 +36,15 @@
 
 #maindynamicform {
   margin-left: 120px;
-  border: 1px solid blue;
-  width: 500px;
-  height: 300px;
+  height: 500px;
 }
 
 #maindynamicform fieldset {
   border: 1px solid blue;
+}
+
+#maindynamicform form {
+  border: 1px solid red;
 }
 
 .form-control {

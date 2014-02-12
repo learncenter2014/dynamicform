@@ -1,52 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="" name="" action="" method="">
-	<fieldset id="String" name="String" label="String" width="String" height="String"
-		legend="String">
-		<element type="text">
-			<text id="String1" name="String1" label="String" value="String" size="0" maxlength="0"
-				required="false" readonly="true" regexp="String" helptext=""/>
-		</element>
+<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="form11" name="form11" action="save.action" method="post" width="700" height="420">
+    <fieldset id="String11" name="String11" label="分组域" width="700" height="400"
+        legend="String">
         <element type="text">
-            <text id="String2" name="String2" label="String" value="String" size="0" maxlength="0"
-                  required="false" readonly="true" regexp="String" helptext=""/>
+            <text id="String1155" name="String21" label="文本" value="peter" size="10" maxlength="10"
+                required="false" readonly="true" regexp="String" helptext=""/>
         </element>
-        <element type="text">
-            <text id="String3" name="String3" label="String" value="String" size="0" maxlength="0"
-                  required="false" readonly="true" regexp="String" helptext=""/>
-        </element>
-        <element type="text">
-            <text id="String4" name="String4" label="String" value="String" size="0" maxlength="0"
-                  required="false" readonly="true" regexp="String" helptext=""/>
-        </element>
-        <element type="text">
-            <text id="String4123qadeqeqe" name="String4" label="asdadadad" value="String" size="0" maxlength="0"
-                  required="false" readonly="true" regexp="String" helptext=""/>
-        </element>
-        <!--element type="date">
-            <date id="String" name="String" label="String" value="String" size="0" maxlength="0"
+        <element type="date">
+            <date id="String22" name="String223" label="日期" value="2014-02-14" size="10" maxlength="10"
                   required="true" readonly="true" format="String" helptext=""/>
         </element>
-		<element type="select">
-			<select id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="false" readonly="false" listvalue="String" helptext=""/>
-		</element>
-		<element type="textarea">
-			<textarea id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="false" readonly="false" helptext=""/>
-		</element>
-		<element type="image">
-			<image id="String" name="String" src="http://www.baidu.com/my.icon" helptext=""/>
-		</element>
-		<element type="radio">
-			<radio id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="true" readonly="false" listvalue="String" helptext=""/>
-		</element>
-		<element type="checkbox">
-			<checkbox id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="false" readonly="false" listvalue="String" helptext=""/>
-		</element>
-		<element type="button">
-			<button id="String" name="String" value="" size=""/>
-		</element-->
-	</fieldset>
+        <element type="select">
+            <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
+                required="false" readonly="false" listvalue="String" helptext=""/>
+        </element>
+        <element type="textarea">
+            <textarea id="String24" name="String21" label="文本域" value="String" size="10" maxlength="10"
+                required="false" readonly="false" helptext=""/>
+        </element>
+        <element type="image">
+            <image id="String25" name="String24" src="http://www.baidu.com/my.icon" helptext=""/>
+        </element>
+        <element type="radio">
+            <radio id="String223" name="String25" label="圆纽" value="String" size="10" maxlength="10"
+                required="true" readonly="false" listvalue="String" helptext=""/>
+        </element>
+        <element type="checkbox">
+            <checkbox id="String26" name="String44" label="单选框" value="String" size="10" maxlength="10"
+                required="false" readonly="false" listvalue="String" helptext=""/>
+        </element>
+        <element type="button">
+            <button id="String27" name="String44" value="提交" size="10"/>
+        </element>
+    </fieldset>
 </tns:form>

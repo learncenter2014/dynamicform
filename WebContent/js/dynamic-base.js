@@ -11,7 +11,7 @@ function initDrop() {
         zIndex : 1000,
         revert : 'invalid'
     });
-    jQuery('#maindynamicform').droppable({
+    jQuery('form.connectedSortable').droppable({
         cursor : 'move',
         accept : '#FieldSet',
         helper : 'clone',
@@ -28,6 +28,21 @@ function initDrop() {
         drop : function(event, ui) {
             event.stopPropagation();
             jQuery.dynamicplugin.addNewElement(ui, this);
+        }
+    });
+    
+    jQuery("form.connectedSortable,fieldset.connectedSortable").resizable({
+        stop : function(event, ui) {
+            var id = jQuery(this).attr("id");
+            var fieldsetObj = jQuery.dynamicplugin.elementArray[id.substring("block_".length)];
+            if (fieldsetObj) {
+                if ( ui.size.width  != ui.originalSize.width)  {
+                    fieldsetObj.width  = (ui.size.width);
+                }
+                if ( ui.size.height  != ui.originalSize.height)  {
+                    fieldsetObj.height = (ui.size.height);
+                }
+            }
         }
     });
 }
@@ -119,8 +134,16 @@ function escapeH(ss) {
 function load_xml( surl ) { 
     var htmlContent = jQuery.dynamicplugin.parseXml(surl);
     jQuery("#maindynamicform").append(htmlContent);
+    initDrop();
+    enableRowSelectable(".handle");
 }
 
+/**
+ * xml and html
+ */ 
+function save_xml( surl ) { 
+    jQuery.dynamicplugin.saveXml(surl);
+}
 
 /**
  * show file panel
