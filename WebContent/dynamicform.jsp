@@ -11,8 +11,8 @@
 
 </style>
 
-<script type="text/javascript" src="js/dynamic-base.js"></script>
 <script type="text/javascript" src="js/jquery-dynamicform-1.0.0.js"></script>
+<script type="text/javascript" src="js/dynamic-base.js"></script>
 
 
 </head>
@@ -42,12 +42,35 @@
       <li id="saveXml"><img src="img/save_xml.png"> Save</li>
     </ul>
   </div>
-  <form id="maindynamicform"></form>
+  <div id="maindynamicform"></div>
   <div id="dialog_elt" title="Input zone definition"></div>
-
+  <div id="dialog_file" title="Load a form"></div>
+  
   <script type="text/javascript">
             jQuery(document).ready(function() {
+                
+                jQuery("#dialog_file").dialog({
+                    bgiframe : true,
+                    autoOpen : false,
+                    height : 200,
+                    modal : true,
+                    buttons : {
+                        Save : function() {
+                            var bVal = jQuery("#x_file").val();
 
+                            if (bVal && bVal.length > 0) {
+                                load_xml(bVal);
+                                jQuery(this).dialog('close');
+                            }
+                        },
+                        Cancel : function() {
+                            jQuery(this).dialog('close');
+                        }
+                    },
+                    close : function() {
+                    }
+                });
+                
                 jQuery("#dialog_elt").dialog({
                     bgiframe : true,
                     autoOpen : false,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="" name="">
+<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="" name="" action="" method="">
 	<fieldset id="String" name="String" label="String" width="String" height="String"
 		legend="String">
 		<element type="text">

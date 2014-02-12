@@ -1,4 +1,23 @@
 (function($) {
+    /**
+     * GUID是一种由算法生成的二进制长度为128位的数字标识符。GUID 的格式为“xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx”，
+     * 其中的 x 是 0-9 或 a-f 范围内的一个32位十六进制数。在理想情况下，任何计算机和计算机集群都不会生成两个相同的GUID。
+     * @returns
+     */
+    $.uuid = function() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 36; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[8] = s[13] = s[18] = s[23] = "-";
+     
+        var uuid = s.join("");
+        return uuid;
+    };
+    
     $.substitute = function(str, o, regexp) {
         /**
          * ${XXX} style will be replaced by this method.
@@ -151,7 +170,7 @@
         Input.call(this, options);
         this.constructor = TextArea;
         this.xmltemplate = '<textarea id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" helptext="${helptext}"/>';
-        this.htmltemplate = '<input type="checkbox" id="${id}" name="${name}" value="${value}">';
+        this.htmltemplate = '<textarea type="checkbox" id="${id}" name="${name}" value="${value}" rows="${size}" cols="${maxlength}"></textarea>';
     }
     TextArea.prototype = input;
 
@@ -218,8 +237,6 @@
             this.accesskey = jQuery("#e_accesskey").val();
             this.listvalue= jQuery("#e_listvalue").val();
             this.helptext = jQuery("#e_helptext").val();
-            this.width = jQuery("#e_width").val();
-            this.height = jQuery("#e_height").val();
             
             this.required = jQuery("#e_required")[0]?jQuery("#e_required")[0].checked:false;
             this.readonly = jQuery("#e_readonly")[0]?jQuery("#e_readonly")[0].checked:false;
@@ -240,14 +257,31 @@
             jQuery("#e_accesskey").val(this.accesskey);
             jQuery("#e_listvalue").val(this.listvalue);
             jQuery("#e_helptext").val(this.helptext);
-            jQuery("#e_width").val(this.width);
-            jQuery("#e_height").val(this.height);
             
             if(jQuery("#e_required")[0])
             jQuery("#e_required")[0].checked=this.required;
             if(jQuery("#e_readonly")[0])
             jQuery("#e_readonly")[0].checked=this.readonly;
-        }
+        };
+        this.parseFromXml = function(xmlObj){
+            this.name = jQuery(xmlObj).attr("name");
+            this.label = jQuery(xmlObj).attr("label");
+            this.action = jQuery(xmlObj).attr("action");
+            this.method = jQuery(xmlObj).attr("method");
+            this.width = jQuery(xmlObj).attr("width");
+            this.height = jQuery(xmlObj).attr("height");
+            this.size = jQuery(xmlObj).attr("size");
+            this.mask = jQuery(xmlObj).attr("mask");
+            this.freemask = jQuery(xmlObj).attr("freemask");
+            this.regexp = jQuery(xmlObj).attr("regexp");
+            this.maxlength = jQuery(xmlObj).attr("maxlength");
+            this.accesskey = jQuery(xmlObj).attr("accesskey");
+            this.listvalue= jQuery(xmlObj).attr("listvalue");
+            this.helptext = jQuery(xmlObj).attr("helptext");
+            
+            this.required = jQuery(xmlObj).attr("required");
+            this.readonly = jQuery(xmlObj).attr("readonly");  
+        };
     };
     
     $.dynamicplugin = {
@@ -304,10 +338,61 @@
         saveXml: function(){
             
         },
-        parseXml: function(){
-            
+        parseXml: function(surl){
+            //reset all cache data.
+            this.selected=null;
+            this.idIndex=0;
+            this.elementArray={};
+            var htmlBuffer = "";
+            jQuery.ajax({
+                async:false,
+                type: "GET",
+                url: "xml/"+surl,
+                cache: false,
+                dataType: "xml",
+                complete : function(data, status) {
+                    var pluginRef = jQuery.dynamicplugin;
+                    var resp = data.responseXML;
+                    
+                    var form = jQuery(resp).find('tns\\:form');
+                    var formId = form.attr("id");
+                    var options = new UiInputDialog(formId,"form");
+                    options.parseFromXml(form);
+                    pluginRef.elementArray[formId] = options;
+                    var createForm = pluginRef.createElementFactory(options);
+                    
+                    jQuery(resp).find("fieldset").each(function(){
+                        var fieldSet = jQuery(this);
+                        var fieldId = fieldSet.attr("id");
+                        var options = new UiInputDialog(fieldId,"fieldset");
+                        options.parseFromXml(fieldSet);
+                        pluginRef.elementArray[fieldId] = options;
+                        var createFieldSet = pluginRef.createElementFactory(options);
+                        createForm.addFieldSets(createFieldSet);
+                        
+                        //loop element per fieldset
+                        
+                        jQuery(resp).find("element").each(function(){
+                            var element = jQuery(this);
+                            var type = element.attr("type");
+                            var typeObj = element.find(type);
+                            var elementId = typeObj.attr("id");
+                            var options = new UiInputDialog(elementId,type);
+                            options.parseFromXml(typeObj);
+                            pluginRef.elementArray[elementId] = options;
+                            var createElement = pluginRef.createElementFactory(options);
+                            createFieldSet.addElement(createElement);
+                        });
+                    });
+                    
+                    htmlBuffer = createForm.toHtml();
+                }
+             });
+            return htmlBuffer;
         },
         addNewElement:function(ui, dest){
+            //global uuid that avoid to id conflict issue.
+            this.idIndex = $.uuid();
             var _id = "el_" + this.idIndex;
             var typeToAdd = ui.draggable.attr('id');  
             typeToAdd = !typeToAdd?"text":typeToAdd.toLowerCase();
@@ -318,7 +403,6 @@
             var elementInstance = this.createElementFactory(options);
             var outputHtml = elementInstance.toHtml();
             jQuery(dest).append(outputHtml);
-            this.idIndex++;
             
             var url = "pages/panel_dialog/input_" + typeToAdd + ".html";
             jQuery("#dialog_elt").load(url, function() {
@@ -330,10 +414,19 @@
             });
         },
         deleteElement:function(){
-            
+            if (this.selected) {
+                var _no = jQuery(this.selected).attr('id');
+
+                if (!!_no) {
+                    //remove cache data from memory.
+                    delete this.elementArray[_no.substring("img_".length)];
+                    //remove DOM node from DOM tree of Form.
+                    jQuery("#block_"+_no.substring("img_".length)).remove();
+                }
+            } 
         },
         initForm:function(_no){
-            var form = jQuery.dynamicplugin.elementArray[_no];
+            var form = this.elementArray[_no];
             if (form == null) {
                 var options = new UiInputDialog(_no,"form");
                 this.elementArray[_no] = options;
