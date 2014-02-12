@@ -3,9 +3,25 @@
 	<fieldset id="String" name="String" label="String" width="String" height="String"
 		legend="String">
 		<element type="text">
-			<text id="String" name="String" label="String" value="String" size="0" maxlength="0"
+			<text id="String1" name="String1" label="String" value="String" size="0" maxlength="0"
 				required="false" readonly="true" regexp="String" helptext=""/>
 		</element>
+        <element type="text">
+            <text id="String2" name="String2" label="String" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
+        <element type="text">
+            <text id="String3" name="String3" label="String" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
+        <element type="text">
+            <text id="String4" name="String4" label="String" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
+        <element type="text">
+            <text id="String4123qadeqeqe" name="String4" label="asdadadad" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
         <!--element type="date">
             <date id="String" name="String" label="String" value="String" size="0" maxlength="0"
                   required="true" readonly="true" format="String" helptext=""/>

@@ -71,7 +71,8 @@ public class TemplateGenerator {
       try {
         Method med = DynamicType.class.getDeclaredMethod(type.toString());
         Component component = (Component)med.invoke(dynamicType);
-        result.append(TemplateHelper.getTemplate(dynamicType.getType().toLowerCase(), component)) ;
+        //todo use vistior mode to enhance the componenet
+        result.append(TemplateHelper.getTemplate(dynamicType.getType().toLowerCase(), ComponentEnhancer.enhance(component))) ;
       } catch (NoSuchMethodException e) {
         //todo LOG.error();
       } catch (InvocationTargetException e) {
