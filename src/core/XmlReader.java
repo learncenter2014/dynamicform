@@ -19,7 +19,7 @@ public class XmlReader {
   private File xmlFile;
   public XmlReader(String xmlFilePath) throws FileNotFoundException{
     xmlFile = new File(xmlFilePath);
-    if (xmlFile.exists()) {
+    if (!xmlFile.exists()) {
       throw new XmlFileNotFoundException("xmlFile does not exists");
     }
   }

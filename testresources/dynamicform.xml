@@ -1,36 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:form xmlns:tns="http://www.dynamic.org/dynamicform">
+<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="" name="" action="" method="">
 	<fieldset id="String" name="String" label="String" width="String" height="String"
 		legend="String">
-		<element type="date">
-			<date id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="Y" readonly="N" format="String" helptext=""/>
-		</element>
 		<element type="text">
-			<text id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="N" readonly="Y" regexp="String" helptext=""/>
+			<text id="String1" name="String1" label="String" value="String" size="0" maxlength="0"
+				required="false" readonly="true" regexp="String" helptext=""/>
 		</element>
+        <element type="text">
+            <text id="String2" name="String2" label="String" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
+        <element type="text">
+            <text id="String3" name="String3" label="String" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
+        <element type="text">
+            <text id="String4" name="String4" label="String" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
+        <element type="text">
+            <text id="String4123qadeqeqe" name="String4" label="asdadadad" value="String" size="0" maxlength="0"
+                  required="false" readonly="true" regexp="String" helptext=""/>
+        </element>
+        <!--element type="date">
+            <date id="String" name="String" label="String" value="String" size="0" maxlength="0"
+                  required="true" readonly="true" format="String" helptext=""/>
+        </element>
 		<element type="select">
 			<select id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="N" readonly="N" listvalue="String" helptext=""/>
+				required="false" readonly="false" listvalue="String" helptext=""/>
 		</element>
 		<element type="textarea">
 			<textarea id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="N" readonly="N" helptext=""/>
+				required="false" readonly="false" helptext=""/>
 		</element>
 		<element type="image">
-			<image id="String" name="String" label="String" src="http://www.baidu.com/my.icon" helptext=""/>
+			<image id="String" name="String" src="http://www.baidu.com/my.icon" helptext=""/>
 		</element>
 		<element type="radio">
 			<radio id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="Y" readonly="N" listvalue="String" helptext=""/>
+				required="true" readonly="false" listvalue="String" helptext=""/>
 		</element>
 		<element type="checkbox">
 			<checkbox id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="N" readonly="N" listvalue="String" helptext=""/>
+				required="false" readonly="false" listvalue="String" helptext=""/>
 		</element>
 		<element type="button">
-			<button id="String" name="String" label="String" value="" helptext=""/>
-		</element>
+			<button id="String" name="String" value="" size=""/>
+		</element-->
 	</fieldset>
 </tns:form>

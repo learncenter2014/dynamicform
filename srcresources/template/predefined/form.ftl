@@ -1,3 +1,3 @@
-<form>
-  ${form.innerHtml}
+<form class="form-horizontal">
+  ${innerHTML!}
 </form>
