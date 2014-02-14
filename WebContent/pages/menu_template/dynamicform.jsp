@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ include file="pages/commonHeader.jsp"%>
+<%@ include file="/pages/commonHeader.jsp"%>
 <html style="height: 100%">
 <head>
 <title>Form wizard tool</title>
@@ -38,6 +38,7 @@
     </ul>
     <ul id="rbMenu3" class="rb_menu" style="margin-top:5px">
       <li id="FieldSet"><img src="img/property.png"> FieldSet</li>
+      <li id="formCreate"><img src="img/property.png"> Create Form</li>
       <li id="formEdit"><img src="img/property.png"> Edit Form</li>
       <li id="loadXml"><img src="img/load_xml.png"> Load</li>
       <li id="saveXml"><img src="img/save_xml.png"> Save</li>
@@ -105,9 +106,11 @@
                 jQuery('#ElementDelete').click(function() {
                     deleteControlPanel();
                 });
-                
+                jQuery('#formCreate').click(function() {
+                    createForm();
+                });
                 jQuery('#formEdit').click(function() {
-                    showControlPanel("maindynamicform");
+                    editForm();
                 });
                 jQuery('#loadXml').click(function() {
                     showFilePanel();

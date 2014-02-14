@@ -95,7 +95,7 @@
         this.constructor = Form;
         this.width = options.width;
         this.height = options.height;
-        this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
+        this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" width="${width}" height="${height}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
         this.elements = [];
         this.addElement = function(obj) {
             this.elements.push(obj);
@@ -107,7 +107,7 @@
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<form id="${id}" name="${name}" style="width:${width}px;height:${height}px;" class="connectedSortable">${subElementsHtml}\n</form>';
+        this.htmltemplate = '<form id="block_${id}" name="${name}" style="width:${width}px;height:${height}px;" class="connectedSortable">${subElementsHtml}\n</form>';
         this.toHtml = function(){
             this.subElementsHtml = "";
             for ( var i = 0; i < this.elements.length; i++) {
@@ -123,9 +123,11 @@
         Component.call(this, options);
         this.constructor = Image;
         this.src = options.src;
+        this.width=options.wdith;
+        this.height=options.height;
         this.helptext = options.helptext;
         this.xmltemplate = '<image id="${id}" name="${name}" src="${src}"></image>';
-        this.htmltemplate = '<img id="${id}" name="${name}" src="${src}" width="${width}" height="${height}">';
+        this.htmltemplate = '<img id="${id}" name="${name}" src="${src}" style="width:${width}px;height:"${height}px">';
     }
     Image.prototype = component;
 
@@ -306,8 +308,14 @@
     
     $.dynamicplugin = {
         selected:null,
-        idIndex:0,
         elementArray:{},
+        formId:null,
+        resetGlobalVar: function(){
+            this.selected=null;
+            this.idIndex=0;
+            this.elementArray={};
+            this.formId = null;
+        },
         createElementFactory : function(options) {
             var type = options.type;
             var instanceObj = null;
@@ -371,9 +379,7 @@
         },
         parseXml: function(surl){
             //reset all cache data.
-            this.selected=null;
-            this.idIndex=0;
-            this.elementArray={};
+            this.resetGlobalVar();
             var htmlBuffer = "";
             jQuery.ajax({
                 async:false,
@@ -387,6 +393,8 @@
                     
                     var form = jQuery(resp).find('tns\\:form');
                     var formId = form.attr("id");
+                    //initial form id for edition operation.
+                    pluginRef.formId = formId;
                     var options = new UiInputDialog(formId,"form");
                     options.parseFromXml(form);
                     pluginRef.elementArray[formId] = options;
@@ -423,8 +431,7 @@
         },
         addNewElement:function(ui, dest){
             //global uuid that avoid to id conflict issue.
-            this.idIndex = $.uuid();
-            var _id = this.idIndex;
+            var _id = $.uuid();
             var typeToAdd = ui.draggable.attr('id');  
             typeToAdd = !typeToAdd?"text":typeToAdd.toLowerCase();
             // fetching inputs data of dialog with object instance;
@@ -444,6 +451,23 @@
                 jQuery(this).dialog('open');
             });
         },
+        updateElement: function(_no){
+            var element = this.elementArray[_no];
+            if (element != null) {
+                element.saveElement();
+                var blockId = "#block_" + _no;
+                if (element.type != 'fieldset' && element.type != 'form') {
+                    var elementInstance = this.createElementFactory(element);
+                    var outputHtml = elementInstance.toHtml();
+                    jQuery(blockId).replaceWith(outputHtml);
+                }else{
+                    jQuery(blockId).width(element.width);
+                    jQuery(blockId).height(element.height);
+                }
+            } else {
+                alert("This element id " + _no + " is empty!");
+            }  
+        },
         deleteElement:function(){
             if (this.selected) {
                 var _no = jQuery(this.selected).attr('id');
@@ -455,6 +479,18 @@
                     jQuery("#block_"+_no.substring("img_".length)).remove();
                 }
             } 
+        },
+        createForm:function(options){
+            //global uuid that avoid to id conflict issue.
+            var _id = $.uuid();
+            //assign to global variable for form.
+            this.formId = _id;
+            var typeToAdd = !options.type?"text":options.type.toLowerCase();
+            var options = new UiInputDialog(_id,typeToAdd);
+            this.elementArray[_id] = options;
+            var elementInstance = this.createElementFactory(options);
+            var outputHtml = elementInstance.toHtml();
+            return outputHtml;
         }
     };
 

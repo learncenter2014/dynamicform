@@ -19,7 +19,7 @@
                 required="false" readonly="false" helptext=""/>
         </element>
         <element type="image">
-            <image id="String25" name="String24" src="http://www.baidu.com/my.icon" helptext=""/>
+            <image id="String25" name="String24" src="jslib/flatlab/img/avatar1_small.jpg" width="40" height="40" helptext=""/>
         </element>
         <element type="radio">
             <radio id="String223" name="String25" label="圆纽" value="String" size="10" maxlength="10"

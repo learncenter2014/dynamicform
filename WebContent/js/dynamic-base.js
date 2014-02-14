@@ -3,7 +3,13 @@ function deleteControlPanel() {
 }
 
 function initDrop() {
-
+    jQuery("fieldset.connectedSortable")
+    .sortable({
+            connectWith: '.connectedSortable',
+            items: 'div.connectedSortable'
+     })
+    .disableSelection();
+    
     jQuery('ul#rbMenu li,#FieldSet').draggable({
         cursor : 'move',
         helper : 'clone',
@@ -51,31 +57,7 @@ function initDrop() {
  * saveInputPanel
  */
 function saveInputPanel(_no) {
-    var element = jQuery.dynamicplugin.elementArray[_no];
-    if (element != null) {
-        element.saveElement();
-        var elementInstance = jQuery.dynamicplugin.createElementFactory(element);
-        var outputHtml = elementInstance.toHtml();
-        var blockId = "#block_" + _no;
-        jQuery(blockId).replaceWith(outputHtml);
-        if(element.type=='fieldset'){
-            jQuery(blockId).resizable({
-                stop : function(event, ui) {
-                    var fieldsetObj = jQuery.dynamicplugin.elementArray[_no];
-                    if (fieldsetObj) {
-                        if ( ui.size.width  != ui.originalSize.width)  {
-                            fieldsetObj.width  = (ui.size.width);
-                        }
-                        if ( ui.size.height  != ui.originalSize.height)  {
-                            fieldsetObj.height = (ui.size.height);
-                        }
-                    }
-                }
-         });
-       }
-    } else {
-        alert("This element id " + _no + " is empty!");
-    }
+    jQuery.dynamicplugin.updateElement(_no);
 }
 
 function showControlPanel(_no) {
@@ -133,7 +115,7 @@ function escapeH(ss) {
 
 function load_xml( surl ) { 
     var htmlContent = jQuery.dynamicplugin.parseXml(surl);
-    jQuery("#maindynamicform").append(htmlContent);
+    jQuery("#maindynamicform").html(htmlContent);
     initDrop();
     enableRowSelectable(".handle");
 }
@@ -154,4 +136,21 @@ function showFilePanel( ) {
             function() { 
                 jQuery('#dialog_file').dialog('open');
             });
+}
+
+function createForm(){
+    var htmlContent = jQuery.dynamicplugin.createForm({type:'form'});
+    jQuery("#maindynamicform").html(htmlContent);
+    initDrop();
+    enableRowSelectable(".handle");
+}
+
+function editForm(){
+    var formId = jQuery.dynamicplugin.formId;
+    if(!formId){
+        alert("Please create a form or open a file in control pannel.");
+        return;
+    }else{
+        showControlPanel(formId);
+    }
 }
