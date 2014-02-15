@@ -8,7 +8,7 @@
               <ul class="sidebar-menu" id="nav-accordion">
               
                   <li>
-                      <a  href="dynamicform.jsp">
+                      <a  href="pages/menu_template/dynamicform.jsp">
                           <i class="fa fa-tasks"></i>
                           <span>模版管理 </span>
                           <span class="label label-danger pull-right mail-info"></span>

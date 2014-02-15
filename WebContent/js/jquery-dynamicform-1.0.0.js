@@ -33,11 +33,15 @@
         this.name = options.name;
         this.type = undefined;
         this.xmltemplate = "";
+        //sub-class could overwrite this function.
+        this.preInit = function(){};
         this.toXml = function() {
+            this.preInit();
             return $.substitute('<element type="${type}">'+this.xmltemplate+'</element>', this);
         },
         this.htmltemplate = "";
         this.toHtml = function(){
+            this.preInit();
             return $.substitute('<div id="block_${id}" class="connectedSortable"><label for="${id}">${label}</label>'+this.htmltemplate+'<img id="img_${id}" width="16" height="16" class="handle" alt="move" src="img/arrow.png"></div>', this);
         }
     };
@@ -69,16 +73,20 @@
         this.addElement = function(obj) {
             this.elements.push(obj);
         };
-        this.xmltemplate = '<fieldset id="${id}" name="${id}" width="${width}" height="${height}" legend="${label}">${subElements}\n</fieldset>';
+        this.xmltemplate = '<fieldset id="${id}" name="${id}" width="${width}" height="${height}" legend="${label}">${subElementsXml}\n</fieldset>';
         this.toXml = function() {
-            this.subElements = "";
+            this.subElementsXml = "";
             for ( var i = 0; i < this.elements.length; i++) {
-                this.subElements += "\n" + this.elements[i].toXml();
+                this.subElementsXml += "\n" + this.elements[i].toXml();
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" style="width:${width}px;height:${height}px" class="connectedSortable"><legend><img id="img_${id}" width="16" height="16" class="handle" alt="move" src="img/arrow.png">${label}</legend></fieldset>';
+        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" style="width:${width}px;height:${height}px" class="connectedSortable"><legend><img id="img_${id}" width="16" height="16" class="handle" alt="move" src="img/arrow.png">${label}</legend>${subElementsHtml}\n</fieldset>';
         this.toHtml = function(){
+            this.subElementsHtml = "";
+            for ( var i = 0; i < this.elements.length; i++) {
+                this.subElementsHtml += "\n" + this.elements[i].toHtml();
+            }
             return $.substitute(this.htmltemplate, this);
         }
     };
@@ -89,19 +97,28 @@
     function Form(options) {
         Component.call(this, options);
         this.constructor = Form;
-        this.template = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" action="${action}" method="${method}">${subFieldSets}\n</tns:form>';
-        this.fieldSets = [];
-        this.addFieldSets = function(obj) {
-            this.fieldSets.push(obj);
+        this.width = options.width;
+        this.height = options.height;
+        this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" width="${width}" height="${height}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
+        this.elements = [];
+        this.addElement = function(obj) {
+            this.elements.push(obj);
         };
         this.toXml = function() {
-            this.subFieldSets = "";
-            for ( var i = 0; i < this.fieldSets.length; i++) {
-                this.subFieldSets += "\n" + this.fieldSets[i].toXml();
+            this.subElementsXml = "";
+            for ( var i = 0; i < this.elements.length; i++) {
+                this.subElementsXml += "\n" + this.elements[i].toXml();
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<form id="${id}" name="${name}" width="${width}" height="${height}"></form>';
+        this.htmltemplate = '<form id="block_${id}" name="${name}" style="width:${width}px;height:${height}px;" class="connectedSortable">${subElementsHtml}\n</form>';
+        this.toHtml = function(){
+            this.subElementsHtml = "";
+            for ( var i = 0; i < this.elements.length; i++) {
+                this.subElementsHtml += "\n" + this.elements[i].toHtml();
+            }
+            return $.substitute(this.htmltemplate, this);
+        }
     }
     Form.prototype = component;
     
@@ -110,9 +127,11 @@
         Component.call(this, options);
         this.constructor = Image;
         this.src = options.src;
+        this.width=options.wdith;
+        this.height=options.height;
         this.helptext = options.helptext;
         this.xmltemplate = '<image id="${id}" name="${name}" src="${src}"></image>';
-        this.htmltemplate = '<img id="${id}" name="${name}" src="${src}" width="${width}" height="${height}">';
+        this.htmltemplate = '<img id="${id}" name="${name}" src="${src}" style="width:${width}px;height:"${height}px">';
     }
     Image.prototype = component;
 
@@ -120,8 +139,9 @@
     function Button(options) {
         Component.call(this, options);
         this.constructor = Button;
+        this.value = options.value;
         this.xmltemplate = '<button id="${id}" name="${name}" value="${value}" helptext="${helptext}"/>';
-        this.htmltemplate = '<input class="form-control" type="submit" id="${id}" name="${name}" value="${value}">';
+        this.htmltemplate = '<button type="button" value="${value}" name="${name}" id="${id}" class="btn btn-info">${value}</button>';
     }
     Button.prototype = component;
 
@@ -179,8 +199,22 @@
         Input.call(this, options);
         this.constructor = Select;
         this.listvalue = options.listvalue;
+        this.suboptions = "";
+        this.preInit = function(){
+            this.suboptions = "";
+            if(this.listvalue){
+                var items = this.listvalue.split(";");
+                for(var i=0;i<items.length;i++){
+                    var labelValue = items[i].split("=");
+                    if(labelValue.length==2){
+                       var option = $.substitute("<option value=${value}>${label}</option>",{label:labelValue[0],value:labelValue[1]});
+                       this.suboptions +=option;
+                    }
+                }
+            }
+        };
         this.xmltemplate = '<select id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" listvalue="${listvalue}" helptext="${helptext}"/>';
-        this.htmltemplate = '<select id="${id}" name="${name}" value="${value}"></select>';
+        this.htmltemplate = '<select id="${id}" name="${name}" value="${value}" class="form-control m-bot15">${suboptions}</select>';
     }
     Select.prototype = input;
 
@@ -216,8 +250,8 @@
         this.helptext = "Please input promoted info";
         this.action = "";
         this.method = "post";
-        this.width = 200;
-        this.height = 200;
+        this.width = 400;
+        this.height = 400;
         
         this.required = false;
         this.readonly = false;  
@@ -237,6 +271,8 @@
             this.accesskey = jQuery("#e_accesskey").val();
             this.listvalue= jQuery("#e_listvalue").val();
             this.helptext = jQuery("#e_helptext").val();
+            this.src = jQuery("#e_src").val();
+            this.value = jQuery("#e_value").val();
             
             this.required = jQuery("#e_required")[0]?jQuery("#e_required")[0].checked:false;
             this.readonly = jQuery("#e_readonly")[0]?jQuery("#e_readonly")[0].checked:false;
@@ -257,6 +293,8 @@
             jQuery("#e_accesskey").val(this.accesskey);
             jQuery("#e_listvalue").val(this.listvalue);
             jQuery("#e_helptext").val(this.helptext);
+            jQuery("#e_src").val(this.src);
+            jQuery("#e_value").val(this.value);
             
             if(jQuery("#e_required")[0])
             jQuery("#e_required")[0].checked=this.required;
@@ -278,6 +316,8 @@
             this.accesskey = jQuery(xmlObj).attr("accesskey");
             this.listvalue= jQuery(xmlObj).attr("listvalue");
             this.helptext = jQuery(xmlObj).attr("helptext");
+            this.src = jQuery(xmlObj).attr("src");
+            this.value = jQuery(xmlObj).attr("value");
             
             this.required = jQuery(xmlObj).attr("required");
             this.readonly = jQuery(xmlObj).attr("readonly");  
@@ -286,8 +326,14 @@
     
     $.dynamicplugin = {
         selected:null,
-        idIndex:0,
         elementArray:{},
+        formId:null,
+        resetGlobalVar: function(){
+            this.selected=null;
+            this.idIndex=0;
+            this.elementArray={};
+            this.formId = null;
+        },
         createElementFactory : function(options) {
             var type = options.type;
             var instanceObj = null;
@@ -330,19 +376,28 @@
             }
             return instanceObj;
         },
-        _toXml: function(form) {
+        _toXml: function() {
             var stringBuffer = '<?xml version="1.0" encoding="UTF-8"?>\n';
             stringBuffer += form.toXml();
             return stringBuffer;
         },
         saveXml: function(){
-            
+            var formName = "form1";
+            var dataXml = _toXml();
+            jQuery.ajax({
+                type: "POST",
+                url: "template/savexml.action",
+                cache: false,
+                data: ({file: formName,
+                        data :dataXml}),
+                dataType: "text",
+                complete : function(data, status) {
+                   alert("Save xml : " + bVal + "/" + status ) ;
+            }});
         },
         parseXml: function(surl){
             //reset all cache data.
-            this.selected=null;
-            this.idIndex=0;
-            this.elementArray={};
+            this.resetGlobalVar();
             var htmlBuffer = "";
             jQuery.ajax({
                 async:false,
@@ -356,6 +411,8 @@
                     
                     var form = jQuery(resp).find('tns\\:form');
                     var formId = form.attr("id");
+                    //initial form id for edition operation.
+                    pluginRef.formId = formId;
                     var options = new UiInputDialog(formId,"form");
                     options.parseFromXml(form);
                     pluginRef.elementArray[formId] = options;
@@ -368,7 +425,7 @@
                         options.parseFromXml(fieldSet);
                         pluginRef.elementArray[fieldId] = options;
                         var createFieldSet = pluginRef.createElementFactory(options);
-                        createForm.addFieldSets(createFieldSet);
+                        createForm.addElement(createFieldSet);
                         
                         //loop element per fieldset
                         
@@ -392,8 +449,7 @@
         },
         addNewElement:function(ui, dest){
             //global uuid that avoid to id conflict issue.
-            this.idIndex = $.uuid();
-            var _id = "el_" + this.idIndex;
+            var _id = $.uuid();
             var typeToAdd = ui.draggable.attr('id');  
             typeToAdd = !typeToAdd?"text":typeToAdd.toLowerCase();
             // fetching inputs data of dialog with object instance;
@@ -413,6 +469,23 @@
                 jQuery(this).dialog('open');
             });
         },
+        updateElement: function(_no){
+            var element = this.elementArray[_no];
+            if (element != null) {
+                element.saveElement();
+                var blockId = "#block_" + _no;
+                if (element.type != 'fieldset' && element.type != 'form') {
+                    var elementInstance = this.createElementFactory(element);
+                    var outputHtml = elementInstance.toHtml();
+                    jQuery(blockId).replaceWith(outputHtml);
+                }else{
+                    jQuery(blockId).width(element.width);
+                    jQuery(blockId).height(element.height);
+                }
+            } else {
+                alert("This element id " + _no + " is empty!");
+            }  
+        },
         deleteElement:function(){
             if (this.selected) {
                 var _no = jQuery(this.selected).attr('id');
@@ -425,12 +498,17 @@
                 }
             } 
         },
-        initForm:function(_no){
-            var form = this.elementArray[_no];
-            if (form == null) {
-                var options = new UiInputDialog(_no,"form");
-                this.elementArray[_no] = options;
-            }
+        createForm:function(options){
+            //global uuid that avoid to id conflict issue.
+            var _id = $.uuid();
+            //assign to global variable for form.
+            this.formId = _id;
+            var typeToAdd = !options.type?"text":options.type.toLowerCase();
+            var options = new UiInputDialog(_id,typeToAdd);
+            this.elementArray[_id] = options;
+            var elementInstance = this.createElementFactory(options);
+            var outputHtml = elementInstance.toHtml();
+            return outputHtml;
         }
     };
 

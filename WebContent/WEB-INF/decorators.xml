@@ -13,6 +13,5 @@
 		<pattern>/index.jsp</pattern>
 		<pattern>/dynamicform.jsp</pattern>
 		<pattern>/pages/*.jsp</pattern>
-        <pattern>/*.action</pattern>
 	</decorator>
 </decorators>  
