@@ -10,43 +10,37 @@
             <text id="String2" name="String2" label="String" value="String" size="0" maxlength="0"
                   required="false" readonly="true" regexp="String" helptext=""/>
         </element>
-        <element type="text">
-            <text id="String3" name="String3" label="String" value="String" size="0" maxlength="0"
-                  required="false" readonly="true" regexp="String" helptext=""/>
+        <element type="select">
+            <select id="Select" name="Select" label="Select" value="b" size="0" maxlength="0"
+                    required="false" readonly="false" listvalue="a=Yes, I do;b=No, I do not" helptext=""/>
         </element>
-        <element type="text">
-            <text id="String4" name="String4" label="String" value="String" size="0" maxlength="0"
-                  required="false" readonly="true" regexp="String" helptext=""/>
+        <element type="radio">
+            <radio id="radio" name="radio" label="radio" value="String" size="0" maxlength="0"
+                   required="true" readonly="false" listvalue="r1=radio1;r2=radio2;r3=radio3" helptext=""/>
         </element>
-        <element type="text">
-            <text id="String4123qadeqeqe" name="String4" label="asdadadad" value="String" size="0" maxlength="0"
-                  required="false" readonly="true" regexp="String" helptext=""/>
+        <element type="radio">
+            <radio id="radio2" name="radio" label="radio2" value="String" size="0" maxlength="0"
+                   required="true" readonly="false" listvalue="r1=radio1;r2=radio2;r3=radio3" helptext=""/>
         </element>
-        <!--element type="date">
-            <date id="String" name="String" label="String" value="String" size="0" maxlength="0"
+        <element type="checkbox">
+            <checkbox id="checkbox" name="checkbox" label="checkbox" value="String" size="0" maxlength="0"
+                      required="false" readonly="false" listvalue="c1=checkbox1;c2=checkbox2;c3=checkbox3" helptext=""/>
+        </element>
+        <element type="textarea">
+            <textarea id="textArea" name="textArea" label="textArea" value="textArea" size="0" maxlength="0"
+                      required="false" readonly="false" helptext=""/>
+        </element>
+        <element type="date">
+            <date id="date" name="date" label="date" value="date" size="0" maxlength="0"
                   required="true" readonly="true" format="String" helptext=""/>
         </element>
-		<element type="select">
-			<select id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="false" readonly="false" listvalue="String" helptext=""/>
-		</element>
-		<element type="textarea">
-			<textarea id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="false" readonly="false" helptext=""/>
-		</element>
+        <element type="button">
+            <button id="String" name="String" value="" size=""/>
+        </element>
+        <!--
 		<element type="image">
 			<image id="String" name="String" src="http://www.baidu.com/my.icon" helptext=""/>
 		</element>
-		<element type="radio">
-			<radio id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="true" readonly="false" listvalue="String" helptext=""/>
-		</element>
-		<element type="checkbox">
-			<checkbox id="String" name="String" label="String" value="String" size="0" maxlength="0"
-				required="false" readonly="false" listvalue="String" helptext=""/>
-		</element>
-		<element type="button">
-			<button id="String" name="String" value="" size=""/>
-		</element-->
+		-->
 	</fieldset>
 </tns:form>

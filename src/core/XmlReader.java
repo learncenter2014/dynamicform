@@ -1,5 +1,6 @@
 package core;
 
+import core.componentext.DFObjectFactory;
 import core.exception.XmlFileNotFoundException;
 import dynamicschema.Form;
 
@@ -28,6 +29,7 @@ public class XmlReader {
     if(xmlFile!=null && xmlFile.exists()) {
       JAXBContext context = JAXBContext.newInstance(Form.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
+      //unmarshaller.setProperty("com.sun.xml.bind.ObjectFactory",new DFObjectFactory());
       Form form = (Form)unmarshaller.unmarshal(xmlFile);
       return form;
     } else {
