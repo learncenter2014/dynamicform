@@ -12,6 +12,7 @@
 	<decorator name="main" page="/pages/decorators/main.jsp">
 		<pattern>/index.jsp</pattern>
 		<pattern>/dynamicform.jsp</pattern>
-		<pattern>/pages/*.jsp</pattern>
+        <pattern>/pages/*.jsp</pattern>
+        <pattern>/datainput/data*.action</pattern>
 	</decorator>
 </decorators>  
