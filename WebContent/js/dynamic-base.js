@@ -32,7 +32,6 @@ function initDrop() {
         helper : 'clone',
         opacity : '0.5',
         drop : function(event, ui) {
-            event.stopPropagation();
             jQuery.dynamicplugin.addNewElement(ui, this);
         }
     });

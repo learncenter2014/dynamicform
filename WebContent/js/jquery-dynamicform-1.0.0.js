@@ -33,11 +33,15 @@
         this.name = options.name;
         this.type = undefined;
         this.xmltemplate = "";
+        //sub-class could overwrite this function.
+        this.preInit = function(){};
         this.toXml = function() {
+            this.preInit();
             return $.substitute('<element type="${type}">'+this.xmltemplate+'</element>', this);
         },
         this.htmltemplate = "";
         this.toHtml = function(){
+            this.preInit();
             return $.substitute('<div id="block_${id}" class="connectedSortable"><label for="${id}">${label}</label>'+this.htmltemplate+'<img id="img_${id}" width="16" height="16" class="handle" alt="move" src="img/arrow.png"></div>', this);
         }
     };
@@ -195,8 +199,22 @@
         Input.call(this, options);
         this.constructor = Select;
         this.listvalue = options.listvalue;
+        this.suboptions = "";
+        this.preInit = function(){
+            this.suboptions = "";
+            if(this.listvalue){
+                var items = this.listvalue.split(";");
+                for(var i=0;i<items.length;i++){
+                    var labelValue = items[i].split("=");
+                    if(labelValue.length==2){
+                       var option = $.substitute("<option value=${value}>${label}</option>",{label:labelValue[0],value:labelValue[1]});
+                       this.suboptions +=option;
+                    }
+                }
+            }
+        };
         this.xmltemplate = '<select id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" listvalue="${listvalue}" helptext="${helptext}"/>';
-        this.htmltemplate = '<select id="${id}" name="${name}" value="${value}" class="form-control m-bot15"></select>';
+        this.htmltemplate = '<select id="${id}" name="${name}" value="${value}" class="form-control m-bot15">${suboptions}</select>';
     }
     Select.prototype = input;
 
