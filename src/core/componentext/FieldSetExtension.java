@@ -1,11 +1,11 @@
 package core.componentext;
 
-import dynamicschema.Form;
+import dynamicschema.FieldSet;
 
 /**
- * Created by wangronghua on 14-2-11.
+ * Created by wangronghua on 14-2-15.
  */
-public class FormExtension extends Form{
+public class FieldSetExtension extends FieldSet {
 
   public String getInnerHTML() {
     return innerHTML;
@@ -16,6 +16,5 @@ public class FormExtension extends Form{
   }
 
   private String innerHTML;
-
 
 }

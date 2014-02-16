@@ -78,12 +78,28 @@ public class ComponentEnhancer {
     return button;
   }
   public static Component wrap(FieldSet fieldSet) {
+    FieldSetExtension extension = new FieldSetExtension();
+    try {
+      BeanUtils.copyProperties(extension, fieldSet);
 
-    return fieldSet;
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return extension;
   }
   public static Component wrap(Form form) {
+    FormExtension extension = new FormExtension();
+    try {
+      BeanUtils.copyProperties(extension, form);
 
-    return form;
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return extension;
   }
 
   public static ComponentBase wrap(ComponentBase component) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="form11" name="form11" action="save.action" method="post" width="700" height="420">
+<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="form11" name="form11" action="/datainput/dataRecordInputSubmit.action" method="post" width="700" height="420">
     <fieldset id="String11" name="String11" label="分组域" width="700" height="400"
         legend="String">
         <element type="text">
@@ -27,7 +27,7 @@
         </element>
         <element type="checkbox">
             <checkbox id="String26" name="String44" label="单选框" value="String" size="10" maxlength="10"
-                required="false" readonly="false" listvalue="String" helptext=""/>
+                required="false" readonly="false" listvalue="String=abc;int=456" helptext=""/>
         </element>
         <element type="button">
             <button id="String27" name="String44" value="提交" size="10"/>

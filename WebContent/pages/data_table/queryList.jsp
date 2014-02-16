@@ -20,7 +20,9 @@
     <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
     <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
     <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
-
+    <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/css/TableTools.css" rel="stylesheet" />
+    
+    
 
 
     <!-- Custom styles for this template -->
@@ -45,26 +47,12 @@
            </header>
            <div class="panel-body">
                  <div class="adv-table">
-                     <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
-                         <thead>
-                         <tr>
-                                <th>ID</th>
-								<th>USERNAME</th>
-								<th>AGE</th>
-								<th>ADDRESS</th>
-                         </tr>
-                      </thead>
+                     <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="example">
+                       
                       <tbody>
                           <tr><td colspan="4" class="dataTables_empty">Loading data from server</td></tr>
                       </tbody>
-                         <tfoot>
-							<tr>
-								<th>ID</th>
-								<th>USERNAME</th>
-								<th>AGE</th>
-								<th>ADDRESS</th>
-							</tr>
-						</tfoot>
+                          
                      </table>
                 </div>
           </div>
@@ -82,10 +70,11 @@
     <script src="<%=request.getContextPath()%>/jslib/flatlab/js/respond.min.js" ></script>
     <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/media/js/jquery.dataTables.js" type="text/javascript" language="javascript" ></script>
     <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/data-tables/DT_bootstrap.js" type="text/javascript" ></script>
-
     <!--common script for all pages-->
     <script src="<%=request.getContextPath()%>/jslib/flatlab/js/common-scripts.js"></script>
 
+<script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/ZeroClipboard.js" type="text/javascript" charset="utf-8" ></script>
+<script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/TableTools.js" type="text/javascript" charset="utf-8" ></script>
     <script type="text/javascript">
       /* Formating function for row details */
       function fnFormatDetails ( oTable, nTr )
@@ -110,18 +99,18 @@
           nCloneTd.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png">';
           nCloneTd.className = "center";
 
-          $('#hidden-table-info thead tr').each( function () {
+          $('#example thead tr').each( function () {
               this.insertBefore( nCloneTh, this.childNodes[0] );
           } );
 
-          $('#hidden-table-info tbody tr').each( function () {
+          $('#example tbody tr').each( function () {
               this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
           } );
           
           /*
            * Initialse DataTables, with no sorting on the 'details' column
            */
-          var oTable = $('#hidden-table-info').dataTable( {
+          var oTable = $('#example').dataTable( {
               "aoColumnDefs": [
                   { "bSortable": false, "aTargets": [ 0 ] }
               ],
@@ -132,7 +121,7 @@
            * Note that the indicator for showing which row is open is not controlled by DataTables,
            * rather it is done here
            */
-          $('#hidden-table-info tbody td img').live('click', function () {
+          $('#example tbody td img').live('click', function () {
               var nTr = $(this).parents('tr')[0];
               if ( oTable.fnIsOpen(nTr) )
               {
@@ -148,24 +137,108 @@
               }
           } );
      --%>
+     var tableUrl = "<%=request.getContextPath()%>/datatable/initTable.action";
+     var param = {};
+     $.getJSON( tableUrl, param, function (initParam) { 
      
-     /*
-      * Initialse DataTables, with no sorting on the 'details' column
-      */
-     var oTable = $('#hidden-table-info').dataTable( {
-         "bProcessing": true,
- 		 "bServerSide": true,
- 		 "iDisplayLength":10,
- 		 "sAjaxSource": "<%=request.getContextPath()%>/datatable/queryList.action",
-         "aaSorting": [[1, 'asc']],
-         "aoColumns": [
-              { "mData": "id", "sTitle":"ID" },
-              { "mData": "username", "sTitle":"USERNAME"  },
-              { "mData": "age", "sTitle":"AGE"  },
-              { "mData": "address", "sTitle":"ADDRESS"  }
-          ]
-     });
+	     /*
+	      * Initialse DataTables, with no sorting on the 'details' column
+	      */
+	     var oTable = $('#example').dataTable( {
+	         "bProcessing": initParam.bProcessing,
+	 		 "bServerSide": initParam.bServerSide,
+	 		 "iDisplayLength":initParam.iDisplayLength,
+	 		 "aLengthMenu": initParam.aLengthMenu,
+	 		 "aoColumns": initParam.aoColumns,
+	 		 "sAjaxSource": initParam.sAjaxSource,
+	 		 
+	 		"fnDrawCallback": function ( oSettings ) {
+	            var that = this;
+	 
+	            /* Need to redo the counters if filtered or sorted */
+	            if ( oSettings.bSorted || oSettings.bFiltered )
+	            {
+	                this.$('td:first-child', {"filter":"applied"}).each( function (i) {
+	                    that.fnUpdate( i+3, this.parentNode, 0, false, false );
+	                } );
+	            }
+	        }, 
+	        
+	        
+	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+	             /* //======= method one===========
+	             // Add some extra data to the sender 
+	 			aoData.push( { "name": "more_data", "value": "my_value" } );
+	 			$.getJSON( sSource, aoData, function (json) { 
+	 				// Do whatever additional processing you want on the callback, then tell DataTables
+	 				fnCallback(json)
+	 			} );
+	 			 //======= method one END=========== */
+	 			     
+	 			//========method two==================   
+	 			 oSettings.jqXHR = $.ajax( {
+	                 "dataType": 'json',
+	                 "type": "POST",
+	                 "url": sSource,
+	                 "data": aoData,
+	                 "success": function(result,status,response){
+	                    // Do whatever additional processing you want on the callback, then tell DataTables
+	                    /*
+	                    var headerList = initParam.aoColumns;
+	                     if(headerList == null || headerList == 'undefined'|| headerList.length == 0){
+	                         return;
+	                     }
+	                     
+	                     var hasFilter = false;
+	                     for(var i = 0; i < headerList.length; i++){
+	                         var header = headerList[i];
+	                         if(header.bSearchable){
+	                             hasFilter = true;
+	                             break;
+	                         }
+	                     }
+	                  */
+	                     fnCallback(result);
+	                     /*
+	                     var nCloneTr = document.createElement( 'tr' );
+	                     var nCloneTd = document.createElement( 'td' );
+	                     nCloneTd.className = "center";
+	
+	                     $('#example thead').each( function (i) {
+	                         this.insertBefore( nCloneTr, this.childNodes[0] );
+	                     } );
+	
+	                     $('#example thead tr').each( function (i) {
+	                         for(var i = 0; i < headerList.length; i++){
+	                             var header = headerList[i];
+	                             if(header.bSearchable){
+	                                  
+	                             }
+	                             this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+	                         }
+	                         return false;
+	                     } );
+	                     */
+	                 }
+	               } );
+	 			//========method two END==================   
+	          }
+	        });
+ 	} );
+     /* Add/remove class to a row when clicked on */
+     $('#example tr').live('click', function() {
+         $(this).toggleClass('row_selected');
+     } );
       } );
+      
+      /*
+       * I don't actually use this here, but it is provided as it might be useful and demonstrates
+       * getting the TR nodes from DataTables
+       */
+      function fnGetSelected( oTableLocal )
+      {
+          return oTableLocal.$('tr.row_selected');
+      }
   </script>
 
 

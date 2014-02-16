@@ -4,7 +4,7 @@
 package bl.common;
 
 import vo.DataQueryVo;
-import vo.DataTableVo;
+import vo.table.TableDataVo;
 
 /**
  * @author gudong
@@ -18,8 +18,8 @@ public class BaseBusiness<F extends BeanContext, L extends BeanContext> implemen
    * @param limt
    * @return
    */
-  public DataTableVo query(DataQueryVo query) {
-    DataTableVo dataTable = new DataTableVo();
+  public TableDataVo query(DataQueryVo query) {
+    TableDataVo dataTable = new TableDataVo();
     dataTable.setsEcho(query.getSEcho());
     return dataTable;
   }

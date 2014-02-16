@@ -1,5 +1,9 @@
 package actions;
 
+import bl.constants.BusTieConstant;
+import bl.instancepool.SingleBusinessPoolManager;
+import bl.mongobus.DataBusiness;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import core.TemplateGenerator;
 import core.TemplateHelper;
@@ -8,6 +12,7 @@ import org.apache.struts2.ServletActionContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wangronghua on 14-2-9.
@@ -35,6 +40,9 @@ public class DataPageInputAction extends ActionSupport {
   }
 
   public String save() {
+    String templateId = "dynamicform";
+    DataBusiness dataBusiness = (DataBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DATABUSINESS);
+    Map<String, Object> paraMap = ActionContext.getContext().getParameters();
     // todo save user data to database
     return SUCCESS;
   }
