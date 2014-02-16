@@ -67,10 +67,12 @@
 	</package>
 	
 	<package name="datatable" namespace="/datatable" extends="default">
-        <action name="index" class="actions.DataTableAction" method="index">
+        <action name="index" class="actions.BaseTableAction" method="index">
            <result name="success">/pages/data_table/queryList.jsp</result>
 		</action>
-		<action name="queryList" class="actions.DataTableAction" method="queryList">
+		<action name="initTable" class="actions.BaseTableAction" method="initTable">
+		</action>
+		<action name="queryTableList" class="actions.BaseTableAction" method="queryTableList">
 		</action>
 	</package>
 </struts>

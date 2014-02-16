@@ -1,19 +1,20 @@
 /**
  * 
  */
-package vo;
+package vo.table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The table
+ * Table, Map <b>dataTable</b>
  * 
  * @author gudong
- * 
+ * @since $Date:2014-02-08$
  */
-public class DataTableVo implements Serializable {
+public class TableDataVo implements Serializable {
+  private static final long serialVersionUID = -8763407087905944532L;
 
   private int sEcho;
   private int iTotalRecords;
@@ -51,4 +52,5 @@ public class DataTableVo implements Serializable {
   public void setAaData(List aaData) {
     this.aaData = aaData;
   }
+
 }
