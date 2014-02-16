@@ -1,2 +1,2 @@
 
-<button type="button" class="btn btn-info">${name!}</button>
+<button type="submit" class="btn btn-info">${name!}</button>

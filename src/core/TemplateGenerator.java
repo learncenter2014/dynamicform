@@ -1,5 +1,7 @@
 package core;
 
+import core.componentext.FieldSetExtension;
+import core.componentext.FormExtension;
 import core.exception.XmlFileNotFoundException;
 import dynamicschema.Component;
 import dynamicschema.DynamicType;
@@ -40,22 +42,23 @@ public class TemplateGenerator {
   }
 
   String genTemplate(Form form) {
+    ComponentEnhancer enhancer = new ComponentEnhancer();
+    FormExtension formExt = (FormExtension)(form.enhance(enhancer));
     List<FieldSet> fieldSets = form.getFieldset();
-    Map param = new HashMap();
-    param.put("form", form);
-    param.put("innerHTML", genTemplate(fieldSets.toArray(new FieldSet[0])));
-    return TemplateHelper.getTemplate("form", param);
+    formExt.setInnerHTML(genTemplate(fieldSets.toArray(new FieldSet[0])));
+    return TemplateHelper.getTemplate("form", formExt);
   }
 
   String genTemplate(FieldSet[] fieldSets) {
+    ComponentEnhancer enhancer = new ComponentEnhancer();
     StringBuilder result = new StringBuilder();
     for(FieldSet fieldSet: fieldSets) {
       List<DynamicType> dynamicTypes = fieldSet.getElement();
       String dtString = genTemplate(dynamicTypes.toArray(new DynamicType[0]));
-      Map paraMap = new HashMap();
-      paraMap.put("fieldset", fieldSet);
-      paraMap.put("innerHTML", dtString);
-      result.append(TemplateHelper.getTemplate("fieldset", paraMap));
+
+      FieldSetExtension fieldSetExtension = (FieldSetExtension)fieldSet.enhance(enhancer);
+      fieldSetExtension.setInnerHTML(dtString);
+      result.append(TemplateHelper.getTemplate("fieldset", fieldSetExtension));
     }
     return result.toString();
   }
@@ -83,19 +86,4 @@ public class TemplateGenerator {
     return result.toString();
   }
 
-  public static void main(String[] args) {
-//    TemplateGenerator g = new TemplateGenerator();
-//    g.genTemplate("/Users/wangronghua/workspace/DynamicForm/testresources/dynamicform.xml", "dynamicform.ftl");
-      A a = new A();
-      a.set(new HashMap());
-  }
-
-}
-class A {
-  public void set(Map map) {
-    System.out.println("map");
-  }
-  public void set(HashMap map) {
-    System.out.println("hashmap");
-  }
 }
