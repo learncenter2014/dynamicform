@@ -7,10 +7,7 @@ import dynamicschema.FieldSet;
 import dynamicschema.Form;
 
 import javax.xml.bind.JAXBException;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -26,7 +23,7 @@ public class TemplateGenerator {
     File template = new File(Constants.TEMPLATE_PATH_TEMP + "/" + templateId);
     Writer templateWriter = null;
     try {
-      templateWriter = new FileWriter(template);
+      templateWriter = new OutputStreamWriter(new FileOutputStream(template), "UTF-8");
       XmlReader reader = new XmlReader(xmlFilePath);
       Form form = reader.readForm();
       templateWriter.write(this.genTemplate(form));
