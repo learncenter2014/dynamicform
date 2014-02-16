@@ -18,35 +18,31 @@
 </head>
 <body>
   <!-- begin: main content area #main -->
- <div style="position:relative;">
-  <div id="formBuilderMenu" style="float: left; margin-right: 15px; width: 180px;">
+ <div class="template" style="position:relative;">
+  <div id="formBuilderMenu">
     <ul id="rbMenu" class="rb_menu">
-      <li id="Label"><img src="img/new_label.png"> Label</li>
-      <li id="Image"><img src="img/new_image.png"> Image</li>
-      <li id="Text"><img src="img/new_text.png"> Input Text</li>
-      <li id="Password"><img src="img/new_password.png"> Password</li>
-      <li id="TextArea"><img src="img/new_textarea.png"> TextArea</li>
-      <li id="Radio"><img src="img/new_radio.png"> Radio Button</li>
-      <li id="Checkbox"><img src="img/new_checkbox.png"> Checkbox</li>
-      <li id="Select"><img src="img/new_select.png"> Select</li>
-      <li id="Date"><img src="img/new_date_picker.png"> DatePicker</li>
-      <li id="Button"><img src="img/new_button.png"> Button</li>
-    </ul>
-    <ul id="rbMenu2" class="rb_menu" style="margin-top:5px">
-      <li id="ElementEdit"><img src="img/property.png"> Edit</li>
-      <li id="ElementDelete"><img src="img/delete.png"> Delete</li>
+      <li id="Label"><img src="img/new_label.png"> 标签</li>
+      <li id="Image"><img src="img/new_image.png"> 图片</li>
+      <li id="Text"><img src="img/new_text.png"> 输入框</li>
+      <li id="Password"><img src="img/new_password.png"> 密码框</li>
+      <li id="TextArea"><img src="img/new_textarea.png"> 文本框</li>
+      <li id="Radio"><img src="img/new_radio.png"> 按钮</li>
+      <li id="Checkbox"><img src="img/new_checkbox.png"> 单复选框</li>
+      <li id="Select"><img src="img/new_select.png"> 下拉框</li>
+      <li id="Date"><img src="img/new_date_picker.png"> 日历</li>
+      <li id="Button"><img src="img/new_button.png"> 提交</li>
     </ul>
     <ul id="rbMenu3" class="rb_menu" style="margin-top:5px">
-      <li id="FieldSet"><img src="img/property.png"> FieldSet</li>
-      <li id="formCreate"><img src="img/property.png"> Create Form</li>
-      <li id="formEdit"><img src="img/property.png"> Edit Form</li>
-      <li id="loadXml"><img src="img/load_xml.png"> Load</li>
-      <li id="saveXml"><img src="img/save_xml.png"> Save</li>
+      <li id="FieldSet"><img src="img/property.png"> 分组域</li>
+      <li id="formCreate"><img src="img/property.png"> 创建表单模版</li>
+      <li id="loadXml"><img src="img/load_xml.png"> 打开</li>
+      <li id="saveXml"><img src="img/save_xml.png"> 保存</li>
     </ul>
   </div>
-  <div id="maindynamicform" style="position:absolute;left:0px;top:10px;width:80%;height:80%"></div>
-  <div id="dialog_elt" title="Input zone definition"></div>
-  <div id="dialog_file" title="Load a form"></div>
+  <h4 style="text-align:center;position:absolute;left:0px;top:0px;width:100%">动态表单模版工作区</h4>
+  <div id="maindynamicform" style="position:absolute;left:0px;top:50px;width:80%;height:80%"></div>
+  <div id="dialog_elt" title="参数设置区"></div>
+  <div id="dialog_file" title="系统模版列表区"></div>
   </div>
   <script type="text/javascript">
             jQuery(document).ready(function() {
@@ -87,12 +83,11 @@
                             if (bValid) {
                                 saveInputPanel(_no);
                                 initDrop();
-                                enableRowSelectable(".handle");
                                 jQuery(this).dialog('close');
                             }
                         },
                         Cancel : function() {
-                            enableRowSelectable(".handle");
+                            initDrop();
                             jQuery(this).dialog('close');
                         }
                     },
@@ -100,12 +95,6 @@
                     }
                 });
 
-                jQuery('#ElementEdit').click(function() {
-                    showControlPanel();
-                });
-                jQuery('#ElementDelete').click(function() {
-                    deleteControlPanel();
-                });
                 jQuery('#formCreate').click(function() {
                     createForm();
                 });

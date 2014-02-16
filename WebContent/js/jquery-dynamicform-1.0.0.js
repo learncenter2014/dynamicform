@@ -33,17 +33,20 @@
         this.name = options.name;
         this.type = undefined;
         this.xmltemplate = "";
+        this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span>&nbsp;<span class="fa fa-arrows-alt" style="cursor:move">移动</span></div>';
         //sub-class could overwrite this function.
-        this.preInit = function(){};
+        this.preInit = function(){
+            
+        };
         this.toXml = function() {
             this.preInit();
             return $.substitute('<element type="${type}">'+this.xmltemplate+'</element>', this);
-        },
+        };
         this.htmltemplate = "";
         this.toHtml = function(){
             this.preInit();
-            return $.substitute('<div id="block_${id}" class="connectedSortable"><label for="${id}">${label}</label>'+this.htmltemplate+'<img id="img_${id}" width="16" height="16" class="handle" alt="move" src="img/arrow.png"></div>', this);
-        }
+            return $.substitute('<div id="block_${id}" class="connectedSortable"><label for="${id}">${label}</label>'+this.htmltemplate+'${operation}</div>', this);
+        };
     };
     
     var component = new Component({});
@@ -73,7 +76,7 @@
         this.addElement = function(obj) {
             this.elements.push(obj);
         };
-        this.xmltemplate = '<fieldset id="${id}" name="${id}" width="${width}" height="${height}" legend="${label}">${subElementsXml}\n</fieldset>';
+        this.xmltemplate = '<fieldset id="${id}" name="${id}" legend="${label}">${subElementsXml}\n</fieldset>';
         this.toXml = function() {
             this.subElementsXml = "";
             for ( var i = 0; i < this.elements.length; i++) {
@@ -81,14 +84,14 @@
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" style="width:${width}px;height:${height}px" class="connectedSortable"><legend><img id="img_${id}" width="16" height="16" class="handle" alt="move" src="img/arrow.png">${label}</legend>${subElementsHtml}\n</fieldset>';
+        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" class="connectedSortable"><legend id="legend_${id}">${label}</legend>${operation}${subElementsHtml}\n</fieldset>';
         this.toHtml = function(){
             this.subElementsHtml = "";
             for ( var i = 0; i < this.elements.length; i++) {
                 this.subElementsHtml += "\n" + this.elements[i].toHtml();
             }
             return $.substitute(this.htmltemplate, this);
-        }
+        };
     };
     
     FieldSet.prototype = component;
@@ -99,7 +102,8 @@
         this.constructor = Form;
         this.width = options.width;
         this.height = options.height;
-        this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" width="${width}" height="${height}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
+        this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span></div>';
+        this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
         this.elements = [];
         this.addElement = function(obj) {
             this.elements.push(obj);
@@ -111,14 +115,14 @@
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<form id="block_${id}" name="${name}" style="width:${width}px;height:${height}px;" class="connectedSortable">${subElementsHtml}\n</form>';
+        this.htmltemplate = '<form id="block_${id}" name="${name}" class="connectedSortable">${operation}${subElementsHtml}\n</form>';
         this.toHtml = function(){
             this.subElementsHtml = "";
             for ( var i = 0; i < this.elements.length; i++) {
                 this.subElementsHtml += "\n" + this.elements[i].toHtml();
             }
             return $.substitute(this.htmltemplate, this);
-        }
+        };
     }
     Form.prototype = component;
     
@@ -190,7 +194,7 @@
         Input.call(this, options);
         this.constructor = TextArea;
         this.xmltemplate = '<textarea id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" helptext="${helptext}"/>';
-        this.htmltemplate = '<textarea type="checkbox" id="${id}" name="${name}" value="${value}" rows="${size}" cols="${maxlength}"></textarea>';
+        this.htmltemplate = '<textarea id="${id}" name="${name}" value="${value}" rows="${size}" cols="${maxlength}"></textarea>';
     }
     TextArea.prototype = input;
 
@@ -240,11 +244,11 @@
         this.type = _type;
         this.name = "";
         this.label = "";
-        this.size = 10;
+        this.size = 5;
         this.mask = "";
         this.freemask = "";
         this.regexp = "";
-        this.maxlength = 10;
+        this.maxlength = 30;
         this.accesskey = "";
         this.listvalue = "";
         this.helptext = "Please input promoted info";
@@ -325,7 +329,6 @@
     };
     
     $.dynamicplugin = {
-        selected:null,
         elementArray:{},
         formId:null,
         resetGlobalVar: function(){
@@ -478,27 +481,25 @@
                     var elementInstance = this.createElementFactory(element);
                     var outputHtml = elementInstance.toHtml();
                     jQuery(blockId).replaceWith(outputHtml);
-                }else{
-                    jQuery(blockId).width(element.width);
-                    jQuery(blockId).height(element.height);
+                }else if(element.type == 'fieldset'){
+                    jQuery("#legend_"+_no).text(element.label);
                 }
             } else {
                 alert("This element id " + _no + " is empty!");
             }  
         },
-        deleteElement:function(){
-            if (this.selected) {
-                var _no = jQuery(this.selected).attr('id');
-
+        deleteElement:function(id){
+                var _no = id;
                 if (!!_no) {
                     //remove cache data from memory.
-                    delete this.elementArray[_no.substring("img_".length)];
+                    delete this.elementArray[_no];
                     //remove DOM node from DOM tree of Form.
-                    jQuery("#block_"+_no.substring("img_".length)).remove();
+                    jQuery("#block_"+_no).remove();
                 }
-            } 
         },
         createForm:function(options){
+            //reset all cache data.
+            this.resetGlobalVar();
             //global uuid that avoid to id conflict issue.
             var _id = $.uuid();
             //assign to global variable for form.

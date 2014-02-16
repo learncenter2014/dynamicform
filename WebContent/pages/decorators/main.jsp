@@ -21,7 +21,11 @@
     <link href="jslib/flatlab/css/style.css" rel="stylesheet">
     <link href="jslib/flatlab/css/style-responsive.css" rel="stylesheet" />
     <link href="jslib/jquery-ui-1.10.4.custom/css/start/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
-
+    <style type="text/css">
+		.ui-dialog {
+			z-index: 2000;
+		}
+    </style>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
       <script src="jslib/flatlab/js/html5shiv.js"></script>

@@ -1,71 +1,69 @@
-.rb_menu {
-  background-color: transparent;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-  margin-right: 0px;
-  padding-bottom: 0px;
-  padding-top: 0px;
+.template .rb_menu {
   padding-right: 1px;
   padding-left: 1px;
-  width: 150px;
+  width: 120px;
 }
 
-.rb_menu li {
+.template .rb_menu li {
   padding-bottom: 3px;
   padding-top: 3px;
   vertical-align: middle;
   list-style: none;
 }
 
-.rb_menu li:hover {
+.template .rb_menu li:hover {
   background-color: #2020AF;
   color: #F0FF00;
 }
 
-.rb_menu img {
+.template .rb_menu img {
   vertical-align: middle;
 }
 
-.connectedSortable {
-  float: left;
-  margin-left: 2px;
-  margin-top: 2px;
-  margin-right: 2px;
-}
-
-#maindynamicform {
+.template #maindynamicform {
   margin-left: 120px;
   height: 500px;
 }
 
-#maindynamicform fieldset {
-  border: 1px solid blue;
-}
-
-#maindynamicform form {
-  border: 1px solid red;
-}
-
-.form-control {
+.template .form-control {
   display: inline;
   width: 200px;
 }
+.template form.connectedSortable{
+	width:800px;
+	min-height:200px; 
+	border: 1px solid red;
+	position:relative;
+}
 
-fieldset {
+.template fieldset.connectedSortable {
   display: block;
-  border: 1px dotted #fff;
-  padding: 5px 5px 5px 10px;
-  font-family: verdana, sans-serif;
-  margin-bottom: 0.5em;
-  line-height: 1.5em;
-  font-size: 1em;
+  border: 1px dashed blue;
+  width:600px;
+  min-height:200px;
+  margin:10px;
+  position:relative;
 }
 
-.ui-front {
-  z-index: 2000;
+.template div.connectedSortable {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  position:relative;
 }
 
-.selected {
-  border-right: 3px solid red;
+.template .operation{
+	position:absolute;
+	top:10px;
+	right:0px
+}
+
+.template div.connectedSortable > label{
+  width:150px;
+}
+
+.template .operation>span.fa:hover {
+  background-color: #2020AF;
+  color: #F0FF00;
 }

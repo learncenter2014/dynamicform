@@ -1,14 +1,19 @@
-function deleteControlPanel() {
-    jQuery.dynamicplugin.deleteElement();
+function deleteControlPanel(id) {
+    jQuery.dynamicplugin.deleteElement(id);
 }
 
 function initDrop() {
+    jQuery("form.connectedSortable")
+    .sortable({
+            connectWith: 'form.connectedSortable',
+            items: 'fieldset.connectedSortable'
+     });
+    
     jQuery("fieldset.connectedSortable")
     .sortable({
-            connectWith: '.connectedSortable',
+            connectWith: 'fieldset.connectedSortable',
             items: 'div.connectedSortable'
-     })
-    .disableSelection();
+     });
     
     jQuery('ul#rbMenu li,#FieldSet').draggable({
         cursor : 'move',
@@ -36,20 +41,13 @@ function initDrop() {
         }
     });
     
-    jQuery("form.connectedSortable,fieldset.connectedSortable").resizable({
-        stop : function(event, ui) {
-            var id = jQuery(this).attr("id");
-            var fieldsetObj = jQuery.dynamicplugin.elementArray[id.substring("block_".length)];
-            if (fieldsetObj) {
-                if ( ui.size.width  != ui.originalSize.width)  {
-                    fieldsetObj.width  = (ui.size.width);
-                }
-                if ( ui.size.height  != ui.originalSize.height)  {
-                    fieldsetObj.height = (ui.size.height);
-                }
-            }
-        }
+    jQuery('.operation>.fa.fa-edit').click(function() {
+        showControlPanel(jQuery(this).parent().attr("id").substring("operation_".length));
     });
+    jQuery('.operation>.fa.fa-cut').click(function() {
+        deleteControlPanel(jQuery(this).parent().attr("id").substring("operation_".length));
+    });
+    
 }
 
 /**
@@ -60,10 +58,6 @@ function saveInputPanel(_no) {
 }
 
 function showControlPanel(_no) {
-    if (!_no || _no.length < 1) {
-        _no = jQuery(jQuery.dynamicplugin.selected).attr('id');
-        _no = _no.substring("img_".length);
-    }
     var typeToAdd = "";
     if (jQuery.dynamicplugin.elementArray[_no] != null) {
         typeToAdd = jQuery.dynamicplugin.elementArray[_no].type;
@@ -89,17 +83,6 @@ function showControlPanel(_no) {
             });
 }
 
-function enableRowSelectable(id) {
-    jQuery(id).click(function() {
-        if (jQuery.dynamicplugin.selected) {
-            jQuery(jQuery.dynamicplugin.selected).removeClass("selected");
-        }
-        jQuery(this).addClass("selected");
-        jQuery.dynamicplugin.selected = this;
-    });
-
-}
-
 function escapeH(ss) {
     var str = ss;
     var findReplace = [ [ /&/g, "&amp;" ], [ /</g, "&lt;" ], [ />/g, "&gt;" ],
@@ -116,7 +99,6 @@ function load_xml( surl ) {
     var htmlContent = jQuery.dynamicplugin.parseXml(surl);
     jQuery("#maindynamicform").html(htmlContent);
     initDrop();
-    enableRowSelectable(".handle");
 }
 
 /**
@@ -140,8 +122,8 @@ function showFilePanel( ) {
 function createForm(){
     var htmlContent = jQuery.dynamicplugin.createForm({type:'form'});
     jQuery("#maindynamicform").html(htmlContent);
+    showControlPanel(jQuery.dynamicplugin.formId);
     initDrop();
-    enableRowSelectable(".handle");
 }
 
 function editForm(){
