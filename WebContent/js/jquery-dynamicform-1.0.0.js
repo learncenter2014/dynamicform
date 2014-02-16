@@ -31,20 +31,19 @@
     function Component(options) {
         this.id = options.id;
         this.name = options.name;
-        this.type = undefined;
+        this.type = options.type;
         this.xmltemplate = "";
         this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span>&nbsp;<span class="fa fa-arrows-alt" style="cursor:move">移动</span></div>';
         //sub-class could overwrite this function.
-        this.preInit = function(){
+        this.preInitHtml = function(){
             
         };
         this.toXml = function() {
-            this.preInit();
             return $.substitute('<element type="${type}">'+this.xmltemplate+'</element>', this);
         };
         this.htmltemplate = "";
         this.toHtml = function(){
-            this.preInit();
+            this.preInitHtml();
             return $.substitute('<div id="block_${id}" class="connectedSortable"><label for="${id}">${label}</label>'+this.htmltemplate+'${operation}</div>', this);
         };
     };
@@ -61,6 +60,33 @@
         this.required = options.required;
         this.readonly = options.readonly;
         this.helptext = options.helptext;
+        this.preInitHtml = function(){
+            if(this.listvalue && this.listvalue.length>0){
+                var items = this.listvalue.split(";");
+                var templateString = "";
+                if(this.type=="checkbox"){
+                    templateString = '<label><input type="checkbox" id="${id}" name="${name}" value="${value}">${label}</label>';
+                }else if(this.type=="radio"){
+                    templateString = '<label><input type="radio" id="${id}" name="${name}" value="${value}">${label}</label>';  
+                }else if(this.type=="select"){
+                    templateString = '<option value="${value}">${label}</option>';
+                }
+                var stringBuffer = "";
+                for(var i=0;i<items.length;i++){
+                    var labelValue = items[i].split("=");
+                    if(labelValue.length==2){
+                       var name = this.name;
+                       var option = $.substitute(templateString,{name:name, id:$.uuid(), label:labelValue[0],value:labelValue[1]});
+                       stringBuffer +=option;
+                    }
+                }
+                if(this.type=="select"){
+                    this.suboptions = stringBuffer;
+                }else{
+                    this.htmltemplate = stringBuffer;
+                }
+            }
+        };
     };
     
     Input.protottype = component;
@@ -203,20 +229,6 @@
         Input.call(this, options);
         this.constructor = Select;
         this.listvalue = options.listvalue;
-        this.suboptions = "";
-        this.preInit = function(){
-            this.suboptions = "";
-            if(this.listvalue){
-                var items = this.listvalue.split(";");
-                for(var i=0;i<items.length;i++){
-                    var labelValue = items[i].split("=");
-                    if(labelValue.length==2){
-                       var option = $.substitute("<option value=${value}>${label}</option>",{label:labelValue[0],value:labelValue[1]});
-                       this.suboptions +=option;
-                    }
-                }
-            }
-        };
         this.xmltemplate = '<select id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" listvalue="${listvalue}" helptext="${helptext}"/>';
         this.htmltemplate = '<select id="${id}" name="${name}" value="${value}" class="form-control m-bot15">${suboptions}</select>';
     }
