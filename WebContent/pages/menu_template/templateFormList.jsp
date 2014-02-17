@@ -8,7 +8,7 @@
         <td><label for="x_file">Template Form Lists</label></td>
         <td><select name="x_file" id="x_file">
             <s:iterator value="fileList" var="sup">
-              <option value="${sup}">${sup}</option>
+              <option value="${sup[1]}">${sup[0]}</option>
             </s:iterator>
         </select></td>
       </tr>

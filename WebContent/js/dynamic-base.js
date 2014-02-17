@@ -83,20 +83,8 @@ function showControlPanel(_no) {
             });
 }
 
-function escapeH(ss) {
-    var str = ss;
-    var findReplace = [ [ /&/g, "&amp;" ], [ /</g, "&lt;" ], [ />/g, "&gt;" ],
-            [ /"/g, "&quot;" ] ]
-
-    for (item in findReplace)
-        str = str.replace(item[0], item[1]);
-
-    return str;
-}
-
-
-function load_xml( surl ) { 
-    var htmlContent = jQuery.dynamicplugin.parseXml(surl);
+function load_xml( options ) { 
+    var htmlContent = jQuery.dynamicplugin.parseXml(options);
     jQuery("#maindynamicform").html(htmlContent);
     initDrop();
 }

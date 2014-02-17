@@ -1,13 +1,13 @@
 package bl.mongobus;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
+
+import org.bson.types.ObjectId;
 
 import bl.common.BeanContext;
 import bl.common.BusinessInterface;
 import bl.common.BusinessResult;
 import bl.common.MongoBeanContext;
-import bl.constants.BusTieConstant;
 import bl.exceptions.MiServerException;
 
 import com.mongodb.BasicDBObject;
@@ -23,7 +23,8 @@ import dao.MongoDBConnectionFactory;
 
 public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanContext> {
     private static Logger LOG = LoggerFactory.getLogger(MongoCommonBusiness.class);
-    protected String dbName = null;
+    // currently, we use a single database for all data.
+    protected String dbName = "form";
     protected String collectionName = null;
 
     private DBCollection getConection() {
@@ -34,7 +35,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
 
     @Override
     public BeanContext constructLeafBean() {
-        MongoBeanContext mbc = new MongoBeanContext(new BasicDBObject(BusTieConstant.COLLECTIONRECORDID, SequenceUidGenerator.getNewUid(this.dbName)));
+        MongoBeanContext mbc = new MongoBeanContext();
         return mbc;
     }
 
@@ -45,42 +46,30 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
             MongoBeanContext castLeafBean = (MongoBeanContext) genLeafBean;
             WriteResult wr = getConection().save(castLeafBean.getDbOjbect());
             if (wr.getError() != null) {
-                throw new MiServerException.General("error.mongodb.writedata",wr.getError());
+                throw new MiServerException.General("error.mongodb.writedata", wr.getError());
             }
         }
         return br;
     }
 
     @Override
-    public BusinessResult getLeaf(String leafUidStr) {
-        long uid = convertString2Long(leafUidStr);
-        return this.getLeaf(uid);
-
-    }
-
-    @Override
-    public BusinessResult getLeaf(long leafUidLong) {
-        DBObject dob = getConection().findOne(new BasicDBObject(BusTieConstant.COLLECTIONRECORDID, leafUidLong));
-        MongoBeanContext genLeafBean = new MongoBeanContext(dob);
+    public BusinessResult getLeaf(String objectId) {
+        DBCollection dc = getConection();
+        DBObject dob = dc.findOne(new BasicDBObject("_id", new ObjectId(objectId)));
         BusinessResult br = new BusinessResult();
-        br.setResponseData(genLeafBean);
+        MongoBeanContext createBean = new MongoBeanContext(dob);
+        br.setResponseData(createBean);
         return br;
     }
 
     @Override
-    public BusinessResult deleteLeaf(String leafUidStr) {
-        long uid = convertString2Long(leafUidStr);
-        return this.deleteLeaf(uid);
-    }
-
-    @Override
-    public BusinessResult deleteLeaf(long leafUidLong) {
+    public BusinessResult deleteLeaf(String objectId) {
         DBCollection dc = getConection();
-        DBObject dob = dc.findOne(new BasicDBObject(BusTieConstant.COLLECTIONRECORDID, leafUidLong));
+        DBObject dob = dc.findOne(new BasicDBObject("_id", new ObjectId(objectId)));
         WriteResult wr = dc.remove(dob);
         BusinessResult br = new BusinessResult();
         if (wr.getError() != null) {
-            throw new MiServerException.General("error.mongodb.writedata",wr.getError());
+            throw new MiServerException.General("error.mongodb.writedata", wr.getError());
         }
         return br;
     }
@@ -93,7 +82,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
             MongoBeanContext castLeafBean = (MongoBeanContext) newBean;
             WriteResult wr = dc.save(castLeafBean.getDbOjbect());
             if (wr.getError() != null) {
-                throw new MiServerException.General("error.mongodb.writedata",wr.getError());
+                throw new MiServerException.General("error.mongodb.writedata", wr.getError());
             }
         }
         return br;
@@ -101,29 +90,15 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
 
     @Override
     public BusinessResult getAllLeaves() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * Convert the given string into a long.
-     * 
-     * @param ctx
-     *            The request context.
-     * @param theString
-     *            The given string value.
-     * @return The corresponding long value, or -1 if error.
-     */
-    public static long convertString2Long(String theString) {
-        long retVal = -1;
-        if (DIGIT_PATTERN.matcher(theString).matches() == false)
-            return retVal;
-        try {
-            retVal = Long.parseLong(theString);
-        } catch (NumberFormatException nfe) {
-            throw new MiServerException.General("error.numberformat.exception",theString);
+        DBCollection dc = getConection();
+        BusinessResult br = new BusinessResult();
+        ArrayList<DBObject> dbs = new ArrayList<DBObject>();
+        DBCursor dbCorsor = dc.find();
+        while (dbCorsor.hasNext()) {
+            dbs.add(dbCorsor.next());
         }
-        return retVal;
+        br.setResponseData(dbs);
+        return br;
     }
 
     /**
@@ -136,7 +111,7 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
         ArrayList<DBObject> dbs = new ArrayList<DBObject>();
         if (newBean instanceof MongoBeanContext) {
             MongoBeanContext castLeafBean = (MongoBeanContext) newBean;
-            DBCursor dbCorsor = dc.find(castLeafBean.getDbOjbect()).sort(new BasicDBObject(BusTieConstant.COLLECTIONRECORDID, 1));
+            DBCursor dbCorsor = dc.find(castLeafBean.getDbOjbect());
             while (dbCorsor.hasNext()) {
                 dbs.add(dbCorsor.next());
             }
@@ -144,7 +119,5 @@ public class MongoCommonBusiness implements BusinessInterface<BeanContext, BeanC
         }
         return br;
     }
-
-    private final static Pattern DIGIT_PATTERN = Pattern.compile("[0-9]+?");
 
 }

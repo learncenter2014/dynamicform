@@ -23,16 +23,8 @@ public interface BusinessInterface<F extends BeanContext, L extends BeanContext>
      *            The request context.
      * @return The result of the business operation.
      */
-    public BusinessResult getLeaf(String leafUidStr);
+    public BusinessResult getLeaf(String objectId);
 
-    /**
-     * Business method to get a Leaf with long UID type.
-     * 
-     * @param ctx
-     *            The request context.
-     * @return The result of the business operation.
-     */
-    public BusinessResult getLeaf(long leafUidLong);
 
     /**
      * Business method to delete a Leaf.
@@ -41,16 +33,8 @@ public interface BusinessInterface<F extends BeanContext, L extends BeanContext>
      *            The request context.
      * @return The result of the business operation.
      */
-    public BusinessResult deleteLeaf(String leafUidStr);
+    public BusinessResult deleteLeaf(String objectId);
 
-    /**
-     * Business method to delete a Leaf.
-     * 
-     * @param ctx
-     *            The request context.
-     * @return The result of the business operation.
-     */
-    public BusinessResult deleteLeaf(long leafUidLong);
 
     /**
      * Business method to update a Leaf.
@@ -78,4 +62,6 @@ public interface BusinessInterface<F extends BeanContext, L extends BeanContext>
      * @return The result of the business operation.
      */
     public BusinessResult findLeaves(L newBean);
+    
+    
 }

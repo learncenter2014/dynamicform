@@ -27,6 +27,35 @@
         };
         return str.replace(regexp || /\$\{([^{}]+)\}/g, callback);
     };
+    
+    $.escapeXml = function(ss) {
+       
+        if (ss != null && typeof ss == "string") {
+            var str = ss;
+            var findReplace = [ [ /&/g, "&amp;" ], [ /</g, "&lt;" ], [ />/g, "&gt;" ], [ /"/g, "&quot;" ] ]
+
+            for (item in findReplace)
+                str = str.replace(findReplace[item][0], findReplace[item][1]);
+            return str;
+        } else {
+            return ss;
+        }
+        
+    };
+    
+    $.unescapeXml = function(ss) {
+       if (ss != null && typeof ss == "string") { 
+        var str = ss;
+        var findReplace = [ [ /&amp;/g, "&" ], [ /&lt;/g, "<" ], [ /&gt;/g, ">" ], [ /&quot;/g, "\"" ] ]
+
+        for (item in findReplace)
+            str = str.replace(findReplace[item][0], findReplace[item][1]);
+        return str;
+       } else {
+           return ss;
+       }
+    };
+
     /* abstract class for all Elements */
     function Component(options) {
         this.id = options.id;
@@ -95,14 +124,12 @@
     function FieldSet(options) {
         this.constructor = FieldSet;
         Component.call(this, options);
-        this.width = options.width;
-        this.height = options.height;
-        this.label = options.label;
+        this.legend = options.legend;
         this.elements = [];
         this.addElement = function(obj) {
             this.elements.push(obj);
         };
-        this.xmltemplate = '<fieldset id="${id}" name="${id}" legend="${label}">${subElementsXml}\n</fieldset>';
+        this.xmltemplate = '<fieldset id="${id}" name="${id}" legend="${legend}">${subElementsXml}\n</fieldset>';
         this.toXml = function() {
             this.subElementsXml = "";
             for ( var i = 0; i < this.elements.length; i++) {
@@ -110,7 +137,7 @@
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" class="connectedSortable"><legend id="legend_${id}">${label}</legend>${operation}${subElementsHtml}\n</fieldset>';
+        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" class="connectedSortable"><legend id="legend_${id}">${legend}</legend>${operation}${subElementsHtml}\n</fieldset>';
         this.toHtml = function(){
             this.subElementsHtml = "";
             for ( var i = 0; i < this.elements.length; i++) {
@@ -126,8 +153,6 @@
     function Form(options) {
         Component.call(this, options);
         this.constructor = Form;
-        this.width = options.width;
-        this.height = options.height;
         this.label = options.label;
         this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span></div>';
         this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
@@ -221,7 +246,7 @@
         Input.call(this, options);
         this.constructor = TextArea;
         this.xmltemplate = '<textarea id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" helptext="${helptext}"/>';
-        this.htmltemplate = '<textarea id="${id}" name="${name}" value="${value}" rows="${size}" cols="${maxlength}"></textarea>';
+        this.htmltemplate = '<textarea id="${id}" name="${name}" value="${value}" rows="${size}" cols="${maxlength}">${value}</textarea>';
     }
     TextArea.prototype = input;
 
@@ -240,7 +265,7 @@
         Input.call(this, options);
         this.constructor = DateElement;
         this.format = options.format;
-        this.xmltemplate = '<date id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" value="${value}" format="${format}" helptext="${helptext}"/>';
+        this.xmltemplate = '<date id="${id}" name="${name}" label="${label}" value="${value}" size="${size}" maxlength="${maxlength}" required="${required}" readonly="${readonly}" format="${format}" helptext="${helptext}"/>';
         this.htmltemplate = '<input class="form-control" type="text" id="${id}" name="${name}" value="${value}">';
     }
     DateElement.prototype = input;
@@ -276,6 +301,7 @@
         this.saveElement = function() {
             this.name = jQuery("#e_name").val();
             this.label = jQuery("#e_label").val();
+            this.legend = jQuery("#e_legend").val();
             this.action = jQuery("#e_action").val();
             this.method = jQuery("#e_method").val();
             this.width = jQuery("#e_width").val();
@@ -297,6 +323,7 @@
 
         this.showElement = function() {
             jQuery("#e_name").val(this.name);
+            jQuery("#e_legend").val(this.legend);
             jQuery("#e_label").val(this.label);
             jQuery("#e_action").val(this.action);
             jQuery("#e_method").val(this.method);
@@ -320,6 +347,7 @@
         };
         this.parseFromXml = function(xmlObj){
             this.name = jQuery(xmlObj).attr("name");
+            this.legend = jQuery(xmlObj).attr("legend");
             this.label = jQuery(xmlObj).attr("label");
             this.action = jQuery(xmlObj).attr("action");
             this.method = jQuery(xmlObj).attr("method");
@@ -397,24 +425,39 @@
             stringBuffer += form.toXml();
             return stringBuffer;
         },
+        escapseOptions: function(options){
+            var newObject = jQuery.extend(true, {}, options); 
+            for(var i in newObject){
+                newObject[i] = $.escapeXml(newObject[i]);
+            }
+            return newObject;
+        },
+        unescapseOptions: function(options){
+            var newObject = jQuery.extend(true, {}, options); 
+            for(var i in newObject){
+                newObject[i] = $.unescapeXml(newObject[i]);
+            }
+            return newObject;
+        },
         saveXml: function(){
             var pluginRef = this;
             var formName = pluginRef.elementArray[this.formId].name;
             var label = pluginRef.elementArray[this.formId].label;
-            var createForm = pluginRef.createElementFactory(this.elementArray[this.formId]);
+            var options = this.elementArray[this.formId];
+            var createForm = pluginRef.createElementFactory(pluginRef.escapseOptions(options));
             //loop fieldset
             jQuery("#block_"+this.formId).find("fieldset.connectedSortable").each(function(){
                 var fieldSet = jQuery(this);
                 var fieldId = fieldSet.attr("id");
                 var options = pluginRef.elementArray[fieldId.substring("block_".length)];
-                var createFieldSet = pluginRef.createElementFactory(options);
+                var createFieldSet = pluginRef.createElementFactory(pluginRef.escapseOptions(options));
                 createForm.addElement(createFieldSet);
                 //loop element per fieldset
                 jQuery(this).find("div.connectedSortable").each(function(){
                     var element = jQuery(this);
                     var divId = element.attr("id");
                     var options = pluginRef.elementArray[divId.substring("block_".length)];
-                    var createElement = pluginRef.createElementFactory(options);
+                    var createElement = pluginRef.createElementFactory(pluginRef.escapseOptions(options));
                     createFieldSet.addElement(createElement);
                 });
             });
@@ -433,14 +476,14 @@
                    alert("Save xml is " + status ) ;
             }});
         },
-        parseXml: function(surl){
+        parseXml: function(parameters){
             //reset all cache data.
             this.resetGlobalVar();
             var htmlBuffer = "";
             jQuery.ajax({
                 async:false,
                 type: "GET",
-                url: "xml/"+surl,
+                url: parameters.path,
                 cache: false,
                 dataType: "xml",
                 success : function(data, status) {
@@ -453,6 +496,8 @@
                     pluginRef.formId = formId;
                     var options = new UiInputDialog(formId,"form");
                     options.parseFromXml(form);
+                    options.label = parameters.label;
+                    options = pluginRef.unescapseOptions(options);
                     pluginRef.elementArray[formId] = options;
                     var createForm = pluginRef.createElementFactory(options);
                     
@@ -461,6 +506,7 @@
                         var fieldId = fieldSet.attr("id");
                         var options = new UiInputDialog(fieldId,"fieldset");
                         options.parseFromXml(fieldSet);
+                        options = pluginRef.unescapseOptions(options);
                         pluginRef.elementArray[fieldId] = options;
                         var createFieldSet = pluginRef.createElementFactory(options);
                         createForm.addElement(createFieldSet);
@@ -474,6 +520,7 @@
                             var elementId = typeObj.attr("id");
                             var options = new UiInputDialog(elementId,type);
                             options.parseFromXml(typeObj);
+                            options = pluginRef.unescapseOptions(options);
                             pluginRef.elementArray[elementId] = options;
                             var createElement = pluginRef.createElementFactory(options);
                             createFieldSet.addElement(createElement);
@@ -517,7 +564,7 @@
                     var outputHtml = elementInstance.toHtml();
                     jQuery(blockId).replaceWith(outputHtml);
                 }else if(element.type == 'fieldset'){
-                    jQuery("#legend_"+_no).text(element.label);
+                    jQuery("#legend_"+_no).text(element.legend);
                 }
             } else {
                 alert("This element id " + _no + " is empty!");

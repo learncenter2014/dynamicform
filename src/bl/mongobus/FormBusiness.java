@@ -8,6 +8,6 @@ public class FormBusiness extends MongoCommonBusiness {
 
     public FormBusiness() {
         this.dbName = "form";
-        this.collectionName = "userdatas";
+        this.collectionName = "template";
     }
 }

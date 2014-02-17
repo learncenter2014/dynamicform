@@ -54,12 +54,10 @@
                     modal : true,
                     buttons : {
                         Save : function() {
-                            var bVal = jQuery("#x_file").val();
-
-                            if (bVal && bVal.length > 0) {
-                                load_xml(bVal);
-                                jQuery(this).dialog('close');
-                            }
+                            var url = jQuery("#x_file").val();
+                            var label = jQuery("#x_file option:selected").text();
+                            load_xml({path:url,label:label});
+                            jQuery(this).dialog('close');
                         },
                         Cancel : function() {
                             jQuery(this).dialog('close');
