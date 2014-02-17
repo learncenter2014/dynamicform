@@ -90,53 +90,8 @@
       }
 
       $(document).ready(function() {
-          <%-- 
-          /*
-           * Insert a 'details' column to the table
-           */
-          var nCloneTh = document.createElement( 'th' );
-          var nCloneTd = document.createElement( 'td' );
-          nCloneTd.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png">';
-          nCloneTd.className = "center";
-
-          $('#example thead tr').each( function () {
-              this.insertBefore( nCloneTh, this.childNodes[0] );
-          } );
-
-          $('#example tbody tr').each( function () {
-              this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
-          } );
-          
-          /*
-           * Initialse DataTables, with no sorting on the 'details' column
-           */
-          var oTable = $('#example').dataTable( {
-              "aoColumnDefs": [
-                  { "bSortable": false, "aTargets": [ 0 ] }
-              ],
-              "aaSorting": [[1, 'asc']]
-          });
-
-          /* Add event listener for opening and closing details
-           * Note that the indicator for showing which row is open is not controlled by DataTables,
-           * rather it is done here
-           */
-          $('#example tbody td img').live('click', function () {
-              var nTr = $(this).parents('tr')[0];
-              if ( oTable.fnIsOpen(nTr) )
-              {
-                  /* This row is already open - close it */
-                  this.src = "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png";
-                  oTable.fnClose( nTr );
-              }
-              else
-              {
-                  /* Open this row */
-                  this.src = "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_close.png";
-                  oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
-              }
-          } );
-     --%>
+          <%-- --%>
+     
      var tableUrl = "<%=request.getContextPath()%>/datatable/initTable.action";
      var param = {};
      $.getJSON( tableUrl, param, function (initParam) { 
@@ -159,7 +114,7 @@
 	            if ( oSettings.bSorted || oSettings.bFiltered )
 	            {
 	                this.$('td:first-child', {"filter":"applied"}).each( function (i) {
-	                    that.fnUpdate( i+3, this.parentNode, 0, false, false );
+	                  //  that.fnUpdate( i+3, this.parentNode, 0, false, false );
 	                } );
 	            }
 	        }, 
@@ -225,11 +180,48 @@
 	          }
 	        });
  	} );
+     
+     /*
+      * Insert a 'details' column to the table
+      */
+     var nCloneTh = document.createElement( 'th' );
+     var nCloneTd = document.createElement( 'td' );
+     nCloneTd.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png">';
+     nCloneTd.className = "center";
+
+     $('#example thead tr').each( function () {
+         this.insertBefore( nCloneTh, this.childNodes[0] );
+     } );
+
+     $('#example tbody tr').each( function () {
+         this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+     } );
+     
+     /* Add event listener for opening and closing details
+      * Note that the indicator for showing which row is open is not controlled by DataTables,
+      * rather it is done here
+      */
+     $('#example tbody td img').live('click', function () {
+         var nTr = $(this).parents('tr')[0];
+         if ( oTable.fnIsOpen(nTr) )
+         {
+             /* This row is already open - close it */
+             this.src = "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png";
+             oTable.fnClose( nTr );
+         }
+         else
+         {
+             /* Open this row */
+             this.src = "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_close.png";
+             oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+         }
+     } );
+     
      /* Add/remove class to a row when clicked on */
      $('#example tr').live('click', function() {
          $(this).toggleClass('row_selected');
      } );
-      } );
+ } );
       
       /*
        * I don't actually use this here, but it is provided as it might be useful and demonstrates
