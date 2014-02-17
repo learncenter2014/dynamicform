@@ -4,6 +4,7 @@
 package vo.table;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Table Header, map property <b>Column</b> of <b>dataTable</b>
@@ -38,7 +39,20 @@ public class TableHeaderVo {
   }
 
   public String getsTitle() {
-    return sTitle;
+    String filterHtml = "";
+    if(bSearchable){
+      filterHtml = "<br/>";
+      if(searchMap == null){
+        filterHtml = filterHtml + "<input type='text' name='search_"+ mData+"' class='search_init'/>";
+      }else{
+        filterHtml = filterHtml + "<select>";
+        for(Entry<String,String> entry:searchMap.entrySet()){
+          filterHtml = filterHtml + "<option value='"+entry.getKey()+"'>"+entry.getValue()+"</option>";
+        }
+        filterHtml = filterHtml + "</select>";
+      }
+    }
+    return sTitle + filterHtml;
   }
 
   public void setsTitle(String sTitle) {
