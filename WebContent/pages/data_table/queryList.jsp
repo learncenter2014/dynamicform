@@ -48,7 +48,8 @@
            <div class="panel-body">
                  <div class="adv-table">
                      <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="example">
-                       
+                       <thead>
+                       </thead>
                       <tbody>
                           <tr><td colspan="4" class="dataTables_empty">Loading data from server</td></tr>
                       </tbody>
@@ -89,13 +90,29 @@
           return sOut;
       }
 
-      $(document).ready(function() {
-          <%-- --%>
+ $(document).ready(function() {
      
      var tableUrl = "<%=request.getContextPath()%>/datatable/initTable.action";
      var param = {};
      $.getJSON( tableUrl, param, function (initParam) { 
-     
+         var showDetails = false;
+         
+         var aoColumns = initParam.aoColumns;
+         for(var i=0;i<aoColumns.length;i++){
+             if(aoColumns[i].bVisible == false){
+                 showDetails = true;
+                 break;
+             }
+         }
+         
+         
+         
+         var nCloneTd = document.createElement( 'td' );
+         nCloneTd.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png">';
+         nCloneTd.className = "center";
+         
+         
+         
 	     /*
 	      * Initialse DataTables, with no sorting on the 'details' column
 	      */
@@ -114,7 +131,10 @@
 	            if ( oSettings.bSorted || oSettings.bFiltered )
 	            {
 	                this.$('td:first-child', {"filter":"applied"}).each( function (i) {
-	                  //  that.fnUpdate( i+3, this.parentNode, 0, false, false );
+	                    that.fnUpdate( i, this.parentNode, 0, false, false );
+	                    if(showDetails){
+	                        this.append(nCloneTd.cloneNode( true ));
+	                    }
 	                } );
 	            }
 	        }, 
@@ -181,13 +201,13 @@
 	        });
  	} );
      
+     
+     
      /*
       * Insert a 'details' column to the table
-      */
+      
      var nCloneTh = document.createElement( 'th' );
-     var nCloneTd = document.createElement( 'td' );
-     nCloneTd.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png">';
-     nCloneTd.className = "center";
+     
 
      $('#example thead tr').each( function () {
          this.insertBefore( nCloneTh, this.childNodes[0] );
@@ -196,7 +216,7 @@
      $('#example tbody tr').each( function () {
          this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
      } );
-     
+     */
      /* Add event listener for opening and closing details
       * Note that the indicator for showing which row is open is not controlled by DataTables,
       * rather it is done here
