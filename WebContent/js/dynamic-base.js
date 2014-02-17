@@ -104,8 +104,8 @@ function load_xml( surl ) {
 /**
  * xml and html
  */ 
-function save_xml( surl ) { 
-    jQuery.dynamicplugin.saveXml(surl);
+function save_xml() { 
+    jQuery.dynamicplugin.saveXml();
 }
 
 /**

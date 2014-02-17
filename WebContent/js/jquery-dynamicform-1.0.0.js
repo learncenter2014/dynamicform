@@ -128,6 +128,7 @@
         this.constructor = Form;
         this.width = options.width;
         this.height = options.height;
+        this.label = options.label;
         this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span></div>';
         this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
         this.elements = [];
@@ -391,23 +392,45 @@
             }
             return instanceObj;
         },
-        _toXml: function() {
+        _toXml: function(form) {
             var stringBuffer = '<?xml version="1.0" encoding="UTF-8"?>\n';
             stringBuffer += form.toXml();
             return stringBuffer;
         },
         saveXml: function(){
-            var formName = "form1";
-            var dataXml = _toXml();
+            var pluginRef = this;
+            var formName = pluginRef.elementArray[this.formId].name;
+            var label = pluginRef.elementArray[this.formId].label;
+            var createForm = pluginRef.createElementFactory(this.elementArray[this.formId]);
+            //loop fieldset
+            jQuery("#block_"+this.formId).find("fieldset.connectedSortable").each(function(){
+                var fieldSet = jQuery(this);
+                var fieldId = fieldSet.attr("id");
+                var options = pluginRef.elementArray[fieldId.substring("block_".length)];
+                var createFieldSet = pluginRef.createElementFactory(options);
+                createForm.addElement(createFieldSet);
+                //loop element per fieldset
+                jQuery(this).find("div.connectedSortable").each(function(){
+                    var element = jQuery(this);
+                    var divId = element.attr("id");
+                    var options = pluginRef.elementArray[divId.substring("block_".length)];
+                    var createElement = pluginRef.createElementFactory(options);
+                    createFieldSet.addElement(createElement);
+                });
+            });
+            //covert form object to xml structure.
+            var dataXml = this._toXml(createForm);
             jQuery.ajax({
+                async:false,
                 type: "POST",
                 url: "template/savexml.action",
                 cache: false,
-                data: ({file: formName,
+                data: ({name: formName,
+                        label:label,
                         data :dataXml}),
                 dataType: "text",
-                complete : function(data, status) {
-                   alert("Save xml : " + bVal + "/" + status ) ;
+                success : function(data, status) {
+                   alert("Save xml is " + status ) ;
             }});
         },
         parseXml: function(surl){
@@ -420,9 +443,9 @@
                 url: "xml/"+surl,
                 cache: false,
                 dataType: "xml",
-                complete : function(data, status) {
+                success : function(data, status) {
                     var pluginRef = jQuery.dynamicplugin;
-                    var resp = data.responseXML;
+                    var resp = data;
                     
                     var form = jQuery(resp).find('tns\\:form');
                     var formId = form.attr("id");
@@ -502,7 +525,7 @@
         },
         deleteElement:function(id){
                 var _no = id;
-                if (!!_no) {
+                if (_no != null) {
                     //remove cache data from memory.
                     delete this.elementArray[_no];
                     //remove DOM node from DOM tree of Form.
