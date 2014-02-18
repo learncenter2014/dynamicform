@@ -11,41 +11,32 @@ package vo.table;
  */
 public class TableActionVo {
 
-  private String method;
-  private String text;
-  private String msg; // user ${fieldName} instead of value
-  private boolean multiRows = true;
+  private String actionName;
+  private String html;
 
-  public String getMethod() {
-    return method;
+  public TableActionVo(String actionName, String html) {
+    super();
+    this.actionName = actionName;
+    this.html = html;
   }
 
-  public void setMethod(String method) {
-    this.method = method;
+  public String getActionName() {
+    return actionName;
   }
 
-  public String getText() {
-    return text;
+  public void setActionName(String actionName) {
+    this.actionName = actionName;
   }
 
-  public void setText(String text) {
-    this.text = text;
+  public String getHtml() {
+    return html;
   }
 
-  public boolean isMultiRows() {
-    return multiRows;
+  public void setHtml(String html) {
+    this.html = html;
   }
 
-  public void setMultiRows(boolean multiRows) {
-    this.multiRows = multiRows;
+  public String toString() {
+    return "<span actionName='" + actionName + "' title='" + actionName + "'>" + html + "</span>";
   }
-
-  public String getMsg() {
-    return msg;
-  }
-
-  public void setMsg(String msg) {
-    this.msg = msg;
-  }
-
 }

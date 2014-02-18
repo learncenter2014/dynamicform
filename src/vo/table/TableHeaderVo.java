@@ -3,9 +3,6 @@
  */
 package vo.table;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 /**
  * Table Header, map property <b>Column</b> of <b>dataTable</b>
  * 
@@ -22,12 +19,23 @@ public class TableHeaderVo {
   private boolean bVisible = true;
 
   // // additional properties
-  private Map<String, String> searchMap = null;
+  private String[][] searchOptions = null; // map html select element, like [["1","2"]["Male","Female"]]
 
   public TableHeaderVo(String mData, String sTitle) {
     super();
     this.mData = mData;
     this.sTitle = sTitle;
+  }
+
+  public TableHeaderVo(String mData, String sTitle, boolean bVisible) {
+    super();
+    this.mData = mData;
+    this.sTitle = sTitle;
+    this.bVisible = bVisible;
+    if (bVisible == false) {
+      this.bSortable = false;
+      this.bSearchable = false;
+    }
   }
 
   public String getmData() {
@@ -40,19 +48,35 @@ public class TableHeaderVo {
 
   public String getsTitle() {
     String filterHtml = "";
-    if(bSearchable){
-      filterHtml = "<br/>";
-      if(searchMap == null){
-        filterHtml = filterHtml + "<input type='text' name='search_"+ mData+"' class='search_init'/>";
-      }else{
-        filterHtml = filterHtml + "<select>";
-        for(Entry<String,String> entry:searchMap.entrySet()){
-          filterHtml = filterHtml + "<option value='"+entry.getKey()+"'>"+entry.getValue()+"</option>";
+    if (bVisible && bSearchable) {
+      if (searchOptions == null) {
+        filterHtml += "<input type='text' name='" + mData + "' class='search_init'/>";
+      } else if (searchOptions.length == 1) {
+        filterHtml += "<select name='" + mData + "'>";
+
+        for (int i = 0; i < searchOptions[0].length; i++) {
+          filterHtml += "<option value='" + searchOptions[0][i] + "'>" + searchOptions[0][i] + "</option>";
         }
+
         filterHtml = filterHtml + "</select>";
+      } else if (searchOptions.length >= 2) {
+        filterHtml += "<select name='" + mData + "'>";
+        for (int i = 0; i < searchOptions[0].length; i++) {
+          filterHtml += "<option value='" + searchOptions[0][i] + "'>";
+          if (i < searchOptions[1].length) {
+            filterHtml += searchOptions[1][i] + "</option>";
+          } else {
+            filterHtml += searchOptions[0][i] + "</option>";
+          }
+        }
+
+        filterHtml += "</select>";
       }
     }
-    return sTitle + filterHtml;
+    if (filterHtml.length() > 0) {
+      return filterHtml + "<br/>" + sTitle;
+    }
+    return sTitle;
   }
 
   public void setsTitle(String sTitle) {
@@ -91,12 +115,12 @@ public class TableHeaderVo {
     this.bVisible = bVisible;
   }
 
-  public Map<String, String> getSearchMap() {
-    return searchMap;
+  public void setSearchOptions(String[][] searchOptions) {
+    this.searchOptions = searchOptions;
   }
 
-  public void setSearchMap(Map<String, String> searchMap) {
-    this.searchMap = searchMap;
+  public TableHeaderVo addSearchOptions(String[][] searchOptions) {
+    this.searchOptions = searchOptions;
+    return this;
   }
-
 }

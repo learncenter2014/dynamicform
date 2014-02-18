@@ -78,16 +78,33 @@
 <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/TableTools.js" type="text/javascript" charset="utf-8" ></script>
     <script type="text/javascript">
       /* Formating function for row details */
-      function fnFormatDetails ( oTable, nTr )
-      {
+      function fnFormatDetails ( oTable, nTr ){
           var aData = oTable.fnGetData( nTr );
+          var aoColumns = oTable.fnSettings().aoColumns;
           var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-          sOut += '<tr><td>Rendering engine:</td><td>'+aData[1]+' '+aData[4]+'</td></tr>';
-          sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
-          sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+          for(var i=0;i<aoColumns.length;i++){
+              if(aoColumns[i].bVisible == false){
+                  sOut += '<tr><td>'+ aoColumns[i].sTitle+':</td><td>'+aData[aoColumns[i].mData]+'</td></tr>';
+              }
+          }
           sOut += '</table>';
-
           return sOut;
+      }
+      
+      function showDetails(oTableObj,thisObj){
+          var oTable = $('#example').dataTable();
+          var oSettings = oTable.fnSettings();
+          var nTr = $(thisObj).parents('tr')[0];
+          if ( oTable.fnIsOpen(nTr) ){
+             // This row is already open - close it 
+              $('img',thisObj).attr("src" , "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png");
+              oTable.fnClose( nTr );
+          }else{
+            //   Open this row 
+              $('img',thisObj).attr("src" , "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_close.png");
+              oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+              $('td.details',$(nTr).next()).attr("colspan",nTr.childNodes.length);
+          }
       }
 
  $(document).ready(function() {
@@ -95,23 +112,19 @@
      var tableUrl = "<%=request.getContextPath()%>/datatable/initTable.action";
      var param = {};
      $.getJSON( tableUrl, param, function (initParam) { 
-         var showDetails = false;
-         
-         var aoColumns = initParam.aoColumns;
-         for(var i=0;i<aoColumns.length;i++){
-             if(aoColumns[i].bVisible == false){
-                 showDetails = true;
-                 break;
+         for(var i=0;i<initParam.aoColumns.length ; i++){
+             if(initParam.aoColumns[i].mData == 'age'){
+                 initParam.aoColumns[i].mRender = function ( data, type, full ) {
+		            if(data == 1){
+		                return "Male";
+		            }else if(data == 0){
+		                return "Female";
+		            }else{
+		                return "Unkown";
+		            }
+		        }
              }
          }
-         
-         
-         
-         var nCloneTd = document.createElement( 'td' );
-         nCloneTd.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png">';
-         nCloneTd.className = "center";
-         
-         
          
 	     /*
 	      * Initialse DataTables, with no sorting on the 'details' column
@@ -123,23 +136,38 @@
 	 		 "aLengthMenu": initParam.aLengthMenu,
 	 		 "aoColumns": initParam.aoColumns,
 	 		 "sAjaxSource": initParam.sAjaxSource,
-	 		 
-	 		"fnDrawCallback": function ( oSettings ) {
-	            var that = this;
-	 
-	            /* Need to redo the counters if filtered or sorted */
-	            if ( oSettings.bSorted || oSettings.bFiltered )
-	            {
-	                this.$('td:first-child', {"filter":"applied"}).each( function (i) {
-	                    that.fnUpdate( i, this.parentNode, 0, false, false );
-	                    if(showDetails){
-	                        this.append(nCloneTd.cloneNode( true ));
-	                    }
-	                } );
-	            }
-	        }, 
-	        
-	        
+	 		 "bFilter":false,
+	 		 //"aaSorting": [[1, 'asc']],
+	 		  
+		     "fnDrawCallback": function ( oSettings ) {
+		            if(initParam.actionHtml.length > 0){
+		                if($('#example thead tr th:first[arias="actions"]').length == 0){
+		                    $('#example thead tr').each( function () {
+		                          var thObj =document.createElement( 'th' );
+		                          thObj.setAttribute("arias","actions");
+		                          thObj.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png"/><br/>ACTION';
+			                      this.insertBefore(thObj , this.childNodes[0] );
+			                      $('img',$(thObj)).live('click', function (i) {
+					                    add();
+					              });
+			                 } );
+		                }
+			            $('#example tbody tr').each( function (i) {
+			                var nCloneTd = document.createElement( 'td' );
+			                nCloneTd.className = "center";
+			                nCloneTd.innerHTML =  initParam.actionHtml ;
+			                this.insertBefore(  nCloneTd , this.childNodes[0] );
+			                
+			                $('span[actionName]',$(nCloneTd)).live('click', function (i) {
+			                    eval($(this).attr('actionName')+"(oTable,this)");
+			                });
+			            } );
+		            }
+		            /* Add/remove class to a row when clicked on */
+		            $('#example tbody tr').live('click', function() {
+		                $(this).toggleClass('row_selected');
+		            } );
+		     }, 
 	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 	             /* //======= method one===========
 	             // Add some extra data to the sender 
@@ -151,6 +179,41 @@
 	 			 //======= method one END=========== */
 	 			     
 	 			//========method two==================   
+	 			 var i=0;
+	 			 var mDataObj = {};
+	 			 var sortObj = {};
+	 			for(var n=0;n<aoData.length;n++){
+	 			    if(aoData[n].name == "iColumns"){
+	 			       iMax = aoData[n].value;
+	 			       continue;
+	 			    }
+	 			   if(aoData[n].name == ("mDataProp_"+ i)){
+	 			       i++;
+	 			      mDataObj["mDataProp_"+ i] = aoData[n].value;
+	 			     continue;
+	 			   }
+	 			   i = 0;
+	 			  if(aoData[n].name == ("iSortCol_"+ i)){
+	 			      i++;
+	 			     sortObj["mDataProp_"+ aoData[n].value] = "";
+	 			    continue;
+	 			  }
+	 			 i = 0;
+	 			  if(aoData[n].name == ("sSortDir_"+ i)){
+	 			      i++;
+	 			     sortObj["mDataProp_"+ aoData[n].value] = aoData[n].value;
+	 			    continue;
+	 			  }
+	 			}
+	 			 for(var p in sortObj){
+	 			    aoData.push( { "name": p, "value": sortObj[p] } );
+	 			 }
+	 			$('#example thead tr th input[type="text"]').each( function (i) {
+	 			  aoData.push( { "name": "filter['"+this.name+"']", "value": this.value } );
+	 			});
+	 			$('#example thead tr th select[name]').each( function (i) {
+	 			  aoData.push( { "name": "filter['"+this.name+"']", "value": $(this).val() } );
+		 		});
 	 			 oSettings.jqXHR = $.ajax( {
 	                 "dataType": 'json',
 	                 "type": "POST",
@@ -158,89 +221,13 @@
 	                 "data": aoData,
 	                 "success": function(result,status,response){
 	                    // Do whatever additional processing you want on the callback, then tell DataTables
-	                    /*
-	                    var headerList = initParam.aoColumns;
-	                     if(headerList == null || headerList == 'undefined'|| headerList.length == 0){
-	                         return;
-	                     }
-	                     
-	                     var hasFilter = false;
-	                     for(var i = 0; i < headerList.length; i++){
-	                         var header = headerList[i];
-	                         if(header.bSearchable){
-	                             hasFilter = true;
-	                             break;
-	                         }
-	                     }
-	                  */
 	                     fnCallback(result);
-	                     /*
-	                     var nCloneTr = document.createElement( 'tr' );
-	                     var nCloneTd = document.createElement( 'td' );
-	                     nCloneTd.className = "center";
-	
-	                     $('#example thead').each( function (i) {
-	                         this.insertBefore( nCloneTr, this.childNodes[0] );
-	                     } );
-	
-	                     $('#example thead tr').each( function (i) {
-	                         for(var i = 0; i < headerList.length; i++){
-	                             var header = headerList[i];
-	                             if(header.bSearchable){
-	                                  
-	                             }
-	                             this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
-	                         }
-	                         return false;
-	                     } );
-	                     */
-	                 }
+	                  }
 	               } );
 	 			//========method two END==================   
 	          }
 	        });
  	} );
-     
-     
-     
-     /*
-      * Insert a 'details' column to the table
-      
-     var nCloneTh = document.createElement( 'th' );
-     
-
-     $('#example thead tr').each( function () {
-         this.insertBefore( nCloneTh, this.childNodes[0] );
-     } );
-
-     $('#example tbody tr').each( function () {
-         this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
-     } );
-     */
-     /* Add event listener for opening and closing details
-      * Note that the indicator for showing which row is open is not controlled by DataTables,
-      * rather it is done here
-      */
-     $('#example tbody td img').live('click', function () {
-         var nTr = $(this).parents('tr')[0];
-         if ( oTable.fnIsOpen(nTr) )
-         {
-             /* This row is already open - close it */
-             this.src = "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png";
-             oTable.fnClose( nTr );
-         }
-         else
-         {
-             /* Open this row */
-             this.src = "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_close.png";
-             oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
-         }
-     } );
-     
-     /* Add/remove class to a row when clicked on */
-     $('#example tr').live('click', function() {
-         $(this).toggleClass('row_selected');
-     } );
  } );
       
       /*
@@ -252,7 +239,6 @@
           return oTableLocal.$('tr.row_selected');
       }
   </script>
-
 
   </body>
 

@@ -5,6 +5,7 @@ package actions;
 
 import net.sf.json.JSONObject;
 import vo.DataQueryVo;
+import vo.table.TableActionVo;
 import vo.table.TableDataVo;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
@@ -32,19 +33,32 @@ public class BaseTableAction extends BaseAction implements ModelDriven<DataQuery
     return SUCCESS;
   }
 
-  public String initTable()throws Exception {
+  public String initTable() throws Exception {
     TableInitVo init = new TableInitVo();
-    init.getAoColumns().add(new TableHeaderVo("id", "INDEX"));
+    boolean headerVisible = false;
     init.getAoColumns().add(new TableHeaderVo("username", "USERNAME"));
-    init.getAoColumns().add(new TableHeaderVo("address", "ADDRESS"));
-    init.setsAjaxSource(getRequest().getContextPath()+"/datatable/queryTableList.action");
+    init.getAoColumns().add(new TableHeaderVo("age", "AGE").addSearchOptions(new String[][] { { "1", "0" }, { "Male", "Female" } }));
+    init.getAoColumns().add(new TableHeaderVo("address", "ADDRESS", headerVisible));
+
+    if (!headerVisible) {
+      init.addAction(new TableActionVo("showDetails", "<img src='" + getRequest().getContextPath()
+          + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+    }
+    init.addAction(new TableActionVo("edit", "<img src='" + getRequest().getContextPath()
+        + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+    init.addAction(new TableActionVo("delete", "<img src='" + getRequest().getContextPath()
+        + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+    init.addAction(new TableActionVo("lockUser", "<img src='" + getRequest().getContextPath()
+        + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+
+    init.setsAjaxSource(getRequest().getContextPath() + "/datatable/queryTable.action");
     // json
     JSONObject jsonObject = JSONObject.fromObject(init);
     writeJson(jsonObject);
     return null;
   }
-  
-  public String queryTableList() throws Exception {
+
+  public String queryTable() throws Exception {
     TableDataVo table = new BaseBusiness().query(getModel());
     table.setiTotalDisplayRecords(100);
     table.setiTotalRecords(100);
@@ -53,7 +67,10 @@ public class BaseTableAction extends BaseAction implements ModelDriven<DataQuery
     for (int i = 0; i < getModel().getIDisplayLength(); i++) {
       data = new TestGirdData();
       data.setId(getModel().getIDisplayStart() + (i + 1));
-      data.setAge(1);
+      if (i % 2 == 0)
+        data.setAge(1);
+      else
+        data.setAge(0);
       data.setUsername("test username" + data.getId());
       data.setAddress("test address" + data.getId());
       table.getAaData().add(data);
