@@ -21,7 +21,7 @@ public class TableInitVo {
 
   // //additional properties
   private String idName = "id";
-  private List<TableActionVo> actionList = new ArrayList<TableActionVo>();
+  private String actionHtml = "";
 
   public boolean isbProcessing() {
     return bProcessing;
@@ -79,12 +79,16 @@ public class TableInitVo {
     this.idName = idName;
   }
 
-  public List<TableActionVo> getActionList() {
-    return actionList;
+  public void setActionHtml(String actionHtml) {
+    this.actionHtml = actionHtml;
   }
 
-  public void setActionList(List<TableActionVo> actionList) {
-    this.actionList = actionList;
+  public String getActionHtml() {
+    return actionHtml;
+  }
+
+  public void addAction(TableActionVo action) {
+    this.actionHtml += action.toString();
   }
 
 }
