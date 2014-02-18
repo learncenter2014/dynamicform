@@ -42,11 +42,6 @@ public class BaseBusiness<F extends BeanContext, L extends BeanContext> implemen
         return null;
     }
 
-    @Override
-    public BusinessResult deleteLeaf(String leafUidStr) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public BusinessResult updateLeaf(L origBean, L newBean) {
@@ -62,8 +57,15 @@ public class BaseBusiness<F extends BeanContext, L extends BeanContext> implemen
 
     @Override
     public BusinessResult getLeafByName(String name) {
-      // TODO Auto-generated method stub
-      return null;
+        // TODO Auto-generated method stub
+        return null;
     }
+
+    @Override
+    public BusinessResult deleteLeaf(String objectId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 
 }

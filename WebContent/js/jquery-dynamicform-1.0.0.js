@@ -588,6 +588,7 @@
             this.formId = _id;
             var typeToAdd = !options.type?"text":options.type.toLowerCase();
             var options = new UiInputDialog(_id,typeToAdd);
+            options.name = "template"+new Date().getTime();
             this.elementArray[_id] = options;
             var elementInstance = this.createElementFactory(options);
             var outputHtml = elementInstance.toHtml();

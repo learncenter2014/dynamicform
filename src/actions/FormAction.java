@@ -3,6 +3,7 @@ package actions;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +11,12 @@ import javax.servlet.ServletContext;
 
 import org.apache.struts2.util.ServletContextAware;
 
+import bl.beans.TemplateBean;
 import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.FormBusiness;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
@@ -28,9 +28,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
  * 
  */
 public class FormAction extends ActionSupport implements ServletContextAware {
-    protected static Logger LOG = LoggerFactory.getLogger(FormAction.class);
+    protected final static Logger LOG = LoggerFactory.getLogger(FormAction.class);
     private ServletContext sc = null;
-    private static String XMLFILEPATH = "xml";
+    public final static String XMLFILEPATH = "xml";
     private List<String[]> filelist = new ArrayList<String[]>();
     private String name = null;
     private String data = null;
@@ -80,7 +80,8 @@ public class FormAction extends ActionSupport implements ServletContextAware {
     }
 
     public String savexml() {
-/*        if (this.name != null && this.data != null && this.label != null) {
+
+        if (this.name != null && this.data != null && this.label != null) {
             try {
                 String requestPath = this.sc.getRealPath(XMLFILEPATH + "/" + name + ".xml");
                 LOG.info("save xml content to this [#0] file", requestPath);
@@ -88,28 +89,25 @@ public class FormAction extends ActionSupport implements ServletContextAware {
 
                 // stored in template table, refer to dynamictable.js
                 FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
-                MongoBeanContext mb = new MongoBeanContext(new BasicDBObject("name", this.name));
-                BusinessResult br = fb.findLeaves(mb);
-                ArrayList<DBObject> al = (ArrayList<DBObject>) br.getResponseData();
-                if (al.size() > 0) {
-                    BasicDBObject orignalDb = (BasicDBObject) al.get(0);
-                    BasicDBObject newDb = (BasicDBObject) orignalDb.clone();
-                    newDb.put("label", this.label);
-                    newDb.put("modifytime", new Date(System.currentTimeMillis()));
-                    fb.updateLeaf(new MongoBeanContext(orignalDb), new MongoBeanContext(newDb));
+                BusinessResult br = fb.getLeafByName(this.name);
+                TemplateBean al = (TemplateBean) br.getResponseData();
+                if (al != null) {
+                    TemplateBean orignalT = (TemplateBean) al;
+                    TemplateBean newT = (TemplateBean) orignalT.clone();
+                    newT.setLabel(this.label);
+                    fb.updateLeaf(orignalT, newT);
                 } else {
-                    MongoBeanContext createM = (MongoBeanContext) fb.constructLeafBean();
-                    DBObject newdb = createM.getDbOjbect();
-                    newdb.put("name", this.name);
-                    newdb.put("label", this.label);
-                    newdb.put("path", "xml/" + this.name + ".xml");
-                    newdb.put("createtime", new Date(System.currentTimeMillis()));
-                    fb.createLeaf(createM);
+                    TemplateBean tb = new TemplateBean();
+                    tb.setName(this.name);
+                    tb.setPath(XMLFILEPATH + "/" + this.name + ".xml");
+                    tb.setLabel(this.label);
+                    fb.createLeaf(tb);
                 }
             } catch (Exception e) {
                 LOG.error("this exception [#0]", e.getMessage());
             }
-        }*/
+        }
+
         return ActionSupport.SUCCESS;
     }
 
@@ -117,11 +115,11 @@ public class FormAction extends ActionSupport implements ServletContextAware {
 
         try {
             FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
-            //find all records in the template;
+            // find all records in the template;
             BusinessResult br = fb.getAllLeaves();
-            ArrayList<DBObject> elements = (ArrayList<DBObject>) br.getResponseData();
-            for (DBObject el : elements) {
-                String[] row = new String[] { el.get("label").toString(), el.get("path").toString() };
+            List<TemplateBean> elements = (List<TemplateBean>) br.getResponseData();
+            for (TemplateBean te : elements) {
+                String[] row = new String[] { te.getLabel(), te.getPath() };
                 this.filelist.add(row);
             }
             LOG.info("loading all xml #0 files", String.valueOf(filelist.size()));
@@ -138,14 +136,71 @@ public class FormAction extends ActionSupport implements ServletContextAware {
         return filelist;
     }
 
-    public static void main(String[] args) {
-    }
-
     /**
      * aware injection of struts2
      */
     @Override
     public void setServletContext(ServletContext context) {
         this.sc = context;
+    }
+
+    public static void main(String[] args) {
+        FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
+        // create a leaf in the MongoDB.
+        {
+            TemplateBean tb = new TemplateBean();
+            tb.setLabel("测试数据1");
+            tb.setName("template1");
+            tb.setPath("xml/template1.xml");
+            fb.createLeaf(tb);
+        }
+
+        // find a leaf in the MongoDB.
+
+        {
+            BusinessResult br = fb.getLeafByName("template1");
+            Object o = br.getResponseData();
+            if (o != null) {
+                TemplateBean find = (TemplateBean) o;
+                // find a leaf by object id string in the MongoDB.
+                {
+                    BusinessResult br1 = fb.getLeaf(find.get_id().toString());
+                    Object o1 = br1.getResponseData();
+                    if (o1 != null) {
+                        TemplateBean find1 = (TemplateBean) o1;
+                        System.out.println(find1.getPath());
+                    }
+                }
+
+                System.out.println(find.getPath());
+            }
+        }
+
+        // update a leaf in the MongoDB.
+        {
+            BusinessResult br = fb.getLeafByName("template1");
+            Object o = br.getResponseData();
+            if (o != null) {
+                TemplateBean orginal = (TemplateBean) o;
+                TemplateBean cloneT = (TemplateBean) orginal.clone();
+                cloneT.setPath("xml/template_test.xml");
+                fb.updateLeaf(orginal, cloneT);
+            }
+        }
+
+        // delete a leaf in the MongoDB.
+        {
+            BusinessResult br = fb.getLeafByName("template1");
+            Object o = br.getResponseData();
+            if (o != null) {
+                TemplateBean find = (TemplateBean) o;
+                System.out.println(find.getPath());
+                fb.deleteLeaf(find.get_id().toString());
+            }
+        }
+        
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmssSSS");
+        System.out.println(sdf.format(date));
     }
 }

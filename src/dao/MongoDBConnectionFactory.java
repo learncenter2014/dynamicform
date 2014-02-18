@@ -1,16 +1,11 @@
 package dao;
 
 import java.net.UnknownHostException;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-
-import bl.beans.TemplateBean;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
@@ -62,33 +57,5 @@ public class MongoDBConnectionFactory {
   }
 
   public static void main(String[] args) {
-    List<TemplateBean> list = new ArrayList<TemplateBean>();
-    {
-      TemplateBean tb = new TemplateBean();
-      tb.setLabel("测试数据1");
-      tb.setName("peter");
-      tb.setCreateTime(new Date(System.currentTimeMillis()));
-      tb.setModifyTime(new Date(System.currentTimeMillis()));
-      list.add(tb);
-    }
-    {
-      TemplateBean tb = new TemplateBean();
-      tb.setLabel("测试数据2");
-      tb.setName("wit");
-      tb.setCreateTime(new Date(System.currentTimeMillis()));
-      tb.setModifyTime(new Date(System.currentTimeMillis()));
-      list.add(tb);
-    }
-
-    {
-      TemplateBean tb = new TemplateBean();
-      tb.setLabel("测试数据3");
-      tb.setName("gudong");
-      tb.setCreateTime(new Date(System.currentTimeMillis()));
-      tb.setModifyTime(new Date(System.currentTimeMillis()));
-      list.add(tb);
-    }
-    Datastore ds = MongoDBConnectionFactory.getDatastore("form");
-    ds.save(list);
   }
 }
