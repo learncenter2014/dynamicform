@@ -7,11 +7,10 @@
         // inside event callbacks 'this' is the DOM element so we first
         // wrap it in a jQuery object and then invoke ajaxSubmit
         //$(this).ajaxSubmit();
-        alert(111);
         $.post(
-            url: ${action!} ,
-            data: this.serialize(),
-            success: function(data, textStatus, jqXHR) {
+            "${action!}" ,
+            this.serialize(),
+            function(data, textStatus, jqXHR) {
                 alert(data);
             }
         );
