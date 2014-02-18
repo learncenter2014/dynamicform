@@ -1,12 +1,18 @@
 package dao;
 
 import java.net.UnknownHostException;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.mongodb.BasicDBObject;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
+
+import bl.beans.TemplateBean;
+
 import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
@@ -16,12 +22,31 @@ import dao.exceptions.FailureDBException;
 public class MongoDBConnectionFactory {
   protected static Logger LOG = LoggerFactory.getLogger(MongoDBConnectionFactory.class);
   private static MongoClient mongoClient = null;
-
+  private static Map<String, Datastore> dbRef = new HashMap<String, Datastore>();
   static {
     try {
       mongoClient = new MongoClient("127.0.0.1");
     } catch (UnknownHostException e) {
       LOG.error("this exception [#0]", e.getMessage());
+    }
+  }
+
+  public static Datastore getDatastore(String dbName) {
+    if (dbRef.containsKey(dbName)) {
+      return dbRef.get(dbName);
+    } else {
+      synchronized (MongoDBConnectionFactory.class) {
+        if (dbRef.containsKey(dbName)) {
+          return dbRef.get(dbName);
+        } else {
+          Datastore ds = new Morphia().createDatastore(mongoClient, dbName);
+          ds.ensureIndexes();
+          ds.ensureCaps();
+          dbRef.put(dbName, ds);
+          return ds;
+        }
+
+      }
     }
   }
 
@@ -37,21 +62,33 @@ public class MongoDBConnectionFactory {
   }
 
   public static void main(String[] args) {
-    DB db = MongoDBConnectionFactory.getConnection("form");
-    DBCollection dc = db.getCollection("userdatas");
-    DBCursor dbc = dc.find().sort(new BasicDBObject("recordId",-1)).limit(1);
-    DBObject dos = dbc.next();
-    System.out.println(dos.get("recordId"));
-    // Iterator<DBObject> dbobjects = dbc.iterator();
-    // while (dbobjects.hasNext()) {
-    // DBObject doj = dbobjects.next();
-    // System.out.println("name=" + doj.get("name"));
-    // }
-    // BasicDBObject bbd = new BasicDBObject();
-    // bbd.append("recordId", 3);
-    // bbd.append("name", "jackie");
-    // bbd.append("age", 14);
-    // dc.save(bbd);
+    List<TemplateBean> list = new ArrayList<TemplateBean>();
+    {
+      TemplateBean tb = new TemplateBean();
+      tb.setLabel("测试数据1");
+      tb.setName("peter");
+      tb.setCreateTime(new Date(System.currentTimeMillis()));
+      tb.setModifyTime(new Date(System.currentTimeMillis()));
+      list.add(tb);
+    }
+    {
+      TemplateBean tb = new TemplateBean();
+      tb.setLabel("测试数据2");
+      tb.setName("wit");
+      tb.setCreateTime(new Date(System.currentTimeMillis()));
+      tb.setModifyTime(new Date(System.currentTimeMillis()));
+      list.add(tb);
+    }
 
+    {
+      TemplateBean tb = new TemplateBean();
+      tb.setLabel("测试数据3");
+      tb.setName("gudong");
+      tb.setCreateTime(new Date(System.currentTimeMillis()));
+      tb.setModifyTime(new Date(System.currentTimeMillis()));
+      list.add(tb);
+    }
+    Datastore ds = MongoDBConnectionFactory.getDatastore("form");
+    ds.save(list);
   }
 }

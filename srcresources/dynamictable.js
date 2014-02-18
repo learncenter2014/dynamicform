@@ -2,7 +2,7 @@
 var template1={
    _id: ObjectId("52da62d0f158e8485a3e29e2"),
    name:'template1',
-   displayname:'模版1',
+   label:'模版1',
    path:'xml/template1.xml',
    createtime:new Date(),
    modifytime: new Date()
@@ -22,20 +22,48 @@ db.template.insert(template2);
 db.template.ensureIndex({name:1});
 
 //page table schema, every page will be fetched data from {XXX}_data table.
-var page={
+var patient={
   _id:ObjectId("52da62d0f158e8485a3e29e3"),
-  name:'page1',
+  name:'patient',
+  label:'病人信息页面',
   templatelist:[
-       {templatename:'template1',templatedatatable:'template', forignkey: ObjectId("52da62d0f158e8485a3e29e2")},
-       {templatename:'template2',templatedatatable:'template', forignkey: ObjectId("52da62d0f158e8485a3e29e1")}
+       {templatename:'template1',templatedatatable:'template'},
+       {templatename:'template2',templatedatatable:'template'}
   ],
   createtime:new Date(),
   modifytime: new Date()
 };
-db.page.insert(page);
+db.page.insert(patient);
+
+var followupvisit = {
+    _id : ObjectId("52da62d0f158e8485a3e29e3"),
+    name : 'followupvisit',
+    label:'随访页面',
+    templatelist : [ {
+        templatename : 'template1',
+        templatedatatable : 'template'
+    }, {
+        templatename : 'template2',
+        templatedatatable : 'template'
+    } ],
+    createtime : new Date(),
+    modifytime : new Date()
+};
+db.page.insert(followupvisit);
 db.page.ensureIndex({name:1});
 
-//page1_data table schema, who does maintain mapping info,which real data are respectively stored in template1_data, or template2_data...,etc.
+//patient table schema.
+var patient1 = {
+    _id : ObjectId("52da62d0f158e8485a3e29a3"),
+    name : '病人小王',
+    pagedata :'',
+    createtime : new Date(),
+    modifytime : new Date()
+};
+db.patient.insert(patient1);
+
+// page1_data table schema, who does maintain mapping info,which real data are
+// respectively stored in template1_data, or template2_data...,etc.
 var page1_data={
   _id:ObjectId("52da62d0f158e8485a3e29e4"),
   datamapping:[

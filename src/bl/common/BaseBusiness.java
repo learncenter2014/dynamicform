@@ -61,9 +61,9 @@ public class BaseBusiness<F extends BeanContext, L extends BeanContext> implemen
     }
 
     @Override
-    public BusinessResult findLeaves(L newBean) {
-        // TODO Auto-generated method stub
-        return null;
+    public BusinessResult getLeafByName(String name) {
+      // TODO Auto-generated method stub
+      return null;
     }
 
 }

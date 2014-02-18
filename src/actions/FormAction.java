@@ -11,7 +11,6 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.util.ServletContextAware;
 
 import bl.common.BusinessResult;
-import bl.common.MongoBeanContext;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.FormBusiness;
@@ -81,7 +80,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
     }
 
     public String savexml() {
-        if (this.name != null && this.data != null && this.label != null) {
+/*        if (this.name != null && this.data != null && this.label != null) {
             try {
                 String requestPath = this.sc.getRealPath(XMLFILEPATH + "/" + name + ".xml");
                 LOG.info("save xml content to this [#0] file", requestPath);
@@ -110,7 +109,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
             } catch (Exception e) {
                 LOG.error("this exception [#0]", e.getMessage());
             }
-        }
+        }*/
         return ActionSupport.SUCCESS;
     }
 
