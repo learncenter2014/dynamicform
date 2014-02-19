@@ -28,8 +28,27 @@ public class BaseTableAction extends BaseAction implements ModelDriven<DataQuery
   private static final long serialVersionUID = -5222876000116738224L;
 
   private DataQueryVo model;
+  private String actionPrex = "";
+  private BaseBusiness baseBusiness;
+  
+  public String getActionPrex() {
+    return actionPrex;
+  }
+
+  public void setActionPrex(String actionPrex) {
+    this.actionPrex = actionPrex;
+  }
+
+  public BaseBusiness getBaseBusiness() {
+    return baseBusiness;
+  }
+
+  public void setBaseBusiness(BaseBusiness baseBusiness) {
+    this.baseBusiness = baseBusiness;
+  }
 
   public String index() throws Exception {
+    actionPrex = getRequest().getContextPath() + "/datatable";
     return SUCCESS;
   }
 
@@ -45,13 +64,12 @@ public class BaseTableAction extends BaseAction implements ModelDriven<DataQuery
           + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
     }
     init.addAction(new TableActionVo("edit", "<img src='" + getRequest().getContextPath()
-        + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+        + "/img/pencil.png" + "'/>").disableAjax());
     init.addAction(new TableActionVo("delete", "<img src='" + getRequest().getContextPath()
-        + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+        + "/img/edit_remove.png" + "'/>","Are you sure delete?"));
     init.addAction(new TableActionVo("lockUser", "<img src='" + getRequest().getContextPath()
-        + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+        + "/img/lock.png" + "'/>","Are you sure lock the user?"));
 
-    init.setsAjaxSource(getRequest().getContextPath() + "/datatable/queryTable.action");
     // json
     JSONObject jsonObject = JSONObject.fromObject(init);
     writeJson(jsonObject);
