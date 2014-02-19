@@ -8,9 +8,17 @@
               <ul class="sidebar-menu" id="nav-accordion">
               
                   <li>
-                      <a  href="pages/menu_template/dynamicform.jsp">
+                      <a  href="template/dynamicform.action">
                           <i class="fa fa-tasks"></i>
                           <span>模版管理 </span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a  href="page/pageedit.action">
+                          <i class="fa fa-tasks"></i>
+                          <span>页面构建 </span>
                           <span class="label label-danger pull-right mail-info"></span>
                       </a>
                   </li>

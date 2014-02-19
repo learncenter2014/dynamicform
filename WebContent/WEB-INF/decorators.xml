@@ -6,12 +6,14 @@
 		<pattern>/pages/menu_template/saveresult.jsp</pattern>
 		<pattern>/pages/menu_loginout/*</pattern>
 		<pattern>/panel/*.html</pattern>
+		<pattern>/template/templateFormlist.action</pattern>
 	</excludes>
 
 	<!-- 用来定义装饰器要过滤的页面 -->
 	<decorator name="main" page="/pages/decorators/main.jsp">
 		<pattern>/index.jsp</pattern>
-		<pattern>/dynamicform.jsp</pattern>
+		<pattern>/template/*.action</pattern>
+		<pattern>/page/*.action</pattern>
         <pattern>/pages/*.jsp</pattern>
         <pattern>/datainput/data*.action</pattern>
 	</decorator>

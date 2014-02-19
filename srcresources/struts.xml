@@ -24,12 +24,18 @@
 			<result name="success">/pages/menu_template/templateFormList.jsp
 			</result>
 		</action>
-		<action name="templateFileList" class="actions.FormAction" method="templateFileList">
-			<result name="success">/pages/menu_template/templateFileList.jsp
+		<action name="dynamicform" class="actions.FormAction">
+			<result name="success">/pages/menu_template/dynamicform.jsp
 			</result>
 		</action>
 		<action name="save*" class="actions.FormAction" method="save{1}">
 			<result name="success">/pages/menu_template/saveresult.jsp</result>
+		</action>
+	</package>
+	<package name="page" namespace="/page" extends="default">
+		<action name="pageedit" class="actions.PageAction" method="pageEdit">
+			<result name="success">/pages/menu_page/pageedit.jsp
+			</result>
 		</action>
 	</package>
 	<package name="datainput" namespace="/datainput" extends="default">
