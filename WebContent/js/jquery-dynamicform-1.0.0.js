@@ -78,7 +78,7 @@
     };
     
     var component = new Component({});
-
+    
     /* abstract class for Input */
     function Input(options) {
         Component.call(this, options);
@@ -154,6 +154,8 @@
         Component.call(this, options);
         this.constructor = Form;
         this.label = options.label;
+        this.action = options.action;
+        this.method = options.method;
         this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span></div>';
         this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
         this.elements = [];
@@ -269,6 +271,16 @@
         this.htmltemplate = '<input class="form-control" type="text" id="${id}" name="${name}" value="${value}">';
     }
     DateElement.prototype = input;
+    
+    /* sub-class for Label */
+    function Label(options) {
+        Component.call(this, options);
+        this.constructor = Label;
+        this.label = options.label;
+        this.xmltemplate = '<label id="${id}" name="" label="${label}"></label>';
+        this.htmltemplate = '';
+    }
+    Label.prototype = component;
 
     /**
      * binding plugin dynamicform into Jquery.
@@ -415,6 +427,9 @@
                     break;
                 case "form":
                     instanceObj = new Form(options);
+                    break;
+                case "label":
+                    instanceObj = new Label(options);
                     break;
                 }
             }

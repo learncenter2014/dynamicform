@@ -37,6 +37,10 @@
 			<result name="success">/pages/menu_page/pageedit.jsp
 			</result>
 		</action>
+		<action name="pagesave" class="actions.PageAction" method="pageSave">
+            <result name="success">/page/pageedit.action
+            </result>
+        </action>
 	</package>
 	<package name="datainput" namespace="/datainput" extends="default">
 		<action name="deleteuserdata" class="actions.FormAction" method="deleteuserdata">

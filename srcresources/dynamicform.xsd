@@ -99,7 +99,13 @@
       </extension>
     </complexContent>
   </complexType>
-
+  <complexType name="Label">
+    <complexContent>
+      <extension base="tns:Component">
+        <attribute name="label" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
   <complexType name="DynamicType">
     <choice>
       <element name="date" type="tns:Date" minOccurs="0" maxOccurs="1" />
@@ -110,6 +116,7 @@
       <element name="radio" type="tns:Radio" minOccurs="0" maxOccurs="1" />
       <element name="checkbox" type="tns:Checkbox" minOccurs="0" maxOccurs="1" />
       <element name="button" type="tns:Button" minOccurs="0" maxOccurs="1" />
+      <element name="label" type="tns:Label" minOccurs="0" maxOccurs="1" />
     </choice>
     <attribute name="type" type="string" />
   </complexType>
