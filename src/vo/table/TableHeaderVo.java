@@ -17,10 +17,10 @@ public class TableHeaderVo {
   private boolean bSortable = true;
   private boolean bSearchable = true;
   private boolean bVisible = true;
-
+  
   // // additional properties
   private String[][] searchOptions = null; // map html select element, like [["1","2"]["Male","Female"]]
-
+  
   public TableHeaderVo(String mData, String sTitle) {
     super();
     this.mData = mData;

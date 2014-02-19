@@ -109,19 +109,13 @@
 
  $(document).ready(function() {
      
-     var tableUrl = "<%=request.getContextPath()%>/datatable/initTable.action";
+     var tableUrl = "${actionPrex}/initTable.action";
      var param = {};
      $.getJSON( tableUrl, param, function (initParam) { 
          for(var i=0;i<initParam.aoColumns.length ; i++){
-             if(initParam.aoColumns[i].mData == 'age'){
+             if(initParam.aoColumns[i].mData == "age"){
                  initParam.aoColumns[i].mRender = function ( data, type, full ) {
-		            if(data == 1){
-		                return "Male";
-		            }else if(data == 0){
-		                return "Female";
-		            }else{
-		                return "Unkown";
-		            }
+                     if(data == 1){return 'Male';}else if(data == 0){return 'Female';}else{return 'Unkown';} 
 		        }
              }
          }
@@ -135,7 +129,7 @@
 	 		 "iDisplayLength":initParam.iDisplayLength,
 	 		 "aLengthMenu": initParam.aLengthMenu,
 	 		 "aoColumns": initParam.aoColumns,
-	 		 "sAjaxSource": initParam.sAjaxSource,
+	 		 "sAjaxSource": "${actionPrex}/queryTable.action",
 	 		 "bFilter":false,
 	 		 //"aaSorting": [[1, 'asc']],
 	 		  
@@ -145,10 +139,10 @@
 		                    $('#example thead tr').each( function () {
 		                          var thObj =document.createElement( 'th' );
 		                          thObj.setAttribute("arias","actions");
-		                          thObj.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png"/><br/>ACTION';
+		                          thObj.innerHTML = '<img src="<%=request.getContextPath()%>/img/edit_add.png"/><br/>ACTION';
 			                      this.insertBefore(thObj , this.childNodes[0] );
 			                      $('img',$(thObj)).live('click', function (i) {
-					                    add();
+					                    window.location.href = "${actionPrex}/addTable.action";
 					              });
 			                 } );
 		                }
@@ -158,8 +152,23 @@
 			                nCloneTd.innerHTML =  initParam.actionHtml ;
 			                this.insertBefore(  nCloneTd , this.childNodes[0] );
 			                
+			                var trObj = this;
 			                $('span[actionName]',$(nCloneTd)).live('click', function (i) {
-			                    eval($(this).attr('actionName')+"(oTable,this)");
+			                  //  eval($(this).attr('actionName')+"(oTable,this)");
+			                  var actionName = $(this).attr('actionName');
+			                  if(actionName == "showDetails"){
+			                      showDetails(oTable,trObj);
+			                  }else{
+			                      if (confirm(initParam.actions[actionName].msg)){
+			                          if(initParam.actions[actionName].ajax){
+			                              $.getJSON( "${actionPrex}/" + actionName+ ".action", {"id":oTable.fnGetData( trObj )[initParam.idName]}, function (json) { 
+			                                  oTable.fnReloadAjax();
+					      	 		      } );
+			                          }else{
+			                              window.location.href = "${actionPrex}/" + actionName+ ".action";
+			                          }
+			                     }
+			                  }
 			                });
 			            } );
 		            }
@@ -179,35 +188,33 @@
 	 			 //======= method one END=========== */
 	 			     
 	 			//========method two==================   
-	 			 var i=0;
 	 			 var mDataObj = {};
 	 			 var sortObj = {};
+	 			 var iMax = 0;
 	 			for(var n=0;n<aoData.length;n++){
 	 			    if(aoData[n].name == "iColumns"){
 	 			       iMax = aoData[n].value;
-	 			       continue;
 	 			    }
-	 			   if(aoData[n].name == ("mDataProp_"+ i)){
-	 			       i++;
-	 			      mDataObj["mDataProp_"+ i] = aoData[n].value;
-	 			     continue;
-	 			   }
-	 			   i = 0;
-	 			  if(aoData[n].name == ("iSortCol_"+ i)){
-	 			      i++;
-	 			     sortObj["mDataProp_"+ aoData[n].value] = "";
-	 			    continue;
-	 			  }
-	 			 i = 0;
-	 			  if(aoData[n].name == ("sSortDir_"+ i)){
-	 			      i++;
-	 			     sortObj["mDataProp_"+ aoData[n].value] = aoData[n].value;
-	 			    continue;
+	 			    if(aoData[n].name == "mDataProp_0"){
+	 			      for(var i = 0; i < iMax;i++){
+	 			         mDataObj[aoData[n].name] = aoData[n].value;
+	 			         n++;
+	 			      }
+	 			    }
+	 			    if(aoData[n].name == "iSortCol_0"){
+	 			      for(var i = 0; i < iMax;i++){
+	 			          if(aoData[n].name == "iSortCol_"+i){
+	 			               sortObj[mDataObj["mDataProp_"+ aoData[n].value]] = aoData[++n].value;
+	 			               n++;
+	 			          }else{
+	 			              break;
+	 			          }
+	 			      }
 	 			  }
 	 			}
-	 			 for(var p in sortObj){
-	 			    aoData.push( { "name": p, "value": sortObj[p] } );
-	 			 }
+	 			for(var p in sortObj){
+	 			    aoData.push( { "name": "sort['"+p+"']", "value": sortObj[p] } );
+	 			}
 	 			$('#example thead tr th input[type="text"]').each( function (i) {
 	 			  aoData.push( { "name": "filter['"+this.name+"']", "value": this.value } );
 	 			});

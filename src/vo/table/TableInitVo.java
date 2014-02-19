@@ -4,7 +4,9 @@
 package vo.table;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -16,13 +18,13 @@ public class TableInitVo {
   private boolean bServerSide = true;
   private int iDisplayLength = 10;
   private String[][] aLengthMenu = new String[][] { { "10", "25", "50", "-1" }, { "10", "25", "50", "ALL" } };
-  private String sAjaxSource; // like /datatable/queryList.action",
   private List<TableHeaderVo> aoColumns = new ArrayList<TableHeaderVo>();
 
   // //additional properties
   private String idName = "id";
   private String actionHtml = "";
-
+  private Map<String,TableActionVo> actions = new LinkedHashMap<String,TableActionVo>();
+  
   public boolean isbProcessing() {
     return bProcessing;
   }
@@ -55,14 +57,6 @@ public class TableInitVo {
     this.aLengthMenu = aLengthMenu;
   }
 
-  public String getsAjaxSource() {
-    return sAjaxSource;
-  }
-
-  public void setsAjaxSource(String sAjaxSource) {
-    this.sAjaxSource = sAjaxSource;
-  }
-
   public List<TableHeaderVo> getAoColumns() {
     return aoColumns;
   }
@@ -88,7 +82,16 @@ public class TableInitVo {
   }
 
   public void addAction(TableActionVo action) {
+    this.actions.put (action.getActionName(),action);
     this.actionHtml += action.toString();
+  }
+
+  public Map<String, TableActionVo> getActions() {
+    return actions;
+  }
+
+  public void setActions(Map<String, TableActionVo> actions) {
+    this.actions = actions;
   }
 
 }
