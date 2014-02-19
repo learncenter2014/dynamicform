@@ -55,14 +55,18 @@
 			</result>
 		</action>
 
-        <action name="dataView" class="actions.DataPageViewAction" method="loadDataByTarget">
-            <result name="success">/pages/menu_datainput/dataView.jsp</result>
+        <action name="dataView" class="actions.DataPageViewAction" method="loadPaients">
+            <result name="success" type="freemarker">/ftl/datainput/patientView.ftl</result>
         </action>
+        <action name="dataTemplateView" class="actions.DataPageViewAction" method="loadTemplates">
+            <result name="success" type="freemarker">/ftl/datainput/templateView.ftl</result>
+        </action>
+
         <action name="dataRecordInput" class="actions.DataPageInputAction" method="input">
             <result name="success" type="freemarker">/ftl/html.ftl</result>
         </action>
         <action name="dataRecordInputSubmit" class="actions.DataPageInputAction" method="save">
-
+            <result name="success" type="freemarker">/ftl/datainput/saveSuccess.ftl</result>
         </action>
         <action name="dataRecordDelete" class="actions.DataPageInputAction" method="save">
 
