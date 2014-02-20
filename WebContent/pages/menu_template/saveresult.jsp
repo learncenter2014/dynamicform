@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<%@ include file="commonHeader.jsp"%>
+<%@ include file="/pages/commonHeader.jsp"%>
 
 <body>
-  <span style="color:green">操作模板(<s:property value="name"/>)成功!</span>
+  <span style="color:green">操作模板(<s:property value="label"/>)成功!</span>
 </body>
 </body>
 </html>

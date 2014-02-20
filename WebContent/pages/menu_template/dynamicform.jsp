@@ -43,7 +43,6 @@
   <div id="maindynamicform" style="position:absolute;left:0px;top:50px;width:80%;height:80%"></div>
   <div id="dialog_elt" title="参数设置区"></div>
   <div id="dialog_file" title="系统模版列表区"></div>
-  <div id="dialog_message" title="系统消息区"></div>
   </div>
   <script type="text/javascript">
             jQuery(document).ready(function() {
@@ -56,9 +55,14 @@
                     buttons : {
                         Save : function() {
                             var url = jQuery("#x_file").val();
-                            var label = jQuery("#x_file option:selected").text();
-                            load_xml({path:url,label:label});
-                            jQuery(this).dialog('close');
+                            if(url==null){
+                                jQuery("#dialog_message").html('<span style="color:red">没有有效的模版!</span>');
+                                jQuery("#dialog_message").dialog(); 
+                            }else{ 
+                                var label = jQuery("#x_file option:selected").text();
+                                load_xml({path:url,label:label});
+                                jQuery(this).dialog('close');
+                           }
                         },
                         Cancel : function() {
                             jQuery(this).dialog('close');
@@ -76,14 +80,11 @@
                     modal : true,
                     buttons : {
                         Save : function() {
-                            var bValid = true;
-                            var _no = jQuery("#e_id").val();
 
-                            if (bValid) {
-                                saveInputPanel(_no);
-                                initDrop();
-                                jQuery(this).dialog('close');
-                            }
+                            var _no = jQuery("#e_id").val();
+                            saveInputPanel(_no);
+                            initDrop();
+                            jQuery(this).dialog('close');
                         },
                         Cancel : function() {
                             initDrop();

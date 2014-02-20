@@ -99,6 +99,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
         BusinessResult br = fb.getLeafByName(this.name);
         TemplateBean al = (TemplateBean) br.getResponseData();
         if (al != null) {
+          this.label = al.getLabel();
           fb.deleteLeaf(al.get_id().toString());
         }
       }

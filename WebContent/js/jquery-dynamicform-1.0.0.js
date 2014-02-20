@@ -602,6 +602,8 @@
                     
                     var ref = this.elementArray[_no];
                     if(ref.type=="form"){
+                        //reset all cache data.
+                        this.resetGlobalVar();
                         jQuery.ajax({
                             async : false,
                             type : "GET",
@@ -612,9 +614,10 @@
                                 jQuery("#dialog_message").dialog();
                             }
                         });
+                    }else{
+                        delete this.elementArray[_no];
                     }
-                           
-                    delete this.elementArray[_no];
+                    
                     //remove DOM node from DOM tree of Form.
                     jQuery("#block_"+_no).remove();
                 }

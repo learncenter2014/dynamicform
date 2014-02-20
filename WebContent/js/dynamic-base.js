@@ -92,8 +92,14 @@ function load_xml( options ) {
 /**
  * xml and html
  */ 
-function save_xml() { 
-    jQuery.dynamicplugin.saveXml();
+function save_xml() {
+    if(jQuery.dynamicplugin.formId==null){
+        jQuery("#dialog_message").html('<span style="color:red">请创建新的模版或者打开已创建的模版!</span>');
+        jQuery("#dialog_message").dialog(); 
+    }else{
+        jQuery.dynamicplugin.saveXml();
+    }
+    
 }
 
 /**

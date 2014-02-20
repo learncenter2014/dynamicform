@@ -25,6 +25,9 @@
 		.ui-dialog {
 			z-index: 2000;
 		}
+		body{
+		  background:none repeat scroll 0 0 rgb(255, 255, 255);
+		}
     </style>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -66,5 +69,6 @@
   </section>
       <!--common script for all pages-->
       <script src="jslib/flatlab/js/common-scripts.js"></script>
+      <div id="dialog_message" title="系统消息区"></div>
   </body>
 </html>

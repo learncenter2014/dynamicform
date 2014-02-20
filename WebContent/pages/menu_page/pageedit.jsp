@@ -29,8 +29,9 @@
             </s:else>
           </label>
         </s:iterator>
+        <br>
+        <s:submit value="提交" cssClass="btn btn-info"></s:submit>
        </div>
-       <s:submit value="提交"></s:submit>
     </s:form>
 </body>
 
