@@ -20,7 +20,7 @@ public class MongoDBConnectionFactory {
   private static Map<String, Datastore> dbRef = new HashMap<String, Datastore>();
   static {
     try {
-      mongoClient = new MongoClient("192.168.1.5");
+      mongoClient = new MongoClient("127.0.0.1");
     } catch (UnknownHostException e) {
       LOG.error("this exception [#0]", e.getMessage());
     }

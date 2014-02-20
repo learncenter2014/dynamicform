@@ -1,22 +1,17 @@
 package actions;
 
-import bl.beans.TemplateBean;
-import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.DataBusiness;
-import bl.mongobus.FormBusiness;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import core.Constants;
 import core.TemplateGenerator;
 import core.TemplateHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.util.ServletContextAware;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,56 +19,35 @@ import java.util.Map;
 /**
  * Created by wangronghua on 14-2-9.
  */
-public class DataPageInputAction extends ActionSupport implements ServletContextAware {
-
-  private ServletContext servletContext = null;
+public class DataPageInputAction extends ActionSupport {
   private String userData;
   private String templateId;
-
-  private String patientId;
+  private String targetId;
   private String userId;
 
   private String result;
 
   public String input() {
-    HttpServletRequest request = ServletActionContext.getRequest();
-    this.patientId = request.getParameter("patientId");
-    this.templateId = request.getParameter("templateId");
-    if(templateId == null) return ERROR;
-
-    FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
-    BusinessResult br = fb.getLeafByName(templateId);
-    TemplateBean temp = (TemplateBean)br.getResponseData();
-    if(temp == null) return ERROR;
-    String fullPath = this.servletContext.getRealPath(temp.getPath());
-
+    String templateId = "dynamicform";
     TemplateGenerator g = new TemplateGenerator();
-    g.genTemplate(fullPath, templateId + ".ftl");
-
-    Map map = DataBusiness.get().get(templateId, patientId, userId);
-    if(map == null) {
-      map = new HashMap();
-      map.put("patientId", patientId);
-      map.put("templateId", templateId);
-    }
-    result = TemplateHelper.getTemplate(templateId, map);
-
+    g.genTemplate("/Users/wangronghua/workspace/DynamicForm/testresources/dynamicform.xml", "dynamicform.ftl");
+    Map map = DataBusiness.get().get(templateId);
+    result = TemplateHelper.getTemplate("dynamicform", map);
+//    try {
+//      PrintWriter out = ServletActionContext.getResponse().getWriter();
+//      out.write(result);
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//      // todo handle exception
+//    }
     return SUCCESS;
   }
 
   public String save() {
-    HttpServletRequest request = ServletActionContext.getRequest();
-    this.patientId = request.getParameter("patientId");
-    this.templateId = request.getParameter("templateId");
+    String templateId = "dynamicform";
     //DataBusiness dataBusiness = (DataBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DATABUSINESS);
     Map<String, Object> paraMap = ActionContext.getContext().getParameters();
-    Map record = DataBusiness.get().get(templateId, patientId, userId);
-    if(null != record) {
-      DataBusiness.get().update(templateId, patientId, processMap(paraMap));
-    } else {
-      DataBusiness.get().insert(templateId, processMap(paraMap));
-    }
-
+    DataBusiness.get().insert(templateId, processMap(paraMap));
     // todo save user data to database
     return SUCCESS;
   }
@@ -87,8 +61,6 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
       if(value instanceof String[]) {
         String val = StringUtils.join((String[])value, ',');
         result.put(entry.getKey(), val);
-      } else {
-        result.put(entry.getKey(), entry.getValue());
       }
     }
     return result;
@@ -110,6 +82,14 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
     this.templateId = templateId;
   }
 
+  public String getTargetId() {
+    return targetId;
+  }
+
+  public void setTargetId(String targetId) {
+    this.targetId = targetId;
+  }
+
   public String getUserId() {
     return userId;
   }
@@ -118,28 +98,12 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
     this.userId = userId;
   }
 
-  public String getPatientId() {
-    return patientId;
-  }
-
-  public void setPatientId(String patientId) {
-    this.patientId = patientId;
-  }
-
   public String getResult() {
     return result;
   }
 
   public void setResult(String result) {
     this.result = result;
-  }
-
-  /**
-   * aware injection of struts2
-   */
-  @Override
-  public void setServletContext(ServletContext context) {
-    this.servletContext = context;
   }
 
 }
