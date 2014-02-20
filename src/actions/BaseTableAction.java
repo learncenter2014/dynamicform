@@ -3,96 +3,109 @@
  */
 package actions;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 import net.sf.json.JSONObject;
-import vo.DataQueryVo;
-import vo.table.TableActionVo;
+import vo.table.TableQueryVo;
 import vo.table.TableDataVo;
-import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
 import bl.common.BaseBusiness;
 
 import com.opensymphony.xwork2.ModelDriven;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
+ * Base Table Action
+ * 
  * @author gudong
- * @since $Date:2014-02-10$
+ * @since $Date:2014-02-20$
  */
-public class BaseTableAction extends BaseAction implements ModelDriven<DataQueryVo> {
+public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction implements ModelDriven<TableQueryVo> {
 
-  private static Logger log = LoggerFactory.getLogger(BaseTableAction.class);
+  private TableQueryVo model;
+  protected static BaseBusiness business;
+
+  /**
+   * The Action Prefix that will be append action. like : getRequest().getContextPath() + "/datatable".
+   * 
+   * @return
+   */
+  public abstract String getActionPrex();
+
   /**
    * 
+   * @return
    */
-  private static final long serialVersionUID = -5222876000116738224L;
+  public String getCustomJs() {
+    return null;
+  };
 
-  private DataQueryVo model;
-  private String actionPrex = "";
-  private BaseBusiness baseBusiness;
-  
-  public String getActionPrex() {
-    return actionPrex;
+  public String getTableTitle() {
+    return null;
   }
 
-  public void setActionPrex(String actionPrex) {
-    this.actionPrex = actionPrex;
+  public String getTableId() {
+    return this.getClass().getSimpleName() + "_table";
   }
 
-  public BaseBusiness getBaseBusiness() {
-    return baseBusiness;
-  }
+  /**
+   * 
+   * @return
+   */
+  public abstract TableInitVo getTableInit();
 
-  public void setBaseBusiness(BaseBusiness baseBusiness) {
-    this.baseBusiness = baseBusiness;
-  }
-
-  public String index() throws Exception {
-    actionPrex = getRequest().getContextPath() + "/datatable";
-    return SUCCESS;
-  }
-
-  public String initTable() throws Exception {
-    TableInitVo init = new TableInitVo();
-    boolean headerVisible = false;
-    init.getAoColumns().add(new TableHeaderVo("username", "USERNAME"));
-    init.getAoColumns().add(new TableHeaderVo("age", "AGE").addSearchOptions(new String[][] { { "1", "0" }, { "Male", "Female" } }));
-    init.getAoColumns().add(new TableHeaderVo("address", "ADDRESS", headerVisible));
-
-    if (!headerVisible) {
-      init.addAction(new TableActionVo("showDetails", "<img src='" + getRequest().getContextPath()
-          + "/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png" + "'/>"));
+  /**
+   * 
+   * @return
+   */
+  public B getBusiness() {
+    if (business == null) {
+      ParameterizedType t = (ParameterizedType) this.getClass().getGenericSuperclass();
+      Type[] ts = t.getActualTypeArguments();
+      try {
+        business = (B) ((Class<B>) ts[0]).newInstance();
+      } catch (InstantiationException | IllegalAccessException e) {
+        e.printStackTrace();
+        business = null;
+      }
     }
-    init.addAction(new TableActionVo("edit", "<img src='" + getRequest().getContextPath()
-        + "/img/pencil.png" + "'/>").disableAjax());
-    init.addAction(new TableActionVo("delete", "<img src='" + getRequest().getContextPath()
-        + "/img/edit_remove.png" + "'/>","Are you sure delete?"));
-    init.addAction(new TableActionVo("lockUser", "<img src='" + getRequest().getContextPath()
-        + "/img/lock.png" + "'/>","Are you sure lock the user?"));
+    return (B)business;
+  }
 
+  /**
+   * 
+   * @return
+   * @throws Exception
+   */
+  public String index() throws Exception {
+    return "tableIndex";
+  }
+
+  /**
+   * initTable
+   * 
+   * @return
+   * @throws Exception
+   */
+  public String initTable() throws Exception {
     // json
-    JSONObject jsonObject = JSONObject.fromObject(init);
+    JSONObject jsonObject = JSONObject.fromObject(getTableInit());
     writeJson(jsonObject);
     return null;
   }
 
+  /**
+   * queryTable
+   * 
+   * @return
+   * @throws Exception
+   */
   public String queryTable() throws Exception {
-    TableDataVo table = new BaseBusiness().query(getModel());
-    table.setiTotalDisplayRecords(100);
-    table.setiTotalRecords(100);
-
-    TestGirdData data;
-    for (int i = 0; i < getModel().getIDisplayLength(); i++) {
-      data = new TestGirdData();
-      data.setId(getModel().getIDisplayStart() + (i + 1));
-      if (i % 2 == 0)
-        data.setAge(1);
-      else
-        data.setAge(0);
-      data.setUsername("test username" + data.getId());
-      data.setAddress("test address" + data.getId());
-      table.getAaData().add(data);
-    }
+    int count = getBusiness().getCount(getModel());
+    TableDataVo table = getBusiness().query(getModel());
+    table.setsEcho(getModel().getSEcho());
+    table.setiTotalDisplayRecords(count);
+    table.setiTotalRecords(count);
 
     // json
     JSONObject jsonObject = JSONObject.fromObject(table);
@@ -101,9 +114,9 @@ public class BaseTableAction extends BaseAction implements ModelDriven<DataQuery
   }
 
   @Override
-  public DataQueryVo getModel() {
+  public TableQueryVo getModel() {
     if (model == null) {
-      model = new DataQueryVo();
+      model = new TableQueryVo();
     }
     return model;
   }

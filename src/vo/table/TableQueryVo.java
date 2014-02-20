@@ -1,7 +1,7 @@
 /**
  * 
  */
-package vo;
+package vo.table;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @author gudong
  * 
  */
-public class DataQueryVo implements Serializable {
+public class TableQueryVo implements Serializable {
   private int sEcho;
   private int iDisplayStart;
   private int iDisplayLength;

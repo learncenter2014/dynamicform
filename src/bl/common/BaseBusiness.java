@@ -3,7 +3,7 @@
  */
 package bl.common;
 
-import vo.DataQueryVo;
+import vo.table.TableQueryVo;
 import vo.table.TableDataVo;
 
 /**
@@ -18,12 +18,16 @@ public class BaseBusiness<F extends BeanContext, L extends BeanContext> implemen
      * @param limt
      * @return
      */
-    public TableDataVo query(DataQueryVo query) {
+    public TableDataVo query(TableQueryVo queryParam) {
         TableDataVo dataTable = new TableDataVo();
-        dataTable.setsEcho(query.getSEcho());
+        dataTable.setsEcho(queryParam.getSEcho());
         return dataTable;
     }
 
+    public int getCount(TableQueryVo queryParam){
+       return 0;
+    }
+    
     @Override
     public L constructLeafBean() {
         // TODO Auto-generated method stub

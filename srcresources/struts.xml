@@ -14,6 +14,7 @@
 		<default-action-ref name="index" />
 		<global-results>
 			<result name="error">/pages/generalError.jsp</result>
+			<result name="tableIndex">/pages/table/tableIndex.jsp</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception" result="error" />
@@ -76,13 +77,9 @@
 
 	</package>
 	
-	<package name="datatable" namespace="/datatable" extends="default">
-        <action name="index" class="actions.BaseTableAction" method="index">
-           <result name="success">/pages/data_table/queryList.jsp</result>
-		</action>
-		<action name="initTable" class="actions.BaseTableAction" method="initTable">
-		</action>
-		<action name="queryTable" class="actions.BaseTableAction" method="queryTable">
-		</action>
+	<package name="user" namespace="/user" extends="default">
+        <action name="index" class="actions.UserAction" method="index"/>
+		<action name="initTable" class="actions.UserAction" method="initTable"/>
+		<action name="queryTable" class="actions.UserAction" method="queryTable"/>
 	</package>
 </struts>

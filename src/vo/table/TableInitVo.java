@@ -4,9 +4,7 @@
 package vo.table;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 
@@ -22,9 +20,8 @@ public class TableInitVo {
 
   // //additional properties
   private String idName = "id";
-  private String actionHtml = "";
-  private Map<String,TableActionVo> actions = new LinkedHashMap<String,TableActionVo>();
-  
+  private boolean hasDetails = false;
+
   public boolean isbProcessing() {
     return bProcessing;
   }
@@ -73,25 +70,12 @@ public class TableInitVo {
     this.idName = idName;
   }
 
-  public void setActionHtml(String actionHtml) {
-    this.actionHtml = actionHtml;
+  public boolean isHasDetails() {
+    return hasDetails;
   }
 
-  public String getActionHtml() {
-    return actionHtml;
-  }
-
-  public void addAction(TableActionVo action) {
-    this.actions.put (action.getActionName(),action);
-    this.actionHtml += action.toString();
-  }
-
-  public Map<String, TableActionVo> getActions() {
-    return actions;
-  }
-
-  public void setActions(Map<String, TableActionVo> actions) {
-    this.actions = actions;
+  public void setHasDetails(boolean hasDetails) {
+    this.hasDetails = hasDetails;
   }
 
 }
