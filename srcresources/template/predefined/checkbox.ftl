@@ -7,5 +7,14 @@
                 ${option.name}
             </label>
         </#list>
+        <script type="text/javascript">
+        ${"
+        <#if ${name}??>
+            <#list ${name}?split(';') as checkedValue>
+                $(\"input[name=${name}][value='${'$'}{checkedValue!}']\").attr('checked','checked');
+            </#list>
+        </#if>
+        "}
+        </script>
     </div>
 </div>
