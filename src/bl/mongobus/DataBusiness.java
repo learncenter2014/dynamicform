@@ -19,18 +19,19 @@ public class DataBusiness {
     return business;
   }
 
-  public Map get(String templateId) {
+  public Map get(String templateId, String patientId, String userId) {
     if(StringUtils.isBlank(templateId)) {
       return new HashMap();
     }
     DB db = MongoDBConnectionFactory.getConnection(this.dbName);
     DBCollection dc = db.getCollection(templateId);
-    DBObject dbObject = dc.findOne();
-    Map resultMap ;
+
+    BasicDBObject objectQuery = new BasicDBObject("patientId", patientId);
+
+    DBObject dbObject = dc.findOne(objectQuery);
+    Map resultMap = null;
     if(dbObject != null) {
       resultMap  = dbObject.toMap();
-    } else {
-      resultMap = new HashMap();
     }
 
     return resultMap;
@@ -50,8 +51,19 @@ public class DataBusiness {
     }
   }
 
-  public void update(String templateId, Map map) {
-
+  public void update(String templateId, String patientId, Map map) {
+    if(StringUtils.isBlank(templateId)) {
+      return ;
+    }
+    DB db = MongoDBConnectionFactory.getConnection(this.dbName);
+    DBCollection dc = db.getCollection(templateId);
+    BasicDBObject objectQuery = new BasicDBObject("patientId", patientId);
+    DBObject dbObject = new BasicDBObject();
+    dbObject.putAll(map);
+    WriteResult wr = dc.update(objectQuery, dbObject);
+    if (wr.getError() != null) {
+      throw new MiServerException.General("error.mongodb.writedata",wr.getError());
+    }
   }
 
   public void delete() {

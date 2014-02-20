@@ -4,9 +4,12 @@
     <#list options as option>
         <div class="radio">
             <label>
-                <input type="radio" id="${id!}" name="${name!}" value="${option.value}"> ${option.name}
+                <input type="radio" name="${name}" value="${option.value}"> ${option.name}
             </label>
         </div>
     </#list>
+        <script type="text/javascript">
+            $('input[name=${name}][value="${'$'}{${name}!'${value!}'}"]').attr("checked",'checked');
+        </script>
     </div>
 </div>

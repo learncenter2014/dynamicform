@@ -22,7 +22,7 @@ public class ListValueParser {
         String optionStr = optionStrs[index];
         String[] option = optionStr.split(Constants.KEY_VALUE_SPLIT);
         if(option.length > 1) {
-          options[index] = new NameValueBean(option[1], option[0]);
+          options[index] = new NameValueBean(option[0], option[1]);
         } else if(option.length == 1) {
           options[index] = new NameValueBean(option[0], option[0]);
         } else {
