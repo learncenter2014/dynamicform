@@ -35,6 +35,20 @@ public class FormAction extends ActionSupport implements ServletContextAware {
     private String name = null;
     private String data = null;
     private String label = null;
+    private String result = null;
+    /**
+     * @return the result
+     */
+    public String getResult() {
+      return result;
+    }
+
+    /**
+     * @param result the result to set
+     */
+    public void setResult(String result) {
+      this.result = result;
+    }
 
     public String getLabel() {
         return label;
@@ -78,7 +92,19 @@ public class FormAction extends ActionSupport implements ServletContextAware {
     public String execute() throws Exception {
         return super.execute();
     }
-
+  
+    public String deleteTemplate() {
+      if (this.name != null) {
+        FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
+        BusinessResult br = fb.getLeafByName(this.name);
+        TemplateBean al = (TemplateBean) br.getResponseData();
+        if (al != null) {
+          fb.deleteLeaf(al.get_id().toString());
+        }
+      }
+      return ActionSupport.SUCCESS;
+    }
+    
     public String savexml() {
 
         if (this.name != null && this.data != null && this.label != null) {

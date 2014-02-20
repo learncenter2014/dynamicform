@@ -488,8 +488,14 @@
                         data :dataXml}),
                 dataType: "text",
                 success : function(data, status) {
-                   alert("Save xml is " + status ) ;
-            }});
+                   jQuery("#dialog_message").html(data);
+                   jQuery("#dialog_message").dialog();
+                },
+                error: function(){
+                    jQuery("#dialog_message").html('<span style="color:red">后台错误!</span>');
+                    jQuery("#dialog_message").dialog(); 
+                }
+            });
         },
         parseXml: function(parameters){
             //reset all cache data.
@@ -543,6 +549,10 @@
                     });
                     
                     htmlBuffer = createForm.toHtml();
+                },
+                error: function(){
+                    jQuery("#dialog_message").html('<span style="color:red">后台错误!</span>');
+                    jQuery("#dialog_message").dialog(); 
                 }
              });
             return htmlBuffer;
@@ -589,6 +599,21 @@
                 var _no = id;
                 if (_no != null) {
                     //remove cache data from memory.
+                    
+                    var ref = this.elementArray[_no];
+                    if(ref.type=="form"){
+                        jQuery.ajax({
+                            async : false,
+                            type : "GET",
+                            url : "template/deletetemplate.action?name="+ref.name,
+                            cache : false,
+                            success : function(data, status) {
+                                jQuery("#dialog_message").html(data);
+                                jQuery("#dialog_message").dialog();
+                            }
+                        });
+                    }
+                           
                     delete this.elementArray[_no];
                     //remove DOM node from DOM tree of Form.
                     jQuery("#block_"+_no).remove();

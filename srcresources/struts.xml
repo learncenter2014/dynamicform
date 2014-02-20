@@ -31,6 +31,10 @@
 		<action name="save*" class="actions.FormAction" method="save{1}">
 			<result name="success">/pages/menu_template/saveresult.jsp</result>
 		</action>
+		<action name="deletetemplate" class="actions.FormAction" method="deleteTemplate">
+			<result name="success">/pages/menu_template/saveresult.jsp
+			</result>
+		</action>
 	</package>
 	<package name="page" namespace="/page" extends="default">
 		<action name="pageedit" class="actions.PageAction" method="pageEdit">

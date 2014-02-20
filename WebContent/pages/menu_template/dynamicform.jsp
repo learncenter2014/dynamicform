@@ -43,6 +43,7 @@
   <div id="maindynamicform" style="position:absolute;left:0px;top:50px;width:80%;height:80%"></div>
   <div id="dialog_elt" title="参数设置区"></div>
   <div id="dialog_file" title="系统模版列表区"></div>
+  <div id="dialog_message" title="系统消息区"></div>
   </div>
   <script type="text/javascript">
             jQuery(document).ready(function() {
