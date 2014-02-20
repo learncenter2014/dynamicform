@@ -25,7 +25,7 @@ public class WebInitListener implements ServletContextListener {
             LOG.error("Reading file has some exception #0", e.getMessage());
         }
         LOG.info("init server.properties file");
-        ServerContext.init(sce.getServletContext().getClass().getResourceAsStream("server.properties"));
+        ServerContext.init(WebInitListener.class.getResourceAsStream("/server.properties"));
 
         LOG.info("init MongoDB");
         MongoDBConnectionFactory.initDb();

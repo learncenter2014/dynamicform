@@ -1,10 +1,14 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import util.ServerContext;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import bl.beans.PageBean;
@@ -16,17 +20,23 @@ import bl.mongobus.FormBusiness;
 import bl.mongobus.PageBusiness;
 
 public class PageAction extends ActionSupport {
-    public static final String PATIENTNAME = "patient";
-    public static final String REVISITNAME = "revisit";
     private List<String[]> templateList = new ArrayList<String[]>();
-    private String[] patientCheckbox = new String[] {};
+    private final Map<String, String[]> patientCheckbox = new LinkedHashMap<String, String[]>();
+    private final Map<String, String> pageMap = new LinkedHashMap<String, String>();
 
-    private final Map<String, String> pageMap = new LinkedHashMap<String, String>() {
-        {
-            put(PATIENTNAME, "病人管理配置");
-            put(REVISITNAME, "随访管理配置");
+    public PageAction() {
+        String pagemanager = ServerContext.getValue("pagemanager");
+        String[] array = pagemanager.split(",");
+        // key=value
+        for (int i = 0; i < array.length; i++) {
+            String[] keyValue = array[i].split("=");
+            pageMap.put(keyValue[0], keyValue[1]);
         }
-    };
+    }
+
+    public Map<String, String[]> getPatientCheckbox() {
+        return patientCheckbox;
+    }
 
     public Map<String, String> getPageMap() {
         return pageMap;
@@ -47,39 +57,38 @@ public class PageAction extends ActionSupport {
         this.templateList = templateList;
     }
 
-    public String[] getPatientCheckbox() {
-        return patientCheckbox;
-    }
-
-    public void setPatientCheckbox(String[] patientCheckbox) {
-        this.patientCheckbox = patientCheckbox;
-    }
-
     public String pageSave() {
         try {
             PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
             FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
 
-            Object record = pab.getLeafByName(this.PATIENTNAME).getResponseData();
-            List<TemplateBean> tbs = new ArrayList<TemplateBean>();
-            if (this.patientCheckbox != null) {
-                for (int i = 0; i < this.patientCheckbox.length; i++) {
-                    TemplateBean tb = (TemplateBean) fb.getLeafByName(this.patientCheckbox[i]).getResponseData();
-                    tbs.add(tb);
+            Iterator<String> it = this.pageMap.keySet().iterator();
+            Map<String, Object> parameters = ActionContext.getContext().getParameters();
+            while (it.hasNext()) {
+                String key = it.next();
+                String[] arrayTemplates = (String[]) parameters.get(key);
+                Object record = pab.getLeafByName(key).getResponseData();
+                ArrayList<TemplateBean> ar = new ArrayList<TemplateBean>();
+                for (int i = 0; i < arrayTemplates.length; i++) {
+                    Object o = fb.getLeafByName(arrayTemplates[i]).getResponseData();
+                    if (o != null) {
+                        ar.add((TemplateBean) o);
+                    }
                 }
-            }
-            // update patient info in page table.
-            if (record != null) {
-                PageBean orginalBean = (PageBean) record;
-                PageBean newBean = (PageBean) orginalBean.clone();
-                newBean.setTemplateList(tbs);
-                pab.updateLeaf(orginalBean, newBean);
-            } else {
-                PageBean pbean = new PageBean();
-                pbean.setName(this.PATIENTNAME);
-                pbean.setTemplateList(tbs);
-                pbean.setLabel("病人管理页面");
-                pab.createLeaf(pbean);
+
+                // update patient info in page table.
+                if (record != null) {
+                    PageBean orginalBean = (PageBean) record;
+                    PageBean newBean = (PageBean) orginalBean.clone();
+                    newBean.setTemplateList(ar);
+                    pab.updateLeaf(orginalBean, newBean);
+                } else {
+                    PageBean pbean = new PageBean();
+                    pbean.setName(key);
+                    pbean.setLabel(this.pageMap.get(key));
+                    pbean.setTemplateList(ar);
+                    pab.createLeaf(pbean);
+                }
             }
 
         } catch (Exception e) {
@@ -101,14 +110,19 @@ public class PageAction extends ActionSupport {
             }
 
             PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
-            Object record = pab.getLeafByName(this.PATIENTNAME).getResponseData();
+            Object record = pab.getAllLeaves().getResponseData();
+
             if (record != null) {
-                List<TemplateBean> listRecord = ((PageBean) record).getTemplateList();
-                String[] createString = new String[listRecord.size()];
-                for (int i = 0; i < listRecord.size(); i++) {
-                    createString[i] = listRecord.get(i).getName();
+
+                List<PageBean> pbs = ((List<PageBean>) record);
+                for (int j = 0; j < pbs.size(); j++) {
+                    List<TemplateBean> listRecord = pbs.get(j).getTemplateList();
+                    String[] createString = new String[listRecord.size()];
+                    for (int i = 0; i < listRecord.size(); i++) {
+                        createString[i] = listRecord.get(i).getName();
+                    }
+                    this.patientCheckbox.put(pbs.get(j).getName(), createString);
                 }
-                this.patientCheckbox = createString;
             }
         } catch (Exception e) {
             LOG.error("this exception [#0]", e.getMessage());
