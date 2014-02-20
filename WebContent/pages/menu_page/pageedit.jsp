@@ -14,7 +14,7 @@
 <body>
 
     <h4 style="text-align: center;">页面构建</h4>
-    <s:form action="page/pagesave.action">
+    <s:form action="pagesave" namespace="/page">
        <div>
         <p style="margin-right:20px">病人管理配置</p>
         <s:iterator value="templateList" var="sub" status="id">
