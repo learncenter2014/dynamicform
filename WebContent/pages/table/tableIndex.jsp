@@ -42,12 +42,10 @@
   
        <!-- page start-->
        <section class="panel">
-           <header class="panel-heading">
-               DataTables hidden row details example
-           </header>
+           <header class="panel-heading" style="text-align: center;">${tableTitle}</header>
            <div class="panel-body">
                  <div class="adv-table">
-                     <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="example">
+                     <table  id="${tableId}" cellpadding="0" cellspacing="0" border="0" class="display table table-bordered">
                        <thead>
                        </thead>
                       <tbody>
@@ -76,7 +74,13 @@
 
 <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/ZeroClipboard.js" type="text/javascript" charset="utf-8" ></script>
 <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/TableTools.js" type="text/javascript" charset="utf-8" ></script>
-    <script type="text/javascript">
+
+
+
+
+<script type="text/javascript">
+     var cellFormatter = {};
+     var actions = [];
       /* Formating function for row details */
       function fnFormatDetails ( oTable, nTr ){
           var aData = oTable.fnGetData( nTr );
@@ -90,92 +94,82 @@
           sOut += '</table>';
           return sOut;
       }
-      
-      function showDetails(oTableObj,thisObj){
-          var oTable = $('#example').dataTable();
-          var oSettings = oTable.fnSettings();
-          var nTr = $(thisObj).parents('tr')[0];
-          if ( oTable.fnIsOpen(nTr) ){
-             // This row is already open - close it 
-              $('img',thisObj).attr("src" , "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png");
-              oTable.fnClose( nTr );
-          }else{
-            //   Open this row 
-              $('img',thisObj).attr("src" , "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_close.png");
-              oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
-              $('td.details',$(nTr).next()).attr("colspan",nTr.childNodes.length);
-          }
-      }
-
+ 
  $(document).ready(function() {
-     
      var tableUrl = "${actionPrex}/initTable.action";
      var param = {};
      $.getJSON( tableUrl, param, function (initParam) { 
          for(var i=0;i<initParam.aoColumns.length ; i++){
-             if(initParam.aoColumns[i].mData == "age"){
-                 var evalStr = initParam.aoColumns[i].render
-                 initParam.aoColumns[i].mRender = function ( data, type, full ) {
-                     if(data == 1){return 'Male';}else if(data == 0){return 'Female';}else{return 'Unkown';} 
-		        }
+             if(typeof cellFormatter[initParam.aoColumns[i].mData] == "function"){
+                 initParam.aoColumns[i].mRender = cellFormatter[initParam.aoColumns[i].mData];
              }
          }
-         
 	     /*
 	      * Initialse DataTables, with no sorting on the 'details' column
 	      */
-	     var oTable = $('#example').dataTable( {
+	     var oTable = $('#${tableId}').dataTable( {
 	         "bProcessing": initParam.bProcessing,
 	 		 "bServerSide": initParam.bServerSide,
 	 		 "iDisplayLength":initParam.iDisplayLength,
 	 		 "aLengthMenu": initParam.aLengthMenu,
 	 		 "aoColumns": initParam.aoColumns,
 	 		 "sAjaxSource": "${actionPrex}/queryTable.action",
-	 		 "bFilter":false,
-	 		 //"aaSorting": [[1, 'asc']],
+	 		 "bFilter":true,
 	 		  
 		     "fnDrawCallback": function ( oSettings ) {
-		            if(initParam.actionHtml.length > 0){
-		                if($('#example thead tr th:first[arias="actions"]').length == 0){
-		                    $('#example thead tr').each( function () {
+		            if(initParam.hasDetails > 0){
+		                if($('#${tableId} thead tr th:first[arias="showDetails"]').length == 0){
+		                    $('#${tableId} thead tr').each( function () {
 		                          var thObj =document.createElement( 'th' );
-		                          thObj.setAttribute("arias","actions");
-		                          thObj.innerHTML = '<img src="<%=request.getContextPath()%>/img/edit_add.png"/><br/>ACTION';
+		                          thObj.setAttribute("arias","showDetails");
 			                      this.insertBefore(thObj , this.childNodes[0] );
-			                      $('img',$(thObj)).live('click', function (i) {
-					                    window.location.href = "${actionPrex}/addTable.action";
-					              });
 			                 } );
 		                }
-			            $('#example tbody tr').each( function (i) {
-			                var nCloneTd = document.createElement( 'td' );
-			                nCloneTd.className = "center";
-			                nCloneTd.innerHTML =  initParam.actionHtml ;
-			                this.insertBefore(  nCloneTd , this.childNodes[0] );
-			                
-			                var trObj = this;
-			                $('span[actionName]',$(nCloneTd)).live('click', function (i) {
-			                  //  eval($(this).attr('actionName')+"(oTable,this)");
-			                  var actionName = $(this).attr('actionName');
-			                  if(actionName == "showDetails"){
-			                      showDetails(oTable,trObj);
-			                  }else{
-			                      if (confirm(initParam.actions[actionName].msg)){
-			                          if(initParam.actions[actionName].ajax){
-			                              $.getJSON( "${actionPrex}/" + actionName+ ".action", {"id":oTable.fnGetData( trObj )[initParam.idName]}, function (json) { 
-			                                  oTable.fnReloadAjax();
-					      	 		      } );
-			                          }else{
-			                              window.location.href = "${actionPrex}/" + actionName+ ".action";
-			                          }
-			                     }
-			                  }
-			                });
+		                var nCloneTd = document.createElement( 'td' );
+		                nCloneTd.innerHTML = '<img src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png">';
+		                nCloneTd.className = "center";
+			            $('#${tableId} tbody tr').each( function (i) {
+			                this.insertBefore(  nCloneTd.cloneNode( true ) , this.childNodes[0] );
+			            } );
+			            $('#${tableId} tbody td img').live('click', function () {
+			                var nTr = $(this).parents('tr')[0];
+			                if ( oTable.fnIsOpen(nTr) ){
+			                    // This row is already open - close it 
+			                     $(this).attr("src" , "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_open.png");
+			                     oTable.fnClose( nTr );
+			                }else{
+			                   //   Open this row 
+			                     $(this).attr("src" , "<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/examples/examples_support/details_close.png");
+			                     oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+			                     $('td.details',$(nTr).next()).attr("colspan",nTr.childNodes.length);
+			                 }
 			            } );
 		            }
+		            $("#${tableId}_filter").empty();
+		            if(actions.length > 0){
+		                for(var i=actions.length-1;i >=0 ; i--){
+		                    var aObj = document.createElement( 'button' );
+		                    aObj.setAttribute("onclick","actions["+i+"].action(this)");
+		                    aObj.setAttribute("for","${tableId}");
+		                    aObj.setAttribute("style","float:right;");
+		                    aObj.setAttribute("disabled","disabled");
+		                    aObj.setAttribute("multiSelect",actions[i].multiSelect);
+		                    aObj.innerHTML = actions[i].title;
+		                    aObj.className = "DTTT_button";
+		                    $("#${tableId}_filter").append(aObj);
+		                }
+		            }
+		            
 		            /* Add/remove class to a row when clicked on */
-		            $('#example tbody tr').live('click', function() {
+		            $('#${tableId} tbody tr').live('click', function() {
 		                $(this).toggleClass('row_selected');
+		                var selectRows = oTable.$('tr.row_selected');
+		                $("#${tableId}_filter button").attr("disabled","disabled");
+		                if(selectRows.length == 1){
+		                    $("#${tableId}_filter button").removeAttr("disabled");
+		                }else if(selectRows.length > 1){
+		                    $("#${tableId}_filter button[multiSelect='true']").removeAttr("disabled");
+		                }
 		            } );
 		     }, 
 	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
@@ -216,10 +210,10 @@
 	 			for(var p in sortObj){
 	 			    aoData.push( { "name": "sort['"+p+"']", "value": sortObj[p] } );
 	 			}
-	 			$('#example thead tr th input[type="text"]').each( function (i) {
+	 			$('#${tableId} thead tr th input[type="text"]').each( function (i) {
 	 			  aoData.push( { "name": "filter['"+this.name+"']", "value": this.value } );
 	 			});
-	 			$('#example thead tr th select[name]').each( function (i) {
+	 			$('#${tableId} thead tr th select[name]').each( function (i) {
 	 			  aoData.push( { "name": "filter['"+this.name+"']", "value": $(this).val() } );
 		 		});
 	 			 oSettings.jqXHR = $.ajax( {
@@ -237,16 +231,9 @@
 	        });
  	} );
  } );
-      
-      /*
-       * I don't actually use this here, but it is provided as it might be useful and demonstrates
-       * getting the TR nodes from DataTables
-       */
-      function fnGetSelected( oTableLocal )
-      {
-          return oTableLocal.$('tr.row_selected');
-      }
   </script>
+  
+  <script src="${customJs}" type="text/javascript"></script> 
 
   </body>
 
