@@ -114,6 +114,7 @@
      $.getJSON( tableUrl, param, function (initParam) { 
          for(var i=0;i<initParam.aoColumns.length ; i++){
              if(initParam.aoColumns[i].mData == "age"){
+                 var evalStr = initParam.aoColumns[i].render
                  initParam.aoColumns[i].mRender = function ( data, type, full ) {
                      if(data == 1){return 'Male';}else if(data == 0){return 'Female';}else{return 'Unkown';} 
 		        }
