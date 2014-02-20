@@ -37,8 +37,6 @@
         <sequence>
           <element name="element" type="tns:DynamicType" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
-        <attribute name="width" type="string" />
-        <attribute name="height" type="string" />
         <attribute name="legend" type="string" />
       </extension>
     </complexContent>
@@ -47,6 +45,8 @@
     <complexContent>
       <extension base="tns:Component">
         <attribute name="src" type="string" />
+        <attribute name="width" type="string" />
+        <attribute name="height" type="string" />
         <attribute name="helptext" type="string" />
       </extension>
     </complexContent>
