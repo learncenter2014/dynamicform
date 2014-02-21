@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Index;
 
 import bl.common.BeanContext;
 
-@Index(value = "name")
+@Index(background=true, value = "name")
 public class Bean implements BeanContext, Cloneable {
     @Id
     ObjectId _id;

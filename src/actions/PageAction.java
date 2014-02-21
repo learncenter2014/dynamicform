@@ -21,7 +21,7 @@ import bl.mongobus.PageBusiness;
 
 public class PageAction extends ActionSupport {
     private List<String[]> templateList = new ArrayList<String[]>();
-    private final Map<String, String[]> patientCheckbox = new LinkedHashMap<String, String[]>();
+    private final Map<String, List<TemplateBean>> patientCheckbox = new LinkedHashMap<String, List<TemplateBean>>();
     private final Map<String, String> pageMap = new LinkedHashMap<String, String>();
 
     public PageAction() {
@@ -34,7 +34,7 @@ public class PageAction extends ActionSupport {
         }
     }
 
-    public Map<String, String[]> getPatientCheckbox() {
+    public Map<String, List<TemplateBean>> getPatientCheckbox() {
         return patientCheckbox;
     }
 
@@ -117,11 +117,7 @@ public class PageAction extends ActionSupport {
                 List<PageBean> pbs = ((List<PageBean>) record);
                 for (int j = 0; j < pbs.size(); j++) {
                     List<TemplateBean> listRecord = pbs.get(j).getTemplateList();
-                    String[] createString = new String[listRecord.size()];
-                    for (int i = 0; i < listRecord.size(); i++) {
-                        createString[i] = listRecord.get(i).getName();
-                    }
-                    this.patientCheckbox.put(pbs.get(j).getName(), createString);
+                    this.patientCheckbox.put(pbs.get(j).getName(), listRecord);
                 }
             }
         } catch (Exception e) {
