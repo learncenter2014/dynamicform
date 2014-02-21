@@ -7,9 +7,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import net.sf.json.JSONObject;
-import vo.table.TableQueryVo;
+import net.sf.json.JsonConfig;
+import net.sf.json.processors.JsonValueProcessor;
 import vo.table.TableDataVo;
+import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
+import vo.table.TableQueryVo;
 import bl.common.BaseBusiness;
 
 import com.opensymphony.xwork2.ModelDriven;
@@ -89,7 +92,9 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
    */
   public String initTable() throws Exception {
     // json
-    JSONObject jsonObject = JSONObject.fromObject(getTableInit());
+    JsonConfig config =new JsonConfig();
+    config.setExcludes(new String[]{"searchOptions"});
+    JSONObject jsonObject = JSONObject.fromObject(getTableInit(),config);
     writeJson(jsonObject);
     return null;
   }
