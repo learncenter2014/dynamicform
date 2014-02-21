@@ -1,24 +1,31 @@
 package actions;
 
+import bl.beans.PageBean;
 import bl.beans.TemplateBean;
 import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.DataBusiness;
 import bl.mongobus.FormBusiness;
+import bl.mongobus.PageBusiness;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
 import core.Constants;
 import core.TemplateGenerator;
 import core.TemplateHelper;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.ServletContextAware;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +36,7 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   private ServletContext servletContext = null;
   private String userData;
   private String templateId;
-
+  private String pageName;
   private String patientId;
   private String userId;
 
@@ -45,29 +52,62 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
     BusinessResult br = fb.getLeafByName(templateId);
     TemplateBean temp = (TemplateBean)br.getResponseData();
     if(temp == null) return ERROR;
-    String fullPath = this.servletContext.getRealPath(temp.getPath());
-
+//    String fullPath = this.servletContext.getRealPath(temp.getPath());
+//
+//    TemplateGenerator g = new TemplateGenerator();
+//    g.genTemplate(fullPath, templateId + ".ftl");
+//
+//    Map map = DataBusiness.get().get(templateId, patientId, userId);
+//    if(map == null) {
+//      map = new HashMap();
+//      map.put("patientId", patientId);
+//      map.put("templateId", templateId);
+//    }
+    result = this.getHtmlStringByTemplate(temp);
+    return SUCCESS;
+  }
+  
+  private String getHtmlStringByTemplate(TemplateBean bean) {
+    String fullPath = this.servletContext.getRealPath(bean.getPath());
     TemplateGenerator g = new TemplateGenerator();
-    g.genTemplate(fullPath, templateId + ".ftl");
+    g.genTemplate(fullPath, bean.getName() + ".ftl");
 
-    Map map = DataBusiness.get().get(templateId, patientId, userId);
+    Map map = DataBusiness.get().get(bean.getName(), patientId, pageName, userId);
     if(map == null) {
       map = new HashMap();
       map.put("patientId", patientId);
-      map.put("templateId", templateId);
+      map.put("templateId", bean.getName());
+      map.put("pageName", pageName);
     }
-    result = TemplateHelper.getTemplate(templateId, map);
-
+    return TemplateHelper.getTemplate(templateId, map);
+  }
+  
+  public String loadPage() {
+    HttpServletRequest request = ServletActionContext.getRequest();
+    this.patientId = request.getParameter("patientId");
+    this.pageName = request.getParameter("pageName");
+    PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
+    PageBean record = (PageBean)pab.getLeafByName(pageName).getResponseData();
+    if(record == null) return ERROR;
+    
+    StringBuilder rb = new StringBuilder();
+    if(record != null) {
+      List<TemplateBean> tList = record.getTemplateList();
+      for(TemplateBean tBean : tList){
+        rb.append("\n").append(this.getHtmlStringByTemplate(tBean));
+      }
+    }
+    result = rb.toString();
     return SUCCESS;
   }
-
+  
   public String save() {
     HttpServletRequest request = ServletActionContext.getRequest();
     this.patientId = request.getParameter("patientId");
     this.templateId = request.getParameter("templateId");
     //DataBusiness dataBusiness = (DataBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DATABUSINESS);
     Map<String, Object> paraMap = ActionContext.getContext().getParameters();
-    Map record = DataBusiness.get().get(templateId, patientId, userId);
+    Map record = DataBusiness.get().get(templateId, patientId, pageName, userId);
     if(null != record) {
       DataBusiness.get().update(templateId, patientId, processMap(paraMap));
     } else {
@@ -139,6 +179,14 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   @Override
   public void setServletContext(ServletContext context) {
     this.servletContext = context;
+  }
+
+  public String getPageName() {
+    return pageName;
+  }
+
+  public void setPageName(String pageName) {
+    this.pageName = pageName;
   }
 
 }

@@ -1,9 +1,10 @@
 <section>
     <form id="${id!}" name="${name!}" action="datainput/dataRecordInputSubmit.action" class="form-horizontal">
-    ${innerHTML!}
+        ${innerHTML!}
 
         <input type="hidden" name="patientId" value="${"$"}{patientId!}"/>
         <input type="hidden" name="templateId" value="${"$"}{templateId!}"/>
+        <input type="hidden" name="pageName" value="${"$"}{pageName!}"/>
     </form>
     <script>
         $("#${id!null}").submit(function() {

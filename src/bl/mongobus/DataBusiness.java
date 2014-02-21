@@ -19,7 +19,7 @@ public class DataBusiness {
     return business;
   }
 
-  public Map get(String templateId, String patientId, String userId) {
+  public Map get(String templateId, String patientId, String pageName, String userId) {
     if(StringUtils.isBlank(templateId)) {
       return new HashMap();
     }
@@ -27,7 +27,13 @@ public class DataBusiness {
     DBCollection dc = db.getCollection(templateId);
 
     BasicDBObject objectQuery = new BasicDBObject("patientId", patientId);
-
+    if (pageName != null) {
+      objectQuery.append("pageName", pageName);
+    }
+    if (userId != null) {
+      objectQuery.append("userId", userId);
+    }
+    
     DBObject dbObject = dc.findOne(objectQuery);
     Map resultMap = null;
     if(dbObject != null) {
