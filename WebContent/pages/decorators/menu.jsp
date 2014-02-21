@@ -6,6 +6,14 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
+                 
+                  <li>
+                      <a  href="user/index.action">
+                          <i class="fa fa-tasks"></i>
+                          <span>用户管理 </span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
               
                   <li>
                       <a  href="template/dynamicform.action">
@@ -27,6 +35,21 @@
                       <a  href="datainput/dataView.action">
                           <i class="fa fa-th"></i>
                           <span>数据录入</span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a  href="datainput/dataPageInput.action?patientId=patient&pageName=patient">
+                          <i class="fa fa-th"></i>
+                          <span>病例管理</span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
+                  <li>
+                      <a  href="datainput/dataPageInput.action?patientId=patient&pageName=followup">
+                          <i class="fa fa-th"></i>
+                          <span>随访管理</span>
                           <span class="label label-danger pull-right mail-info"></span>
                       </a>
                   </li>

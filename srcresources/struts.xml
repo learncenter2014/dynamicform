@@ -74,9 +74,11 @@
             <result name="success" type="freemarker">/ftl/datainput/saveSuccess.ftl</result>
         </action>
         <action name="dataRecordDelete" class="actions.DataPageInputAction" method="save">
-
         </action>
 
+        <action name="dataPageInput" class="actions.DataPageInputAction" method="loadPage">
+            <result name="success" type="freemarker">/ftl/html.ftl</result>
+        </action>
 	</package>
 	<package name="report" namespace="/report" extends="default">
 
@@ -89,5 +91,8 @@
         <action name="index" class="actions.UserAction" method="index"/>
 		<action name="initTable" class="actions.UserAction" method="initTable"/>
 		<action name="queryTable" class="actions.UserAction" method="queryTable"/>
+		<action name="add" class="actions.UserAction" method="add"/>
+		<action name="edit" class="actions.UserAction" method="edit"/>
+		<action name="delete" class="actions.UserAction" method="delete"/>
 	</package>
 </struts>
