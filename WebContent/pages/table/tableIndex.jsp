@@ -43,27 +43,30 @@
      var actions = [
               {
                   "title":"Add",
+                  "selectedRows": 0,
                   "action": function (thisObj){
                       window.location.href = actionPrex + "/add.action";
                   }
               },{
                   "title":"Edit",
+                  "selectedRows": 1,
                   "action": function (thisObj){
                       var tableObj = $('#'+$(thisObj).attr("for")).dataTable();
-                      var selectRows = tableObj.$('tr.row_selected');
-                      if(selectRows.length != 1){
+                      var selectedRows = tableObj.$('tr.row_selected');
+                      if(selectedRows.length != 1){
                           alert("Please select one record!");
                       }else{
-                         var selectRowData =  tableObj.fnGetData( selectRows[0] );
+                         var selectRowData =  tableObj.fnGetData( selectedRows[0] );
                           window.location.href = actionPrex + "/edit.action?id=" + selectRowData[idName];
                       }
                   }
               },{
                   "title":"Delete",
+                  "selectedRows": -1,
                   "action": function (thisObj){
                       var tableObj = $('#'+$(thisObj).attr("for")).dataTable();
-                      var selectRows = tableObj.$('tr.row_selected');
-                      if(selectRows.length == 0){
+                      var selectedRows = tableObj.$('tr.row_selected');
+                      if(selectedRows.length == 0){
                           alert("Please select records!");
                       }else{
                          if (confirm("Are you sure delete selected records?")){
@@ -149,8 +152,13 @@
 		                    aObj.setAttribute("onclick","actions["+i+"].action(this)");
 		                    aObj.setAttribute("for","${tableId}");
 		                    aObj.setAttribute("style","float:right;");
+		                    aObj.setAttribute("selectedRows",actions[i].selectedRows);
+		                    if(actions[i].selectedRows != 0){
+		                        aObj.setAttribute("disabled","disabled");
+		                    }else{
+		                        aObj.className = "DTTT_button";
+		                    }
 		                    aObj.innerHTML = actions[i].title;
-		                    aObj.className = "DTTT_button";
 		                    $("#${tableId}_filter").append(aObj);
 		                }
 		            }
@@ -158,7 +166,16 @@
 		            /* Add/remove class to a row when clicked on */
 		            $('#${tableId} tbody tr').live('click', function() {
 		                $(this).toggleClass('row_selected');
-		                //var selectRows = oTable.$('tr.row_selected');
+		                var selectedRows = oTable.$('tr.row_selected');
+		                $("#${tableId}_filter button[selectedRows!=0]").attr("disabled","disabled");
+		                if(selectedRows.length == 1){
+		                    $("#${tableId}_filter button[selectedRows=1]").removeAttr("disabled");
+		                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
+		                }else if(selectedRows.length > 1){
+		                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
+		                }
+		                $("#${tableId}_filter button[disabled='disabled']").removeClass("DTTT_button");
+		                $("#${tableId}_filter button[disabled!='disabled']").addClass("DTTT_button");
 		            } );
 		     }, 
 	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
