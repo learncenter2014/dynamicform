@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.ModelDriven;
 public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction implements ModelDriven<TableQueryVo> {
 
   private TableQueryVo model;
-  protected static BaseBusiness business;
+  private static BaseBusiness business;
 
   /**
    * The Action Prefix that will be append action. like : getRequest().getContextPath() + "/datatable".

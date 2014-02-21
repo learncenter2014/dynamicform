@@ -80,7 +80,28 @@
 
 <script type="text/javascript">
      var cellFormatter = {};
-     var actions = [];
+     var actions = [
+              {
+                  "title":"Add",
+                  "multiSelect":true,
+                  "disabled": false,
+                  "action": function (thisObj){
+                      alert("Add for Table "+$(thisObj).attr("for")); 
+                  }
+              },{
+                  "title":"Edit",
+                  "multiSelect":false,
+                  "action": function (thisObj){
+                      alert("Edit for Table "+$(thisObj).attr("for")); 
+                  }
+              },{
+                  "title":"Delete",
+                  "multiSelect":true,
+                  "action": function (thisObj){
+                      alert("Delete for Table "+$(thisObj).attr("for")); 
+                  }
+              }
+      ];
       /* Formating function for row details */
       function fnFormatDetails ( oTable, nTr ){
           var aData = oTable.fnGetData( nTr );
@@ -152,7 +173,9 @@
 		                    aObj.setAttribute("onclick","actions["+i+"].action(this)");
 		                    aObj.setAttribute("for","${tableId}");
 		                    aObj.setAttribute("style","float:right;");
-		                    aObj.setAttribute("disabled","disabled");
+		                    if(actions[i].disabled != false){
+		                        aObj.setAttribute("disabled","disabled");
+		                    }
 		                    aObj.setAttribute("multiSelect",actions[i].multiSelect);
 		                    aObj.innerHTML = actions[i].title;
 		                    aObj.className = "DTTT_button";
@@ -232,9 +255,9 @@
  	} );
  } );
   </script>
-  
-  <script src="${customJs}" type="text/javascript"></script> 
-
+  <% if(request.getAttribute("customJs")!= null && request.getAttribute("customJs").toString().length() > 0 ){%>
+     <script src="${customJs}" type="text/javascript"></script> 
+  <%} %>
   </body>
 
 </html>

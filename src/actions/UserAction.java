@@ -42,8 +42,6 @@ public class UserAction extends BaseTableAction<UserBusiness> {
     init.getAoColumns().add(new TableHeaderVo("username", "USERNAME"));
     init.getAoColumns().add(new TableHeaderVo("age", "AGE").addSearchOptions(new String[][] { { "-1", "1", "2" }, { "----", "Male", "Female" } }));
     init.getAoColumns().add(new TableHeaderVo("address", "ADDRESS", false));
-    init.setHasDetails(true);
-
     return init;
   }
 }

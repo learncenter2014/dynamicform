@@ -20,7 +20,6 @@ public class TableInitVo {
 
   // //additional properties
   private String idName = "id";
-  private boolean hasDetails = false;
 
   public boolean isbProcessing() {
     return bProcessing;
@@ -71,11 +70,11 @@ public class TableInitVo {
   }
 
   public boolean isHasDetails() {
-    return hasDetails;
+    for (TableHeaderVo header : aoColumns) {
+      if (!header.isbVisible()) {
+        return true;
+      }
+    }
+    return false;
   }
-
-  public void setHasDetails(boolean hasDetails) {
-    this.hasDetails = hasDetails;
-  }
-
 }
