@@ -14,5 +14,6 @@
 		<pattern>/template/dynamicform.action</pattern>
 		<pattern>/page/*.action</pattern>
         <pattern>/datainput/data*.action</pattern>
+        <pattern>/user/*.action</pattern>
 	</decorator>
 </decorators>  

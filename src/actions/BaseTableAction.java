@@ -25,6 +25,25 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
 
   private TableQueryVo model;
   private static BaseBusiness business;
+  private String id;
+  private String[] ids;
+  public static final String INDEX_SUCCESS = "tableIndex";
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String[] getIds() {
+    return ids;
+  }
+
+  public void setIds(String[] ids) {
+    this.ids = ids;
+  }
 
   /**
    * The Action Prefix that will be append action. like : getRequest().getContextPath() + "/datatable".
@@ -70,7 +89,15 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
         business = null;
       }
     }
-    return (B)business;
+    return (B) business;
+  }
+
+  @Override
+  public TableQueryVo getModel() {
+    if (model == null) {
+      model = new TableQueryVo();
+    }
+    return model;
   }
 
   /**
@@ -79,7 +106,7 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
    * @throws Exception
    */
   public String index() throws Exception {
-    return "tableIndex";
+    return INDEX_SUCCESS;
   }
 
   /**
@@ -90,9 +117,9 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
    */
   public String initTable() throws Exception {
     // json
-    JsonConfig config =new JsonConfig();
-    config.setExcludes(new String[]{"searchOptions"});
-    JSONObject jsonObject = JSONObject.fromObject(getTableInit(),config);
+    JsonConfig config = new JsonConfig();
+    config.setExcludes(new String[] { "searchOptions" });
+    JSONObject jsonObject = JSONObject.fromObject(getTableInit(), config);
     writeJson(jsonObject);
     return null;
   }
@@ -116,11 +143,30 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
     return null;
   }
 
-  @Override
-  public TableQueryVo getModel() {
-    if (model == null) {
-      model = new TableQueryVo();
-    }
-    return model;
+  /**
+   * 
+   * @return
+   * @throws Exception
+   */
+  public String add() throws Exception {
+    return INDEX_SUCCESS;
+  }
+
+  /**
+   * 
+   * @return
+   * @throws Exception
+   */
+  public String edit() throws Exception {
+    return INDEX_SUCCESS;
+  }
+
+  /**
+   * 
+   * @return
+   * @throws Exception
+   */
+  public String delete() throws Exception {
+    return INDEX_SUCCESS;
   }
 }

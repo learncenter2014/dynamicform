@@ -8,41 +8,20 @@
     <meta name="author" content="Mosaddek">
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.png">
-
+    
+    <style type="text/css">
+		 table tbody tr.even.row_selected td{
+			background-color: #B0BED9 !important;
+		 }
+    </style>
+    
     <title>Data Table</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/css/bootstrap-reset.css" rel="stylesheet">
-    <!--external css-->
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/css/TableTools.css" rel="stylesheet" />
-    
-    
-
-
-    <!-- Custom styles for this template -->
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/css/style.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/jslib/flatlab/css/style-responsive.css" rel="stylesheet" />
-   
-    <link href="<%=request.getContextPath()%>/css/datatable.css" rel="stylesheet" />
-    
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-    <!--[if lt IE 9]>
-      <script src="<%=request.getContextPath()%>/jslib/flatlab/js/html5shiv.js"></script>
-      <script src="<%=request.getContextPath()%>/jslib/flatlab/js/respond.min.js"></script>
-    <![endif]-->
   </head>
-  
 <body>
-  
        <!-- page start-->
-       <section class="panel">
-           <header class="panel-heading" style="text-align: center;">${tableTitle}</header>
+            <% if(request.getAttribute("tableTitle")!= null && request.getAttribute("tableTitle").toString().length() > 0 ){%>
+		     <header class="panel-heading" style="text-align: center;">${tableTitle}</header>
+		  <%} %>
            <div class="panel-body">
                  <div class="adv-table">
                      <table  id="${tableId}" cellpadding="0" cellspacing="0" border="0" class="display table table-bordered">
@@ -55,50 +34,46 @@
                      </table>
                 </div>
           </div>
-     </section>
      <!-- page end-->
-           
-
-    <!-- js placed at the end of the document so the pages load faster -->
-    <!--<script src="<%=request.getContextPath()%>/jslib/flatlab/js/jquery.js"></script>-->
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/media/js/jquery.js" type="text/javascript" language="javascript" ></script>
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/js/bootstrap.min.js"></script>
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/js/jquery.dcjqaccordion.2.7.js" class="include" type="text/javascript" ></script>
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/js/jquery.scrollTo.min.js"></script>
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/js/jquery.nicescroll.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/js/respond.min.js" ></script>
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/media/js/jquery.dataTables.js" type="text/javascript" language="javascript" ></script>
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/assets/data-tables/DT_bootstrap.js" type="text/javascript" ></script>
-    <!--common script for all pages-->
-    <script src="<%=request.getContextPath()%>/jslib/flatlab/js/common-scripts.js"></script>
-
-<script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/ZeroClipboard.js" type="text/javascript" charset="utf-8" ></script>
-<script src="<%=request.getContextPath()%>/jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/TableTools.js" type="text/javascript" charset="utf-8" ></script>
-
-
-
-
+    
 <script type="text/javascript">
+     var idName;
+	 var actionPrex = "${actionPrex}";
      var cellFormatter = {};
      var actions = [
               {
                   "title":"Add",
-                  "multiSelect":true,
-                  "disabled": false,
                   "action": function (thisObj){
-                      alert("Add for Table "+$(thisObj).attr("for")); 
+                      window.location.href = actionPrex + "/add.action";
                   }
               },{
                   "title":"Edit",
-                  "multiSelect":false,
                   "action": function (thisObj){
-                      alert("Edit for Table "+$(thisObj).attr("for")); 
+                      var tableObj = $('#'+$(thisObj).attr("for")).dataTable();
+                      var selectRows = tableObj.$('tr.row_selected');
+                      if(selectRows.length != 1){
+                          alert("Please select one record!");
+                      }else{
+                         var selectRowData =  tableObj.fnGetData( selectRows[0] );
+                          window.location.href = actionPrex + "/edit.action?id=" + selectRowData[idName];
+                      }
                   }
               },{
                   "title":"Delete",
-                  "multiSelect":true,
                   "action": function (thisObj){
-                      alert("Delete for Table "+$(thisObj).attr("for")); 
+                      var tableObj = $('#'+$(thisObj).attr("for")).dataTable();
+                      var selectRows = tableObj.$('tr.row_selected');
+                      if(selectRows.length == 0){
+                          alert("Please select records!");
+                      }else{
+                         if (confirm("Are you sure delete selected records?")){
+						    var par = "";
+						    tableObj.$('tr.row_selected').each(function(i){
+						        par = par + "ids="+tableObj.fnGetData(this)[idName] + "&";
+						    });
+                            window.location.href = actionPrex + "/delete.action?" + par;
+						 }
+                      }
                   }
               }
       ];
@@ -120,6 +95,7 @@
      var tableUrl = "${actionPrex}/initTable.action";
      var param = {};
      $.getJSON( tableUrl, param, function (initParam) { 
+         idName = initParam.idName;
          for(var i=0;i<initParam.aoColumns.length ; i++){
              if(typeof cellFormatter[initParam.aoColumns[i].mData] == "function"){
                  initParam.aoColumns[i].mRender = cellFormatter[initParam.aoColumns[i].mData];
@@ -173,10 +149,6 @@
 		                    aObj.setAttribute("onclick","actions["+i+"].action(this)");
 		                    aObj.setAttribute("for","${tableId}");
 		                    aObj.setAttribute("style","float:right;");
-		                    if(actions[i].disabled != false){
-		                        aObj.setAttribute("disabled","disabled");
-		                    }
-		                    aObj.setAttribute("multiSelect",actions[i].multiSelect);
 		                    aObj.innerHTML = actions[i].title;
 		                    aObj.className = "DTTT_button";
 		                    $("#${tableId}_filter").append(aObj);
@@ -186,13 +158,7 @@
 		            /* Add/remove class to a row when clicked on */
 		            $('#${tableId} tbody tr').live('click', function() {
 		                $(this).toggleClass('row_selected');
-		                var selectRows = oTable.$('tr.row_selected');
-		                $("#${tableId}_filter button").attr("disabled","disabled");
-		                if(selectRows.length == 1){
-		                    $("#${tableId}_filter button").removeAttr("disabled");
-		                }else if(selectRows.length > 1){
-		                    $("#${tableId}_filter button[multiSelect='true']").removeAttr("disabled");
-		                }
+		                //var selectRows = oTable.$('tr.row_selected');
 		            } );
 		     }, 
 	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
@@ -259,5 +225,4 @@
      <script src="${customJs}" type="text/javascript"></script> 
   <%} %>
   </body>
-
 </html>

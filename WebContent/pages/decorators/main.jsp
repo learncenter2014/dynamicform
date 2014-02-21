@@ -16,7 +16,10 @@
     <link href="jslib/flatlab/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
     <link href="jslib/flatlab/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    
+    <link href="jslib/flatlab/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+    <link href="jslib/flatlab/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
+    <link href="jslib/flatlab/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
+    <link href="jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/css/TableTools.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="jslib/flatlab/css/style.css" rel="stylesheet">
     <link href="jslib/flatlab/css/style-responsive.css" rel="stylesheet" />
@@ -44,6 +47,13 @@
     <script src="jslib/flatlab/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="jslib/flatlab/js/respond.min.js" ></script>
 
+   <!-- js placed at the end of the document so the pages load faster -->
+    <script src="jslib/flatlab/assets/advanced-datatable/media/js/jquery.js" type="text/javascript" language="javascript" ></script>
+    <script src="jslib/flatlab/assets/advanced-datatable/media/js/jquery.dataTables.js" type="text/javascript" language="javascript" ></script>
+    <script src="jslib/flatlab/assets/data-tables/DT_bootstrap.js" type="text/javascript" ></script>
+    <!--common script for all pages-->
+    <script src="jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/ZeroClipboard.js" type="text/javascript" charset="utf-8" ></script>
+    <script src="jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/TableTools.js" type="text/javascript" charset="utf-8" ></script>
     <decorator:head/>
   </head>
 
