@@ -54,13 +54,13 @@
                     modal : true,
                     buttons : {
                         Save : function() {
-                            var url = jQuery("#x_file").val();
-                            if(url==null){
+                            var name = jQuery("#x_file").val();
+                            if(name==null){
                                 jQuery("#dialog_message").html('<span style="color:red">没有有效的模版!</span>');
                                 jQuery("#dialog_message").dialog(); 
                             }else{ 
                                 var label = jQuery("#x_file option:selected").text();
-                                load_xml({path:url,label:label});
+                                load_xml({name:name,label:label});
                                 jQuery(this).dialog('close');
                            }
                         },

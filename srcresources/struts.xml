@@ -29,9 +29,15 @@
 			<result name="success">/pages/menu_template/dynamicform.jsp
 			</result>
 		</action>
-		<action name="save*" class="actions.FormAction" method="save{1}">
+		<action name="savexml" class="actions.FormAction" method="savexml">
 			<result name="success">/pages/menu_template/saveresult.jsp</result>
 		</action>
+		<action name="getxml" class="actions.FormAction" method="getxml">
+            <result name="success" type="stream">  
+                <param name="contentType">text/xml;charset=UTF-8</param>  
+                <param name="inputName">xmlStream</param>  
+            </result> 
+        </action>
 		<action name="deletetemplate" class="actions.FormAction" method="deleteTemplate">
 			<result name="success">/pages/menu_template/saveresult.jsp
 			</result>

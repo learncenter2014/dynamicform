@@ -18,15 +18,16 @@ public class WebInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         LOG.info("init dynamic form war");
+
+        LOG.info("init server.properties file");
+        ServerContext.init(WebInitListener.class.getResourceAsStream("/server.properties"));
+
         LOG.info("init /etc/db.properties file");
         try {
             ServerContext.init(new FileInputStream("/etc/db.properties"));
         } catch (Exception e) {
             LOG.error("Reading file has some exception #0", e.getMessage());
         }
-        LOG.info("init server.properties file");
-        ServerContext.init(WebInitListener.class.getResourceAsStream("/server.properties"));
-
         LOG.info("init MongoDB");
         MongoDBConnectionFactory.initDb();
     }

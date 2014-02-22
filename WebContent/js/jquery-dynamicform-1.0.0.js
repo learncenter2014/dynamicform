@@ -504,9 +504,10 @@
             jQuery.ajax({
                 async:false,
                 type: "GET",
-                url: parameters.path,
+                url: "template/getxml.action",
                 cache: false,
                 dataType: "xml",
+                data:parameters,
                 success : function(data, status) {
                     var pluginRef = jQuery.dynamicplugin;
                     var resp = data;

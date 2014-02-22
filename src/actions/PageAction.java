@@ -20,8 +20,8 @@ import bl.mongobus.FormBusiness;
 import bl.mongobus.PageBusiness;
 
 public class PageAction extends ActionSupport {
-    private List<String[]> templateList = new ArrayList<String[]>();
-    private final Map<String, List<TemplateBean>> patientCheckbox = new LinkedHashMap<String, List<TemplateBean>>();
+    private final Map<String, List<TemplateBean>> pageCheckbox = new LinkedHashMap<String, List<TemplateBean>>();
+    private final Map<String, List<TemplateBean>> pageUnCheckbox = new LinkedHashMap<String, List<TemplateBean>>();
     private final Map<String, String> pageMap = new LinkedHashMap<String, String>();
 
     public PageAction() {
@@ -34,27 +34,16 @@ public class PageAction extends ActionSupport {
         }
     }
 
-    public Map<String, List<TemplateBean>> getPatientCheckbox() {
-        return patientCheckbox;
+    public Map<String, List<TemplateBean>> getPageCheckbox() {
+        return pageCheckbox;
     }
-
+    
+    public Map<String, List<TemplateBean>> getPageUnCheckbox() {
+        return pageUnCheckbox;
+    }
+    
     public Map<String, String> getPageMap() {
         return pageMap;
-    }
-
-    /**
-     * @return the templateList
-     */
-    public List<String[]> getTemplateList() {
-        return templateList;
-    }
-
-    /**
-     * @param templateList
-     *            the templateList to set
-     */
-    public void setTemplateList(List<String[]> templateList) {
-        this.templateList = templateList;
     }
 
     public String pageSave() {
@@ -76,7 +65,7 @@ public class PageAction extends ActionSupport {
                     }
                 }
 
-                // update patient info in page table.
+                // update page info in page table.
                 if (record != null) {
                     PageBean orginalBean = (PageBean) record;
                     PageBean newBean = (PageBean) orginalBean.clone();
@@ -103,23 +92,46 @@ public class PageAction extends ActionSupport {
             FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
             // find all records in the template;
             BusinessResult br = fb.getAllLeaves();
+            @SuppressWarnings("unchecked")
             List<TemplateBean> elements = (List<TemplateBean>) br.getResponseData();
-            for (TemplateBean te : elements) {
-                String[] row = new String[] { te.getLabel(), te.getName() };
-                this.templateList.add(row);
-            }
 
             PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
             Object record = pab.getAllLeaves().getResponseData();
 
             if (record != null) {
 
-                List<PageBean> pbs = ((List<PageBean>) record);
+                @SuppressWarnings("unchecked")
+                List<PageBean> pbs = (List<PageBean>) record;
                 for (int j = 0; j < pbs.size(); j++) {
                     List<TemplateBean> listRecord = pbs.get(j).getTemplateList();
-                    this.patientCheckbox.put(pbs.get(j).getName(), listRecord);
+                    this.pageCheckbox.put(pbs.get(j).getName(), listRecord);
+                    
+                    List<TemplateBean> uncheckTemplate = new ArrayList<TemplateBean>();
+                    for(int i=0;i<elements.size();i++){
+                        boolean exist = false;
+                        for(int k=0;k<listRecord.size();k++){
+                            if(elements.get(i).getName().equals(listRecord.get(k).getName())){
+                                exist = true;
+                                break;
+                            }
+                        }
+                        if(!exist){
+                            uncheckTemplate.add(elements.get(i));  
+                        }
+                    }
+                    this.pageUnCheckbox.put(pbs.get(j).getName(), uncheckTemplate);
                 }
             }
+            
+            //checked pageCheckbox is fully empty.
+            Iterator<String> it = this.pageMap.keySet().iterator();
+            while(it.hasNext()){
+                String key = it.next();
+                if(!this.pageCheckbox.containsKey(key)){
+                    this.pageUnCheckbox.put(key, elements);
+                }
+            }
+            
         } catch (Exception e) {
             LOG.error("this exception [#0]", e.getMessage());
         }

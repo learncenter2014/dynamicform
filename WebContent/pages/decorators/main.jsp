@@ -48,7 +48,6 @@
     <script src="jslib/flatlab/js/respond.min.js" ></script>
 
    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="jslib/flatlab/assets/advanced-datatable/media/js/jquery.js" type="text/javascript" language="javascript" ></script>
     <script src="jslib/flatlab/assets/advanced-datatable/media/js/jquery.dataTables.js" type="text/javascript" language="javascript" ></script>
     <script src="jslib/flatlab/assets/data-tables/DT_bootstrap.js" type="text/javascript" ></script>
     <!--common script for all pages-->

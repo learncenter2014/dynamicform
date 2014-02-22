@@ -3,7 +3,6 @@ package bl.instancepool;
 import java.util.HashMap;
 import java.util.Map;
 
-import actions.FormAction;
 import bl.common.BeanContext;
 import bl.common.BusinessInterface;
 import bl.exceptions.FailureInitialClassException;
@@ -12,7 +11,7 @@ import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 public class SingleBusinessPoolManager {
-    protected static Logger LOG = LoggerFactory.getLogger(FormAction.class);
+    protected static Logger LOG = LoggerFactory.getLogger(SingleBusinessPoolManager.class);
     /** A cache of business object instances, keyed by their classpaths. */
     private static Map<String, BusinessInterface<BeanContext, BeanContext>> _hBusObjs = new HashMap<String, BusinessInterface<BeanContext, BeanContext>>();
     private static volatile Object syncObj = new Object();

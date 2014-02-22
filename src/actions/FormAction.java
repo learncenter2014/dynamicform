@@ -1,5 +1,9 @@
 package actions;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Date;
@@ -10,6 +14,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.struts2.util.ServletContextAware;
+
+import util.ServerContext;
 
 import bl.beans.TemplateBean;
 import bl.common.BusinessResult;
@@ -30,12 +36,19 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 public class FormAction extends ActionSupport implements ServletContextAware {
     protected final static Logger LOG = LoggerFactory.getLogger(FormAction.class);
     private ServletContext sc = null;
-    public final static String XMLFILEPATH = "xml";
     private List<String[]> filelist = new ArrayList<String[]>();
     private String name = null;
     private String data = null;
     private String label = null;
     private String result = null;
+    
+    //写一个输出流  
+    private InputStream xmlStream;  
+    
+    public InputStream getXmlStream() {
+        return xmlStream;
+    }
+
     /**
      * @return the result
      */
@@ -106,11 +119,39 @@ public class FormAction extends ActionSupport implements ServletContextAware {
       return ActionSupport.SUCCESS;
     }
     
+    public String getxml() {
+        if (this.name != null) {
+            FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
+            BusinessResult br = fb.getLeafByName(this.name);
+            TemplateBean al = (TemplateBean) br.getResponseData();
+            if (al != null) {
+                String path = al.getPath();
+                try {
+                    FileInputStream fi = new FileInputStream(path);
+                    this.xmlStream = fi;
+                } catch (FileNotFoundException e) {
+                    LOG.error("this exception [#0]", e.getMessage());
+                }
+            }
+        }
+        return ActionSupport.SUCCESS;
+    }
+
     public String savexml() {
 
         if (this.name != null && this.data != null && this.label != null) {
             try {
-                String requestPath = this.sc.getRealPath(XMLFILEPATH + "/" + name + ".xml");
+                String storexmldirectory = ServerContext.getValue("storexmldirectory");
+                String requestPath = null;
+                if (storexmldirectory == null) {
+                    String directory = System.getProperty("user.home") + File.separator + "xml";
+                    storexmldirectory = directory;
+                }
+                if (Files.notExists(Paths.get(storexmldirectory))) {
+                    Files.createDirectories(Paths.get(storexmldirectory));
+                }
+                requestPath = storexmldirectory + File.separator + name + ".xml";
+                
                 LOG.info("save xml content to this [#0] file", requestPath);
                 Files.write(Paths.get(requestPath), this.data.getBytes("UTF-8"));
 
@@ -126,7 +167,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
                 } else {
                     TemplateBean tb = new TemplateBean();
                     tb.setName(this.name);
-                    tb.setPath(XMLFILEPATH + "/" + this.name + ".xml");
+                    tb.setPath(requestPath);
                     tb.setLabel(this.label);
                     fb.createLeaf(tb);
                 }
@@ -146,7 +187,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
             BusinessResult br = fb.getAllLeaves();
             List<TemplateBean> elements = (List<TemplateBean>) br.getResponseData();
             for (TemplateBean te : elements) {
-                String[] row = new String[] { te.getLabel(), te.getPath() };
+                String[] row = new String[] { te.getLabel(), te.getName() };
                 this.filelist.add(row);
             }
             LOG.info("loading all xml #0 files", String.valueOf(filelist.size()));
