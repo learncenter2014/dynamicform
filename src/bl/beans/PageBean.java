@@ -10,7 +10,17 @@ public class PageBean extends Bean {
 
   String label;
 
-  @Reference(ignoreMissing = true, lazy = true)
+  String source;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    @Reference(ignoreMissing = true, lazy = true)
   List<TemplateBean> templateList = null;
 
   /**

@@ -4,6 +4,8 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.SqlDateConverter;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
@@ -22,6 +24,9 @@ public class MongoDBConnectionFactory {
     private static Map<String, Datastore> dbRef = new HashMap<String, Datastore>();
 
     public static void initDb() {
+        //注册sql.date的转换器，即允许BeanUtils.copyProperties时的源目标的sql类型的值允许为空
+        ConvertUtils.register(new SqlDateConverter(null), java.util.Date.class);
+
         try {
             mongoClient = new MongoClient(ServerContext.getValue("mongodbip"));
         } catch (UnknownHostException e) {

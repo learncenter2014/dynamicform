@@ -107,6 +107,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>2.3</version>
         <configuration>
+          <outputDirectory>E:\\apache-tomcat-7.0.21\\webapps</outputDirectory>
           <warSourceDirectory>WebContent</warSourceDirectory>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
