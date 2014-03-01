@@ -57,6 +57,9 @@
 		<action name="pagesave" class="actions.PageAction" method="pageSave">
             <result name="success">/page/pagelist.action </result>
         </action>
+        <action name="decorateform" class="actions.PageAction" method="templateDecorator">
+            <result name="success">/pages/menu_page/template.jsp</result>
+        </action>
 	</package>
 	<package name="datainput" namespace="/datainput" extends="default">
 		<action name="deleteuserdata" class="actions.FormAction" method="deleteuserdata">
@@ -102,8 +105,20 @@
         <action name="index" class="actions.UserAction" method="index"/>
 		<action name="initTable" class="actions.UserAction" method="initTable"/>
 		<action name="queryTable" class="actions.UserAction" method="queryTable"/>
-		<action name="add" class="actions.UserAction" method="add"/>
-		<action name="edit" class="actions.UserAction" method="edit"/>
-		<action name="delete" class="actions.UserAction" method="delete"/>
+		<action name="add" class="actions.UserAction" method="add">
+		   <result name="success">/pages/user/userEdit.jsp</result>
+		</action>
+		<action name="edit" class="actions.UserAction" method="edit">
+		   <result name="success">/pages/user/userEdit.jsp</result>
+		</action>
+		<action name="save" class="actions.UserAction" method="save">
+		   <result name="success" type="redirectAction">/user/index</result>
+		</action>
+		<action name="delete" class="actions.UserAction" method="delete">
+		   <result name="success" type="redirectAction">/user/index</result>
+		</action>
+		<action name="lock" class="actions.UserAction" method="lock">
+		   <result name="success" type="redirectAction">/user/index</result>
+		</action>
 	</package>
 </struts>
