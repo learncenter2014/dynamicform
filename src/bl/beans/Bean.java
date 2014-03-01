@@ -15,8 +15,8 @@ public class Bean implements BeanContext, Cloneable {
 
     String name;
 
-    Date createTime;
-    Date modifyTime;
+    Date createTime = new Date(System.currentTimeMillis());
+    Date modifyTime = new Date(System.currentTimeMillis());
 
     /**
      * @return the name
@@ -26,8 +26,7 @@ public class Bean implements BeanContext, Cloneable {
     }
 
     /**
-     * @param name
-     *            the name to set
+     * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
@@ -41,8 +40,7 @@ public class Bean implements BeanContext, Cloneable {
     }
 
     /**
-     * @param _id
-     *            the _id to set
+     * @param _id the _id to set
      */
     public void set_id(ObjectId _id) {
         this._id = _id;
@@ -56,8 +54,7 @@ public class Bean implements BeanContext, Cloneable {
     }
 
     /**
-     * @param createTime
-     *            the createTime to set
+     * @param createTime the createTime to set
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
@@ -71,8 +68,7 @@ public class Bean implements BeanContext, Cloneable {
     }
 
     /**
-     * @param modifytime
-     *            the modifytime to set
+     * @param modifyime the modifytime to set
      */
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
@@ -80,7 +76,7 @@ public class Bean implements BeanContext, Cloneable {
 
     /**
      * Clone (create a deep copy of) this instance.
-     * 
+     *
      * @return A clone of this instance.
      */
     public Object clone() {

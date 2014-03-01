@@ -44,13 +44,21 @@
 		</action>
 	</package>
 	<package name="page" namespace="/page" extends="default">
-		<action name="pageedit" class="actions.PageAction" method="pageEdit">
-			<result name="success">/pages/menu_page/pageedit.jsp
-			</result>
+		<action name="pagelist" class="actions.PageAction" method="pageList">
+			<result name="success">/pages/menu_page/pagelist.jsp</result>
 		</action>
-		<action name="pagesave" class="actions.PageAction" method="pageSave">
-            <result name="success">/page/pageedit.action
+        <action name="pagedelete" class="actions.PageAction" method="pageDelete">
+            <result name="success">/page/pagelist.action
             </result>
+        </action>
+        <action name="pageedit" class="actions.PageAction" method="pageEdit">
+            <result name="success">/pages/menu_page/pageedit.jsp</result>
+        </action>
+		<action name="pagesave" class="actions.PageAction" method="pageSave">
+            <result name="success">/page/pagelist.action </result>
+        </action>
+        <action name="decorateform" class="actions.PageAction" method="templateDecorator">
+            <result name="success">/pages/menu_page/template.jsp</result>
         </action>
 	</package>
 	<package name="datainput" namespace="/datainput" extends="default">
@@ -101,4 +109,5 @@
 		<action name="edit" class="actions.UserAction" method="edit"/>
 		<action name="delete" class="actions.UserAction" method="delete"/>
 	</package>
+
 </struts>

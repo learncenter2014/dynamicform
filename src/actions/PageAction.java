@@ -1,49 +1,93 @@
 package actions;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import util.ServerContext;
-
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
-
 import bl.beans.PageBean;
 import bl.beans.TemplateBean;
-import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.FormBusiness;
 import bl.mongobus.PageBusiness;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.commons.beanutils.BeanUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PageAction extends ActionSupport {
-    private final Map<String, List<TemplateBean>> pageCheckbox = new LinkedHashMap<String, List<TemplateBean>>();
-    private final Map<String, List<TemplateBean>> pageUnCheckbox = new LinkedHashMap<String, List<TemplateBean>>();
-    private final Map<String, String> pageMap = new LinkedHashMap<String, String>();
+    PageBean pageBean = null;
+    List<PageBean> pageBeans = null;
+    List<TemplateBean> templateBeans = null;
+    List<TemplateBean> templateExists = null;
+
+    public List<TemplateBean> getTemplateExists() {
+        return templateExists;
+    }
+
+    public void setTemplateExists(List<TemplateBean> templateExists) {
+        this.templateExists = templateExists;
+    }
+
+    String name = null;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<PageBean> getPageBeans() {
+        return pageBeans;
+    }
+
+    public void setPageBeans(List<PageBean> pageBeans) {
+        this.pageBeans = pageBeans;
+    }
+
+    public List<TemplateBean> getTemplateBeans() {
+        return templateBeans;
+    }
+
+    public void setTemplateBeans(List<TemplateBean> templateBeans) {
+        this.templateBeans = templateBeans;
+    }
+
+    public PageBean getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean pageBean) {
+        this.pageBean = pageBean;
+    }
 
     public PageAction() {
-        String pagemanager = ServerContext.getValue("pagemanager");
-        String[] array = pagemanager.split(",");
-        // key=value
-        for (int i = 0; i < array.length; i++) {
-            String[] keyValue = array[i].split("=");
-            pageMap.put(keyValue[0], keyValue[1]);
+    }
+
+    private void structureTemplate() {
+        FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
+        Object result = fb.getAllLeaves().getResponseData();
+        if (result != null) {
+            this.templateExists = (List<TemplateBean>) result;
         }
     }
 
-    public Map<String, List<TemplateBean>> getPageCheckbox() {
-        return pageCheckbox;
+    public String pageDelete() {
+        if (this.name != null) {
+            PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
+            PageBean pb = (PageBean) pab.getLeafByName(this.name).getResponseData();
+            if (pb != null)
+                pab.deleteLeaf(pb.get_id().toString());
+        }
+        return ActionSupport.SUCCESS;
     }
-    
-    public Map<String, List<TemplateBean>> getPageUnCheckbox() {
-        return pageUnCheckbox;
-    }
-    
-    public Map<String, String> getPageMap() {
-        return pageMap;
+
+    public String pageEdit() {
+        structureTemplate();
+        if (this.name != null) {
+            PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
+            this.pageBean = (PageBean) pab.getLeafByName(this.name).getResponseData();
+        }
+        return ActionSupport.SUCCESS;
     }
 
     public String pageSave() {
@@ -51,33 +95,23 @@ public class PageAction extends ActionSupport {
             PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
             FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
 
-            Iterator<String> it = this.pageMap.keySet().iterator();
-            Map<String, Object> parameters = ActionContext.getContext().getParameters();
-            while (it.hasNext()) {
-                String key = it.next();
-                String[] arrayTemplates = (String[]) parameters.get(key);
-                Object record = pab.getLeafByName(key).getResponseData();
-                ArrayList<TemplateBean> ar = new ArrayList<TemplateBean>();
-                for (int i = 0; i < arrayTemplates.length; i++) {
-                    Object o = fb.getLeafByName(arrayTemplates[i]).getResponseData();
-                    if (o != null) {
-                        ar.add((TemplateBean) o);
-                    }
+            Object record = pab.getLeafByName(this.pageBean.getName()).getResponseData();
+            List<TemplateBean> list = this.pageBean.getTemplateList();
+            if (list != null) {
+                for (int i = 0, length = list.size(); i < length; i++) {
+                    list.set(i, (TemplateBean) fb.getLeafByName(list.get(i).getName()).getResponseData());
                 }
-
-                // update page info in page table.
-                if (record != null) {
-                    PageBean orginalBean = (PageBean) record;
-                    PageBean newBean = (PageBean) orginalBean.clone();
-                    newBean.setTemplateList(ar);
-                    pab.updateLeaf(orginalBean, newBean);
-                } else {
-                    PageBean pbean = new PageBean();
-                    pbean.setName(key);
-                    pbean.setLabel(this.pageMap.get(key));
-                    pbean.setTemplateList(ar);
-                    pab.createLeaf(pbean);
-                }
+            }
+            // update page info in page table.
+            if (record != null) {
+                PageBean originalBean = (PageBean) record;
+                PageBean newBean = (PageBean) BeanUtils.cloneBean(originalBean);
+                this.pageBean.set_id(originalBean.get_id());
+                BeanUtils.copyProperties(newBean, this.pageBean);
+                pab.updateLeaf(originalBean, newBean);
+            } else {
+                this.pageBean.setName("page" + System.currentTimeMillis());
+                pab.createLeaf(this.pageBean);
             }
 
         } catch (Exception e) {
@@ -86,52 +120,23 @@ public class PageAction extends ActionSupport {
         return ActionSupport.SUCCESS;
     }
 
-    public String pageEdit() {
+    public String pageList() {
         try {
-
-            FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
-            // find all records in the template;
-            BusinessResult br = fb.getAllLeaves();
-            @SuppressWarnings("unchecked")
-            List<TemplateBean> elements = (List<TemplateBean>) br.getResponseData();
-
             PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
             Object record = pab.getAllLeaves().getResponseData();
+            this.pageBeans = (List<PageBean>) record;
 
-            if (record != null) {
+        } catch (Exception e) {
+            LOG.error("this exception [#0]", e.getMessage());
+        }
+        return ActionSupport.SUCCESS;
+    }
 
-                @SuppressWarnings("unchecked")
-                List<PageBean> pbs = (List<PageBean>) record;
-                for (int j = 0; j < pbs.size(); j++) {
-                    List<TemplateBean> listRecord = pbs.get(j).getTemplateList();
-                    this.pageCheckbox.put(pbs.get(j).getName(), listRecord);
-                    
-                    List<TemplateBean> uncheckTemplate = new ArrayList<TemplateBean>();
-                    for(int i=0;i<elements.size();i++){
-                        boolean exist = false;
-                        for(int k=0;k<listRecord.size();k++){
-                            if(elements.get(i).getName().equals(listRecord.get(k).getName())){
-                                exist = true;
-                                break;
-                            }
-                        }
-                        if(!exist){
-                            uncheckTemplate.add(elements.get(i));  
-                        }
-                    }
-                    this.pageUnCheckbox.put(pbs.get(j).getName(), uncheckTemplate);
-                }
-            }
-            
-            //checked pageCheckbox is fully empty.
-            Iterator<String> it = this.pageMap.keySet().iterator();
-            while(it.hasNext()){
-                String key = it.next();
-                if(!this.pageCheckbox.containsKey(key)){
-                    this.pageUnCheckbox.put(key, elements);
-                }
-            }
-            
+    public String templateDecorator(){
+        try{
+            PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
+            Object record = pab.getAllLeaves().getResponseData();
+            this.pageBeans = (List<PageBean>) record;
         } catch (Exception e) {
             LOG.error("this exception [#0]", e.getMessage());
         }

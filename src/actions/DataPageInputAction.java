@@ -68,7 +68,7 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   }
   
   private String getHtmlStringByTemplate(TemplateBean bean) {
-    String fullPath = this.servletContext.getRealPath(bean.getPath());
+    String fullPath = bean.getPath();
     TemplateGenerator g = new TemplateGenerator();
     g.genTemplate(fullPath, bean.getName() + ".ftl");
 

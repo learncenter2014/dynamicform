@@ -24,7 +24,7 @@
                   </li>
                   
                   <li>
-                      <a  href="page/pageedit.action">
+                      <a  href="page/pagelist.action">
                           <i class="fa fa-tasks"></i>
                           <span>页面构建 </span>
                           <span class="label label-danger pull-right mail-info"></span>

@@ -1,23 +1,23 @@
 package bl.mongobus;
 
-import java.util.Date;
-import java.util.List;
-
-import org.bson.types.ObjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Key;
-
 import bl.beans.Bean;
 import bl.common.BeanContext;
 import bl.common.BusinessInterface;
 import bl.common.BusinessResult;
 import bl.exceptions.MiServerException;
-
 import com.mongodb.WriteResult;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
-
 import dao.MongoDBConnectionFactory;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.SqlDateConverter;
+import org.apache.commons.beanutils.converters.SqlTimestampConverter;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
+
+import java.util.Date;
+import java.util.List;
 
 public class MongoCommonBusiness<F, L> implements BusinessInterface {
     private static Logger LOG = LoggerFactory.getLogger(MongoCommonBusiness.class);
@@ -34,7 +34,7 @@ public class MongoCommonBusiness<F, L> implements BusinessInterface {
     @Override
     public BusinessResult createLeaf(BeanContext genLeafBean) {
         Datastore dc = MongoDBConnectionFactory.getDatastore(this.dbName);
-        ((Bean) genLeafBean).setCreateTime(new Date());
+        ((Bean) genLeafBean).setCreateTime(new Date(System.currentTimeMillis()));
         dc.save(genLeafBean);
         BusinessResult br = new BusinessResult();
         return br;
@@ -68,7 +68,7 @@ public class MongoCommonBusiness<F, L> implements BusinessInterface {
     public BusinessResult updateLeaf(BeanContext origBean, BeanContext newBean) {
         Datastore dc = MongoDBConnectionFactory.getDatastore(this.dbName);
         BusinessResult br = new BusinessResult();
-        ((Bean) newBean).setModifyTime(new Date());
+        ((Bean) newBean).setModifyTime(new Date(System.currentTimeMillis()));
         Key<BeanContext> key = dc.save(newBean);
         br.setResponseData(key.getId());
         return br;
