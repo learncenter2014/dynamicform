@@ -174,7 +174,7 @@
             <interceptor name="roles" class="org.apache.struts2.interceptor.RolesInterceptor" />
             <interceptor name="annotationWorkflow" class="com.opensymphony.xwork2.interceptor.annotations.AnnotationWorkflowInterceptor" />
             <interceptor name="multiselect" class="org.apache.struts2.interceptor.MultiselectInterceptor" />
-
+            <interceptor name="loginInterceptor" class="interceptor.LoginInterceptor"/>
             <!-- Basic stack -->
             <interceptor-stack name="basicStack">
                 <interceptor-ref name="exception"/>
@@ -271,7 +271,7 @@
                  the method names input, back, and cancel. These typically are
                  associated with requests that should not be validated.
                  -->
-            <interceptor-stack name="defaultStack">
+            <interceptor-stack name="_defaultStack">
                 <interceptor-ref name="exception"/>
                 <interceptor-ref name="miserverexceptioninterceptor"/>
                 <interceptor-ref name="alias"/>
@@ -302,8 +302,13 @@
             <!-- The completeStack is here for backwards compatibility for
                  applications that still refer to the defaultStack by the
                  old name -->
-            <interceptor-stack name="completeStack">
-                <interceptor-ref name="defaultStack"/>
+            <interceptor-stack name="defaultStack">
+                <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="_defaultStack"/>
+            </interceptor-stack>
+            
+            <interceptor-stack name="noLoginStack">
+                <interceptor-ref name="_defaultStack"/>
             </interceptor-stack>
 
             <!-- Sample execute and wait stack.

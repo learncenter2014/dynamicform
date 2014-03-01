@@ -10,15 +10,30 @@
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.custom.i18n.resources" value="resources/LocaleStrings" />
 
-	<package name="default" namespace="/" extends="struts-default">
+	<package name="default" namespace="/" extends="struts-default" >
 		<default-action-ref name="index" />
 		<global-results>
 			<result name="error">/pages/generalError.jsp</result>
 			<result name="tableIndex">/pages/table/tableIndex.jsp</result>
+			<result name="login_failure" type="redirectAction">/logout.action</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception" result="error" />
 		</global-exception-mappings>
+		
+		
+       <action name="login" class="actions.UserAction" method="login">
+           <interceptor-ref name="noLoginStack"></interceptor-ref>
+		   <result name="success" type="redirectAction">/user/index</result>
+		</action>
+		<action name="logout" class="actions.UserAction" method="logout">
+		   <interceptor-ref name="noLoginStack"></interceptor-ref> 
+		   <result name="success">/pages/menu_loginout/login.jsp</result>
+		</action>
+		
+		<action name="index">
+		   <result name="success">/index.jsp</result>
+		</action>
 	</package>
 	<package name="template" namespace="/template" extends="default">
 		<action name="templateFormlist" class="actions.FormAction" method="templateFormList">
@@ -121,5 +136,4 @@
 		   <result name="success" type="redirectAction">/user/index</result>
 		</action>
 	</package>
-
 </struts>

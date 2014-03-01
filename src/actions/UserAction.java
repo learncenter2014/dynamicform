@@ -20,7 +20,7 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
  */
 public class UserAction extends BaseTableAction<UserBusiness> {
   private static Logger log = LoggerFactory.getLogger(UserAction.class);
-
+  public final static String LOGIN_USER_SESSION_ID = "sessionUser";
   private UserBean user;
 
   public UserBean getUser() {
@@ -104,5 +104,30 @@ public class UserAction extends BaseTableAction<UserBusiness> {
     }
     return SUCCESS;
   }
-  
+
+  /**
+   * login
+   * 
+   * @return
+   */
+  public String login() {
+    if (user != null) {
+      UserBean userTmp = (UserBean) getBusiness().getLeafByName(user.getName()).getResponseData();
+      if (userTmp != null && userTmp.getName().equals(user.getName())) {
+        getSession().setAttribute(LOGIN_USER_SESSION_ID, userTmp);
+        return SUCCESS;
+      }
+    }
+    return "login_failure";
+  }
+
+  /**
+   * login
+   * 
+   * @return
+   */
+  public String logout() {
+    getSession().removeAttribute(LOGIN_USER_SESSION_ID);
+    return SUCCESS;
+  }
 }

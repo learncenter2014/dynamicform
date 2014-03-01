@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%@ include file="/pages/commonHeader.jsp" %>
+    <%@ include file="../commonHeader.jsp" %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -31,11 +31,11 @@
 
     <div class="container">
 
-      <form class="form-signin" action="index.jsp" method="post">
+      <form class="form-signin" action="login.action" method="post">
         <h2 class="form-signin-heading">sign in now</h2>
         <div class="login-wrap">
-            <input type="text" class="form-control" placeholder="User ID" autofocus>
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="text" name="user.name" class="form-control" placeholder="User ID" autofocus>
+            <input type="password" name="user.password" class="form-control" placeholder="Password">
             <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me
                 <span class="pull-right">
