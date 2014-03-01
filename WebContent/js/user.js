@@ -2,7 +2,7 @@
 /** 
  * cellFormatter
  */
-cellFormatter["age"] = function ( data, type, full ) {
+cellFormatter["sex"] = function ( data, type, full ) {
     if(data == 1){
         return 'Male';
     }else if(data == 2){
@@ -11,6 +11,14 @@ cellFormatter["age"] = function ( data, type, full ) {
        return 'Unkown';
     } 
 }
+cellFormatter["lock"] = function ( data, type, full ) {
+    if(data == 1){
+        return 'Lock';
+    }else{
+       return 'UnLock';
+    } 
+}
+
 /** 
  * actions
  */

@@ -131,7 +131,7 @@
 			            $('#${tableId} tbody tr').each( function (i) {
 			                this.insertBefore(  nCloneTd.cloneNode( true ) , this.childNodes[0] );
 			            } );
-			            $('#${tableId} tbody td img').live('click', function () {
+			            $('#${tableId} tbody td').on('click','img',function(){
 			                var nTr = $(this).parents('tr')[0];
 			                if ( oTable.fnIsOpen(nTr) ){
 			                    // This row is already open - close it 
@@ -164,19 +164,19 @@
 		            }
 		            
 		            /* Add/remove class to a row when clicked on */
-		            $('#${tableId} tbody tr').live('click', function() {
-		                $(this).toggleClass('row_selected');
-		                var selectedRows = oTable.$('tr.row_selected');
-		                $("#${tableId}_filter button[selectedRows!=0]").attr("disabled","disabled");
-		                if(selectedRows.length == 1){
-		                    $("#${tableId}_filter button[selectedRows=1]").removeAttr("disabled");
-		                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
-		                }else if(selectedRows.length > 1){
-		                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
-		                }
-		                $("#${tableId}_filter button[disabled='disabled']").removeClass("DTTT_button");
-		                $("#${tableId}_filter button[disabled!='disabled']").addClass("DTTT_button");
-		            } );
+		            $('#${tableId} tbody').on('click','tr',function(){
+			                $(this).toggleClass('row_selected');
+			                var selectedRows = oTable.$('tr.row_selected');
+			                $("#${tableId}_filter button[selectedRows!=0]").attr("disabled","disabled");
+			                if(selectedRows.length == 1){
+			                    $("#${tableId}_filter button[selectedRows=1]").removeAttr("disabled");
+			                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
+			                }else if(selectedRows.length > 1){
+			                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
+			                }
+			                $("#${tableId}_filter button[disabled='disabled']").removeClass("DTTT_button");
+			                $("#${tableId}_filter button[disabled!='disabled']").addClass("DTTT_button");
+			            } );
 		     }, 
 	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 	             /* //======= method one===========

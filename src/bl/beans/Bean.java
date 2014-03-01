@@ -40,12 +40,24 @@ public class Bean implements BeanContext, Cloneable {
     }
 
     /**
+     * @return the _id
+     */
+    public String getId() {
+        return _id != null ? _id.toString() : "";
+    }
+
+    /**
      * @param _id the _id to set
      */
     public void set_id(ObjectId _id) {
         this._id = _id;
     }
-
+    /**
+     * @param _id the _id to set
+     */
+    public void setId(String _id) {
+        this._id = new ObjectId(_id);
+    }
     /**
      * @return the createTime
      */

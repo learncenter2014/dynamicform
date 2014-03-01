@@ -17,8 +17,8 @@ public class TableDataVo implements Serializable {
   private static final long serialVersionUID = -8763407087905944532L;
 
   private int sEcho;
-  private int iTotalRecords;
-  private int iTotalDisplayRecords;
+  private long iTotalRecords;
+  private long iTotalDisplayRecords;
   private List aaData = new ArrayList();
 
   public int getsEcho() {
@@ -29,19 +29,19 @@ public class TableDataVo implements Serializable {
     this.sEcho = sEcho;
   }
 
-  public int getiTotalRecords() {
+  public long getiTotalRecords() {
     return iTotalRecords;
   }
 
-  public void setiTotalRecords(int iTotalRecords) {
+  public void setiTotalRecords(long iTotalRecords) {
     this.iTotalRecords = iTotalRecords;
   }
 
-  public int getiTotalDisplayRecords() {
+  public long getiTotalDisplayRecords() {
     return iTotalDisplayRecords;
   }
 
-  public void setiTotalDisplayRecords(int iTotalDisplayRecords) {
+  public void setiTotalDisplayRecords(long iTotalDisplayRecords) {
     this.iTotalDisplayRecords = iTotalDisplayRecords;
   }
 
