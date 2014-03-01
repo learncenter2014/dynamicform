@@ -121,4 +121,5 @@
 		   <result name="success" type="redirectAction">/user/index</result>
 		</action>
 	</package>
+
 </struts>

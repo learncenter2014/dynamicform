@@ -6,3 +6,6 @@
 *.ear
 /target
 /.gitignore
+/.idea
+/.settings
+/dynamicform.iml

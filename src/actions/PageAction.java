@@ -6,9 +6,11 @@ import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.FormBusiness;
 import bl.mongobus.PageBusiness;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.beanutils.BeanUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,6 +128,27 @@ public class PageAction extends ActionSupport {
             Object record = pab.getAllLeaves().getResponseData();
             this.pageBeans = (List<PageBean>) record;
 
+        } catch (Exception e) {
+            LOG.error("this exception [#0]", e.getMessage());
+        }
+        return ActionSupport.SUCCESS;
+    }
+
+    public String templateDecorator(){
+        try{
+            PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
+            Object record = pab.getAllLeaves().getResponseData();
+            String requestURI = ((HttpServletRequest)ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST)).getRequestURI();
+            List<PageBean> list = new ArrayList<PageBean>();
+            List<PageBean> recordBeans = (List<PageBean>)record;
+            for (int i = 0; i < recordBeans.size(); i++) {
+                PageBean pb = recordBeans.get(i);
+                String source = pb.getSource();
+                if (requestURI != null && requestURI.indexOf(source) != -1) {
+                    list.add(pb);
+                }
+            }
+            this.pageBeans = list;
         } catch (Exception e) {
             LOG.error("this exception [#0]", e.getMessage());
         }
