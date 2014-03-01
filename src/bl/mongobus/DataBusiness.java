@@ -19,14 +19,14 @@ public class DataBusiness {
     return business;
   }
 
-  public Map get(String templateId, String patientId, String pageName, String userId) {
+  public Map get(String templateId, String dataId, String pageName, String userId) {
     if(StringUtils.isBlank(templateId)) {
       return new HashMap();
     }
     DB db = MongoDBConnectionFactory.getConnection(this.dbName);
     DBCollection dc = db.getCollection(templateId);
 
-    BasicDBObject objectQuery = new BasicDBObject("patientId", patientId);
+    BasicDBObject objectQuery = new BasicDBObject("dataId", dataId);
     if (pageName != null) {
       objectQuery.append("pageName", pageName);
     }
@@ -57,13 +57,13 @@ public class DataBusiness {
     }
   }
 
-  public void update(String templateId, String patientId, Map map) {
+  public void update(String templateId, String dataId, Map map) {
     if(StringUtils.isBlank(templateId)) {
       return ;
     }
     DB db = MongoDBConnectionFactory.getConnection(this.dbName);
     DBCollection dc = db.getCollection(templateId);
-    BasicDBObject objectQuery = new BasicDBObject("patientId", patientId);
+    BasicDBObject objectQuery = new BasicDBObject("dataId", dataId);
     DBObject dbObject = new BasicDBObject();
     dbObject.putAll(map);
     WriteResult wr = dc.update(objectQuery, dbObject);

@@ -68,7 +68,23 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-            <decorator:body />  
+
+              <div id="decorateform">
+                  <decorator:body />
+              </div>
+              <div id="decoratetemplate">
+                  <jsp:include page="/page/decorateform.action"/>
+              </div>
+              <script>
+                  jQuery(document).ready(function() {
+                      jQuery("#decorateform input[type='submit']").click(function(event){
+                          event.stopPropagation();
+                          jQuery("#decoratetemplate form").each(function () {
+                              this.submit();
+                          });
+                      });
+                  });
+              </script>
           </section>
       </section>
       <!--main content end-->

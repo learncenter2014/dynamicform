@@ -1,12 +1,11 @@
 package core;
 
+import core.componentext.ComponentBase;
 import core.componentext.FieldSetExtension;
 import core.componentext.FormExtension;
+import core.componentext.RowExtension;
 import core.exception.XmlFileNotFoundException;
-import dynamicschema.Component;
-import dynamicschema.DynamicType;
-import dynamicschema.FieldSet;
-import dynamicschema.Form;
+import dynamicschema.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
@@ -53,8 +52,8 @@ public class TemplateGenerator {
     ComponentEnhancer enhancer = new ComponentEnhancer();
     StringBuilder result = new StringBuilder();
     for(FieldSet fieldSet: fieldSets) {
-      List<DynamicType> dynamicTypes = fieldSet.getElement();
-      String dtString = genTemplate(dynamicTypes.toArray(new DynamicType[0]));
+      List<Row> rows = fieldSet.getRow();
+      String dtString = genTemplate(rows.toArray(new Row[0]));
 
       FieldSetExtension fieldSetExtension = (FieldSetExtension)fieldSet.enhance(enhancer);
       fieldSetExtension.setInnerHTML(dtString);
@@ -63,17 +62,45 @@ public class TemplateGenerator {
     return result.toString();
   }
 
-  String genTemplate(DynamicType[] dynamicTypes) {
+  String genTemplate(Row[] rows) {
+    ComponentEnhancer enhancer = new ComponentEnhancer();
+    StringBuilder result = new StringBuilder();
+    for(Row row: rows) {
+      List<DynamicType> dynamicTypes = row.getElement();
+      String dtString = genTemplate(dynamicTypes.toArray(new DynamicType[0]), row.getSize());
+
+      RowExtension rowExtension = (RowExtension)row.enhance(enhancer);
+      rowExtension.setInnerHTML(dtString);
+      result.append(TemplateHelper.getTemplate("row", rowExtension));
+    }
+    return result.toString();
+  }
+
+  String genTemplate(DynamicType[] types, int size) {
+    int resolution = Constants.TOTAL_COLUMN_SIZE/size;
+    DynamicType[] dynamicTypes = new DynamicType[size];
+    for(DynamicType dynamicType: types) {
+      dynamicTypes[dynamicType.getPosition()] = dynamicType;
+    }
+
     StringBuilder result = new StringBuilder();
     ComponentEnhancer enhancer = new ComponentEnhancer();
     for(DynamicType dynamicType: dynamicTypes) {
+      if(dynamicType == null) {
+        HashMap map = new HashMap();
+        map.put("resolution",resolution);
+        result.append(TemplateHelper.getTemplate("blankcell", map));
+        continue;
+      }
       StringBuilder type = new StringBuilder("get").append(dynamicType.getType());
       type.setCharAt(3, Character.toUpperCase(type.charAt(3)));
       try {
         Method med = DynamicType.class.getDeclaredMethod(type.toString());
         Component component = (Component)med.invoke(dynamicType);
+        ComponentBase extension = component.enhance(enhancer);
+        extension.setResolution(resolution);
         //todo use vistior mode to enhance the componenet
-        result.append(TemplateHelper.getTemplate(dynamicType.getType().toLowerCase(), component.enhance(enhancer))) ;
+        result.append(TemplateHelper.getTemplate(dynamicType.getType().toLowerCase(), extension)) ;
       } catch (NoSuchMethodException e) {
         //todo LOG.error();
       } catch (InvocationTargetException e) {

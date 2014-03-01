@@ -37,14 +37,15 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   private String userData;
   private String templateId;
   private String pageName;
-  private String patientId;
+
+  private String dataId;
   private String userId;
 
   private String result;
 
   public String input() {
     HttpServletRequest request = ServletActionContext.getRequest();
-    this.patientId = request.getParameter("patientId");
+    this.dataId = request.getParameter("dataId");
     this.templateId = request.getParameter("templateId");
     if(templateId == null) return ERROR;
 
@@ -72,10 +73,10 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
     TemplateGenerator g = new TemplateGenerator();
     g.genTemplate(fullPath, bean.getName() + ".ftl");
 
-    Map map = DataBusiness.get().get(bean.getName(), patientId, pageName, userId);
+    Map map = DataBusiness.get().get(bean.getName(), dataId, pageName, userId);
     if(map == null) {
       map = new HashMap();
-      map.put("patientId", patientId);
+      map.put("dataId", dataId);
       map.put("templateId", bean.getName());
       map.put("pageName", pageName);
     }
@@ -84,7 +85,7 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   
   public String loadPage() {
     HttpServletRequest request = ServletActionContext.getRequest();
-    this.patientId = request.getParameter("patientId");
+    this.dataId = request.getParameter("dataId");
     this.pageName = request.getParameter("pageName");
     PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
     PageBean record = (PageBean)pab.getLeafByName(pageName).getResponseData();
@@ -103,13 +104,13 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   
   public String save() {
     HttpServletRequest request = ServletActionContext.getRequest();
-    this.patientId = request.getParameter("patientId");
+    this.dataId = request.getParameter("dataId");
     this.templateId = request.getParameter("templateId");
     //DataBusiness dataBusiness = (DataBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DATABUSINESS);
     Map<String, Object> paraMap = ActionContext.getContext().getParameters();
-    Map record = DataBusiness.get().get(templateId, patientId, pageName, userId);
+    Map record = DataBusiness.get().get(templateId, dataId, pageName, userId);
     if(null != record) {
-      DataBusiness.get().update(templateId, patientId, processMap(paraMap));
+      DataBusiness.get().update(templateId, dataId, processMap(paraMap));
     } else {
       DataBusiness.get().insert(templateId, processMap(paraMap));
     }
@@ -157,14 +158,6 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
     this.userId = userId;
   }
 
-  public String getPatientId() {
-    return patientId;
-  }
-
-  public void setPatientId(String patientId) {
-    this.patientId = patientId;
-  }
-
   public String getResult() {
     return result;
   }
@@ -189,4 +182,12 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
     this.pageName = pageName;
   }
 
+
+  public String getDataId() {
+    return dataId;
+  }
+
+  public void setDataId(String dataId) {
+    this.dataId = dataId;
+  }
 }

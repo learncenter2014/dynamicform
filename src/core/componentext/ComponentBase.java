@@ -7,6 +7,17 @@ import dynamicschema.*;
  * Created by wangronghua on 14-2-12.
  */
 public class ComponentBase {
+  private int resolution;
+
+  public int getResolution() {
+    return resolution;
+  }
+
+  public void setResolution(int resolution) {
+    this.resolution = resolution;
+  }
+
+
   public ComponentBase enhance(ComponentEnhancer enhancer) {
     if(this instanceof Text) {
       return enhancer.wrap((Text)this);
@@ -26,6 +37,8 @@ public class ComponentBase {
       return enhancer.wrap((FieldSet)this);
     } else if(this instanceof Form) {
       return enhancer.wrap((Form)this);
+    } else if(this instanceof Row) {
+      return enhancer.wrap((Row)this);
     }
     return enhancer.wrap(this);
   }

@@ -1,6 +1,6 @@
 <script type="text/javascript">
     function editPatient(patientId) {
-        window.location.href = "datainput/dataTemplateView.action?patientId="+patientId;
+        window.location.href = "datainput/dataTemplateView.action?dataId="+patientId;
     }
 </script>
 

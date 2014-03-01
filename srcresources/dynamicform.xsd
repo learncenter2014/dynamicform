@@ -35,7 +35,7 @@
     <complexContent>
       <extension base="tns:Component">
         <sequence>
-          <element name="element" type="tns:Row" minOccurs="0" maxOccurs="unbounded" />
+          <element name="row" type="tns:Row" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
         <attribute name="legend" type="string" />
       </extension>

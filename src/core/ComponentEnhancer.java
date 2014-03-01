@@ -102,6 +102,19 @@ public class ComponentEnhancer {
     return extension;
   }
 
+  public static Component wrap(Row row) {
+    RowExtension extension = new RowExtension();
+    try {
+      BeanUtils.copyProperties(extension, row);
+
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return extension;
+  }
+
   public static ComponentBase wrap(ComponentBase component) {
     return component;
   }

@@ -1,7 +1,7 @@
 
 <script type="text/javascript">
-    function handleReturn(patientId, templateId) {
-        window.location.href = "datainput/dataTemplateView.action?patientId="+patientId;
+    function handleReturn(dataId, templateId) {
+        window.location.href = "datainput/dataTemplateView.action?dataId="+dataId;
     }
 </script>
 <div class="alert alert-success alert-block fade in">
@@ -14,5 +14,5 @@
     </h4>
     <p>保存成功！</p>
 </div>
-<button type="button" class="btn btn-info" onclick="handleReturn('${patientId}', '${templateId}')">返回</button>
+<button type="button" class="btn btn-info" onclick="handleReturn('${dataId}', '${templateId}')">返回</button>
 
