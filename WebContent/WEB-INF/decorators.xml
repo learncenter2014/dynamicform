@@ -16,4 +16,8 @@
         <pattern>/datainput/data*.action</pattern>
         <pattern>/user/*.action</pattern>
 	</decorator>
+
+    <decorator name="decorateform" page="/pages/decorators/decorateform.jsp">
+        <pattern>/pages/data.jsp</pattern>
+    </decorator>
 </decorators>  

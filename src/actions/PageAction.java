@@ -132,6 +132,17 @@ public class PageAction extends ActionSupport {
         return ActionSupport.SUCCESS;
     }
 
+    public String templateDecorator(){
+        try{
+            PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
+            Object record = pab.getAllLeaves().getResponseData();
+            this.pageBeans = (List<PageBean>) record;
+        } catch (Exception e) {
+            LOG.error("this exception [#0]", e.getMessage());
+        }
+        return ActionSupport.SUCCESS;
+    }
+
     public static void main(String[] args) {
         FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
         // create a leaf in the MongoDB.
