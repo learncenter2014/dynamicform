@@ -11,7 +11,7 @@ import net.sf.json.JsonConfig;
 import vo.table.TableDataVo;
 import vo.table.TableInitVo;
 import vo.table.TableQueryVo;
-import bl.common.BaseBusiness;
+import bl.common.TableBusinessInterface;
 
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -21,10 +21,10 @@ import com.opensymphony.xwork2.ModelDriven;
  * @author gudong
  * @since $Date:2014-02-20$
  */
-public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction implements ModelDriven<TableQueryVo> {
+public abstract class BaseTableAction<B extends TableBusinessInterface> extends BaseAction implements ModelDriven<TableQueryVo> {
 
   private TableQueryVo model;
-  private static BaseBusiness business;
+  private TableBusinessInterface business;
   private String id;
   private String[] ids;
   public static final String INDEX_SUCCESS = "tableIndex";
@@ -131,7 +131,7 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
    * @throws Exception
    */
   public String queryTable() throws Exception {
-    int count = getBusiness().getCount(getModel());
+    long count = getBusiness().getCount(getModel());
     TableDataVo table = getBusiness().query(getModel());
     table.setsEcho(getModel().getSEcho());
     table.setiTotalDisplayRecords(count);
@@ -149,7 +149,7 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
    * @throws Exception
    */
   public String add() throws Exception {
-    return INDEX_SUCCESS;
+    return SUCCESS;
   }
 
   /**
@@ -158,7 +158,7 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
    * @throws Exception
    */
   public String edit() throws Exception {
-    return INDEX_SUCCESS;
+    return SUCCESS;
   }
 
   /**
@@ -167,6 +167,15 @@ public abstract class BaseTableAction<B extends BaseBusiness> extends BaseAction
    * @throws Exception
    */
   public String delete() throws Exception {
-    return INDEX_SUCCESS;
+    return SUCCESS;
+  }
+  
+  /**
+   * 
+   * @return
+   * @throws Exception
+   */
+  public String save() throws Exception {
+    return SUCCESS;
   }
 }
