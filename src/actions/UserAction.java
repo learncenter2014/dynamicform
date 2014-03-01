@@ -72,6 +72,7 @@ public class UserAction extends BaseTableAction<UserBusiness> {
   @Override
   public String edit() throws Exception {
     user = (UserBean) getBusiness().getLeaf(getId()).getResponseData();
+    getSession().setAttribute("dataId", user.getId());
     return SUCCESS;
   }
 
