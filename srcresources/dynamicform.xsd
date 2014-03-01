@@ -35,7 +35,7 @@
     <complexContent>
       <extension base="tns:Component">
         <sequence>
-          <element name="element" type="tns:DynamicType" minOccurs="0" maxOccurs="unbounded" />
+          <element name="element" type="tns:Row" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
         <attribute name="legend" type="string" />
       </extension>
@@ -119,6 +119,18 @@
       <element name="label" type="tns:Label" minOccurs="0" maxOccurs="1" />
     </choice>
     <attribute name="type" type="string" />
+    <attribute name="position" type="int" />
+  </complexType>
+
+  <complexType name="Row">
+    <complexContent>
+      <extension base="tns:Component">
+        <sequence>
+          <element name="element" type="tns:DynamicType" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+        <attribute name="size" type="int" />
+      </extension>
+    </complexContent>
   </complexType>
 
 </schema>
