@@ -28,6 +28,9 @@
 		.ui-dialog {
 			z-index: 2000;
 		}
+        .form-control{
+            color: #000000;
+        }
     </style>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>

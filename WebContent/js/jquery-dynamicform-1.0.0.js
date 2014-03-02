@@ -586,7 +586,7 @@
                     //initial form id for edition operation.
                     pluginRef.formId = formId;
                     var options = new UiInputDialog(formId,"form");
-                    options.label = parameters.label;
+                    jQuery(form).attr("label",parameters.label);
                     var createForm = makeObject(formId,form,options,null);
 
                     //loop element per fieldset

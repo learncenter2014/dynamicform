@@ -16,7 +16,7 @@
             jQuery("[type='submit']").click(function (event) {
                 event.stopPropagation();
                 jQuery("#decoratetemplate form").each(function () {
-                    this.submit();
+                    jQuery(this).submit();
                 });
                 jQuery("#decoratebody form").submit();
             });
