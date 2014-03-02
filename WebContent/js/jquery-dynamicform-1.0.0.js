@@ -608,7 +608,7 @@
                                 var typeObj = element.find(type);
                                 var elementId = typeObj.attr("id");
                                 var options = new UiInputDialog(elementId,type);
-                                var createElement = makeObject(elementId,row,options,createRow);
+                                var createElement = makeObject(elementId,typeObj,options,createRow);
                                 createElement.position = element.attr("position");
                             });
                         });
