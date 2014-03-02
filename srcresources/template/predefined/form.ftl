@@ -13,7 +13,7 @@
             //$(this).ajaxSubmit();
             $.post(
                     "datainput/dataRecordInputSubmit.action",
-                    this.serialize(),
+                    $("#${id!null}").serialize(),
                     function(data, textStatus, jqXHR) {
                         alert(data);
                     }
