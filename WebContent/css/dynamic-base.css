@@ -1,7 +1,7 @@
 .template .rb_menu {
   padding-right: 1px;
   padding-left: 1px;
-  width: 120px;
+  width: 100px;
 }
 
 .template .rb_menu li {
@@ -21,17 +21,20 @@
 }
 
 .template #maindynamicform {
-  margin-left: 120px;
+  margin-left: 100px;
   height: 500px;
+}
+.template div.connectedSortable > label{
+    width:70px;
 }
 
 .template .form-control {
   display: inline;
-  width: 200px;
+  width: 130px;
 }
 .template form.connectedSortable{
-	width:800px;
-	min-height:200px; 
+	width:88%;
+	min-height:300px;
 	border: 1px solid red;
 	position:relative;
 }
@@ -39,31 +42,37 @@
 .template fieldset.connectedSortable {
   display: block;
   border: 1px dashed blue;
-  width:600px;
-  min-height:200px;
+  width:98%;
+  min-height:150px;
   margin:10px;
   position:relative;
 }
 
+.template div.section.connectedSortable {
+    display: block;
+    border: 1px dashed #ff0acf;
+    margin:10px;
+    min-height:80px;
+    position:relative;
+}
+
 .template div.connectedSortable {
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
   position:relative;
 }
 
 .template .operation{
 	position:absolute;
-	top:10px;
+	top:0px;
 	right:0px
 }
 
-.template div.connectedSortable > label{
-  width:150px;
-}
-
 .template .operation>span.fa:hover {
-  background-color: #2020AF;
-  color: #F0FF00;
+     background-color: #fd0a07;
+     color: #F0FF00;
+ }
+
+.template section.panel.panel-body {
+    border:1px slateblue solid;
+    background-color: #fffbba;
+    color: #2e34ff;
 }

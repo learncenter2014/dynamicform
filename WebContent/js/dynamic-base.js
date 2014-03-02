@@ -4,18 +4,24 @@ function deleteControlPanel(id) {
 
 function initDrop() {
     jQuery("form.connectedSortable")
-    .sortable({
+        .sortable({
             connectWith: 'form.connectedSortable',
             items: 'fieldset.connectedSortable'
-     });
-    
+        });
+
     jQuery("fieldset.connectedSortable")
-    .sortable({
+        .sortable({
             connectWith: 'fieldset.connectedSortable',
-            items: 'div.connectedSortable'
-     });
-    
-    jQuery('ul#rbMenu li,#FieldSet').draggable({
+            items: 'div.connectedSortable.section'
+        });
+
+    jQuery("div.section.connectedSortable")
+        .sortable({
+            connectWith: 'div.section.connectedSortable',
+            items: 'section.panel.panel-body'
+        });
+
+    jQuery('ul#rbMenu li,#FieldSet,#Row').draggable({
         cursor : 'move',
         helper : 'clone',
         opacity : '0.5',
@@ -31,7 +37,18 @@ function initDrop() {
             jQuery.dynamicplugin.addNewElement(ui, this);
         }
     });
+
     jQuery('fieldset.connectedSortable').droppable({
+        cursor : 'move',
+        accept : '#Row',
+        helper : 'clone',
+        opacity : '0.5',
+        drop : function(event, ui) {
+            jQuery.dynamicplugin.addNewElement(ui, this);
+        }
+    });
+
+    jQuery('section.panel.panel-body').droppable({
         cursor : 'move',
         accept : 'ul#rbMenu li',
         helper : 'clone',
@@ -39,13 +56,6 @@ function initDrop() {
         drop : function(event, ui) {
             jQuery.dynamicplugin.addNewElement(ui, this);
         }
-    });
-    
-    jQuery('.operation>.fa.fa-edit').click(function() {
-        showControlPanel(jQuery(this).parent().attr("id").substring("operation_".length));
-    });
-    jQuery('.operation>.fa.fa-cut').click(function() {
-        deleteControlPanel(jQuery(this).parent().attr("id").substring("operation_".length));
     });
     
 }

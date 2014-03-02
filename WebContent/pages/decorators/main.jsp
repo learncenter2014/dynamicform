@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="peter">
     <meta name="keyword" content="dynamicform">
-    <title><decorator:title default="动态表单管理系统" /></title>
+    <title>动态表单管理系统</title>
     
     <link rel="shortcut icon" href="jslib/flatlab/img/favicon.png">
 
@@ -27,9 +27,6 @@
     <style type="text/css">
 		.ui-dialog {
 			z-index: 2000;
-		}
-		body{
-		  background:none repeat scroll 0 0 rgb(255, 255, 255);
 		}
     </style>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
@@ -68,23 +65,10 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-
-              <div id="decorateform">
-                  <decorator:body />
-              </div>
-              <div id="decoratetemplate">
-                  <jsp:include page="/page/decorateform.action"/>
-              </div>
-              <script>
-                  jQuery(document).ready(function() {
-                      jQuery("#decorateform input[type='submit']").click(function(event){
-                          event.stopPropagation();
-                          jQuery("#decoratetemplate form").each(function () {
-                              this.submit();
-                          });
-                      });
-                  });
-              </script>
+           <div id="decoratebody">
+             <decorator:body />
+           </div>
+            <jsp:include page="/pages/decorators/decorateform.jsp"/>
           </section>
       </section>
       <!--main content end-->

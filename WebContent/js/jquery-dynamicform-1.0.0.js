@@ -62,13 +62,17 @@
         this.name = options.name;
         this.type = options.type;
         this.xmltemplate = "";
-        this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span>&nbsp;<span class="fa fa-arrows-alt" style="cursor:move">移动</span></div>';
+        this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit"></span>&nbsp;<span class="fa fa-cut"></span></div>';
         //sub-class could overwrite this function.
         this.preInitHtml = function(){
-            
+        };
+        this.preInitXml = function(){
+            //here, need to get this position column of element from row.
+            this.position = jQuery("#block_"+this.id).parent().index();
         };
         this.toXml = function() {
-            return $.substitute('<element type="${type}">'+this.xmltemplate+'</element>', this);
+            this.preInitXml();
+            return $.substitute('<element type="${type}" position="${position}">'+this.xmltemplate+'</element>', this);
         };
         this.htmltemplate = "";
         this.toHtml = function(){
@@ -90,6 +94,7 @@
         this.readonly = options.readonly;
         this.helptext = options.helptext;
         this.preInitHtml = function(){
+            Input.protottype.preInitHtml.apply(this,arguments);
             if(this.listvalue && this.listvalue.length>0){
                 var items = this.listvalue.split(";");
                 var templateString = "";
@@ -129,19 +134,19 @@
         this.addElement = function(obj) {
             this.elements.push(obj);
         };
-        this.xmltemplate = '<fieldset id="${id}" name="${id}" legend="${legend}">${subElementsXml}\n</fieldset>';
+        this.xmltemplate = '<fieldset id="${id}" name="" legend="${legend}">${subElementsXml}</fieldset>';
         this.toXml = function() {
             this.subElementsXml = "";
             for ( var i = 0; i < this.elements.length; i++) {
-                this.subElementsXml += "\n" + this.elements[i].toXml();
+                this.subElementsXml += this.elements[i].toXml();
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" class="connectedSortable"><legend id="legend_${id}">${legend}</legend>${operation}${subElementsHtml}\n</fieldset>';
+        this.htmltemplate = '<fieldset id="block_${id}" name="${id}" class="connectedSortable"><legend id="legend_${id}">${legend}</legend>${operation}${subElementsHtml}</fieldset>';
         this.toHtml = function(){
             this.subElementsHtml = "";
             for ( var i = 0; i < this.elements.length; i++) {
-                this.subElementsHtml += "\n" + this.elements[i].toHtml();
+                this.subElementsHtml += this.elements[i].toHtml();
             }
             return $.substitute(this.htmltemplate, this);
         };
@@ -156,8 +161,8 @@
         this.label = options.label;
         this.action = options.action;
         this.method = options.method;
-        this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit">编辑</span>&nbsp;<span class="fa fa-cut">删除</span></div>';
-        this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" action="${action}" method="${method}">${subElementsXml}\n</tns:form>';
+        this.operation='<div class="operation" id="operation_'+this.id+'"><span class="fa fa-edit"></span>&nbsp;<span class="fa fa-cut"></span></div>';
+        this.xmltemplate = '<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="${id}" name="${name}" action="${action}" method="${method}">${subElementsXml}</tns:form>';
         this.elements = [];
         this.addElement = function(obj) {
             this.elements.push(obj);
@@ -165,15 +170,15 @@
         this.toXml = function() {
             this.subElementsXml = "";
             for ( var i = 0; i < this.elements.length; i++) {
-                this.subElementsXml += "\n" + this.elements[i].toXml();
+                this.subElementsXml += this.elements[i].toXml();
             }
             return $.substitute(this.xmltemplate, this);
         };
-        this.htmltemplate = '<form id="block_${id}" name="${name}" class="connectedSortable">${operation}${subElementsHtml}\n</form>';
+        this.htmltemplate = '<form id="block_${id}" name="${name}" class="connectedSortable">${operation}${subElementsHtml}</form>';
         this.toHtml = function(){
             this.subElementsHtml = "";
             for ( var i = 0; i < this.elements.length; i++) {
-                this.subElementsHtml += "\n" + this.elements[i].toHtml();
+                this.subElementsHtml += this.elements[i].toHtml();
             }
             return $.substitute(this.htmltemplate, this);
         };
@@ -189,7 +194,7 @@
         this.height=options.height;
         this.helptext = options.helptext;
         this.xmltemplate = '<image id="${id}" name="${name}" src="${src}"></image>';
-        this.htmltemplate = '<img id="${id}" name="${name}" src="${src}" style="width:${width}px;height:"${height}px">';
+        this.htmltemplate = '<img id="${id}" name="${name}" src="${src}" style="width:${width}px;height:${height}px">';
     }
     Image.prototype = component;
 
@@ -282,6 +287,44 @@
     }
     Label.prototype = component;
 
+    /* sub-class for Label */
+    function Row(options) {
+        Component.call(this, options);
+        this.constructor = Row;
+        this.size = options.size;
+        this.xmltemplate = '<row id="${id}" name="" size="${size}">${subElementsXml}</row>';
+
+        this.elements = [];
+        this.addElement = function(obj) {
+            this.elements.push(obj);
+        };
+        this.toXml = function() {
+            this.subElementsXml = "";
+            for ( var i = 0; i < this.elements.length; i++) {
+                this.subElementsXml += this.elements[i].toXml();
+            }
+            return $.substitute(this.xmltemplate, this);
+        };
+
+        this.htmltemplate = '<div id="block_${id}" name="" class="section connectedSortable">${subElementsHtml}${operation}<div style="clear:both;"></div></div>';
+
+        this.toHtml = function(){
+            this.subElementsHtml = "";
+            var classname = "col-lg-"+parseInt(12/this.size);
+            for ( var i = 0; i < parseInt(this.size); i++) {
+                this.subElementsHtml += '<section class="'+classname+' panel panel-body">';
+                for(var j=0;j<this.elements.length;j++){
+                    if(this.elements[j].position == i){
+                        this.subElementsHtml +=this.elements[j].toHtml();
+                    }
+                }
+                this.subElementsHtml += '</section>';
+            }
+            return $.substitute(this.htmltemplate, this);
+        };
+    }
+    Row.prototype = component;
+
     /**
      * binding plugin dynamicform into Jquery.
      * 
@@ -294,11 +337,11 @@
         this.type = _type;
         this.name = "";
         this.label = "";
-        this.size = 5;
+        this.size = 3;
         this.mask = "";
         this.freemask = "";
         this.regexp = "";
-        this.maxlength = 30;
+        this.maxlength = 20;
         this.accesskey = "";
         this.listvalue = "";
         this.helptext = "Please input promoted info";
@@ -431,12 +474,16 @@
                 case "label":
                     instanceObj = new Label(options);
                     break;
+                case "row":
+                    options.type='row';
+                    instanceObj = new Row(options);
+                    break;
                 }
             }
             return instanceObj;
         },
         _toXml: function(form) {
-            var stringBuffer = '<?xml version="1.0" encoding="UTF-8"?>\n';
+            var stringBuffer = '<?xml version="1.0" encoding="UTF-8"?>';
             stringBuffer += form.toXml();
             return stringBuffer;
         },
@@ -456,6 +503,14 @@
         },
         saveXml: function(){
             var pluginRef = this;
+
+            var makeObject = function(objectId, container){
+                var options = pluginRef.elementArray[objectId.substring("block_".length)];
+                var createObject = pluginRef.createElementFactory(pluginRef.escapseOptions(options));
+                container.addElement(createObject);
+                return createObject;
+            };
+
             var formName = pluginRef.elementArray[this.formId].name;
             var label = pluginRef.elementArray[this.formId].label;
             var options = this.elementArray[this.formId];
@@ -464,16 +519,18 @@
             jQuery("#block_"+this.formId).find("fieldset.connectedSortable").each(function(){
                 var fieldSet = jQuery(this);
                 var fieldId = fieldSet.attr("id");
-                var options = pluginRef.elementArray[fieldId.substring("block_".length)];
-                var createFieldSet = pluginRef.createElementFactory(pluginRef.escapseOptions(options));
-                createForm.addElement(createFieldSet);
-                //loop element per fieldset
-                jQuery(this).find("div.connectedSortable").each(function(){
-                    var element = jQuery(this);
-                    var divId = element.attr("id");
-                    var options = pluginRef.elementArray[divId.substring("block_".length)];
-                    var createElement = pluginRef.createElementFactory(pluginRef.escapseOptions(options));
-                    createFieldSet.addElement(createElement);
+                var createFiledset = makeObject(fieldId,createForm);
+                //loop element per rows
+                jQuery(this).find("div.section.connectedSortable").each(function(){
+                    var rows = jQuery(this);
+                    var rowId = rows.attr("id");
+                    var createRow = makeObject(rowId,createFiledset);
+                    //loop element per element
+                    jQuery(this).find("div.connectedSortable").each(function(){
+                        var element = jQuery(this);
+                        var divId = element.attr("id");
+                        makeObject(divId,createRow);
+                    });
                 });
             });
             //covert form object to xml structure.
@@ -511,41 +568,49 @@
                 success : function(data, status) {
                     var pluginRef = jQuery.dynamicplugin;
                     var resp = data;
-                    
+
+                    var makeObject = function(objectId, source, options, container){
+                        options.parseFromXml(source);
+                        options = pluginRef.unescapseOptions(options);
+                        pluginRef.elementArray[objectId] = options;
+                        var createObj = pluginRef.createElementFactory(options);
+                        if(container!=null){
+                            container.addElement(createObj);
+                        }else{
+                            container =  createObj;
+                        }
+                        return createObj;
+                    };
                     var form = jQuery(resp).find('tns\\:form');
                     var formId = form.attr("id");
                     //initial form id for edition operation.
                     pluginRef.formId = formId;
                     var options = new UiInputDialog(formId,"form");
-                    options.parseFromXml(form);
                     options.label = parameters.label;
-                    options = pluginRef.unescapseOptions(options);
-                    pluginRef.elementArray[formId] = options;
-                    var createForm = pluginRef.createElementFactory(options);
-                    
-                    jQuery(resp).find("fieldset").each(function(){
+                    var createForm = makeObject(formId,form,options,null);
+
+                    //loop element per fieldset
+                    jQuery(form).find("fieldset").each(function(){
                         var fieldSet = jQuery(this);
                         var fieldId = fieldSet.attr("id");
                         var options = new UiInputDialog(fieldId,"fieldset");
-                        options.parseFromXml(fieldSet);
-                        options = pluginRef.unescapseOptions(options);
-                        pluginRef.elementArray[fieldId] = options;
-                        var createFieldSet = pluginRef.createElementFactory(options);
-                        createForm.addElement(createFieldSet);
-                        
-                        //loop element per fieldset
-                        
-                        jQuery(resp).find("element").each(function(){
-                            var element = jQuery(this);
-                            var type = element.attr("type");
-                            var typeObj = element.find(type);
-                            var elementId = typeObj.attr("id");
-                            var options = new UiInputDialog(elementId,type);
-                            options.parseFromXml(typeObj);
-                            options = pluginRef.unescapseOptions(options);
-                            pluginRef.elementArray[elementId] = options;
-                            var createElement = pluginRef.createElementFactory(options);
-                            createFieldSet.addElement(createElement);
+                        var createFieldset = makeObject(fieldId,fieldSet,options,createForm);
+                        //loop row within fieldset
+                        jQuery(fieldSet).find("row").each(function(){
+                            var row = jQuery(this);
+                            var rowId = row.attr("id");
+                            var options = new UiInputDialog(rowId,'row');
+                            var createRow = makeObject(rowId,row,options,createFieldset);
+                            //loop element within row
+                            jQuery(row).find("element").each(function(){
+                                var element = jQuery(this);
+                                var type = element.attr("type");
+                                var typeObj = element.find(type);
+                                var elementId = typeObj.attr("id");
+                                var options = new UiInputDialog(elementId,type);
+                                var createElement = makeObject(elementId,row,options,createRow);
+                                createElement.position = element.attr("position");
+                            });
                         });
                     });
                     

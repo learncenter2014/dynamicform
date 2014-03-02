@@ -33,14 +33,16 @@
       <li id="Button"><img src="img/new_button.png"> 提交</li>
     </ul>
     <ul id="rbMenu3" class="rb_menu" style="margin-top:5px">
+      <li id="Row"><img src="img/property.png"> 行域</li>
       <li id="FieldSet"><img src="img/property.png"> 分组域</li>
+      <li></li>
       <li id="formCreate"><img src="img/property.png"> 创建表单模版</li>
       <li id="loadXml"><img src="img/load_xml.png"> 打开</li>
       <li id="saveXml"><img src="img/save_xml.png"> 保存</li>
     </ul>
   </div>
   <h4 style="text-align:center;position:absolute;left:0px;top:0px;width:100%">动态表单模版工作区</h4>
-  <div id="maindynamicform" style="position:absolute;left:0px;top:50px;width:80%;height:80%"></div>
+  <div id="maindynamicform" style="position:absolute;left:0px;top:50px;width:100%;height:90%"></div>
   <div id="dialog_elt" title="参数设置区"></div>
   <div id="dialog_file" title="系统模版列表区"></div>
   </div>
@@ -95,17 +97,24 @@
                     }
                 });
 
-                jQuery('#formCreate').click(function() {
+                jQuery('#formCreate').on("click",function() {
                     createForm();
                 });
-                jQuery('#formEdit').click(function() {
+                jQuery('#formEdit').on("click",function() {
                     editForm();
                 });
-                jQuery('#loadXml').click(function() {
+                jQuery('#loadXml').on("click",function() {
                     showFilePanel();
                 });
-                jQuery('#saveXml').click(function() {
+                jQuery('#saveXml').on("click",function() {
                     save_xml();
+                });
+
+                jQuery('#maindynamicform').on("click",".operation>.fa.fa-edit",function() {
+                    showControlPanel(jQuery(this).parent().attr("id").substring("operation_".length));
+                });
+                jQuery('#maindynamicform').on("click",".operation>.fa.fa-cut",function() {
+                    deleteControlPanel(jQuery(this).parent().attr("id").substring("operation_".length));
                 });
             });
         </script>
