@@ -10,7 +10,7 @@
 
 	<!-- 用来定义装饰器要过滤的页面 -->
 	<decorator name="main" page="/pages/decorators/main.jsp">
-		<pattern>/index.jsp</pattern>
+		<pattern>/welcome.jsp</pattern>
 		<pattern>/template/dynamicform.action</pattern>
 		<pattern>/page/*.action</pattern>
         <pattern>/datainput/data*.action</pattern>

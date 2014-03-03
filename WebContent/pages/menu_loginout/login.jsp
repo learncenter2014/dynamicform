@@ -1,15 +1,22 @@
 <!DOCTYPE html>
+<%  response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
+<base href="<%=basePath%>">
+
 <html lang="en">
 <head>
-    <%@ include file="../commonHeader.jsp" %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <meta name="description" content="dynamic manager technique">
+    <meta name="author" content="LiLimin,GuDong,WangRonghua">
+    <meta name="keyword" content="dynamicform,template">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title>FlatLab - Flat & Responsive Bootstrap Admin Template</title>
+    <title>动态表单管理主页--用户登录</title>
 
     <!-- Bootstrap core CSS -->
     <link href="jslib/flatlab/css/bootstrap.min.css" rel="stylesheet">

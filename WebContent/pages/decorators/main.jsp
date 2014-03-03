@@ -4,9 +4,9 @@
     <%@ include file="/pages/commonHeader.jsp" %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="peter">
-    <meta name="keyword" content="dynamicform">
+    <meta name="description" content="dynamic manager technique">
+    <meta name="author" content="LiLimin,GuDong,WangRonghua">
+    <meta name="keyword" content="dynamicform,template">
     <title>动态表单管理系统</title>
     
     <link rel="shortcut icon" href="jslib/flatlab/img/favicon.png">

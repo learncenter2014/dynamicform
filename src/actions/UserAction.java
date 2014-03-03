@@ -3,6 +3,7 @@
  */
 package actions;
 
+import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,6 +14,11 @@ import bl.beans.UserBean;
 
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
+
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author gudong
@@ -127,7 +133,20 @@ public class UserAction extends BaseTableAction<UserBusiness> {
    * @return
    */
   public String logout() {
-    getSession().removeAttribute(LOGIN_USER_SESSION_ID);
-    return SUCCESS;
+      getSession().removeAttribute(LOGIN_USER_SESSION_ID);
+      HttpServletRequest req = (HttpServletRequest) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
+      HttpServletResponse resp = (HttpServletResponse) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_RESPONSE);
+      eraseCookie(req, resp);
+      return SUCCESS;
   }
+
+    private void eraseCookie(HttpServletRequest req, HttpServletResponse resp) {
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null)
+            for (int i = 0; i < cookies.length; i++) {
+                cookies[i].setValue("");
+                cookies[i].setMaxAge(0);
+                resp.addCookie(cookies[i]);
+            }
+    }
 }

@@ -24,7 +24,7 @@
 		
        <action name="login" class="actions.UserAction" method="login">
            <interceptor-ref name="noLoginStack"></interceptor-ref>
-		   <result name="success" type="redirectAction">/user/index</result>
+		   <result name="success" type="redirect">/welcome.jsp</result>
 		</action>
 		<action name="logout" class="actions.UserAction" method="logout">
 		   <interceptor-ref name="noLoginStack"></interceptor-ref> 
@@ -32,7 +32,7 @@
 		</action>
 		
 		<action name="index">
-		   <result name="success">/index.jsp</result>
+		   <result name="success">/welcome.jsp</result>
 		</action>
 	</package>
 	<package name="template" namespace="/template" extends="default">
