@@ -14,7 +14,13 @@
                           <span class="label label-danger pull-right mail-info"></span>
                       </a>
                   </li>
-              
+                  <li>
+                      <a  href="patient/index.action">
+                          <i class="fa fa-tasks"></i>
+                          <span>患者管理 </span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
                   <li>
                       <a  href="template/dynamicform.action">
                           <i class="fa fa-tasks"></i>

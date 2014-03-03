@@ -136,4 +136,22 @@
 		   <result name="success" type="redirectAction">/user/index</result>
 		</action>
 	</package>
+
+    <package name="patient" namespace="/patient" extends="default">
+        <action name="index" class="actions.PatientAction" method="index"/>
+        <action name="initTable" class="actions.PatientAction" method="initTable"/>
+        <action name="queryTable" class="actions.PatientAction" method="queryTable"/>
+        <action name="add" class="actions.PatientAction" method="add">
+            <result name="success">/pages/patient/patientEdit.jsp</result>
+        </action>
+        <action name="edit" class="actions.PatientAction" method="edit">
+            <result name="success">/pages/patient/patientEdit.jsp</result>
+        </action>
+        <action name="save" class="actions.PatientAction" method="save">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+        <action name="delete" class="actions.PatientAction" method="delete">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+    </package>
 </struts>

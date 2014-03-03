@@ -15,5 +15,6 @@
 		<pattern>/page/*.action</pattern>
         <pattern>/datainput/data*.action</pattern>
         <pattern>/user/*.action</pattern>
+        <pattern>/patient/*.action</pattern>
 	</decorator>
 </decorators>
