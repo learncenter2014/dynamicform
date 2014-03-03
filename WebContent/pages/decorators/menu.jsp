@@ -74,7 +74,7 @@
                       </a>
                   </li>
                   <li>
-                      <a  href="pages/menu_loginout/login.jsp">
+                      <a  href="logout.action">
                           <i class="fa fa-user"></i>
                           <span>用户退出</span>
                       </a>

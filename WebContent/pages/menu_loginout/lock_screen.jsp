@@ -4,7 +4,7 @@
     <%@ include file="/pages/commonHeader.jsp" %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lock Screen</title>
+    <title>动态表单管理主页--锁屏</title>
 
     <!-- Bootstrap core CSS -->
     <link href="jslib/flatlab/css/bootstrap.min.css" rel="stylesheet">

@@ -34,7 +34,7 @@
             var str = ss;
             var findReplace = [ [ /&/g, "&amp;" ], [ /</g, "&lt;" ], [ />/g, "&gt;" ], [ /"/g, "&quot;" ] ]
 
-            for (item in findReplace)
+            for (var item=0;item< findReplace.length;item++)
                 str = str.replace(findReplace[item][0], findReplace[item][1]);
             return str;
         } else {
@@ -48,7 +48,7 @@
         var str = ss;
         var findReplace = [ [ /&amp;/g, "&" ], [ /&lt;/g, "<" ], [ /&gt;/g, ">" ], [ /&quot;/g, "\"" ] ]
 
-        for (item in findReplace)
+        for (var item=0;item< findReplace.length;item++)
             str = str.replace(findReplace[item][0], findReplace[item][1]);
         return str;
        } else {
@@ -581,7 +581,14 @@
                         }
                         return createObj;
                     };
-                    var form = jQuery(resp).find('tns\\:form');
+                    var form = null;
+                    //Chrome,Sarfari browser doesn't recognize namspace of xml.
+                    var useragent = navigator.userAgent.toLowerCase();
+                    if(useragent.indexOf('safari')!=-1|| useragent.indexOf('chrome')!=-1){
+                        form = jQuery(resp).find('form');
+                    }else{
+                        form = jQuery(resp).find('tns\\:form');
+                    }
                     var formId = form.attr("id");
                     //initial form id for edition operation.
                     pluginRef.formId = formId;

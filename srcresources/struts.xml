@@ -15,7 +15,7 @@
 		<global-results>
 			<result name="error">/pages/generalError.jsp</result>
 			<result name="tableIndex">/pages/table/tableIndex.jsp</result>
-			<result name="login_failure" type="redirectAction">/logout.action</result>
+			<result name="login_failure" type="redirectAction">logout.action</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception" result="error" />
@@ -24,15 +24,15 @@
 		
        <action name="login" class="actions.UserAction" method="login">
            <interceptor-ref name="noLoginStack"></interceptor-ref>
-		   <result name="success" type="redirectAction">/user/index</result>
+		   <result name="success" type="redirect">/welcome.jsp</result>
 		</action>
 		<action name="logout" class="actions.UserAction" method="logout">
 		   <interceptor-ref name="noLoginStack"></interceptor-ref> 
-		   <result name="success">/pages/menu_loginout/login.jsp</result>
+		   <result name="success" type="redirect">/pages/menu_loginout/login.jsp</result>
 		</action>
 		
 		<action name="index">
-		   <result name="success">/index.jsp</result>
+		   <result name="success">/welcome.jsp</result>
 		</action>
 	</package>
 	<package name="template" namespace="/template" extends="default">
