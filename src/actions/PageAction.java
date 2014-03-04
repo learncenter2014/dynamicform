@@ -100,9 +100,14 @@ public class PageAction extends ActionSupport {
             Object record = pab.getLeafByName(this.pageBean.getName()).getResponseData();
             List<TemplateBean> list = this.pageBean.getTemplateList();
             if (list != null) {
+                List<TemplateBean> createArray = new ArrayList<TemplateBean>();
                 for (int i = 0, length = list.size(); i < length; i++) {
-                    list.set(i, (TemplateBean) fb.getLeafByName(list.get(i).getName()).getResponseData());
+                    TemplateBean tb = (TemplateBean) fb.getLeafByName(list.get(i).getName()).getResponseData();
+                    if(tb!=null){
+                        createArray.add(tb);
+                    }
                 }
+                this.pageBean.setTemplateList(createArray);
             }
             // update page info in page table.
             if (record != null) {

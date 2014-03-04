@@ -8,7 +8,7 @@
     <meta name="author" content="Mosaddek">
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.png">
-    
+
     <style type="text/css">
 		 table tbody tr.even.row_selected td{
 			background-color: #B0BED9 !important;
@@ -36,7 +36,7 @@
          <div class="form-group has-success">
              <label for="lock" class="control-label col-lg-2 col-sm-3">Lock</label>
              <div class="col-lg-10 col-sm-9">
-                 <input  type="checkbox" style="width: 20px" class="checkbox form-control" id="lock" name="user.lock" value="1" 
+                 <input  type="checkbox" style="width: 20px" class="checkbox form-control" id="lock" name="user.lock" value="1"
                     <s:if test="user.lock==1">
 	                  checked="checked"
 	                 </s:if>
@@ -61,21 +61,21 @@
                  <p class="help-block">Please select sex</p>
              </div>
          </div>
-         
+
          <div class="form-group has-error">
              <label for="password" class="control-label col-lg-2">Password</label>
            <div class="col-lg-10">
                <input class="form-control " id="password" name="user.password" type="password" />
            </div>
          </div>
-         
+
          <div class="form-group has-error">
             <label for="confirm_password" class="control-label col-lg-2">Confirm Password</label>
            <div class="col-lg-10">
                <input class="form-control " id="confirm_password" name="confirm_password" type="password" />
            </div>
          </div>
-         
+
          <div class="form-group has-warning">
              <label class="col-lg-2 control-label">Email</label>
              <div class="col-lg-10">
@@ -91,11 +91,11 @@
                  <p class="help-block">Please input cellphone</p>
              </div>
          </div>
-         
+
          <div class="form-group">
              <div class="col-lg-offset-2 col-lg-10">
-                 <button class="btn btn-danger" type="submit">Submit</button>
-                 <button class="btn btn-danger" type="reset">Reset</button>
+                 <button class="btn btn-danger" type="submit">保存</button>
+                 <button class="btn btn-danger" type="button" onclick="history.go(-1);">取消</button>
              </div>
          </div>
      </form>

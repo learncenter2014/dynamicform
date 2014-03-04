@@ -6,7 +6,22 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                 
+                  <li>
+                      <a  href="template/dynamicform.action">
+                          <i class="fa fa-tasks"></i>
+                          <span>模版管理 </span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a  href="page/pagelist.action">
+                          <i class="fa fa-tasks"></i>
+                          <span>页面构建 </span>
+                          <span class="label label-danger pull-right mail-info"></span>
+                      </a>
+                  </li>
+
                   <li>
                       <a  href="user/index.action">
                           <i class="fa fa-tasks"></i>
@@ -21,30 +36,7 @@
                           <span class="label label-danger pull-right mail-info"></span>
                       </a>
                   </li>
-                  <li>
-                      <a  href="template/dynamicform.action">
-                          <i class="fa fa-tasks"></i>
-                          <span>模版管理 </span>
-                          <span class="label label-danger pull-right mail-info"></span>
-                      </a>
-                  </li>
-                  
-                  <li>
-                      <a  href="page/pagelist.action">
-                          <i class="fa fa-tasks"></i>
-                          <span>页面构建 </span>
-                          <span class="label label-danger pull-right mail-info"></span>
-                      </a>
-                  </li>
-                  
-                  <li>
-                      <a  href="datainput/dataView.action">
-                          <i class="fa fa-th"></i>
-                          <span>数据录入</span>
-                          <span class="label label-danger pull-right mail-info"></span>
-                      </a>
-                  </li>
-                  
+
                   <li>
                       <a  href="datainput/dataPageInput.action?patientId=patient&pageName=patient">
                           <i class="fa fa-th"></i>
