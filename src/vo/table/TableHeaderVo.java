@@ -3,6 +3,8 @@
  */
 package vo.table;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Table Header, map property <b>Column</b> of <b>dataTable</b>
  * 
@@ -13,6 +15,7 @@ public class TableHeaderVo {
 
   private String mData = null; // field Name support object graph, like platform.details.0
   private String sTitle = null; // head title
+  private String sClass = ""; // if you want to support mobile, please use 'hidden-phone';
   private String[] asSorting = new String[] { "asc", "desc" }; // [ "desc", "asc","asc", null ]
   private boolean bSortable = true;
   private boolean bSearchable = true;
@@ -50,7 +53,7 @@ public class TableHeaderVo {
     String filterHtml = "";
     if (bVisible && bSearchable) {
       if (searchOptions == null) {
-        filterHtml += "<input type='text' name='" + mData + "' class='search_init'/>";
+        filterHtml += "<input type='text' name='" + mData + "' style='width:"+StringUtils.defaultString(this.sTitle).length()*10+"px;' />";
       } else if (searchOptions.length == 1) {
         filterHtml += "<select name='" + mData + "'>";
 
@@ -123,4 +126,19 @@ public class TableHeaderVo {
     this.searchOptions = searchOptions;
     return this;
   }
+
+  public String getSClass() {
+    return sClass;
+  }
+
+  public TableHeaderVo setSClass(String sClass) {
+    this.sClass = sClass;
+    return this;
+  }
+  
+  public TableHeaderVo hidePhone(){
+    this.sClass = "hidden-phone";
+    return this;
+  }
+  
 }

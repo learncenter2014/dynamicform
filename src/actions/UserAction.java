@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import org.bson.types.ObjectId;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
 import bl.UserBusiness;
@@ -56,8 +57,8 @@ public class UserAction extends BaseTableAction<UserBusiness> {
   public TableInitVo getTableInit() {
     TableInitVo init = new TableInitVo();
     init.getAoColumns().add(new TableHeaderVo("name", "USERNAME"));
-    init.getAoColumns().add(new TableHeaderVo("sex", "Sex").addSearchOptions(new String[][] { { "-1", "1", "2" }, { "----", "Male", "Female" } }));
-    init.getAoColumns().add(new TableHeaderVo("lock", "Lock").addSearchOptions(new String[][] { { "-1", "0", "1" }, { "----", "Unlock", "Lock" } }));
+    init.getAoColumns().add(new TableHeaderVo("sex", "Sex").hidePhone().addSearchOptions(new String[][] { { "-1", "1", "2" }, { "----", "Male", "Female" } }));
+    init.getAoColumns().add(new TableHeaderVo("lock", "Lock").hidePhone().addSearchOptions(new String[][] { { "-1", "0", "1" }, { "----", "Unlock", "Lock" } }));
     init.getAoColumns().add(new TableHeaderVo("cellPhone", "CELL PHONE", false));
     init.getAoColumns().add(new TableHeaderVo("email", "EMAIL", false));
     return init;
@@ -66,6 +67,7 @@ public class UserAction extends BaseTableAction<UserBusiness> {
   @Override
   public String save() throws Exception {
     if (StringUtils.isBlank(user.getId())) {
+      user.set_id(new ObjectId(getSession().getAttribute("dataId").toString()));
       getBusiness().createLeaf(user);
     } else {
       UserBean origUser = (UserBean) getBusiness().getLeaf(user.getId().toString()).getResponseData();
@@ -119,7 +121,7 @@ public class UserAction extends BaseTableAction<UserBusiness> {
   public String login() {
     if (user != null) {
       UserBean userTmp = (UserBean) getBusiness().getLeafByName(user.getName()).getResponseData();
-      if (userTmp != null && userTmp.getName().equals(user.getName())) {
+      if (userTmp != null && userTmp.getPassword().equals(user.getPassword())) {
         getSession().setAttribute(LOGIN_USER_SESSION_ID, userTmp);
         return SUCCESS;
       }

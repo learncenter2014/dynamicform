@@ -10,8 +10,21 @@
     <link rel="shortcut icon" href="img/favicon.png">
     
     <style type="text/css">
-		 table tbody tr.even.row_selected td{
-			background-color: #B0BED9 !important;
+		 div.dataTables_length{
+		    padding: 5px 0 !important;
+		    margin: 0px !important;
+		 }
+		 div.DTTT_container{
+		    padding: 5px 0 !important;
+		    margin: 0px !important;
+		 }
+		 div.dataTables_info{
+		    padding: 5px 0 !important;
+		    margin: 0px !important;
+		 }
+		 div.dataTables_paginate{
+		    padding: 5px 0 !important;
+		    margin: 0px !important;
 		 }
     </style>
     
@@ -38,21 +51,25 @@
     
 <script type="text/javascript">
      var idName;
+     var tableId = "${tableId}";
 	 var actionPrex = "${actionPrex}";
      var cellFormatter = {};
      var actions = [
               {
-                  "title":"Add",
-                  "selectedRows": 0,
-                  "action": function (thisObj){
+                  "sButtonText":"Add",
+                  "sExtends":"text",
+                  "fnClick": function ( nButton, oConfig, oFlash ) {
                       window.location.href = actionPrex + "/add.action";
                   }
               },{
-                  "title":"Edit",
-                  "selectedRows": 1,
-                  "action": function (thisObj){
-                      var tableObj = $('#'+$(thisObj).attr("for")).dataTable();
-                      var selectedRows = tableObj.$('tr.row_selected');
+                  "sButtonText":"Edit",
+                  "sExtends":"select_single",
+                  "fnClick": function ( nButton, oConfig, oFlash ) {
+                      if($(nButton).hasClass("DTTT_disabled")){
+			              return;
+			          }
+                      var tableObj = $('#'+tableId).dataTable();
+                      var selectedRows = tableObj.$('tr.DTTT_selected');
                       if(selectedRows.length != 1){
                           alert("Please select one record!");
                       }else{
@@ -61,11 +78,14 @@
                       }
                   }
               },{
-                  "title":"Delete",
-                  "selectedRows": -1,
-                  "action": function (thisObj){
-                      var tableObj = $('#'+$(thisObj).attr("for")).dataTable();
-                      var selectedRows = tableObj.$('tr.row_selected');
+                  "sButtonText":"Delete",
+                  "sExtends":"select",
+                  "fnClick": function ( nButton, oConfig, oFlash ) {
+                      if($(nButton).hasClass("DTTT_disabled")){
+			              return;
+			          }
+                      var tableObj = $('#'+tableId).dataTable();
+                      var selectedRows = tableObj.$('tr.DTTT_selected');
                       if(selectedRows.length == 0){
                           alert("Please select records!");
                       }else{
@@ -114,8 +134,11 @@
 	 		 "aLengthMenu": initParam.aLengthMenu,
 	 		 "aoColumns": initParam.aoColumns,
 	 		 "sAjaxSource": "${actionPrex}/queryTable.action",
-	 		 "bFilter":true,
-	 		  
+	 		 "sDom": '<"H"lT><"clear">rt<"F"ip>',
+	 		 "oTableTools": {
+	 		   "sRowSelect": "multi",
+		       "aButtons": actions
+	 		 },
 		     "fnDrawCallback": function ( oSettings ) {
 		            if(initParam.hasDetails > 0){
 		                if($('#${tableId} thead tr th:first[arias="showDetails"]').length == 0){
@@ -145,38 +168,8 @@
 			                 }
 			            } );
 		            }
-		            $("#${tableId}_filter").empty();
-		            if(actions.length > 0){
-		                for(var i=actions.length-1;i >=0 ; i--){
-		                    var aObj = document.createElement( 'button' );
-		                    aObj.setAttribute("onclick","actions["+i+"].action(this)");
-		                    aObj.setAttribute("for","${tableId}");
-		                    aObj.setAttribute("style","float:right;");
-		                    aObj.setAttribute("selectedRows",actions[i].selectedRows);
-		                    if(actions[i].selectedRows != 0){
-		                        aObj.setAttribute("disabled","disabled");
-		                    }else{
-		                        aObj.className = "DTTT_button";
-		                    }
-		                    aObj.innerHTML = actions[i].title;
-		                    $("#${tableId}_filter").append(aObj);
-		                }
-		            }
 		            
-		            /* Add/remove class to a row when clicked on */
-		            $('#${tableId} tbody').on('click','tr',function(){
-			                $(this).toggleClass('row_selected');
-			                var selectedRows = oTable.$('tr.row_selected');
-			                $("#${tableId}_filter button[selectedRows!=0]").attr("disabled","disabled");
-			                if(selectedRows.length == 1){
-			                    $("#${tableId}_filter button[selectedRows=1]").removeAttr("disabled");
-			                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
-			                }else if(selectedRows.length > 1){
-			                    $("#${tableId}_filter button[selectedRows=-1]").removeAttr("disabled");
-			                }
-			                $("#${tableId}_filter button[disabled='disabled']").removeClass("DTTT_button");
-			                $("#${tableId}_filter button[disabled!='disabled']").addClass("DTTT_button");
-			            } );
+		           
 		     }, 
 	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 	             /* //======= method one===========
