@@ -55,7 +55,7 @@
                     height : 200,
                     modal : true,
                     buttons : {
-                        Save : function() {
+                        Open : function() {
                             var name = jQuery("#x_file").val();
                             if(name==null){
                                 jQuery("#dialog_message").html('<span style="color:red">没有有效的模版!</span>');
