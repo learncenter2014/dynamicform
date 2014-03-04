@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import org.bson.types.ObjectId;
 import vo.table.TableDataVo;
 import vo.table.TableInitVo;
 import vo.table.TableQueryVo;
@@ -149,6 +150,7 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
    * @throws Exception
    */
   public String add() throws Exception {
+    getSession().setAttribute("dataId", ObjectId.get().toString());
     return SUCCESS;
   }
 
