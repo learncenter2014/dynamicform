@@ -6,6 +6,10 @@ import bl.common.BusinessResult;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by wangronghua on 14-3-3.
  */
@@ -17,7 +21,21 @@ public class PatientBusiness extends MongoCommonBusiness<BeanContext, PatientBea
     this.clazz = PatientBean.class;
   }
 
+  @Override
   public BusinessResult getAllLeaves() {
-    return super.getAllLeaves();
+    BusinessResult result = super.getAllLeaves();
+    if(null != result.getResponseData()) {
+      List<PatientBean> patientBeanList = (List<PatientBean>) result.getResponseData();
+      for(PatientBean patient: patientBeanList) {
+        Date birthDay = patient.getBirthday();
+        Calendar cal = Calendar.getInstance();
+        int thisYear = cal.get(Calendar.YEAR);
+        cal.setTime(birthDay);
+        int thatYear = cal.get(Calendar.YEAR);
+        patient.setAge(thisYear - thatYear);
+      }
+    }
+
+    return result;
   }
 }

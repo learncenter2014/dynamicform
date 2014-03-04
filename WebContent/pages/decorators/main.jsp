@@ -20,6 +20,7 @@
     <link href="jslib/flatlab/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
     <link href="jslib/flatlab/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
     <link href="jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/css/TableTools.css" rel="stylesheet" />
+    <link href="jslib/flatlab/assets/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="jslib/flatlab/css/style.css" rel="stylesheet">
     <link href="jslib/flatlab/css/style-responsive.css" rel="stylesheet" />
@@ -53,6 +54,7 @@
     <!--common script for all pages-->
     <script src="jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/ZeroClipboard.js" type="text/javascript" charset="utf-8" ></script>
     <script src="jslib/flatlab/assets/advanced-datatable/extras/TableTools/media/js/TableTools.js" type="text/javascript" charset="utf-8" ></script>
+    <script src="jslib/flatlab/assets/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8" ></script>
     <decorator:head/>
   </head>
 

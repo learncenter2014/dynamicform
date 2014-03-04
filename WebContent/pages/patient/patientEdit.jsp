@@ -14,6 +14,12 @@
             background-color: #B0BED9 !important;
         }
     </style>
+
+    <script type="text/javascript">
+        function handleCancel() {
+            window.location.href = "patient/index.action"
+        }
+    </script>
     <!--external css-->
     <title>Patient Edit</title>
 </head>
@@ -65,7 +71,7 @@
         <div class="form-group has-warning">
             <label class="col-lg-2 control-label">出生日期</label>
             <div class="col-lg-10">
-                <input id="birthday" placeholder="" name="patient.birthday"  class="form-control" value="${patient.birthday}">
+                <input id="birthday" placeholder="" name="patient.birthday"  class="form-control" value="<s:date name='patient.birthday' format='MM/dd/yyyy'/>">
                 <script>
                     $("#birthday").datepicker();
                 </script>
@@ -84,7 +90,7 @@
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
                 <button class="btn btn-danger" type="submit">提交</button>
-                <button class="btn btn-danger" type="reset">重置</button>
+                <button class="btn btn-danger" onclick="handleCancel()">取消</button>
             </div>
         </div>
     </form>

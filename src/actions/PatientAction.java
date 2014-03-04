@@ -39,7 +39,7 @@ public class PatientAction extends BaseTableAction<PatientBusiness> {
     init.getAoColumns().add(new TableHeaderVo("patientKey", "患者编号"));
     init.getAoColumns().add(new TableHeaderVo("patientName", "姓名"));
     init.getAoColumns().add(new TableHeaderVo("sex", "性别").addSearchOptions(new String[][] { { "-1", "1", "2" }, { "----", "男", "女" } }));
-    init.getAoColumns().add(new TableHeaderVo("age", "出生日期"));
+    //init.getAoColumns().add(new TableHeaderVo("age", "年龄"));
     return init;
   }
 
