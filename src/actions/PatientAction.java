@@ -5,6 +5,7 @@ import bl.beans.UserBean;
 import bl.mongobus.PatientBusiness;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
 
@@ -46,6 +47,7 @@ public class PatientAction extends BaseTableAction<PatientBusiness> {
   @Override
   public String save() throws Exception {
     if (StringUtils.isBlank(patient.getId())) {
+      patient.set_id(new ObjectId(getSession().getAttribute("dataId").toString()));
       getBusiness().createLeaf(patient);
     } else {
       PatientBean origBean = (PatientBean) getBusiness().getLeaf(patient.getId().toString()).getResponseData();

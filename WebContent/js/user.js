@@ -23,16 +23,19 @@ cellFormatter["lock"] = function ( data, type, full ) {
  * actions
  */
 actions.unshift({
-    "title":"Lock/Unlock",
-    "selectedRows": 1,
-    "action": function (thisObj){
-          var tableObj = $('#'+$(thisObj).attr("for")).dataTable();
-          var selectedRows = tableObj.$('tr.row_selected');
+     "sButtonText":"Lock/Unlock",
+     "sExtends":"select_single",
+     "fnClick": function ( nButton, oConfig, oFlash ) {
+          if($(nButton).hasClass("DTTT_disabled")){
+              return;
+          }
+          var tableObj = $('#'+tableId).dataTable();
+          var selectedRows = tableObj.$('tr.DTTT_selected');
           if(selectedRows.length != 1){
               alert("Please select one record!");
           }else{
              var selectRowData =  tableObj.fnGetData( selectedRows[0] );
              window.location.href = actionPrex + "/lock.action?id=" + selectRowData[idName];
           }
-    }
+     }
 })
