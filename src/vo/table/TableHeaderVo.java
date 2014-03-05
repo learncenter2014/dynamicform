@@ -53,7 +53,7 @@ public class TableHeaderVo {
     String filterHtml = "";
     if (bVisible && bSearchable) {
       if (searchOptions == null) {
-        filterHtml += "<input type='text' name='" + mData + "' style='width:"+StringUtils.defaultString(this.sTitle).length()*10+"px;' />";
+        filterHtml += "<input type='text' name='" + mData + "' style='width:"+StringUtils.defaultString(this.sTitle).length()*15+"px;' />";
       } else if (searchOptions.length == 1) {
         filterHtml += "<select name='" + mData + "'>";
 

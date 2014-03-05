@@ -4,18 +4,18 @@
  */
 cellFormatter["sex"] = function ( data, type, full ) {
     if(data == 1){
-        return 'Male';
+        return '男';
     }else if(data == 2){
-        return 'Female';
+        return '女';
     }else{
-       return 'Unkown';
+       return '未知';
     } 
 }
 cellFormatter["lock"] = function ( data, type, full ) {
     if(data == 1){
-        return 'Lock';
+        return '已锁';
     }else{
-       return 'UnLock';
+       return '正常';
     } 
 }
 
@@ -23,7 +23,7 @@ cellFormatter["lock"] = function ( data, type, full ) {
  * actions
  */
 actions.unshift({
-     "sButtonText":"Lock/Unlock",
+     "sButtonText":"(解)锁",
      "sExtends":"select_single",
      "fnClick": function ( nButton, oConfig, oFlash ) {
           if($(nButton).hasClass("DTTT_disabled")){

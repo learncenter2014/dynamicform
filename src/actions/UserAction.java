@@ -56,11 +56,11 @@ public class UserAction extends BaseTableAction<UserBusiness> {
   @Override
   public TableInitVo getTableInit() {
     TableInitVo init = new TableInitVo();
-    init.getAoColumns().add(new TableHeaderVo("name", "USERNAME"));
-    init.getAoColumns().add(new TableHeaderVo("sex", "Sex").hidePhone().addSearchOptions(new String[][] { { "-1", "1", "2" }, { "----", "Male", "Female" } }));
-    init.getAoColumns().add(new TableHeaderVo("lock", "Lock").hidePhone().addSearchOptions(new String[][] { { "-1", "0", "1" }, { "----", "Unlock", "Lock" } }));
-    init.getAoColumns().add(new TableHeaderVo("cellPhone", "CELL PHONE", false));
-    init.getAoColumns().add(new TableHeaderVo("email", "EMAIL", false));
+    init.getAoColumns().add(new TableHeaderVo("name", "用户名"));
+    init.getAoColumns().add(new TableHeaderVo("sex", "性别").hidePhone().addSearchOptions(new String[][] { { "-1", "1", "2" }, { " ", "男", "女" } }));
+    init.getAoColumns().add(new TableHeaderVo("lock", "状态").hidePhone().addSearchOptions(new String[][] { { "-1", "0", "1" }, { " ", "正常", "已锁" } }));
+    init.getAoColumns().add(new TableHeaderVo("cellPhone", "手机", false));
+    init.getAoColumns().add(new TableHeaderVo("email", "邮箱", false));
     return init;
   }
 

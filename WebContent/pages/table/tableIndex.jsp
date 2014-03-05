@@ -56,13 +56,13 @@
      var cellFormatter = {};
      var actions = [
               {
-                  "sButtonText":"Add",
+                  "sButtonText":"添加",
                   "sExtends":"text",
                   "fnClick": function ( nButton, oConfig, oFlash ) {
                       window.location.href = actionPrex + "/add.action";
                   }
               },{
-                  "sButtonText":"Edit",
+                  "sButtonText":"修改",
                   "sExtends":"select_single",
                   "fnClick": function ( nButton, oConfig, oFlash ) {
                       if($(nButton).hasClass("DTTT_disabled")){
@@ -78,7 +78,7 @@
                       }
                   }
               },{
-                  "sButtonText":"Delete",
+                  "sButtonText":"删除",
                   "sExtends":"select",
                   "fnClick": function ( nButton, oConfig, oFlash ) {
                       if($(nButton).hasClass("DTTT_disabled")){
@@ -134,11 +134,22 @@
 	 		 "aLengthMenu": initParam.aLengthMenu,
 	 		 "aoColumns": initParam.aoColumns,
 	 		 "sAjaxSource": "${actionPrex}/queryTable.action",
-	 		 "sDom": '<"H"lT><"clear">rt<"F"ip>',
+	 		 "sDom": '<"H"T><"clear">rt<"F"p>',
 	 		 "oTableTools": {
 	 		   "sRowSelect": "multi",
 		       "aButtons": actions
 	 		 },
+	 		 "oLanguage": {
+	 		     "oPaginate": {
+			        "sPrevious": "上一页",
+			        "sNext":"下一页"
+			    },
+	            "sLengthMenu": "Display _MENU_ records per page",
+	            "sZeroRecords": "无数据",
+	            "sInfo": "显示_START_到_END_,共_TOTAL_",
+	            "sInfoEmpty": "无数据",
+	            "sInfoFiltered": "(filtered from _MAX_ total records)"
+	         },
 		     "fnDrawCallback": function ( oSettings ) {
 		            if(initParam.hasDetails > 0){
 		                if($('#${tableId} thead tr th:first[arias="showDetails"]').length == 0){
@@ -168,8 +179,6 @@
 			                 }
 			            } );
 		            }
-		            
-		           
 		     }, 
 	         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 	             /* //======= method one===========
