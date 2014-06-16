@@ -31,7 +31,7 @@ public class SingleBusinessPoolManager {
                         busObj = (BusinessInterface<BeanContext, BeanContext>) (Class.forName(classpath).newInstance());
                         _hBusObjs.put(classpath, busObj);
                     } catch (Exception ex) {
-                        LOG.fatal("Error: couldn't instantiate new business object: {}", ex);
+                        LOG.error("Error: couldn't instantiate new business object: {}", ex);
                         throw new FailureInitialClassException(ex);
                     }
                 }
