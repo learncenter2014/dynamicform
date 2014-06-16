@@ -2,6 +2,7 @@ package core;
 
 import core.componentext.DFObjectFactory;
 import core.exception.XmlFileNotFoundException;
+import dynamicschema.Document;
 import dynamicschema.Form;
 
 import javax.naming.Context;
@@ -25,13 +26,13 @@ public class XmlReader {
     }
   }
 
-  public Form readForm() throws JAXBException, XmlFileNotFoundException {
+  public Document readDocument() throws JAXBException, XmlFileNotFoundException {
     if(xmlFile!=null && xmlFile.exists()) {
-      JAXBContext context = JAXBContext.newInstance(Form.class);
+      JAXBContext context = JAXBContext.newInstance(Document.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
       //unmarshaller.setProperty("com.sun.xml.bind.ObjectFactory",new DFObjectFactory());
-      Form form = (Form)unmarshaller.unmarshal(xmlFile);
-      return form;
+      Document document = (Document)unmarshaller.unmarshal(xmlFile);
+      return document;
     } else {
       throw new XmlFileNotFoundException("xmlFile does not exists");
     }

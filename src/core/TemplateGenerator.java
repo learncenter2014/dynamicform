@@ -1,9 +1,6 @@
 package core;
 
-import core.componentext.ComponentBase;
-import core.componentext.FieldSetExtension;
-import core.componentext.FormExtension;
-import core.componentext.RowExtension;
+import core.componentext.*;
 import core.exception.XmlFileNotFoundException;
 import dynamicschema.*;
 
@@ -26,8 +23,8 @@ public class TemplateGenerator {
     try {
       templateWriter = new OutputStreamWriter(new FileOutputStream(template), "UTF-8");
       XmlReader reader = new XmlReader(xmlFilePath);
-      Form form = reader.readForm();
-      templateWriter.write(this.genTemplate(form));
+      Document document = reader.readDocument();
+      templateWriter.write(this.genTemplate(document));
       templateWriter.close();
     } catch (XmlFileNotFoundException e) {
       e.printStackTrace();
@@ -40,24 +37,36 @@ public class TemplateGenerator {
     return true;
   }
 
-  String genTemplate(Form form) {
+  String genTemplate(Document document) {
     ComponentEnhancer enhancer = new ComponentEnhancer();
-    FormExtension formExt = (FormExtension)(form.enhance(enhancer));
-    List<FieldSet> fieldSets = form.getFieldset();
-    formExt.setInnerHTML(genTemplate(fieldSets.toArray(new FieldSet[0])));
-    return TemplateHelper.getTemplate("form", formExt);
+    DocumentExtension formExt = (DocumentExtension)(document.enhance(enhancer));
+    List<Form> forms = document.getForm();
+    formExt.setInnerHTML(genTemplate(forms.toArray(new Form[0])));
+    return TemplateHelper.getTemplate("document", formExt);
   }
 
-  String genTemplate(FieldSet[] fieldSets) {
+  String genTemplate(Form[] forms) {
     ComponentEnhancer enhancer = new ComponentEnhancer();
     StringBuilder result = new StringBuilder();
-    for(FieldSet fieldSet: fieldSets) {
+    for (Form form: forms) {
+      FormExtension formExt = (FormExtension)(form.enhance(enhancer));
+      List<Section> fieldSets = form.getSection();
+      formExt.setInnerHTML(genTemplate(fieldSets.toArray(new Section[0])));
+      result.append(TemplateHelper.getTemplate("form", formExt));
+    }
+    return result.toString();
+  }
+
+  String genTemplate(Section[] fieldSets) {
+    ComponentEnhancer enhancer = new ComponentEnhancer();
+    StringBuilder result = new StringBuilder();
+    for(Section fieldSet: fieldSets) {
       List<Row> rows = fieldSet.getRow();
       String dtString = genTemplate(rows.toArray(new Row[0]));
 
       FieldSetExtension fieldSetExtension = (FieldSetExtension)fieldSet.enhance(enhancer);
       fieldSetExtension.setInnerHTML(dtString);
-      result.append(TemplateHelper.getTemplate("fieldset", fieldSetExtension));
+      result.append(TemplateHelper.getTemplate("section", fieldSetExtension));
     }
     return result.toString();
   }

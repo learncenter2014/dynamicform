@@ -1,12 +1,11 @@
 package core.componentext;
 
-import dynamicschema.Section;
+import dynamicschema.Document;
 
 /**
- * Created by wangronghua on 14-2-15.
+ * Created by wangronghua on 14-6-16.
  */
-public class FieldSetExtension extends Section {
-
+public class DocumentExtension extends Document{
   public String getInnerHTML() {
     return innerHTML;
   }
@@ -16,5 +15,4 @@ public class FieldSetExtension extends Section {
   }
 
   private String innerHTML;
-
 }
