@@ -1,7 +1,7 @@
 package core;
 
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import freemarker.template.*;
 
 import java.io.File;

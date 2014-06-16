@@ -3,8 +3,8 @@ package bl.mongobus;
 import bl.beans.PageBean;
 import bl.common.BeanContext;
 
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PageBusiness extends MongoCommonBusiness<BeanContext, PageBean> {
     private static Logger LOG = LoggerFactory.getLogger(PageBusiness.class);

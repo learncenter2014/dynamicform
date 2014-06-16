@@ -17,8 +17,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author gudong
@@ -43,7 +43,7 @@ public class LoginInterceptor extends AbstractInterceptor {
         invocation.getStack().setValue(WebappsConstants.CTX_TOKEN_ERROR_MSG_REQUEST, errorMessage);
         return as.INPUT;
       } else {
-        log.error("This action exception is: #0", e);
+        log.error("This action exception is: {}", e);
         throw new WrappedRuntimeException(e);
       }
     }

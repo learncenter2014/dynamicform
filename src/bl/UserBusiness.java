@@ -7,8 +7,8 @@ import bl.beans.UserBean;
 import bl.common.BeanContext;
 import bl.mongobus.MongoCommonBusiness;
 
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author gudong

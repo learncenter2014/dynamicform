@@ -24,8 +24,8 @@ import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.FormBusiness;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a dynamic handler action
@@ -130,7 +130,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
                     FileInputStream fi = new FileInputStream(path);
                     this.xmlStream = fi;
                 } catch (FileNotFoundException e) {
-                    LOG.error("this exception [#0]", e.getMessage());
+                    LOG.error("this exception [{}]", e.getMessage());
                 }
             }
         }
@@ -152,7 +152,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
                 }
                 requestPath = storexmldirectory + File.separator + name + ".xml";
                 
-                LOG.info("save xml content to this [#0] file", requestPath);
+                LOG.info("save xml content to this [{}] file", requestPath);
                 Files.write(Paths.get(requestPath), this.data.getBytes("UTF-8"));
 
                 // stored in template table, refer to dynamictable.js
@@ -172,7 +172,7 @@ public class FormAction extends ActionSupport implements ServletContextAware {
                     fb.createLeaf(tb);
                 }
             } catch (Exception e) {
-                LOG.error("this exception [#0]", e.getMessage());
+                LOG.error("this exception [{}]", e.getMessage());
             }
         }
 
@@ -190,9 +190,9 @@ public class FormAction extends ActionSupport implements ServletContextAware {
                 String[] row = new String[] { te.getLabel(), te.getName() };
                 this.filelist.add(row);
             }
-            LOG.info("loading all xml #0 files", String.valueOf(filelist.size()));
+            LOG.info("loading all xml {} files", String.valueOf(filelist.size()));
         } catch (Exception e) {
-            LOG.error("this exception [#0]", e.getMessage());
+            LOG.error("this exception [{}]", e.getMessage());
         }
         return ActionSupport.SUCCESS;
     }
