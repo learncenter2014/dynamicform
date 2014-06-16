@@ -1,11 +1,11 @@
 package core.componentext;
 
-import dynamicschema.Radio;
+import dynamicschema.RadioEntry;
 
 /**
  * Created by wangronghua on 14-2-14.
  */
-public class RadioExtension extends Radio {
+public class RadioExtension extends RadioEntry {
   private NameValueBean[] options;
 
   public void init() {

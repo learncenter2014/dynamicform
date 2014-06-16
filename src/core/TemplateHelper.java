@@ -2,7 +2,7 @@ package core;
 
 import dynamicschema.Component;
 import dynamicschema.Input;
-import dynamicschema.Text;
+import dynamicschema.TextEntry;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateException;
@@ -43,7 +43,7 @@ public class TemplateHelper {
   }
 
   public static void main(String[] args) {
-    Input input = new Text();
+    Input input = new TextEntry();
     input.setId("1");
     input.setLabel("woao");
     input.setValue("adasdada");

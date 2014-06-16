@@ -1,12 +1,11 @@
 package core.componentext;
 
-import core.Constants;
-import dynamicschema.Select;
+import dynamicschema.SelectEntry;
 
 /**
  * Created by wangronghua on 14-2-14.
  */
-public class SelectExtension extends Select {
+public class SelectExtension extends SelectEntry {
 
   private NameValueBean[] options;
 

@@ -1,29 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:form xmlns:tns="http://www.dynamic.org/dynamicform" id="form11" name="form11" action="/datainput/dataRecordInputSubmit.action" method="post" width="700" height="420">
-    <fieldset id="String11" name="String11" legend="String">
-        <row size="3">
-            <element type="text" position="0">
-                <text id="String1155" name="String21" label="文本" value="peter" size="10" maxlength="10"
-                      required="false" readonly="true" regexp="String" helptext=""/>
-            </element>
-            <element type="select" position="2">
-                <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
-                        required="false" readonly="false" listvalue="String" helptext=""/>
-            </element>
-        </row>
-        <row size="3">
-            <element type="text" position="0">
-                <text id="String1155" name="String21" label="文本" value="peter" size="10" maxlength="10"
-                      required="false" readonly="true" regexp="String" helptext=""/>
-            </element>
-            <element type="date" position="1">
-                <date id="String22" name="String223" label="日期" value="2014-02-14" size="10" maxlength="10"
-                      required="true" readonly="true" format="String" helptext=""/>
-            </element>
-            <element type="select" position="2">
-                <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
-                        required="false" readonly="false" listvalue="String" helptext=""/>
-            </element>
-        </row>
-    </fieldset>
-</tns:form>
+<tns:document xmlns:tns="http://www.dynamic.org/dynamicform">
+    <form  id="form11" name="form11" action="/datainput/dataRecordInputSubmit.action" method="post">
+        <section id="String11" name="String11" legend="String">
+            <row size="3">
+                <element type="text" position="0">
+                    <text id="String1155" name="String21" label="文本" value="peter" size="10" maxlength="10"
+                          required="false" readonly="true" regexp="String" helptext=""/>
+                </element>
+                <element type="select" position="2">
+                    <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
+                            required="false" readonly="false" listvalue="String" helptext=""/>
+                </element>
+            </row>
+            <row size="3">
+                <element type="text" position="0">
+                    <text id="String1155" name="String21" label="文本" value="peter" size="10" maxlength="10"
+                          required="false" readonly="true" regexp="String" helptext=""/>
+                </element>
+                <element type="date" position="1">
+                    <date id="String22" name="String223" label="日期" value="2014-02-14" size="10" maxlength="10"
+                          required="true" readonly="true" format="String" helptext=""/>
+                </element>
+                <element type="select" position="2">
+                    <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
+                            required="false" readonly="false" listvalue="String" helptext=""/>
+                </element>
+            </row>
+            <row>
+                <element type="table" position="0">
+                    <table id="xx" name="xx" label="Demo Table" col="3">
+                        <column>
+                            <title>A</title>
+                            <element type="select">
+                                <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
+                                        required="false" readonly="false" listvalue="String" helptext=""/>
+                            </element>
+                        </column>
+                        <column>
+                            <title>B</title>
+                            <element type="select">
+                                <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
+                                        required="false" readonly="false" listvalue="String" helptext=""/>
+                            </element>
+                        </column>
+                        <column>
+                            <title>C</title>
+                            <element type="select">
+                                <select id="String23" name="String21" label="选择框" value="String" size="10" maxlength="10"
+                                        required="false" readonly="false" listvalue="String" helptext=""/>
+                            </element>
+                        </column>
+                    </table>
+                </element>
+            </row>
+        </section>
+    </form>
+</tns:document>

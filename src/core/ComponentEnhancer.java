@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ComponentEnhancer {
 
-  public static Component wrap(Text text) {
+  public static Component wrap(TextEntry text) {
     TextExtension extension = new TextExtension();
     try {
       BeanUtils.copyProperties(extension, text);
@@ -24,11 +24,11 @@ public class ComponentEnhancer {
     }
     return extension;
   }
-  public static Component wrap(TextArea textArea) {
+  public static Component wrap(TextAreaEntry textArea) {
 
     return textArea;
   }
-  public static Component wrap(Checkbox checkbox) {
+  public static Component wrap(CheckboxEntry checkbox) {
     CheckboxExtension extension = new CheckboxExtension();
     try {
       BeanUtils.copyProperties(extension, checkbox);
@@ -40,7 +40,7 @@ public class ComponentEnhancer {
     extension.init();
     return extension;
   }
-  public static Component wrap(Radio radio) {
+  public static Component wrap(RadioEntry radio) {
     RadioExtension extension = new RadioExtension();
     try {
       BeanUtils.copyProperties(extension, radio);
@@ -52,15 +52,15 @@ public class ComponentEnhancer {
     extension.init();
     return extension;
   }
-  public static Component wrap(Image image) {
+  public static Component wrap(ImageEntry image) {
 
     return image;
   }
-  public static Component wrap(Date date) {
+  public static Component wrap(DateEntry date) {
 
     return date;
   }
-  public static Component wrap(Select select) {
+  public static Component wrap(SelectEntry select) {
     SelectExtension extension = new SelectExtension();
     try {
       BeanUtils.copyProperties(extension, select);
@@ -77,7 +77,7 @@ public class ComponentEnhancer {
 
     return button;
   }
-  public static Component wrap(FieldSet fieldSet) {
+  public static Component wrap(Section fieldSet) {
     FieldSetExtension extension = new FieldSetExtension();
     try {
       BeanUtils.copyProperties(extension, fieldSet);
@@ -106,6 +106,19 @@ public class ComponentEnhancer {
     RowExtension extension = new RowExtension();
     try {
       BeanUtils.copyProperties(extension, row);
+
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return extension;
+  }
+
+  public static Component wrap(Document document) {
+    DocumentExtension extension = new DocumentExtension();
+    try {
+      BeanUtils.copyProperties(extension, document);
 
     } catch (IllegalAccessException e) {
       e.printStackTrace();

@@ -5,19 +5,31 @@
     <attribute name="id" type="string" />
     <attribute name="name" type="string" />
   </complexType>
-  <element name="form">
+
+  <element name="document">
     <complexType>
       <complexContent>
         <extension base="tns:Component">
           <sequence>
-            <element name="fieldset" type="tns:FieldSet" minOccurs="0" maxOccurs="unbounded" />
+            <element name="form" type="tns:Form" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
-          <attribute name="action" type="string" />
-          <attribute name="method" type="string" />
         </extension>
       </complexContent>
     </complexType>
   </element>
+
+  <complexType name="Form">
+    <complexContent>
+      <extension base="tns:Component">
+        <sequence>
+          <element name="section" type="tns:Section" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+        <attribute name="action" type="string" />
+        <attribute name="method" type="string" />
+      </extension>
+    </complexContent>
+  </complexType>
+
   <complexType name="Input" abstract="true">
     <complexContent>
       <extension base="tns:Component">
@@ -31,7 +43,7 @@
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="FieldSet">
+  <complexType name="Section">
     <complexContent>
       <extension base="tns:Component">
         <sequence>
@@ -41,7 +53,7 @@
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="Image">
+  <complexType name="ImageEntry">
     <complexContent>
       <extension base="tns:Component">
         <attribute name="src" type="string" />
@@ -59,64 +71,87 @@
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="Checkbox">
+  <complexType name="CheckboxEntry">
     <complexContent>
       <extension base="tns:Input">
         <attribute name="listvalue" type="string" />
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="Radio">
+  <complexType name="RadioEntry">
     <complexContent>
       <extension base="tns:Input">
         <attribute name="listvalue" type="string" />
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="TextArea">
+  <complexType name="TextAreaEntry">
     <complexContent>
       <extension base="tns:Input" />
     </complexContent>
   </complexType>
-  <complexType name="Text">
+  <complexType name="TextEntry">
     <complexContent>
       <extension base="tns:Input">
         <attribute name="regexp" type="string" />
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="Select">
+  <complexType name="SelectEntry">
     <complexContent>
       <extension base="tns:Input">
         <attribute name="listvalue" type="string" />
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="Date">
+  <complexType name="DateEntry">
     <complexContent>
       <extension base="tns:Input">
         <attribute name="format" type="string" />
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="Label">
+  <complexType name="LabelEntry">
     <complexContent>
       <extension base="tns:Component">
         <attribute name="label" type="string" />
       </extension>
     </complexContent>
   </complexType>
+  <complexType name="TableEntry">
+    <complexContent>
+      <extension base="tns:Component">
+        <sequence>
+          <element name="column" type="tns:ColumnEntry" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+        <attribute name="label" type="string" />
+        <attribute name="col" type="int" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ColumnEntry">
+    <complexContent>
+      <extension base="tns:Component">
+        <sequence>
+          <element name="title" type="string" />
+          <element name="element" type="tns:DynamicType" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
   <complexType name="DynamicType">
     <choice>
-      <element name="date" type="tns:Date" minOccurs="0" maxOccurs="1" />
-      <element name="text" type="tns:Text" minOccurs="0" maxOccurs="1" />
-      <element name="select" type="tns:Select" minOccurs="0" maxOccurs="1" />
-      <element name="textarea" type="tns:TextArea" minOccurs="0" maxOccurs="1" />
-      <element name="image" type="tns:Image" minOccurs="0" maxOccurs="1" />
-      <element name="radio" type="tns:Radio" minOccurs="0" maxOccurs="1" />
-      <element name="checkbox" type="tns:Checkbox" minOccurs="0" maxOccurs="1" />
+      <element name="date" type="tns:DateEntry" minOccurs="0" maxOccurs="1" />
+      <element name="text" type="tns:TextEntry" minOccurs="0" maxOccurs="1" />
+      <element name="select" type="tns:SelectEntry" minOccurs="0" maxOccurs="1" />
+      <element name="textarea" type="tns:TextAreaEntry" minOccurs="0" maxOccurs="1" />
+      <element name="image" type="tns:ImageEntry" minOccurs="0" maxOccurs="1" />
+      <element name="radio" type="tns:RadioEntry" minOccurs="0" maxOccurs="1" />
+      <element name="checkbox" type="tns:CheckboxEntry" minOccurs="0" maxOccurs="1" />
+      <element name="label" type="tns:LabelEntry" minOccurs="0" maxOccurs="1" />
+      <element name="table" type="tns:TableEntry" minOccurs="0" maxOccurs="1" />
       <element name="button" type="tns:Button" minOccurs="0" maxOccurs="1" />
-      <element name="label" type="tns:Label" minOccurs="0" maxOccurs="1" />
     </choice>
     <attribute name="type" type="string" />
     <attribute name="position" type="int" />

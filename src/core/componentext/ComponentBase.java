@@ -19,26 +19,28 @@ public class ComponentBase {
 
 
   public ComponentBase enhance(ComponentEnhancer enhancer) {
-    if(this instanceof Text) {
-      return enhancer.wrap((Text)this);
-    } else if(this instanceof Checkbox) {
-      return enhancer.wrap((Checkbox)this);
-    } else if(this instanceof Image) {
-      return enhancer.wrap((Image)this);
-    } else if(this instanceof Date) {
-      return enhancer.wrap((Date)this);
-    } else if(this instanceof Radio) {
-      return enhancer.wrap((Radio)this);
-    } else if(this instanceof Select) {
-      return enhancer.wrap((Select)this);
-    } else if(this instanceof TextArea) {
-      return enhancer.wrap((TextArea)this);
-    } else if(this instanceof FieldSet) {
-      return enhancer.wrap((FieldSet)this);
+    if(this instanceof TextEntry) {
+      return enhancer.wrap((TextEntry)this);
+    } else if(this instanceof CheckboxEntry) {
+      return enhancer.wrap((CheckboxEntry)this);
+    } else if(this instanceof ImageEntry) {
+      return enhancer.wrap((ImageEntry)this);
+    } else if(this instanceof DateEntry) {
+      return enhancer.wrap((DateEntry)this);
+    } else if(this instanceof RadioEntry) {
+      return enhancer.wrap((RadioEntry)this);
+    } else if(this instanceof SelectEntry) {
+      return enhancer.wrap((SelectEntry)this);
+    } else if(this instanceof TextAreaEntry) {
+      return enhancer.wrap((TextAreaEntry)this);
+    } else if(this instanceof Section) {
+      return enhancer.wrap((Section)this);
     } else if(this instanceof Form) {
       return enhancer.wrap((Form)this);
     } else if(this instanceof Row) {
       return enhancer.wrap((Row)this);
+    } else if(this instanceof Document) {
+      return enhancer.wrap((Document)this);
     }
     return enhancer.wrap(this);
   }
