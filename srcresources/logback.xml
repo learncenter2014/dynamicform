@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/dynamicform.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %class.%method:%line - %message %mdc%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+           ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %class.%method:%line - %message %mdc%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <root level="WARN">
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>
+
