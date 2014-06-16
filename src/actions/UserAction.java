@@ -13,8 +13,8 @@ import vo.table.TableInitVo;
 import bl.UserBusiness;
 import bl.beans.UserBean;
 
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;

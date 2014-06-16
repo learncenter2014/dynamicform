@@ -7,8 +7,8 @@ import bl.common.BeanContext;
 import bl.common.BusinessInterface;
 import bl.exceptions.FailureInitialClassException;
 
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SingleBusinessPoolManager {
     protected static Logger LOG = LoggerFactory.getLogger(SingleBusinessPoolManager.class);

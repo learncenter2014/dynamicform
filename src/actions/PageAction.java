@@ -122,7 +122,7 @@ public class PageAction extends ActionSupport {
             }
 
         } catch (Exception e) {
-            LOG.error("this exception [#0]", e.getMessage());
+            LOG.error("this exception [{}]", e.getMessage());
         }
         return ActionSupport.SUCCESS;
     }
@@ -134,7 +134,7 @@ public class PageAction extends ActionSupport {
             this.pageBeans = (List<PageBean>) record;
 
         } catch (Exception e) {
-            LOG.error("this exception [#0]", e.getMessage());
+            LOG.error("this exception [{}]", e.getMessage());
         }
         return ActionSupport.SUCCESS;
     }
@@ -155,7 +155,7 @@ public class PageAction extends ActionSupport {
             }
             this.pageBeans = list;
         } catch (Exception e) {
-            LOG.error("this exception [#0]", e.getMessage());
+            LOG.error("this exception [{}]", e.getMessage());
         }
         return ActionSupport.SUCCESS;
     }

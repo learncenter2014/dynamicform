@@ -3,8 +3,8 @@ package util;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ServerContext {
     protected static Logger LOG = LoggerFactory.getLogger(ServerContext.class);
@@ -15,7 +15,7 @@ public class ServerContext {
         try {
             prop.load(input);
         } catch (Exception e) {
-            LOG.error("this exception [#0]", e.getMessage());
+            LOG.error("this exception [{}]", e.getMessage());
         }
     }
 

@@ -7,8 +7,8 @@ import javax.servlet.ServletContextListener;
 
 import util.ServerContext;
 
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import dao.MongoDBConnectionFactory;
 
@@ -26,7 +26,7 @@ public class WebInitListener implements ServletContextListener {
         try {
             ServerContext.init(new FileInputStream("/etc/db.properties"));
         } catch (Exception e) {
-            LOG.error("Reading file has some exception #0", e.getMessage());
+            LOG.error("Reading file has some exception {}", e.getMessage());
         }
         LOG.info("init MongoDB");
         MongoDBConnectionFactory.initDb();
