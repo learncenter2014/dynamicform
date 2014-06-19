@@ -1,13 +1,16 @@
 /**
- * 
+ *
  */
 package vo.table;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Table Header, map property <b>Column</b> of <b>dataTable</b>
- * 
+ *
  * @author gudong
  * @since $Date:2014-02-16$
  */
@@ -17,13 +20,41 @@ public class TableHeaderVo {
   private String sTitle = null; // head title
   private String sClass = ""; // if you want to support mobile, please use 'hidden-phone';
   private String[] asSorting = new String[] { "asc", "desc" }; // [ "desc", "asc","asc", null ]
-  private boolean bSortable = true;
-  private boolean bSearchable = true;
+  private boolean bSortable = false;
+  private boolean bSearchable = false;
   private boolean bVisible = true;
-  
+  private String suffixed = "";
+  //true 仅仅显示在搜索条件里但不出现在grid表头里
+  private boolean hiddenColumn = false;
+
+  public boolean isHiddenColumn() {
+    return hiddenColumn;
+  }
+
+  public TableHeaderVo setHiddenColumn(boolean hiddenColumn) {
+    this.hiddenColumn = hiddenColumn;
+    return this;
+  }
+
+  public String getSuffixed() {
+    return suffixed;
+  }
+
+  public void setSuffixed(String suffixed) {
+    this.suffixed = suffixed;
+  }
+
+  public String getsClass() {
+    return sClass;
+  }
+
+  public void setsClass(String sClass) {
+    this.sClass = sClass;
+  }
+
   // // additional properties
   private String[][] searchOptions = null; // map html select element, like [["1","2"]["Male","Female"]]
-  
+
   public TableHeaderVo(String mData, String sTitle) {
     super();
     this.mData = mData;
@@ -50,35 +81,6 @@ public class TableHeaderVo {
   }
 
   public String getsTitle() {
-    String filterHtml = "";
-    if (bVisible && bSearchable) {
-      if (searchOptions == null) {
-        filterHtml += "<input type='text' name='" + mData + "' style='width:"+StringUtils.defaultString(this.sTitle).length()*15+"px;' />";
-      } else if (searchOptions.length == 1) {
-        filterHtml += "<select name='" + mData + "'>";
-
-        for (int i = 0; i < searchOptions[0].length; i++) {
-          filterHtml += "<option value='" + searchOptions[0][i] + "'>" + searchOptions[0][i] + "</option>";
-        }
-
-        filterHtml = filterHtml + "</select>";
-      } else if (searchOptions.length >= 2) {
-        filterHtml += "<select name='" + mData + "'>";
-        for (int i = 0; i < searchOptions[0].length; i++) {
-          filterHtml += "<option value='" + searchOptions[0][i] + "'>";
-          if (i < searchOptions[1].length) {
-            filterHtml += searchOptions[1][i] + "</option>";
-          } else {
-            filterHtml += searchOptions[0][i] + "</option>";
-          }
-        }
-
-        filterHtml += "</select>";
-      }
-    }
-    if (filterHtml.length() > 0) {
-      return filterHtml + "<br/>" + sTitle;
-    }
     return sTitle;
   }
 
@@ -106,6 +108,16 @@ public class TableHeaderVo {
     return bSearchable;
   }
 
+  public TableHeaderVo disableSearch() {
+    this.setbSearchable(false);
+    return this;
+  }
+
+  public TableHeaderVo enableSearch() {
+    this.setbSearchable(true);
+    return this;
+  }
+
   public void setbSearchable(boolean bSearchable) {
     this.bSearchable = bSearchable;
   }
@@ -127,6 +139,10 @@ public class TableHeaderVo {
     return this;
   }
 
+  public String[][] getSearchOptions() {
+    return searchOptions;
+  }
+
   public String getSClass() {
     return sClass;
   }
@@ -135,10 +151,30 @@ public class TableHeaderVo {
     this.sClass = sClass;
     return this;
   }
-  
+
   public TableHeaderVo hidePhone(){
     this.sClass = "hidden-phone";
     return this;
   }
-  
+
+  public String convertValue(Object rawValue) {
+    /**
+     * 由于searchOptions是为了前台下拉框使用的，所以在导出EXCEL数据的时候，可以根据此做值的转化为显示名称，为excel提供友好结果
+     * searchOptions数据结构是二位数组，第一纬度：数值 第二纬度：显示名称
+     **/
+    if (rawValue == null) {
+      return "";
+    } else if (rawValue instanceof Date) {
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      return sdf.format(rawValue);
+    } else if (this.searchOptions != null && rawValue != null) {
+      for (int i = 0; i < this.searchOptions[0].length; i++) {
+        if (this.searchOptions[0][i].equals(String.valueOf(rawValue))) {
+          return this.searchOptions[1][i];
+        }
+      }
+
+    }
+    return rawValue.toString();
+  }
 }

@@ -35,21 +35,21 @@
         <input name="patient.id" type="hidden" value="${patient.id}"/>
         <input name="patient.name" type="hidden" value="${patient.name}"/>
 
-        <div class="form-group has-success">
+        <div class="form-group">
             <label class="col-lg-2 control-label">患者编号</label>
             <div class="col-lg-10">
                 <input type="text" placeholder="" id="f-key" name="patient.patientKey" class="form-control" required="required" value="${patient.patientKey}">
                 <p class="help-block">请输入患者编号！</p>
             </div>
         </div>
-        <div class="form-group has-success">
+        <div class="form-group">
             <label class="col-lg-2 control-label">患者姓名</label>
             <div class="col-lg-10">
                 <input type="text" placeholder="" id="f-name" name="patient.patientName" class="form-control" required="required" value="${patient.patientName}">
                 <p class="help-block">请输入患者姓名！</p>
             </div>
         </div>
-        <div class="form-group has-error">
+        <div class="form-group">
             <label class="col-lg-2 control-label">性别</label>
             <div class="col-lg-10">
                 <select class="form-control m-bot15" name="patient.sex">
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="form-group has-warning">
+        <div class="form-group">
             <label class="col-lg-2 control-label">出生日期</label>
             <div class="col-lg-10">
                 <input id="birthday" placeholder="" name="patient.birthday"  class="form-control" value="<s:date name='patient.birthday' format='MM/dd/yyyy'/>">
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div class="form-group has-warning">
+        <div class="form-group">
             <label class="col-lg-2 control-label">手机号码</label>
             <div class="col-lg-10">
                 <input  placeholder="" name="patient.cellphone"  class="form-control" value="${patient.cellphone}">

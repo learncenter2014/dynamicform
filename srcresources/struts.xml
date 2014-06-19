@@ -137,6 +137,23 @@
 		</action>
 	</package>
 
+    <package name="document" namespace="/document" extends="default">
+        <action name="index" class="actions.DocumentAction" method="index"/>
+        <action name="initTable" class="actions.DocumentAction" method="initTable"/>
+        <action name="queryTable" class="actions.DocumentAction" method="queryTable"/>
+        <action name="add" class="actions.DocumentAction" method="add">
+            <result name="success">/pages/document/documentEdit.jsp</result>
+        </action>
+        <action name="edit" class="actions.DocumentAction" method="edit">
+            <result name="success">/pages/document/documentEdit.jsp</result>
+        </action>
+        <action name="save" class="actions.DocumentAction" method="save">
+            <result name="success" type="redirectAction">/document/index</result>
+        </action>
+        <action name="delete" class="actions.DocumentAction" method="delete">
+            <result name="success" type="redirectAction">/document/index</result>
+        </action>
+    </package>
     <package name="patient" namespace="/patient" extends="default">
         <action name="index" class="actions.PatientAction" method="index"/>
         <action name="initTable" class="actions.PatientAction" method="initTable"/>
