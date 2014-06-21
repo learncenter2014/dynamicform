@@ -171,6 +171,23 @@
             <result name="success" type="redirectAction">/entry/index?documentId=${documentId}</result>
         </action>
     </package>
+    <package name="entryCode" namespace="/entryCode" extends="default">
+        <action name="index" class="actions.EntryCodeAction" method="index"/>
+        <action name="initTable" class="actions.EntryCodeAction" method="initTable"/>
+        <action name="queryTable" class="actions.EntryCodeAction" method="queryTable"/>
+        <action name="add" class="actions.EntryCodeAction" method="add">
+            <result name="success">/pages/entry/entryCodeEdit.jsp</result>
+        </action>
+        <action name="edit" class="actions.EntryCodeAction" method="edit">
+            <result name="success">/pages/entry/entryCodeEdit.jsp</result>
+        </action>
+        <action name="save" class="actions.EntryCodeAction" method="save">
+            <result name="success" type="redirectAction">/entry/index?entryId=${entryId}</result>
+        </action>
+        <action name="delete" class="actions.EntryCodeAction" method="delete">
+            <result name="success" type="redirectAction">/entry/index?entryId=${entryId}</result>
+        </action>
+    </package>
     <package name="patient" namespace="/patient" extends="default">
         <action name="index" class="actions.PatientAction" method="index"/>
         <action name="initTable" class="actions.PatientAction" method="initTable"/>

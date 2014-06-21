@@ -17,6 +17,7 @@
         <pattern>/user/*.action</pattern>
         <pattern>/document/*.action</pattern>
         <pattern>/entry/*.action</pattern>
+        <pattern>/entryCode/*.action</pattern>
         <pattern>/patient/*.action</pattern>
 	</decorator>
 </decorators>

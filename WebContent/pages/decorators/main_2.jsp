@@ -72,7 +72,7 @@
         </div>
         <div class="navbar-collapse ">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">随访注册</a></li>
+                <li> <!--class="active"--><a href="#">随访注册</a></li>
                 <li><a href="#">随访执行</a></li>
                 <li class="dropdown">
                     <a data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle " href="#">随访设计<b class=" fa fa-angle-down"></b></a>

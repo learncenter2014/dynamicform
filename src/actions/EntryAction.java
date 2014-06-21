@@ -16,6 +16,12 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     private EntryBean entry;
     private String documentId;
 
+
+    @Override
+    public String getCustomJsp() {
+        return "/pages/entry/entryPost.jsp";
+    };
+
     @Override
     public String getActionPrex() {
         return getRequest().getContextPath() + "/entry";

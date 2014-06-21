@@ -60,7 +60,7 @@
                 <div class="col-lg-offset-2 col-lg-10">
                     <button class="btn btn-info" type="submit">保存</button>
 
-                    <a href="entry/index.action">
+                    <a href="entry/index.action?documentId=${documentId}">
                       <div class="btn btn-info">取消</div>
                     </a>
                 </div>
