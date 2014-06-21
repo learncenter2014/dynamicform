@@ -32,7 +32,7 @@ public class DocumentAction extends BaseTableAction<DocumentBusiness> {
         init.getAoColumns().add(new TableHeaderVo("code", "模块代码").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("name", "模块名称").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("abbreviation", "模块缩写").enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("type", "类型"));
+        init.getAoColumns().add(new TableHeaderVo("type", "类型").addSearchOptions(new String[][] { { "0", "1"}, { "无子元素", "有子元素"} }).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("columnCount", "显示列数"));
         init.getAoColumns().add(new TableHeaderVo("createTime", "创建时间"));
         return init;

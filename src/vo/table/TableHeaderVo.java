@@ -177,4 +177,36 @@ public class TableHeaderVo {
     }
     return rawValue.toString();
   }
+
+    /**
+     * cellFormatter["XXXX"] = function ( data, type, full ) {}
+     * @return  snippet JS code.
+     */
+    public String getCellFormatter() {
+        if (this.searchOptions != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("cellFormatter['");
+            sb.append(this.getmData());
+            sb.append("']");
+            sb.append(" = function ( data, type, full ) {");
+            for (int i = 0; i < this.searchOptions[0].length; i++) {
+                sb.append("if(data =='");
+                sb.append(this.searchOptions[0][i]);
+                sb.append("'){");
+                sb.append("return '");
+                sb.append(this.searchOptions[1][i]);
+                sb.append("';}");
+            }
+            sb.append("}");
+            return sb.toString();
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        TableHeaderVo th = new TableHeaderVo("status", "状态").enableSearch().addSearchOptions(
+                new String[][] { { "0", "1", "2", "3", "4"}, { "已注册", "通过审核", "通过面试" , "未通过审核", "未通过面试"} });
+        System.out.println(th.getCellFormatter());
+    }
+
 }
