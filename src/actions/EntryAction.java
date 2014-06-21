@@ -6,6 +6,7 @@ import bl.mongobus.EntryBusiness;
 import org.apache.commons.lang.StringUtils;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
+import vo.table.TableQueryVo;
 
 /**
  * Created by peter on 14-6-21.
@@ -72,11 +73,23 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     @Override
     public String add() {
         entry = new EntryBean();
+        entry.setDocumentId(this.documentId);
         return SUCCESS;
     }
     @Override
     public String getTableTitle() {
         return "<ul class=\"breadcrumb\"><li>系统模块</li><li class=\"active\">实体</li></ul>";
+    }
+    @Override
+    public TableQueryVo getModel() {
+        TableQueryVo model = super.getModel();
+        model.getFilter().put("documentId", this.documentId + "");
+        return model;
+    }
+
+    @Override
+    public String getAddButtonParameter(){
+        return "documentId="+this.documentId;
     }
 
     public EntryBean getEntry() {

@@ -165,10 +165,10 @@
             <result name="success">/pages/entry/entryEdit.jsp</result>
         </action>
         <action name="save" class="actions.EntryAction" method="save">
-            <result name="success" type="redirectAction">/entry/index</result>
+            <result name="success" type="redirectAction">/entry/index?documentId=${documentId}</result>
         </action>
         <action name="delete" class="actions.EntryAction" method="delete">
-            <result name="success" type="redirectAction">/entry/index</result>
+            <result name="success" type="redirectAction">/entry/index?documentId=${documentId}</result>
         </action>
     </package>
     <package name="patient" namespace="/patient" extends="default">

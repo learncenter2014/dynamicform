@@ -33,6 +33,8 @@
         <s:actionerror/><s:actionmessage/>
         <form id="entryForm" class="form-horizontal tasi-form" action="entry/save.action" method="post">
             <input name="entry.id" type="hidden" value="${entry.id}"/>
+            <input name="entry.documentId" type="hidden" value="${entry.documentId}"/>
+            <input name="documentId" type="hidden" value="${entry.documentId}"/>
             <div class="form-group has-error">
                 <label class="col-lg-2 control-label">实体名称</label>
                 <div class="col-lg-10">

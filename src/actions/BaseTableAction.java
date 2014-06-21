@@ -53,6 +53,11 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
    */
   public abstract String getActionPrex();
 
+    //在ADD DELETE EDIT 增加参数传递
+    public String getAddButtonParameter(){
+        return "";
+    }
+
   /**
    *
    * @return
