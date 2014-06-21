@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package actions;
 
@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * Base Table Action
- * 
+ *
  * @author gudong
  * @since $Date:2014-02-20$
  */
@@ -48,20 +48,25 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
 
   /**
    * The Action Prefix that will be append action. like : getRequest().getContextPath() + "/datatable".
-   * 
+   *
    * @return
    */
   public abstract String getActionPrex();
 
   /**
-   * 
+   *
    * @return
    */
   public String getCustomJs() {
     return null;
   };
 
-  public String getTableTitle() {
+    public String getCustomJsp() {
+        return null;
+    };
+
+
+    public String getTableTitle() {
     return null;
   }
 
@@ -70,13 +75,13 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
   }
 
   /**
-   * 
+   *
    * @return
    */
   public abstract TableInitVo getTableInit();
 
   /**
-   * 
+   *
    * @return
    */
   public B getBusiness() {
@@ -102,7 +107,7 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
   }
 
   /**
-   * 
+   *
    * @return
    * @throws Exception
    */
@@ -112,7 +117,7 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
 
   /**
    * initTable
-   * 
+   *
    * @return
    * @throws Exception
    */
@@ -127,7 +132,7 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
 
   /**
    * queryTable
-   * 
+   *
    * @return
    * @throws Exception
    */
@@ -145,7 +150,7 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
   }
 
   /**
-   * 
+   *
    * @return
    * @throws Exception
    */
@@ -155,7 +160,7 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
   }
 
   /**
-   * 
+   *
    * @return
    * @throws Exception
    */
@@ -164,16 +169,16 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
   }
 
   /**
-   * 
+   *
    * @return
    * @throws Exception
    */
   public String delete() throws Exception {
     return SUCCESS;
   }
-  
+
   /**
-   * 
+   *
    * @return
    * @throws Exception
    */

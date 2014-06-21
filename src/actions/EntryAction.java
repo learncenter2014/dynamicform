@@ -1,39 +1,32 @@
 package actions;
 
-import bl.beans.DocumentBean;
+import bl.beans.EntryBean;
 import bl.common.BusinessResult;
-import bl.mongobus.DocumentBusiness;
+import bl.mongobus.EntryBusiness;
 import org.apache.commons.lang.StringUtils;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
 
-import java.util.List;
-
 /**
- * Created by wangronghua on 14-6-19.
+ * Created by peter on 14-6-21.
  */
-public class DocumentAction extends BaseTableAction<DocumentBusiness> {
+public class EntryAction extends BaseTableAction<EntryBusiness> {
 
-    private DocumentBean document;
-
-    @Override
-    public String getCustomJsp() {
-        return "/pages/document/documentPost.jsp";
-    };
+    private EntryBean entry;
+    private String documentId;
 
     @Override
     public String getActionPrex() {
-        return getRequest().getContextPath() + "/document";
+        return getRequest().getContextPath() + "/entry";
     }
 
     @Override
     public TableInitVo getTableInit() {
         TableInitVo init = new TableInitVo();
-        init.getAoColumns().add(new TableHeaderVo("code", "模块代码").enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("name", "模块名称").enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("abbreviation", "模块缩写").enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("type", "类型"));
-        init.getAoColumns().add(new TableHeaderVo("columnCount", "显示列数"));
+        init.getAoColumns().add(new TableHeaderVo("name", "实体名称").enableSearch());
+        init.getAoColumns().add(new TableHeaderVo("entryName", "实体变量名称").enableSearch());
+        init.getAoColumns().add(new TableHeaderVo("abbreviation", "实体缩写").enableSearch());
+        init.getAoColumns().add(new TableHeaderVo("elementType", "实体类型"));
         init.getAoColumns().add(new TableHeaderVo("createTime", "创建时间"));
         return init;
     }
@@ -41,10 +34,10 @@ public class DocumentAction extends BaseTableAction<DocumentBusiness> {
     @Override
     public String save() throws Exception {
         BusinessResult result = null;
-        if (StringUtils.isEmpty(document.getId())) {
-            result = getBusiness().createLeaf(document);
+        if (StringUtils.isEmpty(entry.getId())) {
+            result = getBusiness().createLeaf(entry);
         } else {
-            result = getBusiness().updateLeaf(document, document);
+            result = getBusiness().updateLeaf(entry, entry);
         }
         if (result != null && result.getErrors().size() > 0) {
             for (Object error : result.getErrors()) {
@@ -62,7 +55,7 @@ public class DocumentAction extends BaseTableAction<DocumentBusiness> {
     }
 
     public String edit() {
-        document = (DocumentBean) getBusiness().getLeaf(getId()).getResponseData();
+        entry = (EntryBean) getBusiness().getLeaf(getId()).getResponseData();
         return SUCCESS;
     }
 
@@ -78,20 +71,28 @@ public class DocumentAction extends BaseTableAction<DocumentBusiness> {
 
     @Override
     public String add() {
-        document = new DocumentBean();
+        entry = new EntryBean();
         return SUCCESS;
     }
     @Override
     public String getTableTitle() {
-        return "<ul class=\"breadcrumb\"><li>系统模块</li><li class=\"active\">模块</li></ul>";
+        return "<ul class=\"breadcrumb\"><li>系统模块</li><li class=\"active\">实体</li></ul>";
     }
 
-    public DocumentBean getDocument() {
-        return document;
+    public EntryBean getEntry() {
+        return entry;
     }
 
-    public void setDocument(DocumentBean document) {
-        this.document = document;
+    public void setEntry(EntryBean entry) {
+        this.entry = entry;
     }
 
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 }

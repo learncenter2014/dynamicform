@@ -65,14 +65,13 @@
                             </s:if>
                         </s:iterator>
                         <s:if test="#counter % 3 !=0">
-                    </div>
+                 </div>
                     </s:if>
                     <a class="btn btn-success pull-right" style="margin-right:15px;margin-top: 15px;" onclick="$('#errorarea').html('');$('#${tableId}').dataTable()._fnAjaxUpdate()">
                         <i class="fa fa-check"></i>
                         查询
                     </a>
-                </div>
-    </div>
+      </div>
 </section>
 </form>
 <div id="errorarea"><%@include file="../strutsMessage.jsp"%></div>

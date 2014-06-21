@@ -21,6 +21,7 @@ public class WebInitListener implements ServletContextListener {
 
         LOG.info("init server.properties file");
         ServerContext.init(WebInitListener.class.getResourceAsStream("/server.properties"));
+        sce.getServletContext().setAttribute("rootPath", sce.getServletContext().getContextPath());
 
         LOG.info("init /etc/db.properties file");
         try {

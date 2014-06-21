@@ -154,6 +154,23 @@
             <result name="success" type="redirectAction">/document/index</result>
         </action>
     </package>
+    <package name="entry" namespace="/entry" extends="default">
+        <action name="index" class="actions.EntryAction" method="index"/>
+        <action name="initTable" class="actions.EntryAction" method="initTable"/>
+        <action name="queryTable" class="actions.EntryAction" method="queryTable"/>
+        <action name="add" class="actions.EntryAction" method="add">
+            <result name="success">/pages/entry/entryEdit.jsp</result>
+        </action>
+        <action name="edit" class="actions.EntryAction" method="edit">
+            <result name="success">/pages/entry/entryEdit.jsp</result>
+        </action>
+        <action name="save" class="actions.EntryAction" method="save">
+            <result name="success" type="redirectAction">/entry/index</result>
+        </action>
+        <action name="delete" class="actions.EntryAction" method="delete">
+            <result name="success" type="redirectAction">/entry/index</result>
+        </action>
+    </package>
     <package name="patient" namespace="/patient" extends="default">
         <action name="index" class="actions.PatientAction" method="index"/>
         <action name="initTable" class="actions.PatientAction" method="initTable"/>

@@ -16,6 +16,7 @@
         <pattern>/datainput/data*.action</pattern>
         <pattern>/user/*.action</pattern>
         <pattern>/document/*.action</pattern>
+        <pattern>/entry/*.action</pattern>
         <pattern>/patient/*.action</pattern>
 	</decorator>
 </decorators>
