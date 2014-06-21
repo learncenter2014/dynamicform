@@ -58,11 +58,13 @@
                 <div class="col-lg-offset-2 col-lg-10">
                     <button class="btn btn-info" type="submit">保存</button>
 
-                    <button class="btn btn-info" type="button" onclick="window.location.href='${rootPath}/document/index.action'">取消</button>
+                    <a href="document/index.action">
+                      <div class="btn btn-info">取消</div>
+                    </a>
                 </div>
             </div>
 
-        </form>
+        </form>s
     </div>
 </section>
 </body>

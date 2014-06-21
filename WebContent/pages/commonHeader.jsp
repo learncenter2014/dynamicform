@@ -13,4 +13,4 @@
         response.sendRedirect(basePath+"pages/menu_loginout/login.jsp");
     }
 %>
-    <base href="<%=basePath%>">
+    <base href="<%=basePath%>"/>
