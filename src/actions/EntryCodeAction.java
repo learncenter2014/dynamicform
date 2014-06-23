@@ -1,8 +1,13 @@
 package actions;
 
+import bl.beans.DocumentBean;
 import bl.beans.EntryBean;
 import bl.beans.EntryCodeBean;
 import bl.common.BusinessResult;
+import bl.constants.BusTieConstant;
+import bl.instancepool.SingleBusinessPoolManager;
+import bl.mongobus.DocumentBusiness;
+import bl.mongobus.EntryBusiness;
 import bl.mongobus.EntryCodeBusiness;
 import org.apache.commons.lang.StringUtils;
 import vo.table.TableHeaderVo;
@@ -13,6 +18,8 @@ import vo.table.TableQueryVo;
  * Created by wangronghua on 14-6-21.
  */
 public class EntryCodeAction extends BaseTableAction<EntryCodeBusiness> {
+  private static DocumentBusiness dob = (DocumentBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
+  private static EntryBusiness enb = (EntryBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_ENTRYBUSINESS);
 
   private String entryId;
   private EntryCodeBean entryCode;
@@ -78,7 +85,9 @@ public class EntryCodeAction extends BaseTableAction<EntryCodeBusiness> {
   }
   @Override
   public String getTableTitle() {
-    return "<ul class=\"breadcrumb\"><li>系统模块</li><li class=\"active\">编码</li></ul>";
+    EntryBean eb = (EntryBean) enb.getLeaf(this.entryId).getResponseData();
+    DocumentBean db = (DocumentBean) dob.getLeaf(eb.getDocumentId()).getResponseData();
+    return "<ul class=\"breadcrumb\"><li>系统模块</li><li><a href=\"document/index.action\">模块</a></li><li><a href=\"entry/index.action?documentId="+db.getId()+"\">实体</a></li><li class=\"active\"><a href=\"entryCode/index.action?entryId="+this.entryId+"\">编码</a></li></ul>";
   }
   @Override
   public TableQueryVo getModel() {
