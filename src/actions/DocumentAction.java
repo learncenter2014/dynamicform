@@ -44,7 +44,12 @@ public class DocumentAction extends BaseTableAction<DocumentBusiness> {
         if (StringUtils.isEmpty(document.getId())) {
             result = getBusiness().createLeaf(document);
         } else {
-            result = getBusiness().updateLeaf(document, document);
+            DocumentBean origBean = (DocumentBean)getBusiness().getLeaf(document.getId()).getResponseData();
+            if(null == origBean) {
+              addActionError("未找到对应的模块！");
+              return INPUT;
+            }
+            result = getBusiness().updateLeaf(origBean, document);
         }
         if (result != null && result.getErrors().size() > 0) {
             for (Object error : result.getErrors()) {
