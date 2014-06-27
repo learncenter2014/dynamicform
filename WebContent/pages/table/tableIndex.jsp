@@ -382,7 +382,7 @@ window.actionPrex = "${actionPrex}";
 
     <s:iterator value="tableInit.aoColumns" var="column">
         <s:if test="%{#column.cellFormatter!=null}">
-            <s:property value="#column.cellFormatter"/>
+            <s:property value="#column.cellFormatter"/>;
         </s:if>
     </s:iterator>
 </script>
