@@ -77,7 +77,7 @@
                 <li class="dropdown">
                     <a data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle " href="#">随访设计<b class=" fa fa-angle-down"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="document/index.action">方案设计</a></li>
+                        <li><a href="study/index.action">方案设计</a></li>
                         <li><a href="document/index.action">系统模块</a></li>
                     </ul>
                 </li>

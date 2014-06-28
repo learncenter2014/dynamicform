@@ -88,7 +88,7 @@ public class DocumentAction extends BaseTableAction<DocumentBusiness> {
     }
     @Override
     public String getTableTitle() {
-        return "<ul class=\"breadcrumb\"><li>系统模块</li><li class=\"active\"><a href=\"document/index.action\">模块</a></li></ul>";
+        return "<ul class=\"breadcrumb\"><li>随访设计</li><li class=\"active\"><a href=\"document/index.action\">系统模块</a></li></ul>";
     }
 
     public DocumentBean getDocument() {

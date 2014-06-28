@@ -83,7 +83,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     }
     @Override
     public String getTableTitle() {
-        return "<ul class=\"breadcrumb\"><li>系统模块</li><li><a href=\"document/index.action\">模块</a></li><li class=\"active\"><a href=\"entry/index.action?documentId="+this.documentId+"\">实体</a></li></ul>";
+        return "<ul class=\"breadcrumb\"><li>随访设计</li><li><a href=\"document/index.action\">系统模块</a></li><li class=\"active\"><a href=\"entry/index.action?documentId="+this.documentId+"\">实体</a></li></ul>";
     }
     @Override
     public TableQueryVo getModel() {

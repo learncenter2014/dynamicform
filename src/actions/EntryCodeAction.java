@@ -87,7 +87,7 @@ public class EntryCodeAction extends BaseTableAction<EntryCodeBusiness> {
   public String getTableTitle() {
     EntryBean eb = (EntryBean) enb.getLeaf(this.entryId).getResponseData();
     DocumentBean db = (DocumentBean) dob.getLeaf(eb.getDocumentId()).getResponseData();
-    return "<ul class=\"breadcrumb\"><li>系统模块</li><li><a href=\"document/index.action\">模块</a></li><li><a href=\"entry/index.action?documentId="+db.getId()+"\">实体</a></li><li class=\"active\"><a href=\"entryCode/index.action?entryId="+this.entryId+"\">编码</a></li></ul>";
+    return "<ul class=\"breadcrumb\"><li>随访设计</li><li><a href=\"document/index.action\">系统模块</a></li><li><a href=\"entry/index.action?documentId="+db.getId()+"\">实体</a></li><li class=\"active\"><a href=\"entryCode/index.action?entryId="+this.entryId+"\">编码</a></li></ul>";
   }
   @Override
   public TableQueryVo getModel() {
