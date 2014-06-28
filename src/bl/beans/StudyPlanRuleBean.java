@@ -1,8 +1,11 @@
 package bl.beans;
 
+import org.mongodb.morphia.annotations.Entity;
+
 /**
  * Created by pli on 14-6-29.
  */
+@Entity(value = "study_plan_rule")
 public class StudyPlanRuleBean extends Bean {
     private String studyPlanId;
     private String startTime;
