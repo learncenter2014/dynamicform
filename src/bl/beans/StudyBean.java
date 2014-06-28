@@ -8,6 +8,7 @@ import org.mongodb.morphia.annotations.Entity;
 @Entity(value = "study")
 public class StudyBean extends Bean {
     private String code;
+    private String status; //0:草稿；1:发布
     private String description;
     private String diseaseId; //单病种 指向disease主键
 
@@ -33,5 +34,13 @@ public class StudyBean extends Bean {
 
     public void setDiseaseId(String diseaseId) {
         this.diseaseId = diseaseId;
+    }
+
+    public String getStatus() {
+      return status;
+    }
+
+    public void setStatus(String status) {
+      this.status = status;
     }
 }
