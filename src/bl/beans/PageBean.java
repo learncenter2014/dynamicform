@@ -9,14 +9,13 @@ import org.mongodb.morphia.annotations.Reference;
 public class PageBean extends Bean {
 
   String label;
-
   String source;
 
-    public String getSource() {
-        return source;
-    }
+  public String getSource() {
+      return source;
+  }
 
-    public void setSource(String source) {
+  public void setSource(String source) {
         this.source = source;
     }
 

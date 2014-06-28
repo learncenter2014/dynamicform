@@ -7,6 +7,7 @@ import org.mongodb.morphia.annotations.Entity;
  */
 @Entity(value = "view")
 public class ViewBean extends Bean {
+    private String studyId;
     private int sequence; //序号
     private String description; //备注或者描述
     private short type; // 0随访基线 1 随访录入
@@ -34,4 +35,13 @@ public class ViewBean extends Bean {
     public void setType(short type) {
         this.type = type;
     }
+
+    public String getStudyId() {
+      return studyId;
+    }
+
+    public void setStudyId(String studyId) {
+      this.studyId = studyId;
+    }
+
 }

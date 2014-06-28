@@ -13,7 +13,6 @@ public class StudyBean extends Bean {
     private String description;
     private short state = 0; //0 草稿 1 发布
     private String diseaseId; //单病种 指向disease主键
-    private String startPoint;//随访起点
     public short getState() {
         return state;
     }
