@@ -12,4 +12,9 @@ public interface BusTieConstant {
 
     public static final String BUS_CPATH_ENTRYBUSINESS = "bl.mongobus.EntryBusiness";
 
+    public static final String BUS_CPATH_STUDYBUSINESS = "bl.mongobus.StudyBusiness";
+
+    public static final String BUS_CPATH_DISEASEBUSINESS = "bl.mongobus.DiseaseBusiness";
+
+    public static final String BUS_CPATH_VIEWBUSINESS = "bl.mongobus.ViewBusiness";
 }
