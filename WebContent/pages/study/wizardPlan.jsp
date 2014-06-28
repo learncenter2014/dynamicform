@@ -26,7 +26,7 @@
     </header>
     <div class="panel-body">
         <%@include file="studyNavigation.jsp"%>
-        <form id="studyForm" class="form-horizontal tasi-form" action="study/savewizarPlan.action" method="post">
+        <form id="studyForm" class="form-horizontal tasi-form" action="study/savewizardPlan.action" method="post">
             <input name="study.id" type="hidden" value="${study.id}"/>
 
             <%@ include file="/pages/study/studyAction.jsp"%>

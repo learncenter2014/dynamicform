@@ -26,7 +26,7 @@
     </header>
     <div class="panel-body">
         <%@include file="studyNavigation.jsp"%>
-        <form id="studyForm" class="form-horizontal tasi-form" action="study/savewizarStudy.action" method="post">
+        <form id="studyForm" class="form-horizontal tasi-form" action="study/savewizardStudy.action" method="post">
             <input name="study.id" type="hidden" value="${study.id}"/>
 
             <div class="form-group has-success">
@@ -65,7 +65,7 @@
                 <label class="col-lg-2 control-label">针对病种</label>
 
                 <div class="col-lg-6">
-                    <s:select cssClass="form-control" name="study.diseaseId" list="#{0:'糖尿病',1:'肝癌',2:'脑癌',3:'白血病'}" value="entry.diseaseId"/>
+                    <s:select cssClass="form-control" name="study.diseaseId" list="#{0:'糖尿病',1:'肝癌',2:'脑癌',3:'白血病'}" value="study.diseaseId"/>
                 </div>
             </div>
 

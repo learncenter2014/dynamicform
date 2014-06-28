@@ -108,6 +108,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     }
 
     public String wizardDocument() throws Exception {
+        this.edit();
         return SUCCESS;
     }
 
@@ -116,6 +117,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     }
 
     public String wizardView() throws Exception {
+        this.edit();
         return SUCCESS;
     }
 
@@ -124,6 +126,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     }
 
     public String wizardPlan() throws Exception {
+        this.edit();
         return SUCCESS;
     }
 
@@ -132,6 +135,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     }
 
     public String wizardPreview() throws Exception {
+        this.edit();
         return SUCCESS;
     }
 
