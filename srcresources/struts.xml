@@ -9,6 +9,10 @@
 	<constant name="struts.ui.theme" value="simple" />
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.custom.i18n.resources" value="resources/LocaleStrings" />
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+    <constant name="struts.xwork.chaining.copyErrors" value="true"/>
+    <constant name="struts.xwork.chaining.copyFieldErrors" value="true"/>
+    <constant name="struts.xwork.chaining.copyMessages" value="true"/>
 
 	<package name="default" namespace="/" extends="struts-default" >
 		<default-action-ref name="index" />
@@ -203,6 +207,30 @@
         </action>
         <action name="delete" class="actions.PatientAction" method="delete">
             <result name="success" type="redirectAction">index</result>
+        </action>
+    </package>
+
+    <package name="study" namespace="/study" extends="default">
+        <action name="index" class="actions.StudyAction" method="index"/>
+        <action name="initTable" class="actions.StudyAction" method="initTable"/>
+        <action name="queryTable" class="actions.StudyAction" method="queryTable"/>
+        <action name="add" class="actions.StudyAction" method="add">
+            <result name="success">/pages/study/wizardStudy.jsp</result>
+        </action>
+        <action name="edit" class="actions.StudyAction" method="edit">
+            <result name="success">/pages/study/wizardStudy.jsp</result>
+        </action>
+        <action name="wizard*" class="actions.StudyAction" method="wizard{1}">
+            <result name="success">/pages/study/wizard{1}.jsp</result>
+        </action>
+        <action name="save*" class="actions.StudyAction" method="save{1}">
+            <result name="success" type="redirectAction">/study/{1}.action?activeWizard=${activeWizard}&amp;id=${study.id}</result>
+        </action>
+        <action name="save" class="actions.StudyAction" method="save">
+            <result name="success" type="redirectAction">/study/index</result>
+        </action>
+        <action name="delete" class="actions.StudyAction" method="delete">
+            <result name="success" type="redirectAction">/study/index</result>
         </action>
     </package>
 </struts>
