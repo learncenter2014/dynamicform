@@ -24,7 +24,7 @@
     <header class="panel-heading">
         User Edit
     </header>
-     <form role="form" class="form-horizontal tasi-form" action="<%=request.getContextPath() %>/user/save.action">
+     <form role="form" class="form-horizontal tasi-form" action="${rootPath}/user/save.action">
          <div class="form-group has-success">
              <label class="col-lg-2 control-label">Username</label>
              <div class="col-lg-10">

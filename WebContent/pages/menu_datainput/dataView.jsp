@@ -7,7 +7,7 @@
         </script>
     </head>
     <body>
-        <form action="/datainput/dataRecordInput.action">
+        <form action="${rootPath}/datainput/dataRecordInput.action">
             <button id="addButton" type="submit" class="btn btn-info">Add</button>
         </form>
         <!--

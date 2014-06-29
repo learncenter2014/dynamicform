@@ -31,7 +31,7 @@
     </header>
     <div class="panel-body">
         <s:actionerror/><s:actionmessage/>
-        <form id="entryForm" class="form-horizontal tasi-form" action="entry/save.action" method="post">
+        <form id="entryForm" class="form-horizontal tasi-form" action="${rootPath}/entry/save.action" method="post">
             <input name="entry.id" type="hidden" value="${entry.id}"/>
             <input name="entry.documentId" type="hidden" value="${entry.documentId}"/>
             <input name="documentId" type="hidden" value="${entry.documentId}"/>

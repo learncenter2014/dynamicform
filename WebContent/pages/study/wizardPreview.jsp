@@ -2,20 +2,6 @@
 <html lang="en">
 <%@ include file="../commonHeader.jsp" %>
 <head>
-    <style type="text/css">
-        table tbody tr.even.row_selected td {
-            background-color: #B0BED9 !important;
-        }
-    </style>
-    <!--external css-->
-    <title>
-        <s:if test="study.id.length() > 0">
-            修改方案
-        </s:if>
-        <s:else>
-            添加方案
-        </s:else>
-    </title>
 </head>
 <body>
 
@@ -26,7 +12,7 @@
     </header>
     <div class="panel-body">
         <%@include file="studyNavigation.jsp"%>
-        <form id="studyForm" class="form-horizontal tasi-form" action="study/savewizardPreview.action" method="post">
+        <form id="studyForm" class="form-horizontal tasi-form" action="${rootPath}/study/savewizardPreview.action" method="post">
             <input name="study.id" type="hidden" value="${study.id}"/>
 
             <%@ include file="/pages/study/studyAction.jsp"%>

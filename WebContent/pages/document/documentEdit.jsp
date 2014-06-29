@@ -31,7 +31,7 @@
     </header>
     <div class="panel-body">
         <s:actionerror/><s:actionmessage/>
-        <form id="documentForm" class="form-horizontal tasi-form" action="document/save.action" method="post">
+        <form id="documentForm" class="form-horizontal tasi-form" action="${rootPath}/document/save.action" method="post">
             <input name="document.id" type="hidden" value="${document.id}"/>
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">模块名称</label>
