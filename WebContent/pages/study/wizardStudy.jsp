@@ -13,7 +13,7 @@
         <%@include file="studyNavigation.jsp"%>
         <form id="studyForm" class="form-horizontal tasi-form" action="${rootPath}/study/savewizardStudy.action" method="post">
             <input name="study.id" type="hidden" value="${study.id}"/>
-
+            <input name="activeWizard" type="hidden" value="${activeWizard}"/>
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">方案编码</label>
 

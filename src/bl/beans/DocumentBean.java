@@ -27,6 +27,9 @@ public class DocumentBean extends Bean{
     private List<EntryBean> entryBeanList;
 
     public List<EntryBean> getEntryBeanList() {
+        if(this.entryBeanList!=null){
+            return this.entryBeanList;
+        }
         return super.getSubBeans(EntryBean.class,"documentId");
     }
 

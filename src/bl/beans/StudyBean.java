@@ -20,6 +20,9 @@ public class StudyBean extends Bean {
     private List<StudyDocumentBean> studyDocumentBeanList;
 
     public List<StudyDocumentBean> getStudyDocumentBeanList() {
+        if(this.studyDocumentBeanList!=null){
+            return this.studyDocumentBeanList;
+        }
         return super.getSubBeans(StudyDocumentBean.class,"studyId");
     }
 

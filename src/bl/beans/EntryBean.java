@@ -29,6 +29,9 @@ public class EntryBean extends Bean {
     private List<EntryCodeBean> entryCodeBeanList;
 
     public List<EntryCodeBean> getEntryCodeBeanList() {
+        if(this.entryCodeBeanList!=null){
+            return this.entryCodeBeanList;
+        }
         return super.getSubBeans(EntryCodeBean.class, "entryId");
     }
 

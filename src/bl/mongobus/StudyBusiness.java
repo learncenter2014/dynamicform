@@ -7,6 +7,7 @@ import bl.beans.ViewDocumentBean;
 import bl.common.BeanContext;
 import dao.MongoDBConnectionFactory;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,5 +36,27 @@ public class StudyBusiness extends MongoCommonBusiness<BeanContext, StudyBean> {
         List<StudyDocumentBean> resultList = dc.find(StudyDocumentBean.class, "isDeleted", false)
                 .filter("studyId", studyId).asList();
         return resultList;
+    }
+
+    public void saveStudyDocument(String studyId, List<StudyDocumentBean> listStudyDocument){
+        //delete all StudyDocumentBeans
+        Datastore dc = MongoDBConnectionFactory.getDatastore(getDBName());
+        Query queryStudyDocument = dc.createQuery(StudyDocumentBean.class);
+        queryStudyDocument.filter("studyId", studyId);
+        dc.delete(queryStudyDocument);
+
+        //delete all StudyDocumentEntryBeans
+        Query queryStudyDocumentEntry = dc.createQuery(StudyDocumentEntryBean.class);
+        queryStudyDocumentEntry.filter("studyId", studyId);
+        dc.delete(queryStudyDocumentEntry);
+
+        //persistent all StudyDocumentBeans
+        for (int i = 0; i < listStudyDocument.size(); i++) {
+            dc.save(listStudyDocument.get(i));
+            List<StudyDocumentEntryBean> studyDocumentEntryBeanList = listStudyDocument.get(i).getStudyDocumentEntryBeanList();
+            for (int j = 0; j < studyDocumentEntryBeanList.size(); j++) {
+                dc.save(studyDocumentEntryBeanList.get(j));
+            }
+        }
     }
 }

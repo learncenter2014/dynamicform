@@ -11,9 +11,12 @@ import bl.mongobus.DocumentBusiness;
 import bl.mongobus.StudyBusiness;
 import dynamicschema.Document;
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -27,15 +30,25 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     private static String[][] wizardAction = new String[][]{{"wizardStudy", "基本信息"}, {"wizardDocument", "模块选择"}, {"wizardView", "页面设计"}, {"wizardPlan", "计划规则"}, {"wizardPreview", "方案预览"}};
     private List<DocumentBean> documentBeanList;
     //这个是来自前台选择的document和对应的Entry
-    private List<StudyDocumentEntryBean> savedDocumentBeanList;
+    private List<StudyDocumentBean> savedDocumentBeanList;
+    private List<StudyDocumentEntryBean> savedDocumentEntryBeanList;
     private static final DocumentBusiness dbs = (DocumentBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
+    private static final StudyBusiness sbs = (StudyBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
 
-    public List<StudyDocumentEntryBean> getSavedDocumentBeanList() {
+    public List<StudyDocumentBean> getSavedDocumentBeanList() {
         return savedDocumentBeanList;
     }
 
-    public void setSavedDocumentBeanList(List<StudyDocumentEntryBean> savedDocumentBeanList) {
+    public void setSavedDocumentBeanList(List<StudyDocumentBean> savedDocumentBeanList) {
         this.savedDocumentBeanList = savedDocumentBeanList;
+    }
+
+    public List<StudyDocumentEntryBean> getSavedDocumentEntryBeanList() {
+        return savedDocumentEntryBeanList;
+    }
+
+    public void setSavedDocumentEntryBeanList(List<StudyDocumentEntryBean> savedDocumentEntryBeanList) {
+        this.savedDocumentEntryBeanList = savedDocumentEntryBeanList;
     }
 
     public List<DocumentBean> getDocumentBeanList() {
@@ -143,6 +156,33 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     }
 
     public String savewizardDocument() throws Exception {
+        ArrayList<StudyDocumentBean> sdbs = new ArrayList<StudyDocumentBean>();
+        if (this.savedDocumentBeanList != null) {
+            //constructed all studyDocumentBeans.
+            for (int i = 0; i < savedDocumentBeanList.size(); i++) {
+                StudyDocumentBean sdb = savedDocumentBeanList.get(i);
+                String sdbId = ObjectId.get().toString();
+                sdb.setId(sdbId);
+                sdb.setStudyId(this.study.getId());
+                //追加StudyDocumentEntryBean
+                ArrayList<StudyDocumentEntryBean> sdeb = new ArrayList<StudyDocumentEntryBean>();
+                for (int j = 0; j < this.savedDocumentEntryBeanList.size(); j++) {
+                    StudyDocumentEntryBean sdebRef = this.savedDocumentEntryBeanList.get(j);
+                    //documentId存在，且要被选中元素也存在
+                    if (sdebRef != null && sdebRef.getDocumentId().equals(sdb.getDocumentId()) && sdebRef.getEntryId()!=null) {
+                        sdebRef.setId(ObjectId.get().toString());
+                        sdebRef.setStudyDocumentId(sdbId);
+                        sdebRef.setStudyId(this.study.getId());
+                        //加入引用
+                        sdeb.add(sdebRef);
+                    }
+                }
+                sdb.setStudyDocumentEntryBeanList(sdeb);
+                sdbs.add(sdb);
+            }
+        }
+        //持久studyDocument
+        sbs.saveStudyDocument(this.study.getId(), sdbs);
         return SUCCESS;
     }
 

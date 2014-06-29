@@ -11,7 +11,7 @@
         <%@include file="studyNavigation.jsp"%>
         <form id="studyForm" class="form-horizontal tasi-form" action="${rootPath}/study/savewizardPlan.action" method="post">
             <input name="study.id" type="hidden" value="${study.id}"/>
-
+            <input name="activeWizard" type="hidden" value="${activeWizard}"/>
             <%@ include file="/pages/study/studyAction.jsp"%>
         </form>
     </div>
