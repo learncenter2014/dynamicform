@@ -3,6 +3,8 @@ package bl.beans;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Transient;
 
+import java.util.List;
+
 /**
  * Created by wangronghua on 14-6-17.
  */
@@ -21,6 +23,16 @@ public class DocumentBean extends Bean{
 
     @Transient
     private String innerHTML;
+    @Transient
+    private List<EntryBean> entryBeanList;
+
+    public List<EntryBean> getEntryBeanList() {
+        return super.getSubBeans(EntryBean.class,"documentId");
+    }
+
+    public void setEntryBeanList(List<EntryBean> entryBeanList) {
+        this.entryBeanList = entryBeanList;
+    }
 
     public String getAbbreviation() {
         return abbreviation;

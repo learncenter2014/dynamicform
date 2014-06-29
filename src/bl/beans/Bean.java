@@ -1,13 +1,17 @@
 package bl.beans;
 
-import java.io.Serializable;
-import java.util.Date;
-
+import bl.common.BeanContext;
+import dao.MongoDBConnectionFactory;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 
-import bl.common.BeanContext;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Bean implements BeanContext, Cloneable, Serializable {
     @Id
@@ -144,4 +148,26 @@ public class Bean implements BeanContext, Cloneable, Serializable {
         this.isDeleted = isDeleted;
     }
 
+    /***
+     *  采用延迟加载的方式来实现，而且在线程上下文只加载一次并且缓存以便提高利用效率
+     * @param subClass      字表类型信息
+     * @param parentIdName  子表对应外键名字
+     * @param <SC>
+     * @return  List<SC> 子表类型
+     */
+    public <SC> List<SC> getSubBeans(Class<SC> subClass, String parentIdName) {
+        String key = subClass + parentIdName;
+        if(cacheSubBeans.containsKey(key)){
+            return cacheSubBeans.get(key);
+        }else{
+            Datastore dc = MongoDBConnectionFactory.getDatastore("form");
+            List<SC> resultList = dc.find(subClass, "isDeleted", false)
+                    .filter(parentIdName, this.getId()).asList();
+            cacheSubBeans.put(key,resultList);
+            return resultList;
+        }
+    }
+
+    //缓存池
+    private Map<String,List> cacheSubBeans = new HashMap<String,List>();
 }

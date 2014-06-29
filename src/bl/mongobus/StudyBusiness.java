@@ -1,6 +1,7 @@
 package bl.mongobus;
 
 import bl.beans.StudyBean;
+import bl.beans.StudyDocumentBean;
 import bl.beans.StudyDocumentEntryBean;
 import bl.beans.ViewDocumentBean;
 import bl.common.BeanContext;
@@ -26,6 +27,13 @@ public class StudyBusiness extends MongoCommonBusiness<BeanContext, StudyBean> {
         Datastore dc = MongoDBConnectionFactory.getDatastore(getDBName());
         List<StudyDocumentEntryBean> resultList = dc.find(StudyDocumentEntryBean.class, "isDeleted", false)
             .filter("studyId", studyId).filter("documentId",documentId).asList();
+        return resultList;
+    }
+
+    public List<StudyDocumentBean> getStudyDocumentList (String studyId) {
+        Datastore dc = MongoDBConnectionFactory.getDatastore(getDBName());
+        List<StudyDocumentBean> resultList = dc.find(StudyDocumentBean.class, "isDeleted", false)
+                .filter("studyId", studyId).asList();
         return resultList;
     }
 }

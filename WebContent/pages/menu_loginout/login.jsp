@@ -38,7 +38,7 @@
 
     <div class="container">
 
-      <form class="form-signin" action="login.action" method="post">
+      <form class="form-signin" action="${rootPath}/login.action" method="post">
         <h2 class="form-signin-heading">sign in now</h2>
         <div class="login-wrap">
             <input type="text" name="user.name" class="form-control" placeholder="User ID" autofocus>

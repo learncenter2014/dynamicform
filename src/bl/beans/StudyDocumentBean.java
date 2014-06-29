@@ -5,11 +5,24 @@ package bl.beans;
  */
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
+
+import java.util.List;
 
 @Entity(value = "study_document")
 public class StudyDocumentBean extends Bean {
     private String studyId;
     private String documentId;
+    @Transient
+    private List<StudyDocumentEntryBean> studyDocumentEntryBeanList;
+
+    public List<StudyDocumentEntryBean> getStudyDocumentEntryBeanList() {
+        return super.getSubBeans(StudyDocumentEntryBean.class,"studyDocumentId");
+    }
+
+    public void setStudyDocumentEntryBeanList(List<StudyDocumentEntryBean> studyDocumentEntryBeanList) {
+        this.studyDocumentEntryBeanList = studyDocumentEntryBeanList;
+    }
 
     public String getStudyId() {
         return studyId;

@@ -30,7 +30,7 @@
     <header class="panel-heading">
         Patient Edit
     </header>
-    <form role="form" class="form-horizontal tasi-form" action="<%=request.getContextPath() %>/patient/save.action">
+    <form role="form" class="form-horizontal tasi-form" action="${rootPath}/patient/save.action">
 
         <input name="patient.id" type="hidden" value="${patient.id}"/>
         <input name="patient.name" type="hidden" value="${patient.name}"/>

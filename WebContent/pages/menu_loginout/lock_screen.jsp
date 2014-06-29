@@ -33,7 +33,7 @@
             <img src="jslib/flatlab/img/follower-avatar.jpg" alt="lock avatar"/>
             <h1>Jonathan Smith</h1>
             <span class="locked">Locked</span>
-            <form role="form" class="form-inline" action="index.jsp">
+            <form role="form" class="form-inline" action="${rootPath}/index.jsp">
                 <div class="form-group col-lg-12">
                     <input type="password" placeholder="Password" id="exampleInputPassword2" class="form-control lock-input">
                     <button class="btn btn-lock" type="submit">

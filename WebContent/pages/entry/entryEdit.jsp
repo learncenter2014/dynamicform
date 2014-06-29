@@ -31,7 +31,7 @@
     </header>
     <div class="panel-body">
         <s:actionerror/><s:actionmessage/>
-        <form id="entryForm" class="form-horizontal tasi-form" action="entry/save.action" method="post">
+        <form id="entryForm" class="form-horizontal tasi-form" action="${rootPath}/entry/save.action" method="post">
             <input name="entry.id" type="hidden" value="${entry.id}"/>
             <input name="entry.documentId" type="hidden" value="${entry.documentId}"/>
             <input name="documentId" type="hidden" value="${entry.documentId}"/>
@@ -40,6 +40,13 @@
                 <div class="col-lg-6">
                     <input type="text" placeholder="实体名称" name="entry.name" class="form-control"
                            required="required" value="${entry.name}"/>
+                </div>
+            </div>
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label">实体编码</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="实体编码" name="entry.code" class="form-control"
+                           required="required" value="${entry.code}"/>
                 </div>
             </div>
             <div class="form-group has-success">

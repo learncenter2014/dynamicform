@@ -1,11 +1,20 @@
 package actions;
 
+import bl.beans.DocumentBean;
 import bl.beans.StudyBean;
+import bl.beans.StudyDocumentBean;
+import bl.beans.StudyDocumentEntryBean;
 import bl.common.BusinessResult;
+import bl.constants.BusTieConstant;
+import bl.instancepool.SingleBusinessPoolManager;
+import bl.mongobus.DocumentBusiness;
 import bl.mongobus.StudyBusiness;
+import dynamicschema.Document;
 import org.apache.commons.lang.StringUtils;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
+
+import java.util.List;
 
 /**
  * Created by pli on 14-6-19.
@@ -16,6 +25,26 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     //当前默认激活的wizard
     private String activeWizard = "wizardStudy";
     private static String[][] wizardAction = new String[][]{{"wizardStudy", "基本信息"}, {"wizardDocument", "模块选择"}, {"wizardView", "页面设计"}, {"wizardPlan", "计划规则"}, {"wizardPreview", "方案预览"}};
+    private List<DocumentBean> documentBeanList;
+    //这个是来自前台选择的document和对应的Entry
+    private List<StudyDocumentEntryBean> savedDocumentBeanList;
+    private static final DocumentBusiness dbs = (DocumentBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
+
+    public List<StudyDocumentEntryBean> getSavedDocumentBeanList() {
+        return savedDocumentBeanList;
+    }
+
+    public void setSavedDocumentBeanList(List<StudyDocumentEntryBean> savedDocumentBeanList) {
+        this.savedDocumentBeanList = savedDocumentBeanList;
+    }
+
+    public List<DocumentBean> getDocumentBeanList() {
+        return documentBeanList;
+    }
+
+    public void setDocumentBeanList(List<DocumentBean> documentBeanList) {
+        this.documentBeanList = documentBeanList;
+    }
 
     public String getActiveWizard() {
         return activeWizard;
@@ -109,6 +138,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
 
     public String wizardDocument() throws Exception {
         this.edit();
+        this.documentBeanList = (List<DocumentBean>) dbs.getAllLeaves().getResponseData();
         return SUCCESS;
     }
 
@@ -145,7 +175,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
 
     @Override
     public String getTableTitle() {
-        return "<ul class=\"breadcrumb\"><li>随访设计</li><li class=\"active\"><a href=\"study/index.action\">方案设计</a></li></ul>";
+        return "<ul class=\"breadcrumb\"><li>随访设计</li><li class=\"active\"><a href=\""+getRequest().getContextPath()+"/study/index.action\">方案设计</a></li></ul>";
     }
 
     public StudyBean getStudy() {
