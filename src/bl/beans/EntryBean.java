@@ -1,6 +1,7 @@
 package bl.beans;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by wangronghua on 14-6-17.
@@ -21,6 +22,11 @@ public class EntryBean extends Bean {
     private int size = 30; //HTML最大长度
     private String regularExpression; //正则表达式，结合JS或者后台验证
     private String documentId; //归属于哪个Document
+
+    @Transient
+    private String innerHTML;
+    @Transient
+    private DocumentBean document;
 
     public String getEntryName() {
         return entryName;
@@ -133,4 +139,21 @@ public class EntryBean extends Bean {
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
+
+    public DocumentBean getDocument() {
+        return document;
+    }
+
+    public void setDocument(DocumentBean document) {
+        this.document = document;
+    }
+
+    public String getInnerHTML() {
+        return innerHTML;
+    }
+
+    public void setInnerHTML(String innerHTML) {
+        this.innerHTML = innerHTML;
+    }
+
 }

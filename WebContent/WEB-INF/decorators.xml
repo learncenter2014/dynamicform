@@ -19,6 +19,7 @@
         <pattern>/entry/*.action</pattern>
         <pattern>/entryCode/*.action</pattern>
         <pattern>/patient/*.action</pattern>
+        <pattern>/participant/*.action</pattern>
         <pattern>/study/*.action</pattern>
 	</decorator>
 </decorators>

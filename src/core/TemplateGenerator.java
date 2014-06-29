@@ -7,6 +7,7 @@ import bl.mongobus.DocumentBusiness;
 import bl.mongobus.EntryBusiness;
 import bl.mongobus.StudyBusiness;
 import bl.mongobus.ViewBusiness;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -14,21 +15,25 @@ import java.util.List;
  */
 public class TemplateGenerator {
 
-    public String genTemplate(String viewId) {
+    public boolean genTemplate(String viewId) {
         ViewBusiness viewBus = (ViewBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_VIEWBUSINESS);
         ViewBean viewBean = (ViewBean)viewBus.getLeaf(viewId).getResponseData();
         if(null != viewBean) {
             return genTemplate(viewBean);
         } else {
-            return "";
+            return false;
         }
     }
 
-    private String genTemplate(ViewBean viewBean) {
+    public boolean genTemplate(ViewBean viewBean) {
         DocumentBusiness documentBus = (DocumentBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
         ViewBusiness viewBus = (ViewBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_VIEWBUSINESS);
+        StudyBusiness studyBus = (StudyBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
 
         List<ViewDocumentBean> viewDocumentBeanList = viewBus.getViewDocumentList(viewBean.getId());
+        StudyBean studyBean = (StudyBean)studyBus.getLeaf(viewBean.getStudyId()).getResponseData();
+        viewBean.setStudy(studyBean);
+
         StringBuilder innerHTML = new StringBuilder();
         for(ViewDocumentBean viewDocumentBean : viewDocumentBeanList) {
             String documentId = viewDocumentBean.getDocumentId();
@@ -39,7 +44,19 @@ public class TemplateGenerator {
         }
 
         viewBean.setInnerHTML(innerHTML.toString());
-        return TemplateHelper.get().getTemplate(EntryType.VIEW, viewBean);
+        String ftlContent = TemplateHelper.get().getTemplate(EntryType.VIEW, viewBean);
+
+        File template = new File(Constants.TEMPLATE_PATH_TEMP + "/" + viewBean.getId() + ".ftl");
+        try {
+            Writer templateWriter = new OutputStreamWriter(new FileOutputStream(template), "UTF-8");
+            templateWriter.write(ftlContent);
+            templateWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //todo exception
+            return false;
+        }
+        return true;
     }
 
     private String genTemplate(String studyId, DocumentBean documentBean) {
@@ -50,6 +67,7 @@ public class TemplateGenerator {
         for(StudyDocumentEntryBean bean : studyDocumentEntryBeanList) {
             EntryBean entryBean = (EntryBean)entryBus.getLeaf(bean.getEntryId()).getResponseData();
             if(null != entryBean) {
+                entryBean.setDocument(documentBean);
                 innerHTML.append(genTemplate(entryBean));
             }
         }
