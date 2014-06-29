@@ -31,6 +31,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     public TableInitVo getTableInit() {
         TableInitVo init = new TableInitVo();
         init.getAoColumns().add(new TableHeaderVo("name", "实体名称").enableSearch());
+        init.getAoColumns().add(new TableHeaderVo("code", "实体编码").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("entryName", "实体英文名称").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("subElementType", "元素归类").addSearchOptions(new String[][] { { "0", "1"}, { "主元素", "子元数"} }).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("elementType", "实体类型").addSearchOptions(new String[][] { { "0", "1"}, { "定性", "定量"} }).enableSearch());
@@ -83,7 +84,8 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     }
     @Override
     public String getTableTitle() {
-        return "<ul class=\"breadcrumb\"><li>随访设计</li><li><a href=\"document/index.action\">系统模块</a></li><li class=\"active\"><a href=\"entry/index.action?documentId="+this.documentId+"\">实体</a></li></ul>";
+        String prefixPath = getRequest().getContextPath()+"/";
+        return "<ul class=\"breadcrumb\"><li>随访设计</li><li><a href=\""+prefixPath+"document/index.action\">系统模块</a></li><li class=\"active\"><a href=\""+prefixPath+"entry/index.action?documentId="+this.documentId+"\">实体</a></li></ul>";
     }
     @Override
     public TableQueryVo getModel() {

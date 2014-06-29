@@ -1,6 +1,9 @@
 package bl.beans;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
+
+import java.util.List;
 
 /**
  * Created by pli on 14-6-28.
@@ -13,6 +16,17 @@ public class StudyBean extends Bean {
     private String description;
     private short state = 0; //0 草稿 1 发布
     private String diseaseId; //单病种 指向disease主键
+    @Transient
+    private List<StudyDocumentBean> studyDocumentBeanList;
+
+    public List<StudyDocumentBean> getStudyDocumentBeanList() {
+        return super.getSubBeans(StudyDocumentBean.class,"studyId");
+    }
+
+    public void setStudyDocumentBeanList(List<StudyDocumentBean> studyDocumentBeanList) {
+        this.studyDocumentBeanList = studyDocumentBeanList;
+    }
+
     public short getState() {
         return state;
     }

@@ -43,6 +43,13 @@
                 </div>
             </div>
             <div class="form-group has-success">
+                <label class="col-lg-2 control-label">实体编码</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="实体编码" name="entry.code" class="form-control"
+                           required="required" value="${entry.code}"/>
+                </div>
+            </div>
+            <div class="form-group has-success">
                 <label class="col-lg-2 control-label">实体英文名称</label>
                 <div class="col-lg-6">
                     <input name="entry.entryName" type="text" value="${entry.entryName}" class="form-control" required="required" placeholder="请输入实体变量名称"/>

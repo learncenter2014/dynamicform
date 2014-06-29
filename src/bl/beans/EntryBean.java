@@ -1,6 +1,9 @@
 package bl.beans;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
+
+import java.util.List;
 
 /**
  * Created by wangronghua on 14-6-17.
@@ -8,6 +11,7 @@ import org.mongodb.morphia.annotations.Entity;
 @Entity(value = "entry")
 public class EntryBean extends Bean {
     private String entryName; //实体变量名称作为后续生成数据存储模型的表的列名
+    private String code; //代码
     private String abbreviation;//英文缩写
     private short elementType; //0 定性有数据源1 定量表示没有数据源
     private short dataType;  //0  字符型 1 数字型 2 日期型
@@ -21,6 +25,24 @@ public class EntryBean extends Bean {
     private int size = 30; //HTML最大长度
     private String regularExpression; //正则表达式，结合JS或者后台验证
     private String documentId; //归属于哪个Document
+    @Transient
+    private List<EntryCodeBean> entryCodeBeanList;
+
+    public List<EntryCodeBean> getEntryCodeBeanList() {
+        return super.getSubBeans(EntryCodeBean.class, "entryId");
+    }
+
+    public void setEntryCodeBeanList(List<EntryCodeBean> entryCodeBeanList) {
+        this.entryCodeBeanList = entryCodeBeanList;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getEntryName() {
         return entryName;
