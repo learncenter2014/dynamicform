@@ -233,4 +233,21 @@
             <result name="success" type="redirectAction">/study/index</result>
         </action>
     </package>
+    <package name="view" namespace="/view" extends="default">
+        <action name="index" class="actions.ViewAction" method="index"/>
+        <action name="initTable" class="actions.ViewAction" method="initTable"/>
+        <action name="queryTable" class="actions.ViewAction" method="queryTable"/>
+        <action name="add" class="actions.ViewAction" method="add">
+            <result name="success">/pages/view/viewEdit.jsp</result>
+        </action>
+        <action name="edit" class="actions.ViewAction" method="edit">
+            <result name="success">/pages/view/viewEdit.jsp</result>
+        </action>
+        <action name="save" class="actions.ViewAction" method="save">
+            <result name="success" type="redirectAction">/view/index?studyId=${studyId}</result>
+        </action>
+        <action name="delete" class="actions.ViewAction" method="delete">
+            <result name="success" type="redirectAction">/view/index?studyId=${studyId}</result>
+        </action>
+    </package>
 </struts>

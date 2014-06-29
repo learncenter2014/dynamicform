@@ -21,4 +21,7 @@
         <pattern>/patient/*.action</pattern>
         <pattern>/study/*.action</pattern>
 	</decorator>
+    <decorator name="maingrid" page="/pages/decorators/main_view_grid.jsp">
+        <pattern>/view/*.action</pattern>
+    </decorator>
 </decorators>
