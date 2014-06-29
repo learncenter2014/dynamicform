@@ -27,6 +27,10 @@ public class EntryBean extends Bean {
     private String documentId; //归属于哪个Document
     @Transient
     private List<EntryCodeBean> entryCodeBeanList;
+    @Transient
+    private String innerHTML;
+    @Transient
+    private DocumentBean document;
 
     public List<EntryCodeBean> getEntryCodeBeanList() {
         if(this.entryCodeBeanList!=null){
@@ -158,4 +162,21 @@ public class EntryBean extends Bean {
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
+
+    public DocumentBean getDocument() {
+        return document;
+    }
+
+    public void setDocument(DocumentBean document) {
+        this.document = document;
+    }
+
+    public String getInnerHTML() {
+        return innerHTML;
+    }
+
+    public void setInnerHTML(String innerHTML) {
+        this.innerHTML = innerHTML;
+    }
+
 }

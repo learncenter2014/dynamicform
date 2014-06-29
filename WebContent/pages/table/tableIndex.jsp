@@ -29,9 +29,9 @@
             <section class="panel">
                 <header class="panel-heading" onclick="$('#panelbody').toggle();$('#panelbodybullet').toggleClass('fa fa-chevron-up');$('#panelbodybullet').toggleClass('fa fa-chevron-down');" style="cursor: pointer">
                     <div id="operationbutton"></div>
-                      <span class="tools pull-right">
+                    <span class="tools pull-right">
                         <span id="panelbodybullet" class="fa fa-chevron-up" style="cursor: pointer">查询区域</span>
-                      </span>
+                    </span>
                 </header>
                 <div class="panel-body" id="panelbody" style="display: none">
                     <div class="form-group">

@@ -15,6 +15,8 @@ public class ViewBean extends Bean {
 
     @Transient
     private String innerHTML;
+    @Transient
+    private StudyBean study;
 
     public int getSequence() {
         return sequence;
@@ -55,6 +57,15 @@ public class ViewBean extends Bean {
     public void setInnerHTML(String innerHTML) {
         this.innerHTML = innerHTML;
     }
+
+    public StudyBean getStudy() {
+        return study;
+    }
+
+    public void setStudy(StudyBean study) {
+        this.study = study;
+    }
+
 
 
 }

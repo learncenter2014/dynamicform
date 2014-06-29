@@ -12,7 +12,7 @@ public enum EntryType {
     RADIO("radio", 5),
     DATE("date", 6),
     DOCUMENT("document", 777),
-    VIEW("view", 888),
+    VIEW("form", 888),
     NULL("null", 999);
 
     private int typeId;

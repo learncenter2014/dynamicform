@@ -2,9 +2,11 @@
     <form id="${id!}" name="${name!}" action="datainput/dataRecordInputSubmit.action" class="form-horizontal">
         ${innerHTML!}
 
-        <input type="hidden" name="dataId" value="${"$"}{dataId!}"/>
-        <input type="hidden" name="templateId" value="${"$"}{templateId!}"/>
-        <input type="hidden" name="pageName" value="${"$"}{pageName!}"/>
+        <input type="hidden" name="studyId" value="${"$"}{studyId!}"/>
+        <input type="hidden" name="viewId" value="${"$"}{viewId!}"/>
+        <input type="hidden" name="participantId" value="${"$"}{participantId!}"/>
+        <input type="hidden" name="recordId" value="${"$"}{recordId!}"/>
+        <input type="hidden" name="tableName" value="${study.code}"/>
     </form>
     <script>
         $("#${id!null}").submit(function() {

@@ -73,7 +73,12 @@
         <div class="navbar-collapse ">
             <ul class="nav navbar-nav">
                 <li> <!--class="active"--><a href="${rootPath}/#">随访注册</a></li>
-                <li><a href="${rootPath}/#">随访执行</a></li>
+                <li class="dropdown">
+                    <a data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle " href="#">随访执行<b class=" fa fa-angle-down"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="${rootPath}/participant/index.action">随访执行</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle " href="${rootPath}/#">随访设计<b class=" fa fa-angle-down"></b></a>
                     <ul class="dropdown-menu">
