@@ -1,6 +1,7 @@
 package bl.beans;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by pli on 14-6-28.
@@ -11,6 +12,9 @@ public class ViewBean extends Bean {
     private int sequence; //序号
     private String description; //备注或者描述
     private short type; // 0随访基线 1 随访录入
+
+    @Transient
+    private String innerHTML;
 
     public int getSequence() {
         return sequence;
@@ -43,5 +47,14 @@ public class ViewBean extends Bean {
     public void setStudyId(String studyId) {
       this.studyId = studyId;
     }
+
+    public String getInnerHTML() {
+        return innerHTML;
+    }
+
+    public void setInnerHTML(String innerHTML) {
+        this.innerHTML = innerHTML;
+    }
+
 
 }
