@@ -71,7 +71,7 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   private String getHtmlStringByTemplate(TemplateBean bean) {
     String fullPath = bean.getPath();
     TemplateGenerator g = new TemplateGenerator();
-    g.genTemplate(fullPath, bean.getName() + ".ftl");
+    //g.genTemplate(fullPath, bean.getName() + ".ftl");
 
     Map map = DataBusiness.get().get(bean.getName(), dataId, pageName, userId);
     if(map == null) {
@@ -80,7 +80,7 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
       map.put("templateId", bean.getName());
       map.put("pageName", pageName);
     }
-    return TemplateHelper.getTemplate(templateId, map);
+    return TemplateHelper.get().getTemplate(templateId, map);
   }
   
   public String loadPage() {
@@ -98,8 +98,8 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
         rb.append("\n").append(this.getHtmlStringByTemplate(tBean));
       }
     }
-    result = rb.toString();
-    return SUCCESS;
+      result = rb.toString();
+      return SUCCESS;
   }
   
   public String save() {

@@ -1,6 +1,7 @@
 package bl.beans;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by wangronghua on 14-6-17.
@@ -8,86 +9,97 @@ import org.mongodb.morphia.annotations.Entity;
 @Entity(value = "document")
 public class DocumentBean extends Bean{
 
-  private String tableName;
-  private String englishName;
-  private int type; //0:包含有子元素；1:包含无子元素
-  private String code; //代码
-  private String abbreviation; //缩写
-  private int columnCount;
-  private boolean displayNameOrNot;
-  private int standardCategory; //标准分类: 0:CDISC, 1:机构标准, 2:非标准
-  private String description;
+    private String tableName;
+    private String englishName;
+    private int type; //0:包含有子元素；1:包含无子元素
+    private String code; //代码
+    private String abbreviation; //缩写
+    private int columnCount;
+    private boolean displayNameOrNot;
+    private int standardCategory; //标准分类: 0:CDISC, 1:机构标准, 2:非标准
+    private String description;
 
-  public String getAbbreviation() {
-    return abbreviation;
-  }
+    @Transient
+    private String innerHTML;
 
-  public void setAbbreviation(String abbreviation) {
-    this.abbreviation = abbreviation;
-  }
+    public String getAbbreviation() {
+        return abbreviation;
+    }
 
-  public String getTableName() {
-    return tableName;
-  }
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
 
-  public void setTableName(String tableName) {
-    this.tableName = tableName;
-  }
+    public String getTableName() {
+        return tableName;
+    }
 
-  public int getType() {
-    return type;
-  }
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-  public void setType(int type) {
-    this.type = type;
-  }
+    public int getType() {
+        return type;
+    }
 
-  public String getCode() {
-    return code;
-  }
+    public void setType(int type) {
+        this.type = type;
+    }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
+    public String getCode() {
+        return code;
+    }
 
-  public String getEnglishName() {
-    return englishName;
-  }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-  public void setEnglishName(String englishName) {
-    this.englishName = englishName;
-  }
+    public String getEnglishName() {
+        return englishName;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public int getColumnCount() {
-    return columnCount;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setColumnCount(int columnCount) {
-    this.columnCount = columnCount;
-  }
+    public int getColumnCount() {
+        return columnCount;
+    }
 
-  public boolean isDisplayNameOrNot() {
-    return displayNameOrNot;
-  }
+    public void setColumnCount(int columnCount) {
+        this.columnCount = columnCount;
+    }
 
-  public void setDisplayNameOrNot(boolean displayNameOrNot) {
-    this.displayNameOrNot = displayNameOrNot;
-  }
+    public boolean isDisplayNameOrNot() {
+        return displayNameOrNot;
+    }
 
-  public int getStandardCategory() {
-    return standardCategory;
-  }
+    public void setDisplayNameOrNot(boolean displayNameOrNot) {
+        this.displayNameOrNot = displayNameOrNot;
+    }
 
-  public void setStandardCategory(int standardCategory) {
-    this.standardCategory = standardCategory;
-  }
+    public int getStandardCategory() {
+        return standardCategory;
+    }
+
+    public void setStandardCategory(int standardCategory) {
+        this.standardCategory = standardCategory;
+    }
+
+    public String getInnerHTML() {
+        return innerHTML;
+    }
+
+    public void setInnerHTML(String innerHTML) {
+        this.innerHTML = innerHTML;
+    }
 
 }

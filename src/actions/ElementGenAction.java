@@ -1,6 +1,7 @@
 package actions;
 
 import com.opensymphony.xwork2.ActionSupport;
+import core.EntryType;
 import core.TemplateHelper;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class ElementGenAction extends ActionSupport {
     paraMap.put("elementId", elementId);
     paraMap.put("label", label);
     paraMap.put("name", name);
-    result = TemplateHelper.getTemplate("text", paraMap);
+    result = TemplateHelper.get().getTemplate(EntryType.TEXT, paraMap);
     return SUCCESS;
   }
 
