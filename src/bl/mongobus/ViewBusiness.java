@@ -5,6 +5,7 @@ import bl.beans.ViewDocumentBean;
 import bl.common.BeanContext;
 import dao.MongoDBConnectionFactory;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,5 +26,17 @@ public class ViewBusiness extends MongoCommonBusiness<BeanContext, ViewBean> {
         Datastore dc = MongoDBConnectionFactory.getDatastore(getDBName());
         List<ViewDocumentBean> resultList = dc.find(ViewDocumentBean.class, "isDeleted", false).filter("viewId", viewId).asList();
         return resultList;
+    }
+
+    public void saveViewDocumentList(String viewId, List<ViewDocumentBean> viewDocumentBeans) {
+        Datastore dc = MongoDBConnectionFactory.getDatastore(getDBName());
+        //delete all ViewDocumentBeans
+        Query viewDocumentQuery = dc.createQuery(ViewDocumentBean.class);
+        viewDocumentQuery.filter("viewId", viewId);
+        dc.delete(viewDocumentQuery);
+        //persistent all ViewDocumentBeans
+        for (int i = 0; i < viewDocumentBeans.size(); i++) {
+            dc.save(viewDocumentBeans.get(i));
+        }
     }
 }

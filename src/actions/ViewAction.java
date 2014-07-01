@@ -1,16 +1,21 @@
 package actions;
 
-import bl.beans.StudyBean;
+import bl.beans.DocumentBean;
 import bl.beans.ViewBean;
+import bl.beans.ViewDocumentBean;
 import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.StudyBusiness;
 import bl.mongobus.ViewBusiness;
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
 import vo.table.TableQueryVo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by peter on 14-6-21.
@@ -19,16 +24,25 @@ public class ViewAction extends BaseTableAction<ViewBusiness> {
 
     private ViewBean view;
     private String studyId;
-    private StudyBean studyBean;
-
+    //检索已经被关联的document对象
+    private List<DocumentBean> studySelectedDocuments;
+    private String[] viewDocumentList;
     private static final StudyBusiness sbs = (StudyBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
 
-    public StudyBean getStudyBean() {
-        return studyBean;
+    public List<DocumentBean> getStudySelectedDocuments() {
+        return studySelectedDocuments;
     }
 
-    public void setStudyBean(StudyBean studyBean) {
-        this.studyBean = studyBean;
+    public void setStudySelectedDocuments(List<DocumentBean> studySelectedDocuments) {
+        this.studySelectedDocuments = studySelectedDocuments;
+    }
+
+    public String[] getViewDocumentList() {
+        return viewDocumentList;
+    }
+
+    public void setViewDocumentList(String[] viewDocumentList) {
+        this.viewDocumentList = viewDocumentList;
     }
 
     @Override
@@ -97,7 +111,21 @@ public class ViewAction extends BaseTableAction<ViewBusiness> {
 
     public String documentList() {
         view = (ViewBean) getBusiness().getLeaf(getId()).getResponseData();
-        studyBean = (StudyBean) sbs.getLeaf(this.studyId).getResponseData();
+        studySelectedDocuments = sbs.getDocumentsByStudyId(this.studyId);
+        return SUCCESS;
+    }
+    public String saveDocumentList() {
+        List<ViewDocumentBean> vdbs = new ArrayList<ViewDocumentBean>();
+        if(viewDocumentList!=null){
+            for(String ref:viewDocumentList){
+                ViewDocumentBean vb = new ViewDocumentBean();
+                vb.set_id(new ObjectId());
+                vb.setViewId(this.view.getId());
+                vb.setDocumentId(ref);
+                vdbs.add(vb);
+            }
+        }
+        getBusiness().saveViewDocumentList(this.view.getId(), vdbs);
         return SUCCESS;
     }
 

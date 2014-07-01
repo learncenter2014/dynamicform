@@ -258,5 +258,8 @@
         <action name="documentList" class="actions.ViewAction" method="documentList">
             <result name="success">/pages/view/documentList.jsp</result>
         </action>
+        <action name="saveDocumentList" class="actions.ViewAction" method="saveDocumentList">
+            <result name="success" type="redirectAction">/view/index?studyId=${studyId}</result>
+        </action>
     </package>
 </struts>

@@ -1,16 +1,18 @@
 package bl.mongobus;
 
+import bl.beans.DocumentBean;
 import bl.beans.StudyBean;
 import bl.beans.StudyDocumentBean;
 import bl.beans.StudyDocumentEntryBean;
-import bl.beans.ViewDocumentBean;
 import bl.common.BeanContext;
 import dao.MongoDBConnectionFactory;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +24,20 @@ public class StudyBusiness extends MongoCommonBusiness<BeanContext, StudyBean> {
     public StudyBusiness() {
         this.dbName = "form";
         this.clazz = StudyBean.class;
+    }
+    public List<DocumentBean> getDocumentsByStudyId(String studyId){
+        StudyBean sbean = (StudyBean)getLeaf(studyId).getResponseData();
+        List<StudyDocumentBean> sdbs = sbean.getStudyDocumentBeanList();
+        if(sdbs!=null){
+            ArrayList<ObjectId> documents = new ArrayList<ObjectId>();
+            for(StudyDocumentBean sd:sdbs){
+                documents.add(new ObjectId(sd.getDocumentId()));
+            }
+            Datastore dc = MongoDBConnectionFactory.getDatastore(getDBName());
+            return dc.createQuery(DocumentBean.class).filter("_id in",documents).asList();
+        }else{
+            return null;
+        }
     }
 
     public List<StudyDocumentEntryBean> getStudyDocumentEntryList (String studyId, String documentId) {
