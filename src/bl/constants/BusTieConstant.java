@@ -18,4 +18,6 @@ public interface BusTieConstant {
 
     public static final String BUS_CPATH_VIEWBUSINESS = "bl.mongobus.ViewBusiness";
 
+    public static final String BUS_CPATH_PARTICIPANTBUSINESS = "bl.mongobus.ParticipantBusiness";
+
 }

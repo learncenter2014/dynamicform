@@ -29,11 +29,17 @@ public class ParticipantAction extends BaseTableAction<ParticipantBusiness> {
         TableInitVo init = new TableInitVo();
         init.getAoColumns().add(new TableHeaderVo("registerNo", "住院/门诊号").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("name", "姓名").enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("birthday", "出生年月"));
+        init.getAoColumns().add(new TableHeaderVo("birthDay", "出生年月"));
         init.getAoColumns().add(new TableHeaderVo("dischargeDate", "出院时间"));
         init.getAoColumns().add(new TableHeaderVo("diagnosis", "诊断"));
-        init.getAoColumns().add(new TableHeaderVo("studyPlanId", "随访方案"));
+        init.getAoColumns().add(new TableHeaderVo("studyId", "随访方案"));
+        init.getAoColumns().add(new TableHeaderVo("participantCode", "对象编码"));
         init.getAoColumns().add(new TableHeaderVo("latestFollowUpDate", "最近一次随访时间"));
         return init;
+    }
+
+    public String followUp() {
+
+        return SUCCESS;
     }
 }

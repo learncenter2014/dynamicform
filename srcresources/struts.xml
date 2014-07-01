@@ -214,6 +214,9 @@
         <action name="index" class="actions.ParticipantAction" method="index"/>
         <action name="initTable" class="actions.ParticipantAction" method="initTable"/>
         <action name="queryTable" class="actions.ParticipantAction" method="queryTable"/>
+        <action name="studyInput" class="actions.StudyInputAction" method="input" >
+            <result name="success">/pages/study/studyInput.jsp</result>
+        </action>
     </package>
 
     <package name="study" namespace="/study" extends="default">
@@ -237,6 +240,10 @@
         </action>
         <action name="delete" class="actions.StudyAction" method="delete">
             <result name="success" type="redirectAction">/study/index</result>
+        </action>
+
+        <action name="studyInput" class="actions.StudyInputAction" method="input" >
+            <result name="success">/pages/study/studyInput.jsp</result>
         </action>
     </package>
     <package name="view" namespace="/view" extends="default">

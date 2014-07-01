@@ -19,6 +19,8 @@ public class StudyBean extends Bean {
     @Transient
     private List<StudyDocumentBean> studyDocumentBeanList;
 
+    private List<ViewBean> viewBeanList;
+
     public List<StudyDocumentBean> getStudyDocumentBeanList() {
         if(this.studyDocumentBeanList!=null){
             return this.studyDocumentBeanList;
@@ -68,5 +70,16 @@ public class StudyBean extends Bean {
 
     public void setDiseaseId(String diseaseId) {
         this.diseaseId = diseaseId;
+    }
+
+    public List<ViewBean> getViewBeanList() {
+        if(null != viewBeanList) {
+            return viewBeanList;
+        }
+        return super.getSubBeans(ViewBean.class, "studyId");
+    }
+
+    public void setViewBeanList(List<ViewBean> viewBeanList) {
+        this.viewBeanList = viewBeanList;
     }
 }
