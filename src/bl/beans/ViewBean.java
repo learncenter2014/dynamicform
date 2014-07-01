@@ -3,11 +3,14 @@ package bl.beans;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Transient;
 
+import java.util.List;
+
 /**
  * Created by pli on 14-6-28.
  */
 @Entity(value = "view")
 public class ViewBean extends Bean {
+    //研究对象1:n页面条目
     private String studyId;
     private int sequence; //序号
     private String description; //备注或者描述
@@ -17,6 +20,19 @@ public class ViewBean extends Bean {
     private String innerHTML;
     @Transient
     private StudyBean study;
+    @Transient
+    private List<ViewDocumentBean> viewDocumentBeanList;
+
+    public List<ViewDocumentBean> getViewDocumentBeanList() {
+        if(this.viewDocumentBeanList!=null){
+            return this.viewDocumentBeanList;
+        }
+        return super.getSubBeans(ViewDocumentBean.class, "viewId");
+    }
+
+    public void setViewDocumentBeanList(List<ViewDocumentBean> viewDocumentBeanList) {
+        this.viewDocumentBeanList = viewDocumentBeanList;
+    }
 
     public int getSequence() {
         return sequence;
@@ -59,7 +75,10 @@ public class ViewBean extends Bean {
     }
 
     public StudyBean getStudy() {
-        return study;
+        if(this.study!=null){
+            return this.study;
+        }
+        return super.getParentBean(StudyBean.class, this.studyId);
     }
 
     public void setStudy(StudyBean study) {

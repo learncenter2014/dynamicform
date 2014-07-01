@@ -255,5 +255,8 @@
         <action name="delete" class="actions.ViewAction" method="delete">
             <result name="success" type="redirectAction">/view/index?studyId=${studyId}</result>
         </action>
+        <action name="documentList" class="actions.ViewAction" method="documentList">
+            <result name="success">/pages/view/documentList.jsp</result>
+        </action>
     </package>
 </struts>

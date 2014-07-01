@@ -1,7 +1,11 @@
 package actions;
 
+import bl.beans.StudyBean;
 import bl.beans.ViewBean;
 import bl.common.BusinessResult;
+import bl.constants.BusTieConstant;
+import bl.instancepool.SingleBusinessPoolManager;
+import bl.mongobus.StudyBusiness;
 import bl.mongobus.ViewBusiness;
 import org.apache.commons.lang.StringUtils;
 import vo.table.TableHeaderVo;
@@ -15,11 +19,21 @@ public class ViewAction extends BaseTableAction<ViewBusiness> {
 
     private ViewBean view;
     private String studyId;
+    private StudyBean studyBean;
 
+    private static final StudyBusiness sbs = (StudyBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
+
+    public StudyBean getStudyBean() {
+        return studyBean;
+    }
+
+    public void setStudyBean(StudyBean studyBean) {
+        this.studyBean = studyBean;
+    }
 
     @Override
     public String getCustomJsp() {
-        return null;
+        return "/pages/view/viewDocument.jsp";
     }
 
     @Override
@@ -78,6 +92,12 @@ public class ViewAction extends BaseTableAction<ViewBusiness> {
     public String add() {
         view = new ViewBean();
         view.setStudyId(this.studyId);
+        return SUCCESS;
+    }
+
+    public String documentList() {
+        view = (ViewBean) getBusiness().getLeaf(getId()).getResponseData();
+        studyBean = (StudyBean) sbs.getLeaf(this.studyId).getResponseData();
         return SUCCESS;
     }
 

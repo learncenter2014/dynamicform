@@ -148,7 +148,7 @@ public class Bean implements BeanContext, Cloneable, Serializable {
         this.isDeleted = isDeleted;
     }
 
-    /***
+    /*** 此方法目的：在子表中检索子对象
      *  采用延迟加载的方式来实现，而且在线程上下文只加载一次并且缓存以便提高利用效率
      * @param subClass      字表类型信息
      * @param parentIdName  子表对应外键名字
@@ -165,6 +165,26 @@ public class Bean implements BeanContext, Cloneable, Serializable {
                     .filter(parentIdName, this.getId()).asList();
             cacheSubBeans.put(key,resultList);
             return resultList;
+        }
+    }
+
+    /*** 此方法目的：在父表中检索子对象,根据"_id"字段查询对象
+     *  采用延迟加载的方式来实现，而且在线程上下文只加载一次并且缓存以便提高利用效率
+     * @param subClass      字表类型信息
+     * @param parentIdValue  子表对应外键名字
+     * @param <SC>
+     * @return  List<SC> 子表类型
+     */
+    public <SC> SC getParentBean(Class<SC> subClass, String parentIdValue) {
+        String key = subClass + parentIdValue;
+        if(cacheSubBeans.containsKey(key)){
+            return (SC)cacheSubBeans.get(key).get(0);
+        }else{
+            Datastore dc = MongoDBConnectionFactory.getDatastore("form");
+            List<SC> resultList = dc.find(subClass, "isDeleted", false)
+                    .filter("_id", new ObjectId(parentIdValue)).asList();
+            cacheSubBeans.put(key,resultList);
+            return resultList.get(0);
         }
     }
 
