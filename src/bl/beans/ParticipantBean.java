@@ -1,5 +1,6 @@
 package bl.beans;
 
+import bl.mongobus.ParticipantBusiness;
 import org.mongodb.morphia.annotations.Entity;
 
 import java.util.Date;
@@ -15,8 +16,8 @@ public class ParticipantBean extends Bean{
     private Date birthDay;
     private Date dischargeDate;  //出院时间
     private Date startDate;      //随访开始时间，又作基线时间
-    private String studyPlanId;  //随访方案
-    private String latestFollowUpDate; //最近完成随访的时间
+    private Date latestFollowUpDate; //最近完成随访的时间
+    private String studyId;  //随访方案ID
     private String diagnosis;    //诊断
 
     public String getDiagnosis() {
@@ -27,20 +28,20 @@ public class ParticipantBean extends Bean{
         this.diagnosis = diagnosis;
     }
 
-    public String getLatestFollowUpDate() {
+    public Date getLatestFollowUpDate() {
         return latestFollowUpDate;
     }
 
-    public void setLatestFollowUpDate(String latestFollowUpDate) {
+    public void setLatestFollowUpDate(Date latestFollowUpDate) {
         this.latestFollowUpDate = latestFollowUpDate;
     }
 
-    public String getStudyPlanId() {
-        return studyPlanId;
+    public String getStudyId() {
+        return studyId;
     }
 
-    public void setStudyPlanId(String studyPlanId) {
-        this.studyPlanId = studyPlanId;
+    public void setStudyId(String studyId) {
+        this.studyId = studyId;
     }
 
     public Date getStartDate() {
@@ -82,6 +83,4 @@ public class ParticipantBean extends Bean{
     public void setDischargeDate(Date dischargeDate) {
         this.dischargeDate = dischargeDate;
     }
-
-
 }

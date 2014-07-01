@@ -22,6 +22,8 @@ public class ViewBean extends Bean {
     private StudyBean study;
     @Transient
     private List<ViewDocumentBean> viewDocumentBeanList;
+    @Transient
+    private List<DocumentBean> documentBeanList;
 
     public List<ViewDocumentBean> getViewDocumentBeanList() {
         if(this.viewDocumentBeanList!=null){
@@ -85,6 +87,12 @@ public class ViewBean extends Bean {
         this.study = study;
     }
 
+    public List<DocumentBean> getDocumentBeanList() {
+        return documentBeanList;
+    }
 
+    public void setDocumentBeanList(List<DocumentBean> documentBeanList) {
+        this.documentBeanList = documentBeanList;
+    }
 
 }

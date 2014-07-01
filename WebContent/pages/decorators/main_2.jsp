@@ -58,7 +58,7 @@
     <decorator:head/>
 </head>
 
-<body>
+<body style="background-color: #fff">
 
 <div class="navbar navbar-default navbar-static-top">
     <div class="header white-bg">
@@ -94,16 +94,16 @@
     </div>
 </div>
 
-<section id="container" class="panel">
+<%--<section id="container" class="panel">--%>
     <!--main content start-->
-            <div id="decoratebody" class="panel-body">
+            <div id="decoratebody">
                 <decorator:body />
             </div>
     <!--main content end-->
     <!--footer start-->
-    <jsp:include page="/pages/decorators/foot.jsp"></jsp:include>
+    <%--<jsp:include page="/pages/decorators/foot.jsp"></jsp:include>--%>
     <!--footer end-->
-</section>
+<%--</section>--%>
 <!--common script for all pages-->
 <script src="${rootPath}/jslib/flatlab/js/common-scripts.js"></script>
 <div id="dialog_message" title="系统消息区"></div>
