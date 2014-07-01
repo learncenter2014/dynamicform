@@ -22,9 +22,9 @@
             <input name="studyId" type="hidden" value="${view.studyId}"/>
 
             <div class="form-group" style="text-align: center">
-                <s:iterator value="studySelectedDocuments">
+                <s:iterator value="studySelectedDocuments" var="ssds">
                     <div class="form-group has-success">
-                        <s:if test="view.viewDocumentBeanList!=null && view.viewDocumentBeanList.{#this.documentId==id}">
+                        <s:if test="view.viewDocumentBeanList!=null && (view.viewDocumentBeanList.{?#this.documentId==#ssds.id}.size!=0)">
                             <div class="col-lg-2">
                                 <input type="checkbox" checked value="<s:property value="id"/>"
                                        name="viewDocumentList">
