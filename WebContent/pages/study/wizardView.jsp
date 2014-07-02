@@ -14,6 +14,9 @@
             <input name="activeWizard" type="hidden" value="${activeWizard}"/>
             <iframe src="${rootPath}/view/index.action?studyId=${study.id}" width="100%" height="300px" scrolling="auto" frameborder="0"></iframe>
             <%@ include file="/pages/study/studyAction.jsp"%>
+            <script>
+                jQuery("#studyActionSave").css("display","none");
+            </script>
         </form>
     </div>
 </section>

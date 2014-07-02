@@ -210,6 +210,10 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     }
 
     public String savewizardPreview() throws Exception {
+        StudyBean studyFromDb = (StudyBean) getBusiness().getLeaf(this.study.getId()).getResponseData();
+        StudyBean orginal = (StudyBean) studyFromDb.clone();
+        studyFromDb.setState(this.study.getState());
+        getBusiness().updateLeaf(orginal, studyFromDb);
         return SUCCESS;
     }
 

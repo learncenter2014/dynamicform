@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 import org.bson.types.ObjectId;
 import vo.table.TableDataVo;
 import vo.table.TableInitVo;
@@ -130,6 +131,8 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
     // json
     JsonConfig config = new JsonConfig();
     config.setExcludes(new String[] { "searchOptions" });
+    //解决对象之间循环关联
+    config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
     JSONObject jsonObject = JSONObject.fromObject(getTableInit(), config);
     writeJson(jsonObject);
     return null;
@@ -149,7 +152,10 @@ public abstract class BaseTableAction<B extends TableBusinessInterface> extends 
     table.setiTotalRecords(count);
 
     // json
-    JSONObject jsonObject = JSONObject.fromObject(table);
+    //解决对象之间循环关联
+    JsonConfig config = new JsonConfig();
+    config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+    JSONObject jsonObject = JSONObject.fromObject(table, config);
     writeJson(jsonObject);
     return null;
   }

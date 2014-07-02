@@ -10,7 +10,7 @@
              cssClass="btn btn-info">
             前一步</s:a>
     </s:if>
-    <button class="btn btn-info" type="submit" style="margin-left:80px;margin-right:80px">保存</button>
+    <button id="studyActionSave" class="btn btn-info" type="submit" style="margin-left:80px;margin-right:80px">保存</button>
     <s:if test="%{#indexWizard<wizardAction.length-1}">
         <s:a href="%{wizardAction[#indexWizard+1][0]+'.action?activeWizard='+wizardAction[#indexWizard+1][0] +'&id='+id}"
              cssClass="btn btn-info">
