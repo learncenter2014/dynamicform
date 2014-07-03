@@ -15,6 +15,12 @@ import java.util.List;
  */
 public class TemplateGenerator {
 
+    private static TemplateGenerator instance = new TemplateGenerator();
+
+    public static TemplateGenerator get() {
+        return instance;
+    }
+
     public boolean genTemplate(String viewId) {
         ViewBusiness viewBus = (ViewBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_VIEWBUSINESS);
         ViewBean viewBean = (ViewBean)viewBus.getLeaf(viewId).getResponseData();

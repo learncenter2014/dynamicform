@@ -3,6 +3,7 @@ package bl.mongobus;
 import bl.beans.ViewBean;
 import bl.beans.ViewDocumentBean;
 import bl.common.BeanContext;
+import core.TemplateGenerator;
 import dao.MongoDBConnectionFactory;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -38,5 +39,7 @@ public class ViewBusiness extends MongoCommonBusiness<BeanContext, ViewBean> {
         for (int i = 0; i < viewDocumentBeans.size(); i++) {
             dc.save(viewDocumentBeans.get(i));
         }
+
+        TemplateGenerator.get().genTemplate(viewId);
     }
 }
