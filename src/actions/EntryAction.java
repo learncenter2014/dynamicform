@@ -30,6 +30,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     @Override
     public TableInitVo getTableInit() {
         TableInitVo init = new TableInitVo();
+        init.getAoColumns().add(new TableHeaderVo("sequence", "序号").disableSearch());
         init.getAoColumns().add(new TableHeaderVo("name", "实体名称").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("code", "实体编码").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("englishName", "实体英文名称").enableSearch());
