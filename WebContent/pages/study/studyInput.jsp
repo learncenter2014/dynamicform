@@ -19,6 +19,12 @@
         function handleCancel() {
             window.location.href = "patient/index.action"
         }
+
+        function handleDataInput(viewId) {
+            var actionUrl = "${rootPath}/datainput/dataRecordInput.action?viewId="+viewId;
+            htmlobj = $.ajax({url:actionUrl,async:false});
+            $("#contentDiv").html(htmlobj.responseText);
+        }
     </script>
     <!--external css-->
     <title>studyInput.jsp</title>
@@ -37,7 +43,7 @@
                     <ul class="nav prod-cat">
                         <s:iterator value="viewBeanList" var="view">
                             <li>
-                                <a class="active" href="#view.id"><i class=" fa fa-angle-right"></i>
+                                <a href="#" onclick="handleDataInput('<s:property value="#view.id"/>')"><i class=" fa fa-angle-right"></i>
                                     <s:property value="#view.name" />
                                 </a>
                                 <ul class="nav">
@@ -60,7 +66,7 @@
                 <%--<header class="panel-heading">--%>
                 <%--Category--%>
                 <%--</header>--%>
-                <div class="panel-body">
+                <div id="contentDiv" class="panel-body">
 
                 </div>
             </section>

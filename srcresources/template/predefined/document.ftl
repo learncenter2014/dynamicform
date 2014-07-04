@@ -5,7 +5,7 @@
             <a class="fa fa-chevron-down" href="javascript:;"></a>
         </span>
     </header>
-    <div class="panel-body" style="display: block;">
+    <div class="panel-body">
         ${innerHTML!}
     </div>
 </section>

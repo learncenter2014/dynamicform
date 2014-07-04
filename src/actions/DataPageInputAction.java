@@ -40,67 +40,38 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
 
   private String dataId;
   private String userId;
+  private String viewId;
 
   private String result;
 
   public String input() {
     HttpServletRequest request = ServletActionContext.getRequest();
-    this.dataId = request.getParameter("dataId");
-    this.templateId = request.getParameter("templateId");
-    if(templateId == null) return ERROR;
-
-    FormBusiness fb = (FormBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_FORMBUSINESS);
-    BusinessResult br = fb.getLeafByName(templateId);
-    TemplateBean temp = (TemplateBean)br.getResponseData();
-    if(temp == null) return ERROR;
-//    String fullPath = this.servletContext.getRealPath(temp.getPath());
-//
-//    TemplateGenerator g = new TemplateGenerator();
-//    g.genTemplate(fullPath, templateId + ".ftl");
-//
-//    Map map = DataBusiness.get().get(templateId, patientId, userId);
-//    if(map == null) {
-//      map = new HashMap();
-//      map.put("patientId", patientId);
-//      map.put("templateId", templateId);
-//    }
-    result = this.getHtmlStringByTemplate(temp);
+    if(null != viewId)
+    {
+        result = TemplateHelper.get().getTemplate(viewId, new HashMap());
+    }
     return SUCCESS;
   }
-  
-  private String getHtmlStringByTemplate(TemplateBean bean) {
-    String fullPath = bean.getPath();
-    TemplateGenerator g = new TemplateGenerator();
-    //g.genTemplate(fullPath, bean.getName() + ".ftl");
-
-    Map map = DataBusiness.get().get(bean.getName(), dataId, pageName, userId);
-    if(map == null) {
-      map = new HashMap();
-      map.put("dataId", dataId);
-      map.put("templateId", bean.getName());
-      map.put("pageName", pageName);
-    }
-    return TemplateHelper.get().getTemplate(templateId, map);
-  }
-  
-  public String loadPage() {
-    HttpServletRequest request = ServletActionContext.getRequest();
-    this.dataId = request.getParameter("dataId");
-    this.pageName = request.getParameter("pageName");
-    PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
-    PageBean record = (PageBean)pab.getLeafByName(pageName).getResponseData();
-    if(record == null) return ERROR;
-    
-    StringBuilder rb = new StringBuilder();
-    if(record != null) {
-      List<TemplateBean> tList = record.getTemplateList();
-      for(TemplateBean tBean : tList){
-        rb.append("\n").append(this.getHtmlStringByTemplate(tBean));
-      }
-    }
-      result = rb.toString();
-      return SUCCESS;
-  }
+//
+//
+//  public String loadPage() {
+//    HttpServletRequest request = ServletActionContext.getRequest();
+//    this.dataId = request.getParameter("dataId");
+//    this.pageName = request.getParameter("pageName");
+//    PageBusiness pab = (PageBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PAGEBUSINESS);
+//    PageBean record = (PageBean)pab.getLeafByName(pageName).getResponseData();
+//    if(record == null) return ERROR;
+//
+//    StringBuilder rb = new StringBuilder();
+//    if(record != null) {
+//      List<TemplateBean> tList = record.getTemplateList();
+//      for(TemplateBean tBean : tList){
+//        rb.append("\n").append(this.getHtmlStringByTemplate(tBean));
+//      }
+//    }
+//      result = rb.toString();
+//      return SUCCESS;
+//  }
   
   public String save() {
     HttpServletRequest request = ServletActionContext.getRequest();
@@ -190,4 +161,13 @@ public class DataPageInputAction extends ActionSupport implements ServletContext
   public void setDataId(String dataId) {
     this.dataId = dataId;
   }
+
+    public String getViewId() {
+        return viewId;
+    }
+
+    public void setViewId(String viewId) {
+        this.viewId = viewId;
+    }
+
 }
