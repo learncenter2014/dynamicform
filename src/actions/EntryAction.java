@@ -32,7 +32,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
         TableInitVo init = new TableInitVo();
         init.getAoColumns().add(new TableHeaderVo("name", "实体名称").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("code", "实体编码").enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("entryName", "实体英文名称").enableSearch());
+        init.getAoColumns().add(new TableHeaderVo("englishName", "实体英文名称").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("subElementType", "元素归类").addSearchOptions(new String[][] { { "0", "1"}, { "主元素", "子元数"} }).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("elementType", "实体类型").addSearchOptions(new String[][] { { "0", "1"}, { "定性", "定量"} }).enableSearch());
         return init;
@@ -91,6 +91,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     public TableQueryVo getModel() {
         TableQueryVo model = super.getModel();
         model.getFilter().put("documentId", this.documentId + "");
+        model.getSort().put("sequence","asc");
         return model;
     }
 

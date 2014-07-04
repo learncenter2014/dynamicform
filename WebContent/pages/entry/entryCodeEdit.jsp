@@ -43,27 +43,12 @@
                 </div>
             </div>
             <div class="form-group has-error">
-                <label class="col-lg-2 control-label">缩写</label>
-                <div class="col-lg-10">
-                    <input name="entryCode.abbreviation" type="text" value="${entryCode.abbreviation}" class="form-control"
-                           required="required" placeholder="请输入缩写"/>
-                </div>
-            </div>
-            <div class="form-group has-error">
-                <label class="col-lg-2 control-label">标识</label>
-                <div class="col-lg-10">
-                    <input name="entryCode.key" type="text" value="${entryCode.key}" class="form-control"
-                           required="required" placeholder="请输入缩写"/>
-                </div>
-            </div>
-            <div class="form-group has-error">
                 <label class="col-lg-2 control-label">值</label>
                 <div class="col-lg-10">
                     <input name="entryCode.value" type="text" value="${entryCode.value}" class="form-control"
                            required="required" placeholder="请输入缩写"/>
                 </div>
             </div>
-
 
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">

@@ -112,7 +112,7 @@ var options = {
                 var tableObj = $('#'+tableId).dataTable();
                 var nTr = $(button).parents('tr')[0];
                 var selectRowData =  tableObj.fnGetData( nTr );
-                window.location = actionPrex + "/delete.action?${addButtonParameter}&id=" + selectRowData[idName];
+                window.location = actionPrex + "/delete.action?${addButtonParameter}&id=" + selectRowData[idName]+"&ids=" + selectRowData[idName];
             }
         }
     }
@@ -336,7 +336,7 @@ $(document).ready(function() {
         });
     } );
 } );
-<s:if test="#session['backendSessionUser'].name=='admin'">
+<s:if test="#session['sessionUser'].name=='admin'">
 window.admin = true;
 window.actionPrex = "${actionPrex}";
 </s:if>

@@ -101,7 +101,7 @@
                 <div class="col-lg-6">
                     <%--<input name="document.columnCount" type="text" value="${document.columnCount}" --%>
                     <%--class="form-control" required="required" placeholder="请输入显示列数"/>--%>
-                    <textarea name="document.description" rows="5" cols="60" class="form-control"></textarea>
+                    <textarea name="document.description" rows="5" cols="60" class="form-control">${document.description}</textarea>
                 </div>
             </div>
             <div class="form-group">
