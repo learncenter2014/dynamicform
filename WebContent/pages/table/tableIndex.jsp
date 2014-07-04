@@ -191,7 +191,7 @@ $(document).ready(function() {
             "aoColumns": columns,
             "sAjaxSource": "${actionPrex}/queryTable.action?${addButtonParameter}",
             //"sDom": '<"H"lT><"clear">rt<"F"ip>',
-            "sDom": 'rt<"F"ip>',
+            "sDom": 'lrt<"F"ip>',
             "oLanguage": {
                 "oPaginate": {
                     "sPrevious": "上一页",
@@ -306,6 +306,7 @@ $(document).ready(function() {
                 }
                 </s:if>
                 </s:iterator>
+
                 if(window.exportExcel==true){
                     window.exportExcel = false;
                     var form = $("#exportForm");
