@@ -14,6 +14,7 @@
     <style type="text/css">
         .dataTables_info{width:25%}
         .paging_full_numbers{width:70%}
+        .sorting_1{background-color:}
     </style>
     <title>Data Table</title>
 </head>
@@ -185,6 +186,7 @@ $(document).ready(function() {
             "iDisplayLength":initParam.iDisplayLength,
             "aLengthMenu": initParam.aLengthMenu,
             "bStateSave": true, //save state that keep page in cookie.
+            bSortClasses:false,
             "sPaginationType":'full_numbers',
             "aoColumns": columns,
             "sAjaxSource": "${actionPrex}/queryTable.action?${addButtonParameter}",
