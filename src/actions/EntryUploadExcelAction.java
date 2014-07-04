@@ -133,17 +133,19 @@ public class EntryUploadExcelAction extends UploadExcelAction {
                             } catch (Exception ex) {
                                 LOG.warn("reflected issue {}", ex.getMessage());
                             }
-                        } else {
+                        } else if(!cellValue.isEmpty()){
                             String[] splitEntryCode = cellValue.split(";");
                             ArrayList<EntryCodeBean> entryCodeBeans = new ArrayList<EntryCodeBean>();
                             for (int j = 0; j < splitEntryCode.length; j++) {
-                                EntryCodeBean entryCodeBean = new EntryCodeBean();
                                 String[] equalSplit = splitEntryCode[j].split(":");
-                                entryCodeBean.setName(equalSplit[1]);
-                                entryCodeBean.setValue(equalSplit[0]);
-                                entryCodeBean.setId(ObjectId.get().toString());
-                                entryCodeBean.setEntryId(entryBean.getId());
-                                entryCodeBeans.add(entryCodeBean);
+                                if(equalSplit.length==2){
+                                    EntryCodeBean entryCodeBean = new EntryCodeBean();
+                                    entryCodeBean.setName(equalSplit[1]);
+                                    entryCodeBean.setValue(equalSplit[0]);
+                                    entryCodeBean.setId(ObjectId.get().toString());
+                                    entryCodeBean.setEntryId(entryBean.getId());
+                                    entryCodeBeans.add(entryCodeBean);
+                                }
                             }
                             entryBean.setEntryCodeBeanList(entryCodeBeans);
                         }
