@@ -199,6 +199,7 @@ $(document).ready(function() {
                     "sLast":"末页",
                     "sFirst":"首页"
                 },
+                sProcessing:'正在努力加载，请稍后！',
                 "sLengthMenu": "每页显示 _MENU_ 条",
                 "sZeroRecords": "无数据",
                 "sInfo": "显示第 _START_ 到 _END_ 条, 共 _TOTAL_ 条.",
