@@ -1,13 +1,13 @@
 <section>
     <form id="${id!}" name="${name!}" action="datainput/dataRecordInputSubmit.action" class="form-horizontal">
         ${innerHTML!}
-        <row>
-            <div class="col-sm-${resolution!2}">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-info">保存</button>
-                </div>
+        <section class="panel">
+
+            <div class="panel-body">
+                <button type="submit" class="btn btn-info">保存</button>
             </div>
-        </row>
+        </section>
+
         <input type="hidden" name="studyId" value="${"$"}{studyId!}"/>
         <input type="hidden" name="viewId" value="${"$"}{viewId!}"/>
         <input type="hidden" name="participantId" value="${"$"}{participantId!}"/>
@@ -23,11 +23,11 @@
             jQuery.ajax({
                 type: "POST",
                 async:false,
-                url:"datainput/dataRecordInputSubmit.action",
+                url:"${"$"}{rootPath!}/dataInput/dataRecordInputSubmit.action",
                 data:$("#${id!null}").serialize(),
                 cache: false,
                 success : function(data, status) {
-                    //alert(status);
+                    display(data);
                 }
             });
             // !!! Important !!!

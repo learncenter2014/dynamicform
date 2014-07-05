@@ -82,7 +82,7 @@
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">表单元素</label>
                 <div class="col-lg-6">
-                    <s:select cssClass="form-control" name="entry.htmlType" list="#{0:'标签',1:'文本框',2:'文本域',3:'下拉框',4:'复选框',5:'单选框'}" value="entry.htmlType"/>
+                    <s:select cssClass="form-control" name="entry.htmlType" list="#{0:'标签',1:'文本框',2:'文本域',3:'下拉框',4:'复选框',5:'单选框',6:'日期'}" value="entry.htmlType"/>
                 </div>
             </div>
             <div class="form-group has-success">

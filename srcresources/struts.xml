@@ -80,7 +80,7 @@
             <result name="success">/pages/menu_page/template.jsp</result>
         </action>
 	</package>
-	<package name="datainput" namespace="/datainput" extends="default">
+	<package name="dataInput" namespace="/dataInput" extends="default">
 		<action name="deleteuserdata" class="actions.FormAction" method="deleteuserdata">
 			<result name="success" type="redirect">/template/templateFileList.action
 			</result>
@@ -112,12 +112,17 @@
         <action name="dataPageInput" class="actions.DataPageInputAction" method="loadPage">
             <result name="success" type="freemarker">/ftl/html.ftl</result>
         </action>
-	</package>
-	<package name="report" namespace="/report" extends="default">
 
-	</package>
-	<package name="loginout" namespace="/loginout" extends="default">
 
+        <action name="inputViewSelect" class="actions.StudyInputAction" method="selectView" >
+            <result name="success">/pages/study/inputViewSelect.jsp</result>
+        </action>
+        <action name="inputViewSelectSubmit" class="actions.StudyInputAction" method="saveView" >
+            <result name="success" type="chain">
+                <param name="actionName">studyInput</param>
+                <param name="namespace">/participant</param>
+            </result>
+        </action>
 	</package>
 	
 	<package name="user" namespace="/user" extends="default">
@@ -245,6 +250,10 @@
         <action name="studyInput" class="actions.StudyInputAction" method="input" >
             <result name="success">/pages/study/studyInput.jsp</result>
         </action>
+        <action name="studyInputSubmit" class="actions.StudyInputAction" method="save" >
+            <result name="success">/pages/study/studyInput.jsp</result>
+        </action>
+
     </package>
     <package name="view" namespace="/view" extends="default">
         <action name="index" class="actions.ViewAction" method="index"/>

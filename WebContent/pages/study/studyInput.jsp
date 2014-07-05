@@ -20,10 +20,21 @@
             window.location.href = "patient/index.action"
         }
 
-        function handleDataInput(viewId) {
-            var actionUrl = "${rootPath}/datainput/dataRecordInput.action?viewId="+viewId;
+        function handleDataInput(recordId, tableName) {
+            var actionUrl = "${rootPath}/dataInput/dataRecordInput.action?recordId=" + recordId + "&tableName=" + tableName;
             htmlobj = $.ajax({url:actionUrl,async:false});
             $("#contentDiv").html(htmlobj.responseText);
+        }
+
+        function handleViewSelect() {
+            var actionUrl = "${rootPath}/dataInput/inputViewSelect.action?" +
+                    "studyId=<s:property value="studyId"/>&participantId=<s:property value="participantId"/>";
+            htmlobj = $.ajax({url:actionUrl,async:false});
+            $("#contentDiv").html(htmlobj.responseText);
+        }
+
+        function display(content) {
+            $("#contentDiv").html(content);
         }
     </script>
     <!--external css-->
@@ -35,19 +46,17 @@
 <section id="container" >
     <div class="row">
         <div class="col-md-3">
-            <section class="panel">
-                <%--<header class="panel-heading">--%>
-                    <%--Category--%>
-                <%--</header>--%>
-                <div class="panel-body">
+            <div class="panel-group m-bot20">
+                <div class="panel panel-default">
                     <ul class="nav prod-cat">
-                        <s:iterator value="viewBeanList" var="view">
+                        <s:iterator value="dynamicDataBeanList" var="dataBean">
                             <li>
-                                <a href="#" onclick="handleDataInput('<s:property value="#view.id"/>')"><i class=" fa fa-angle-right"></i>
-                                    <s:property value="#view.name" />
+                                <a href="#" onclick="handleDataInput('<s:property value="#dataBean.dataRecordId"/>',
+                                        '<s:property value="#dataBean.tableName"/>')"><i class=" fa fa-angle-right"></i>
+                                    <s:property value="#dataBean.view.name" />
                                 </a>
                                 <ul class="nav">
-                                    <s:iterator value="#view.documentBeanList" var="document">
+                                    <s:iterator value="#dataBean.view.documentBeanList" var="document">
                                         <li>
                                             <a href="#<s:property value='#document.id'/>">
                                                 <s:property value='#document.name'/>
@@ -59,7 +68,14 @@
                         </s:iterator>
                     </ul>
                 </div>
-            </section>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <button class="btn btn-info">计划</button>
+                        <button class="btn btn-info" onclick="handleViewSelect()">添加</button>
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-9">
             <section class="panel">

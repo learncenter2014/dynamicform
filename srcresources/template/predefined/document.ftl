@@ -1,4 +1,4 @@
-<section class="panel">
+<section class="panel" id="${id!undefined}" name="${id!undefined}">
     <header class="panel-heading">
         ${name!}
         <span class="tools pull-right">

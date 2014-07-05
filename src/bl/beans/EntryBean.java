@@ -16,7 +16,7 @@ public class EntryBean extends Bean {
     private short elementType; //0 定性有数据源1 定量表示没有数据源
     private short dataType;  //0  字符型 1 数字型 2 日期型
     private short subElementType; //元素归类 0 主元素 1 子元数
-    private short htmlType; //0 label  1 text  2 textarea  3 select 4 checkbox 5 radio
+    private short htmlType; //0 label  1 text  2 textarea  3 select 4 checkbox 5 radio 6 date
     private String defaultValue; //缺省值负责一些默认的值业务
     private short standardEntry; //0系统缺省元数据 1 国际标准元数据 2 用户临时创建元数据
     private double minValue; //验证最小值

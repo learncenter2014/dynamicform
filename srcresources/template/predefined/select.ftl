@@ -1,14 +1,14 @@
 <div class="col-sm-${resolution!6}">
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="${id}">${label!}</label>
+        <label class="col-sm-3 control-label" for="${id}">${name!}</label>
         <div class="col-sm-9">
-            <select id="${id}" name="${name}" class="form-control m-bot15">
-                <#list options as option>
+            <select id="${document.code!}_${code!}" name="${document.code!}_${code!}" class="form-control m-bot15">
+                <#list entryCodeBeanList as option>
                     <option id="${option.value!}">${option.name!}</option>
                 </#list>
             </select>
             <script type="text/javascript">
-                $("#${id}").val("${'$'}{${name}!'${value!}'}");
+                $("#${document.code!}_${code!}").val("${'$'}{${document.code!}_${code!}}");
             </script>
         </div>
     </div>
