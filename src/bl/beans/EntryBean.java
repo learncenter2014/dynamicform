@@ -10,20 +10,22 @@ import java.util.List;
  */
 @Entity(value = "entry")
 public class EntryBean extends Bean {
-    private String entryName; //实体变量名称作为后续生成数据存储模型的表的列名
-    private String code; //代码
-    private String abbreviation;//英文缩写
+    private int sequence; //序号
+    private String englishName; //实体变量名称
+    private String code; //代码  作为后续生成数据存储模型的表的列名
     private short elementType; //0 定性有数据源1 定量表示没有数据源
-    private short dataType;  //0  字符型 1 数字型 2 日期型
+    private short dataType;  //0  字符型 1 整数型 2浮点型 3 日期型
     private short subElementType; //元素归类 0 主元素 1 子元数
     private short htmlType; //0 label  1 text  2 textarea  3 select 4 checkbox 5 radio 6 date
     private String defaultValue; //缺省值负责一些默认的值业务
     private short standardEntry; //0系统缺省元数据 1 国际标准元数据 2 用户临时创建元数据
-    private double minValue; //验证最小值
-    private double maxValue; //验证最大值
+    private double minValue = 0; //验证最小值
+    private double maxValue = 9999; //验证最大值
     private int maxLength = 30; //HTML前端最大输入长度
     private int size = 30; //HTML最大长度
     private String regularExpression; //正则表达式，结合JS或者后台验证
+    private String description;//实体描述
+    private int precision = 2; //小数位数
     private String documentId; //归属于哪个Document
     @Transient
     private List<EntryCodeBean> entryCodeBeanList;
@@ -31,6 +33,30 @@ public class EntryBean extends Bean {
     private String innerHTML;
     @Transient
     private DocumentBean document;
+
+    public int getPrecision() {
+        return precision;
+    }
+
+    public void setPrecision(int precision) {
+        this.precision = precision;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
 
     public List<EntryCodeBean> getEntryCodeBeanList() {
         if(this.entryCodeBeanList!=null){
@@ -51,12 +77,12 @@ public class EntryBean extends Bean {
         this.code = code;
     }
 
-    public String getEntryName() {
-        return entryName;
+    public String getEnglishName() {
+        return englishName;
     }
 
-    public void setEntryName(String entryName) {
-        this.entryName = entryName;
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
     }
 
     public short getElementType() {
@@ -153,14 +179,6 @@ public class EntryBean extends Bean {
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
-    }
-
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
     }
 
     public DocumentBean getDocument() {

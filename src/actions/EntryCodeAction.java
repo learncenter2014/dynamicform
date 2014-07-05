@@ -33,8 +33,6 @@ public class EntryCodeAction extends BaseTableAction<EntryCodeBusiness> {
   public TableInitVo getTableInit() {
     TableInitVo init = new TableInitVo();
     init.getAoColumns().add(new TableHeaderVo("name", "名称").enableSearch());
-    init.getAoColumns().add(new TableHeaderVo("abbreviation", "缩写").enableSearch());
-    init.getAoColumns().add(new TableHeaderVo("key", "标识"));
     init.getAoColumns().add(new TableHeaderVo("value", "值"));
     return init;
   }

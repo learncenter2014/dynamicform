@@ -16,4 +16,7 @@
             window.location = "${rootPath}/entryCode/index.action?entryId=" + selectRowData["id"];
         }
     }
+    <s:if test="#session['sessionUser'].name=='admin'">
+      operationButtons.push('<a class="btn btn-success" href="'+window.actionPrex+'/batchimportentry.action?${addButtonParameter}"><i class="fa fa-plus"></i> 批量导入 </a>');
+    </s:if>
 </script>

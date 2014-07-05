@@ -36,6 +36,13 @@
             <input name="entry.documentId" type="hidden" value="${entry.documentId}"/>
             <input name="documentId" type="hidden" value="${entry.documentId}"/>
             <div class="form-group has-success">
+                <label class="col-lg-2 control-label">序号</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="序号" name="entry.sequence" class="form-control"
+                           required="required" value="${entry.sequence}"/>
+                </div>
+            </div>
+            <div class="form-group has-success">
                 <label class="col-lg-2 control-label">实体名称</label>
                 <div class="col-lg-6">
                     <input type="text" placeholder="实体名称" name="entry.name" class="form-control"
@@ -52,13 +59,14 @@
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">实体英文名称</label>
                 <div class="col-lg-6">
-                    <input name="entry.entryName" type="text" value="${entry.entryName}" class="form-control" required="required" placeholder="请输入实体变量名称"/>
+                    <input name="entry.englishName" type="text" value="${entry.englishName}" class="form-control" required="required" placeholder="请输入实体英文名称"/>
                 </div>
             </div>
             <div class="form-group has-success">
-                <label class="col-lg-2 control-label">实体缩写</label>
+                <label class="col-lg-2 control-label">注解</label>
                 <div class="col-lg-6">
-                    <input name="entry.abbreviation" type="text" value="${entry.abbreviation}" class="form-control" required="required" placeholder="请输入实体缩写"/>
+
+                    <textarea name="entry.description" rows="5" cols="60" class="form-control">${entry.description}</textarea>
                 </div>
             </div>
             <div class="form-group has-success">
@@ -70,7 +78,7 @@
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">数据类型</label>
                 <div class="col-lg-6">
-                    <s:select cssClass="form-control" name="entry.dataType" list="#{0:'字符型',1:'数字型',2:'日期型'}" value="entry.dataType"/>
+                    <s:select cssClass="form-control" name="entry.dataType" list="#{0:'字符型',1:'整数型',2:'浮点型',3:'日期型'}" value="entry.dataType"/>
                 </div>
             </div>
             <div class="form-group has-success">
@@ -88,7 +96,7 @@
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">实体缺省值</label>
                 <div class="col-lg-6">
-                    <input name="entry.defaultValue" type="text" value="${entry.defaultValue}" class="form-control" placeholder="请输入实体缺省值"/>
+                    <input name="entry.defaultValue" type="text" value="${entry.defaultValue}" class="form-control" placeholder="请输入实体缺省值">
                 </div>
             </div>
             <div class="form-group has-success">
@@ -110,15 +118,21 @@
                 </div>
             </div>
             <div class="form-group has-success">
-                <label class="col-lg-2 control-label">最大长度</label>
+                <label class="col-lg-2 control-label">小数位数</label>
+                <div class="col-lg-6">
+                    <input name="entry.precision" type="text" value="${entry.precision}" class="form-control" placeholder="请输入小数位数"/>
+                </div>
+            </div>
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label">字段长度</label>
                 <div class="col-lg-6">
                     <input name="entry.maxLength" type="text" value="${entry.maxLength}" class="form-control" required="true" placeholder="请输入最大长度"/>
                 </div>
             </div>
             <div class="form-group has-success">
-                <label class="col-lg-2 control-label">最大显示长度</label>
+                <label class="col-lg-2 control-label">显示长度</label>
                 <div class="col-lg-6">
-                    <input name="entry.size" type="text" value="${entry.size}" class="form-control" placeholder="请输入最大显示长度"/>
+                    <input name="entry.size" type="text" value="${entry.size}" class="form-control" placeholder="请输入显示长度"/>
                 </div>
             </div>
             <div class="form-group has-success">
@@ -132,12 +146,12 @@
                     <button class="btn btn-info" type="submit">保存</button>
 
                     <a href="entry/index.action?documentId=${documentId}">
-                      <div class="btn btn-info">取消</div>
+                        <div class="btn btn-info">取消</div>
                     </a>
                 </div>
             </div>
 
-        </form>
+        </form>.
     </div>
 </section>
 </body>

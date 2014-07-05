@@ -14,6 +14,7 @@
     <style type="text/css">
         .dataTables_info{width:25%}
         .paging_full_numbers{width:70%}
+        .sorting_1{background-color:}
     </style>
     <title>Data Table</title>
 </head>
@@ -112,7 +113,7 @@ var options = {
                 var tableObj = $('#'+tableId).dataTable();
                 var nTr = $(button).parents('tr')[0];
                 var selectRowData =  tableObj.fnGetData( nTr );
-                window.location = actionPrex + "/delete.action?${addButtonParameter}&id=" + selectRowData[idName];
+                window.location = actionPrex + "/delete.action?${addButtonParameter}&id=" + selectRowData[idName]+"&ids=" + selectRowData[idName];
             }
         }
     }
@@ -185,11 +186,12 @@ $(document).ready(function() {
             "iDisplayLength":initParam.iDisplayLength,
             "aLengthMenu": initParam.aLengthMenu,
             "bStateSave": true, //save state that keep page in cookie.
+            bSortClasses:false,
             "sPaginationType":'full_numbers',
             "aoColumns": columns,
             "sAjaxSource": "${actionPrex}/queryTable.action?${addButtonParameter}",
             //"sDom": '<"H"lT><"clear">rt<"F"ip>',
-            "sDom": 'rt<"F"ip>',
+            "sDom": 'lrt<"F"ip>',
             "oLanguage": {
                 "oPaginate": {
                     "sPrevious": "上一页",
@@ -197,6 +199,7 @@ $(document).ready(function() {
                     "sLast":"末页",
                     "sFirst":"首页"
                 },
+                sProcessing:'正在努力加载，请稍后！',
                 "sLengthMenu": "每页显示 _MENU_ 条",
                 "sZeroRecords": "无数据",
                 "sInfo": "显示第 _START_ 到 _END_ 条, 共 _TOTAL_ 条.",
@@ -304,6 +307,7 @@ $(document).ready(function() {
                 }
                 </s:if>
                 </s:iterator>
+
                 if(window.exportExcel==true){
                     window.exportExcel = false;
                     var form = $("#exportForm");
@@ -336,7 +340,7 @@ $(document).ready(function() {
         });
     } );
 } );
-<s:if test="#session['backendSessionUser'].name=='admin'">
+<s:if test="#session['sessionUser'].name=='admin'">
 window.admin = true;
 window.actionPrex = "${actionPrex}";
 </s:if>

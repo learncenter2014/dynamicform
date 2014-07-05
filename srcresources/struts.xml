@@ -179,6 +179,12 @@
         <action name="delete" class="actions.EntryAction" method="delete">
             <result name="success" type="redirectAction">/entry/index?documentId=${documentId}</result>
         </action>
+        <action name="batchimportentry" class="actions.EntryUploadExcelAction" method="batchImportEntry">
+            <result name="success">/pages/entry/entrybatchimportentry.jsp</result>
+        </action>
+        <action name="batchimportsave" class="actions.EntryUploadExcelAction" method="prepareExcel">
+            <result name="success">/pages/entry/entrysaveexcel.jsp</result>
+        </action>
     </package>
     <package name="entryCode" namespace="/entryCode" extends="default">
         <action name="index" class="actions.EntryCodeAction" method="index"/>
