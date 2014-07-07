@@ -1,16 +1,16 @@
 <div class="col-sm-${resolution!6}">
     <div class="form-group">
-        <label class="col-sm-3 control-label">${label!}</label>
+        <label class="col-sm-3 control-label">${name!}</label>
         <div class="col-sm-9">
-        <#list options as option>
+        <#list entryCodeBeanList as option>
             <div class="radio">
                 <label>
-                    <input type="radio" name="${name}" value="${option.value}"> ${option.name}
+                    <input type="radio" name="${document.code!}_${code!}" value="${option.value}"> ${option.name}
                 </label>
             </div>
         </#list>
             <script type="text/javascript">
-                $('input[name=${name}][value="${'$'}{${name}!'${value!}'}"]').attr("checked",'checked');
+                $('input[name="${document.code!}_${code!}"][value="${'$'}{${document.code!}_${code!}}"]').attr("checked",'checked');
             </script>
         </div>
     </div>

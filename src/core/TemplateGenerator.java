@@ -66,14 +66,17 @@ public class TemplateGenerator {
     }
 
     private String genTemplate(String studyId, DocumentBean documentBean) {
+        if(null == documentBean) return "";
         EntryBusiness entryBus = (EntryBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_ENTRYBUSINESS);
         StudyBusiness studyBus = (StudyBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
         List<StudyDocumentEntryBean> studyDocumentEntryBeanList = studyBus.getStudyDocumentEntryList(studyId, documentBean.getId()); //get beans by studyId and DocumentId
         StringBuilder innerHTML = new StringBuilder();
+        int resolution = 12/documentBean.getColumnCount();
         for(StudyDocumentEntryBean bean : studyDocumentEntryBeanList) {
             EntryBean entryBean = (EntryBean)entryBus.getLeaf(bean.getEntryId()).getResponseData();
             if(null != entryBean) {
                 entryBean.setDocument(documentBean);
+                entryBean.setResolution(resolution);
                 innerHTML.append(genTemplate(entryBean));
             }
         }

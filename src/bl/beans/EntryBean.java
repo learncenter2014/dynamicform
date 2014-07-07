@@ -33,6 +33,8 @@ public class EntryBean extends Bean {
     private String innerHTML;
     @Transient
     private DocumentBean document;
+    @Transient
+    private int resolution;
 
     public int getPrecision() {
         return precision;
@@ -196,5 +198,14 @@ public class EntryBean extends Bean {
     public void setInnerHTML(String innerHTML) {
         this.innerHTML = innerHTML;
     }
+
+    public int getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(int resolution) {
+        this.resolution = resolution;
+    }
+
 
 }

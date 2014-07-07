@@ -1,18 +1,19 @@
 <div class="col-sm-${resolution!6}">
     <div class="form-group">
-        <label class="col-sm-3 control-label">${label}</label>
+        <label class="col-sm-3 control-label">${name}</label>
         <div class="col-sm-9">
-            <#list options as option>
+            <input type="hidden" id="${document.code!}_${code!}" name="${document.code!}_${code!}" value="" />
+            <#list entryCodeBeanList as option>
                 <label class="checkbox-inline">
-                    <input type="checkbox" id="${id!}" name="${name!}" value="${option.value}">
+                    <input type="checkbox" id="${document.code!}_${code!}" name="${document.code!}_${code!}" value="${option.value}">
                     ${option.name}
                 </label>
             </#list>
             <script type="text/javascript">
             ${"
-            <#if ${name}??>
-                <#list ${name}?split(';') as checkedValue>
-                    $(\"input[name=${name}][value='${'$'}{checkedValue!}']\").attr('checked','checked');
+            <#if ${document.code!}_${code!}??>
+                <#list ${document.code!}_${code!}?split(';') as checkedValue>
+                    $(\"input[name=${document.code!}_${code!}][value='${'$'}{checkedValue!}']\").attr('checked','checked');
                 </#list>
             </#if>
             "}
