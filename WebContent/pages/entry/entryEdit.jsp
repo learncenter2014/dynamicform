@@ -84,7 +84,7 @@
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">元素归类</label>
                 <div class="col-lg-6">
-                    <s:select cssClass="form-control" name="entry.subElementType" list="#{0:'主元素',1:'子元数'}" value="entry.subElementType"/>
+                    <s:select cssClass="form-control" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素'}" value="entry.subElementType"/>
                 </div>
             </div>
             <div class="form-group has-success">
@@ -100,9 +100,9 @@
                 </div>
             </div>
             <div class="form-group has-success">
-                <label class="col-lg-2 control-label">标准实体</label>
+                <label class="col-lg-2 control-label">标准分类</label>
                 <div class="col-lg-6">
-                    <s:select cssClass="form-control" name="entry.standardEntry" list="#{0:'系统缺省',1:'国际标准',2:'用户临时创建'}" value="entry.standardEntry"/>
+                    <s:select cssClass="form-control" name="entry.standardEntry" list="#{0:'CDISC',1:'机构标准',2:'非标准'}" value="entry.standardEntry"/>
                 </div>
             </div>
             <div class="form-group has-success">
@@ -139,6 +139,18 @@
                 <label class="col-lg-2 control-label">正则表达式</label>
                 <div class="col-lg-6">
                     <input name="entry.regularExpression" type="text" value="${entry.regularExpression}" class="form-control" placeholder="请输入正则表达式"/>
+                </div>
+            </div>
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label">参考值下限</label>
+                <div class="col-lg-6">
+                    <input name="entry.pseudoReferenceLowerValue" type="text" value="${entry.pseudoReferenceLowerValue}" class="form-control" placeholder="请输入参考值下限"/>
+                </div>
+            </div>
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label">参考值上限</label>
+                <div class="col-lg-6">
+                    <input name="entry.pseudoReferenceUpperValue" type="text" value="${entry.pseudoReferenceUpperValue}" class="form-control" placeholder="请输入参考值上限"/>
                 </div>
             </div>
             <div class="form-group">

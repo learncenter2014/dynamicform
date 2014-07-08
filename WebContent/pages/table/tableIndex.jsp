@@ -14,7 +14,6 @@
     <style type="text/css">
         .dataTables_info{width:25%}
         .paging_full_numbers{width:70%}
-        .sorting_1{background-color:}
     </style>
     <title>Data Table</title>
 </head>
@@ -184,7 +183,7 @@ $(document).ready(function() {
             "bProcessing": initParam.bProcessing,
             "bServerSide": initParam.bServerSide,
             "iDisplayLength":initParam.iDisplayLength,
-            "aLengthMenu": initParam.aLengthMenu,
+            "aLengthMenu": [[ "10", "25", "50", "100","500"], ["10", "25", "50", "100", "500"]],
             "bStateSave": true, //save state that keep page in cookie.
             bSortClasses:false,
             "sPaginationType":'full_numbers',
