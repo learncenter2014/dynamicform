@@ -8,6 +8,7 @@ import bl.mongobus.EntryBusiness;
 import bl.mongobus.StudyBusiness;
 import bl.mongobus.ViewBusiness;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,16 +73,24 @@ public class TemplateGenerator {
         List<StudyDocumentEntryBean> studyDocumentEntryBeanList = studyBus.getStudyDocumentEntryList(studyId, documentBean.getId()); //get beans by studyId and DocumentId
         StringBuilder innerHTML = new StringBuilder();
         int resolution = 12/documentBean.getColumnCount();
+        List<EntryBean> entryBeans = new ArrayList<EntryBean>();
         for(StudyDocumentEntryBean bean : studyDocumentEntryBeanList) {
             EntryBean entryBean = (EntryBean)entryBus.getLeaf(bean.getEntryId()).getResponseData();
-            if(null != entryBean) {
+            if(documentBean.getType() == 0 && null != entryBean) {
                 entryBean.setDocument(documentBean);
                 entryBean.setResolution(resolution);
                 innerHTML.append(genTemplate(entryBean));
             }
+            entryBeans.add(entryBean);
         }
-        documentBean.setInnerHTML(innerHTML.toString());
-        return TemplateHelper.get().getTemplate(EntryType.DOCUMENT, documentBean);
+        if(documentBean.getType() == 0) {
+            documentBean.setInnerHTML(innerHTML.toString());
+            return TemplateHelper.get().getTemplate(EntryType.DOCUMENT, documentBean);
+        } else {
+            documentBean.setEntryBeanList(entryBeans);
+            return TemplateHelper.get().getTemplate(EntryType.TABLE, documentBean);
+        }
+
     }
 
     private String genTemplate(EntryBean entryBean) {

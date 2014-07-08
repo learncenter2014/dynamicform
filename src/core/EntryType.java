@@ -11,6 +11,7 @@ public enum EntryType {
     CHECKBOX("checkbox", 4),
     RADIO("radio", 5),
     DATE("date", 6),
+    TABLE("table", 666),
     DOCUMENT("document", 777),
     VIEW("form", 888),
     NULL("null", 999);

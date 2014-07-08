@@ -29,6 +29,7 @@ public class EntryBean extends Bean {
     private double pseudoReferenceLowerValue; //参考值下限
     private double pseudoReferenceUpperValue; //参考值上限
     private String documentId; //归属于哪个Document
+
     @Transient
     private List<EntryCodeBean> entryCodeBeanList;
     @Transient
