@@ -58,7 +58,7 @@
                                 <ul class="nav">
                                     <s:iterator value="#dataBean.view.documentBeanList" var="document">
                                         <li>
-                                            <a href="#<s:property value='#document.id'/>">
+                                            <a href="#<s:property value="#dataBean.view.id" />_<s:property value='#document.id'/>">
                                                 <s:property value='#document.name'/>
                                             </a>
                                         </li>
