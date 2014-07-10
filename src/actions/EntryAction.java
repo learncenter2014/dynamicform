@@ -100,7 +100,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
 
     @Override
     public String getAddButtonParameter(){
-        return "subElementType=0&documentId="+this.documentId;
+        return "documentId="+this.documentId;
     }
 
     public EntryBean getEntry() {

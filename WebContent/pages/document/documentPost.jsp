@@ -13,7 +13,7 @@
             var tableObj = $('#'+tableId).dataTable();
             var nTr = $(button).parents('tr')[0];
             var selectRowData =  tableObj.fnGetData( nTr );
-            window.location = "${rootPath}/entry/index.action?documentId=" + selectRowData["id"];
+            window.location = "${rootPath}/entry/index.action?subElementType=0&documentId=" + selectRowData["id"];
         }
     }
 </script>
