@@ -73,21 +73,29 @@ public class TemplateGenerator {
         List<StudyDocumentEntryBean> studyDocumentEntryBeanList = studyBus.getStudyDocumentEntryList(studyId, documentBean.getId()); //get beans by studyId and DocumentId
         StringBuilder innerHTML = new StringBuilder();
         int resolution = 12/documentBean.getColumnCount();
-        List<EntryBean> entryBeans = new ArrayList<EntryBean>();
+        List<EntryBean> rows = new ArrayList<EntryBean>();
+        List<EntryBean> columns = new ArrayList<EntryBean>();
+
         for(StudyDocumentEntryBean bean : studyDocumentEntryBeanList) {
             EntryBean entryBean = (EntryBean)entryBus.getLeaf(bean.getEntryId()).getResponseData();
             if(documentBean.getType() == 0 && null != entryBean) {
                 entryBean.setDocument(documentBean);
                 entryBean.setResolution(resolution);
                 innerHTML.append(genTemplate(entryBean));
+            } else {
+                if(entryBean.getSubElementType() == 1) {
+                    rows.add(entryBean);
+                } else {
+                    columns.add(entryBean);
+                }
             }
-            entryBeans.add(entryBean);
         }
         if(documentBean.getType() == 0) {
             documentBean.setInnerHTML(innerHTML.toString());
             return TemplateHelper.get().getTemplate(EntryType.DOCUMENT, documentBean);
         } else {
-            documentBean.setEntryBeanList(entryBeans);
+            documentBean.setRows(rows);
+            documentBean.setColumns(columns);
             return TemplateHelper.get().getTemplate(EntryType.TABLE, documentBean);
         }
 

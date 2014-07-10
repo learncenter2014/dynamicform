@@ -25,6 +25,10 @@ public class DocumentBean extends Bean{
     private String innerHTML;
     @Transient
     private List<EntryBean> entryBeanList;
+    @Transient
+    private List<EntryBean> rows;
+    @Transient
+    private List<EntryBean> columns;
 
     public List<EntryBean> getEntryBeanList() {
         if(this.entryBeanList!=null){
@@ -116,5 +120,22 @@ public class DocumentBean extends Bean{
     public void setInnerHTML(String innerHTML) {
         this.innerHTML = innerHTML;
     }
+
+    public List<EntryBean> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<EntryBean> rows) {
+        this.rows = rows;
+    }
+
+    public List<EntryBean> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<EntryBean> columns) {
+        this.columns = columns;
+    }
+
 
 }
