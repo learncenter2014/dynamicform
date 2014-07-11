@@ -8,7 +8,7 @@
                 </#list>
             </select>
             <script type="text/javascript">
-                $("#${document.code!}_${code!}").val("${'$'}{${document.code!}_${code!}}");
+                $("#${document.code!}_${code!}").val("${'$'}{${document.code!}_${code!}!}");
             </script>
         </div>
     </div>

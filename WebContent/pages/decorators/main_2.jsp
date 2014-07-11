@@ -60,7 +60,7 @@
 
 <body style="background-color: #fff">
 
-<div class="navbar navbar-default navbar-static-top">
+<%--<div class="navbar navbar-default navbar-static-top">--%>
     <div class="header white-bg">
         <div class="navbar-header">
             <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -92,13 +92,13 @@
             </ul>
         </div>
     </div>
-</div>
+<%--</div>--%>
 
 <%--<section id="container" class="panel">--%>
     <!--main content start-->
-            <div id="decoratebody">
-                <decorator:body />
-            </div>
+    <div id="decoratebody" style="height: 100%; padding-top: 60px;">
+        <decorator:body />
+    </div>
     <!--main content end-->
     <!--footer start-->
     <%--<jsp:include page="/pages/decorators/foot.jsp"></jsp:include>--%>

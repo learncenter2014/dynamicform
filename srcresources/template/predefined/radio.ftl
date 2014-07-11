@@ -10,7 +10,7 @@
             </div>
         </#list>
             <script type="text/javascript">
-                $('input[name="${document.code!}_${code!}"][value="${'$'}{${document.code!}_${code!}}"]').attr("checked",'checked');
+                $('input[name="${document.code!}_${code!}"][value="${'$'}{${document.code!}_${code!}!}"]').attr("checked",'checked');
             </script>
         </div>
     </div>
