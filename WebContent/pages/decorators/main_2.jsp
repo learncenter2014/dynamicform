@@ -87,7 +87,13 @@
                     </ul>
                 </li>
                 <li><a href="${rootPath}/#">资源管理</a></li>
-                <li><a href="${rootPath}/#">系统管理</a></li>
+                <li class="dropdown">
+                    <a data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle " href="${rootPath}/#">系统管理<b class=" fa fa-angle-down"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="${rootPath}/department/index.action">部门管理</a></li>
+                        <li><a href="${rootPath}/disease/index.action">单病种管理</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </div>
