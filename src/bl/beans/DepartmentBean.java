@@ -57,5 +57,4 @@ public class DepartmentBean extends Bean{
 	public void setHasLongDistance(int hasLongDistance) {
 		this.hasLongDistance = hasLongDistance;
 	}
-	
 }
