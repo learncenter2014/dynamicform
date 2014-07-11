@@ -42,7 +42,7 @@
                 <label class="col-lg-2 control-label">方案简介</label>
 
                 <div class="col-lg-6">
-                    <textarea name="study.description" rows="5" cols="60" class="form-control"></textarea>
+                    <s:textarea name="study.description" rows="5" cols="60" cssClass="form-control"/>
                 </div>
             </div>
 

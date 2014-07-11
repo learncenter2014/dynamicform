@@ -53,8 +53,8 @@
                             </header>
                             <div class="panel-body">
                                 <div class="form-group has-success">
-                                    <s:set value="false" name="checkedDocumentEntry"/>
                                     <s:iterator value="entryBeanList" status="eindex" var="entryBeanList">
+                                        <s:set value="false" name="checkedDocumentEntry"/>
                                         <s:iterator value="study.studyDocumentBeanList" var="studyDocumentBean">
                                             <s:if test="%{documentId == #documentBean.id}">
 

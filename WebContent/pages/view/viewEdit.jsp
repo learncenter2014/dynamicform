@@ -46,7 +46,7 @@
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">页面描述</label>
                 <div class="col-lg-6">
-                    <textarea name="view.description" type="text" value="${view.description}" class="form-control" required="required" placeholder="请输入页面描述"></textarea>
+                    <s:textarea name="view.description" rows="5" cols="60" cssClass="form-control"/>
                 </div>
             </div>
             <div class="form-group has-success">

@@ -284,4 +284,31 @@
             <result name="success" type="redirectAction">/view/index?studyId=${studyId}</result>
         </action>
     </package>
+    
+    <!-- 科室管理 used by zlj -->
+        <package name="department" namespace="/department" extends="default">
+        <action name="index" class="actions.DepartmentAction" method="index"/>
+        <action name="edit" class="actions.DepartmentAction" method="edit">
+		   <result name="success">/pages/department/departmentEdit.jsp</result>
+		</action>
+		<action name="add" class="actions.DepartmentAction" method="add">
+		   <result name="success">/pages/department/departmentEdit.jsp</result>
+		</action>
+		<action name="initTable" class="actions.DepartmentAction" method="initTable"/>
+		<action name="queryTable" class="actions.DepartmentAction" method="queryTable"/>
+		<action name="exportTable" class="actions.DepartmentAction" method="exportTable"/>
+        <action name="save" class="actions.DepartmentAction" method="save">
+		   <result name="success" type="redirectAction"><param name="actionName">index</param></result>
+		   <result name="input">/pages/department/departmentEdit.jsp</result>
+		</action>
+		<action name="delete" class="actions.DepartmentAction" method="delete">
+		   <result name="success" type="redirectAction"><param name="actionName">index</param></result>
+		</action>
+		<action name="batchimportdept" class="actions.DepartmentUploadExcelAction" method="batchImportEntry">
+        	<result name="success">/pages/department/deptbatchimportentry.jsp</result>
+        </action>
+        <action name="batchimportsave" class="actions.DepartmentUploadExcelAction" method="prepareExcel">
+            <result name="success">/pages/department/deptsaveexcel.jsp</result>
+        </action>
+    </package>
 </struts>
