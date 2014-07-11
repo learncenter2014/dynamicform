@@ -40,7 +40,7 @@ public class DepartmentAction extends BaseTableAction<DepartmentBusiness> {
 	public String getCustomJsp() {
 		return "/pages/department/deptPost.jsp";
 	}
-	
+
 	/**
 	   * 二级标题
 	   */
