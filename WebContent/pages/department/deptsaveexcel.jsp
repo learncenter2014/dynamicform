@@ -16,11 +16,12 @@
     <%@include file="../strutsMessage.jsp" %>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
-            <button class="btn btn-info" type="button" onclick="window.location.href='${rootPath}/department/batchimportdept.action'"/>
+            <button class="btn btn-info" type="button" onclick="window.location.href='${rootPath}/department/batchimportdept.action'">
             继续导入</button>
-            <button class="btn btn-info" type="button" onclick="window.location.href='${rootPath}/department/index.action'"/>
+            <button class="btn btn-info" type="button" onclick="window.location.href='${rootPath}/department/index.action'">
             取消</button>
         </div>
     </div>
+</section>
 </body>
 </html>
