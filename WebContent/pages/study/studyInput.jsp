@@ -42,7 +42,7 @@
             return {
 
                 //main function to initiate the module
-                init: function (eTable) {
+                init: function (eTable, editors) {
                     function restoreRow(oTable, nRow) {
                         var aData = oTable.fnGetData(nRow);
                         var jqTds = $('>td', nRow);
@@ -62,7 +62,7 @@
                         for(; index < jqTds.length - 1; index ++) {
                             var id = jqTds[index].id;
                             var hiddenObject = $("input[type='hidden'][name='"+id+"']")[0];
-                            jqTds[index].innerHTML = '<input type="text" class="form-control small" value="' + hiddenObject.value + '">';
+                            $("#"+id).html(editors.get(index - 1, hiddenObject.value));//'<input type="text" class="form-control small" value="' + hiddenObject.value + '">';
                         }
                         jqTds[index].innerHTML = '<a class="edit" href="">保存</a>&nbsp;<a class="cancel" href="">取消</a>';
                     }
@@ -74,8 +74,8 @@
                         for(; index < jqTds.length - 1; index ++) {
                             var id = jqTds[index].id;
                             var hiddenObject = $("input[type='hidden'][name='"+id+"']")[0];
-                            hiddenObject.value = jqInputs[index - 1].value;
-                            oTable.fnUpdate(jqInputs[index - 1].value, nRow, index, false);
+                            hiddenObject.value = editors.getValue(index - 1)//jqInputs[index - 1].value;
+                            oTable.fnUpdate(editors.getDisplayValue(index - 1), nRow, index, false);
                         }
                         oTable.fnUpdate('<a class="edit" href="">编辑</a>', nRow, index, false);
                         oTable.fnDraw();
