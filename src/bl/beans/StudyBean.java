@@ -21,11 +21,24 @@ public class StudyBean extends Bean {
 
     private List<ViewBean> viewBeanList;
 
+    private List<StudyPlanBean> studyPlanBeans;
+
+    public List<StudyPlanBean> getStudyPlanBeans() {
+        if (this.studyPlanBeans != null) {
+            return this.studyPlanBeans;
+        }
+        return super.getSubBeans(StudyPlanBean.class, "studyId");
+    }
+
+    public void setStudyPlanBeans(List<StudyPlanBean> studyPlanBeans) {
+        this.studyPlanBeans = studyPlanBeans;
+    }
+
     public List<StudyDocumentBean> getStudyDocumentBeanList() {
-        if(this.studyDocumentBeanList!=null){
+        if (this.studyDocumentBeanList != null) {
             return this.studyDocumentBeanList;
         }
-        return super.getSubBeans(StudyDocumentBean.class,"studyId");
+        return super.getSubBeans(StudyDocumentBean.class, "studyId");
     }
 
     public void setStudyDocumentBeanList(List<StudyDocumentBean> studyDocumentBeanList) {
@@ -73,7 +86,7 @@ public class StudyBean extends Bean {
     }
 
     public List<ViewBean> getViewBeanList() {
-        if(null != viewBeanList) {
+        if (null != viewBeanList) {
             return viewBeanList;
         }
         return super.getSubBeans(ViewBean.class, "studyId");

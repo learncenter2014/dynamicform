@@ -1,15 +1,17 @@
 package actions;
 
-import bl.beans.DocumentBean;
-import bl.beans.StudyBean;
-import bl.beans.StudyDocumentBean;
-import bl.beans.StudyDocumentEntryBean;
+import bl.beans.*;
 import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.DocumentBusiness;
 import bl.mongobus.StudyBusiness;
+import bl.mongobus.StudyPlanBusiness;
 import dynamicschema.Document;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import vo.table.TableHeaderVo;
@@ -32,8 +34,69 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     //这个是来自前台选择的document和对应的Entry
     private List<StudyDocumentBean> savedDocumentBeanList;
     private List<StudyDocumentEntryBean> savedDocumentEntryBeanList;
-    private static final DocumentBusiness dbs = (DocumentBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
+    private StudyPlanBean subsequentPlan;
+    private StudyPlanBean telphonePlan;
+    //wizardPlan 复诊随访表
+    private List<StudyPlanRuleBean> subsequentPlanRule;
+    //wizardPlan 电话随访表
+    private List<StudyPlanRuleBean> telphonePlanRule;
+
+    //UI 电话随访表格数据源
+    private String subsequentPlanRuleJson = "[]";
+    //UI 电话随访表格数据源
+    private String telphonePlanRuleJson = "[]";
+
+    public String getSubsequentPlanRuleJson() {
+        return subsequentPlanRuleJson;
+    }
+
+    public void setSubsequentPlanRuleJson(String subsequentPlanRuleJson) {
+        this.subsequentPlanRuleJson = subsequentPlanRuleJson;
+    }
+
+    public String getTelphonePlanRuleJson() {
+        return telphonePlanRuleJson;
+    }
+
+    public void setTelphonePlanRuleJson(String telphonePlanRuleJson) {
+        this.telphonePlanRuleJson = telphonePlanRuleJson;
+    }
+
+    public List<StudyPlanRuleBean> getSubsequentPlanRule() {
+        return subsequentPlanRule;
+    }
+
+    public void setSubsequentPlanRule(List<StudyPlanRuleBean> subsequentPlanRule) {
+        this.subsequentPlanRule = subsequentPlanRule;
+    }
+
+    public List<StudyPlanRuleBean> getTelphonePlanRule() {
+        return telphonePlanRule;
+    }
+
+    public void setTelphonePlanRule(List<StudyPlanRuleBean> telphonePlanRule) {
+        this.telphonePlanRule = telphonePlanRule;
+    }
+
+    public StudyPlanBean getSubsequentPlan() {
+        return subsequentPlan;
+    }
+
+    public void setSubsequentPlan(StudyPlanBean subsequentPlan) {
+        this.subsequentPlan = subsequentPlan;
+    }
+
+    public StudyPlanBean getTelphonePlan() {
+        return telphonePlan;
+    }
+
+    public void setTelphonePlan(StudyPlanBean telphonePlan) {
+        this.telphonePlan = telphonePlan;
+    }
+
+    private static final DocumentBusiness dbs = (DocumentBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
     private static final StudyBusiness sbs = (StudyBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
+    private static final StudyPlanBusiness sp = (StudyPlanBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_SUTDYPLANBUSINESS);
 
     public List<StudyDocumentBean> getSavedDocumentBeanList() {
         return savedDocumentBeanList;
@@ -169,7 +232,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
                 for (int j = 0; j < this.savedDocumentEntryBeanList.size(); j++) {
                     StudyDocumentEntryBean sdebRef = this.savedDocumentEntryBeanList.get(j);
                     //documentId存在，且要被选中元素也存在
-                    if (sdebRef != null && sdebRef.getDocumentId().equals(sdb.getDocumentId()) && sdebRef.getEntryId()!=null) {
+                    if (sdebRef != null && sdebRef.getDocumentId().equals(sdb.getDocumentId()) && sdebRef.getEntryId() != null) {
                         sdebRef.setId(ObjectId.get().toString());
                         sdebRef.setStudyDocumentId(sdbId);
                         sdebRef.setStudyId(this.study.getId());
@@ -197,10 +260,71 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
 
     public String wizardPlan() throws Exception {
         this.edit();
+        List<StudyPlanBean> spbs = this.getStudy().getStudyPlanBeans();
+        for (int i = 0; spbs != null && i < spbs.size(); i++) {
+            //复诊随访
+            if (spbs.get(i).getPlanType() == 0) {
+                this.subsequentPlan = spbs.get(i);
+                if (this.subsequentPlan != null) {
+                    this.subsequentPlanRule = this.subsequentPlan.getStudyPlanRuleBeanList();
+                    // json
+                    //解决对象之间循环关联
+                    JsonConfig config = new JsonConfig();
+                    config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+                    JSONArray jsonarray = JSONArray.fromObject(this.subsequentPlanRule, config);
+                    if (jsonarray.toString().isEmpty()) {
+                        this.subsequentPlanRuleJson = "[]";
+                    } else {
+                        this.subsequentPlanRuleJson = jsonarray.toString();
+                    }
+                }
+            }
+            //电话随访
+            else if (spbs.get(i).getPlanType() == 1) {
+                this.telphonePlan = spbs.get(i);
+                if (this.telphonePlan != null) {
+                    this.telphonePlanRule = this.telphonePlan.getStudyPlanRuleBeanList();
+                    // json
+                    //解决对象之间循环关联
+                    JsonConfig config = new JsonConfig();
+                    config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+                    JSONArray jsonarray = JSONArray.fromObject(this.telphonePlanRule, config);
+                    if (jsonarray.toString().isEmpty()) {
+                        this.telphonePlanRuleJson = "[]";
+                    } else {
+                        this.telphonePlanRuleJson = jsonarray.toString();
+                    }
+                }
+            }
+        }
         return SUCCESS;
     }
 
     public String savewizardPlan() throws Exception {
+        List<StudyPlanBean> spbs = new ArrayList<StudyPlanBean>();
+        //更新复诊随访
+        if (this.subsequentPlan != null) {
+            spbs.add(this.subsequentPlan);
+            this.subsequentPlan.set_id(ObjectId.get());
+            this.subsequentPlan.setStudyPlanRuleBeanList(this.subsequentPlanRule);
+            for (int i = 0; this.subsequentPlanRule != null && i < this.subsequentPlanRule.size(); i++) {
+                this.subsequentPlanRule.get(i).setStudyId(this.study.getId());
+                this.subsequentPlanRule.get(i).setStudyPlanId(this.subsequentPlan.getId());
+            }
+        }
+
+        //更新电话随访
+        if (this.telphonePlan != null) {
+            spbs.add(this.telphonePlan);
+            this.telphonePlan.set_id(ObjectId.get());
+            this.telphonePlan.setStudyPlanRuleBeanList(this.telphonePlanRule);
+            for (int i = 0; this.telphonePlanRule != null && i < this.telphonePlanRule.size(); i++) {
+                this.telphonePlanRule.get(i).setStudyId(this.study.getId());
+                this.telphonePlanRule.get(i).setStudyPlanId(this.telphonePlan.getId());
+            }
+        }
+
+        sp.saveStudyPlan(this.study.getId(), spbs);
         return SUCCESS;
     }
 
@@ -219,7 +343,7 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
 
     @Override
     public String getTableTitle() {
-        return "<ul class=\"breadcrumb\"><li>随访设计</li><li class=\"active\"><a href=\""+getRequest().getContextPath()+"/study/index.action\">方案设计</a></li></ul>";
+        return "<ul class=\"breadcrumb\"><li>随访设计</li><li class=\"active\"><a href=\"" + getRequest().getContextPath() + "/study/index.action\">方案设计</a></li></ul>";
     }
 
     public StudyBean getStudy() {

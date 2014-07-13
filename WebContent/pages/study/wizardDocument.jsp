@@ -66,7 +66,7 @@
 
                                             </s:if>
                                         </s:iterator>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-4">
                                                 <input type="hidden" name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].documentId" value="<s:property value="#documentBean.id"/>">
                                                 <s:if test="%{#checkedDocumentEntry==true}">
                                                     <input type="checkbox" checked="checked" name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].entryId" value="<s:property value="id"/>">

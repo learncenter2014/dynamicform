@@ -8,39 +8,57 @@ import org.mongodb.morphia.annotations.Entity;
 @Entity(value = "study_plan_rule")
 public class StudyPlanRuleBean extends Bean {
     private String studyPlanId;
-    private String startTime;
-    private String endTime;
-    private String frequence;
+    private int sequence;
+    private float interval;
+    private short unit = 1; // 0 日 1 月 2 年
+    private String viewId;
+    private String studyId;
+
+    public String getStudyId() {
+        return studyId;
+    }
+
+    public void setStudyId(String studyId) {
+        this.studyId = studyId;
+    }
 
     public String getStudyPlanId() {
         return studyPlanId;
+    }
+
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
     }
 
     public void setStudyPlanId(String studyPlanId) {
         this.studyPlanId = studyPlanId;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public float getInterval() {
+        return interval;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setInterval(float interval) {
+        this.interval = interval;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public short getUnit() {
+        return unit;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setUnit(short unit) {
+        this.unit = unit;
     }
 
-    public String getFrequence() {
-        return frequence;
+    public String getViewId() {
+        return viewId;
     }
 
-    public void setFrequence(String frequence) {
-        this.frequence = frequence;
+    public void setViewId(String viewId) {
+        this.viewId = viewId;
     }
 }
