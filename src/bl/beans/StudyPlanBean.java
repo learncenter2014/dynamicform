@@ -1,6 +1,9 @@
 package bl.beans;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
+
+import java.util.List;
 
 /**
  * Created by pli on 14-6-29.
@@ -13,6 +16,19 @@ public class StudyPlanBean extends Bean {
     private boolean skipWeek; // 是否顺延周六周日
     private boolean skipVocation; //是否顺延法定节假日
     private boolean matchDeptReservation; //是否顺延科室预约
+    @Transient
+    private List<StudyPlanRuleBean> studyPlanRuleBeanList;
+
+    public List<StudyPlanRuleBean> getStudyPlanRuleBeanList() {
+        if (this.studyPlanRuleBeanList != null) {
+            return this.studyPlanRuleBeanList;
+        }
+        return super.getSubBeans(StudyPlanRuleBean.class, "studyPlanId");
+    }
+
+    public void setStudyPlanRuleBeanList(List<StudyPlanRuleBean> studyPlanRuleBeanList) {
+        this.studyPlanRuleBeanList = studyPlanRuleBeanList;
+    }
 
     public short getPlanType() {
         return planType;
