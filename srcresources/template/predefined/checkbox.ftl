@@ -2,10 +2,10 @@
     <div class="form-group">
         <label class="col-sm-3 control-label">${name}</label>
         <div class="col-sm-9">
-            <input type="hidden" id="${document.code!}_${code!}" name="${document.code!}_${code!}" value="" />
+            <input type="hidden" name="${document.code!}_${code!}" value="" />
             <#list entryCodeBeanList as option>
                 <label class="checkbox-inline">
-                    <input type="checkbox" id="${document.code!}_${code!}" name="${document.code!}_${code!}" value="${option.value}">
+                    <input type="checkbox" name="${document.code!}_${code!}" value="${option.value}">
                     ${option.name}
                 </label>
             </#list>

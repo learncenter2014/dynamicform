@@ -4,7 +4,7 @@
         <div class="col-sm-9">
             <select id="${document.code!}_${code!}" name="${document.code!}_${code!}" class="form-control m-bot15">
                 <#list entryCodeBeanList as option>
-                    <option id="${option.value!}">${option.name!}</option>
+                    <option value="${option.value!}">${option.name!}</option>
                 </#list>
             </select>
             <script type="text/javascript">
