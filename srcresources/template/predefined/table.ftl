@@ -27,7 +27,7 @@
 
                     get: function(code, key) {
                         var value = this.data[code + "_" + key];
-                        if(null != key && 'undefined' != key) {
+                        if(null != value && 'undefined' != value) {
                             return value;
                         }
                         return key;
@@ -55,9 +55,23 @@
                             <td id="${row.code!}_${column.code!}" class="data-cell">
                                 <#if column.htmlType == 1>
                                     ${"$"}{${row.code!}_${column.code!}!}
-                                <#else>
+                                <#elseif column.htmlType == 3 || column.htmlType == 5>
                                     <script type="text/javascript">
                                         $("#${row.code!}_${column.code!}").html(KeyValueMap_${id!}.get("${column.code}", "${'$'}{${row.code!}_${column.code!}!}"));
+                                    </script>
+                                <#elseif column.htmlType == 4>
+                                    <script type="text/javascript">
+                                        var values = "${'$'}{${row.code!}_${column.code!}!}".split(";");
+                                        var labels = "";
+                                        for(var index in values) {
+                                            if(labels.length > 0) {
+                                                labels = labels + "," + KeyValueMap_${id!}.get("${column.code}", values[index]);
+                                            } else {
+                                                labels = KeyValueMap_${id!}.get("${column.code}", values[index]);
+                                            }
+                                        }
+
+                                        $("#${row.code!}_${column.code!}").html(labels);
                                     </script>
                                 </#if>
                             </td>
@@ -110,9 +124,68 @@
                                 }
                                 <#elseif column.htmlType == 4>
                                 <#--checkbox-->
+                                {
+                                    html:   <#list column.entryCodeBeanList as option>
+                                                "<label class='checkbox-inline'>" +
+                                                    "<input type='checkbox' id='${id!}_column_editor_${column_index}' name='${id!}_column_editor_${column_index}' value='${option.value}'>" +
+                                                    "${option.name}" +
+                                                "</label>" +
+                                            </#list>
+                                            "<script type='text/javascript'>" +
+                                                "var checkedValueStr = '###value###';" +
+                                                "var checkedValues = checkedValueStr.split(';');" +
+                                                "for(index in checkedValues){" +
+                                                    "$(\"input[name=${id!}_column_editor_${column_index}][value=\"+checkedValues[index]+\"]\").attr('checked','checked');" +
+                                                "}" +
+                                            "<\/script>",
+                                    getHtml: function(value) {
+                                        return this.html.replace(/###value###/g, value);
+                                    },
+                                    getValue: function() {
+                                        var resultValue = "";
+                                        $("input[name=${id!}_column_editor_${column_index}]:checked").each(
+                                            function(){
+                                                resultValue = resultValue + ";" + $(this).val();
+                                            }
+                                        );
+                                        return resultValue;
+                                    },
+                                    getDisplayValue: function() {
+                                        var resultValue = "";
+                                        $("input[name=${id!}_column_editor_${column_index}]:checked").each(
+                                            function(){
+                                                if(resultValue.length > 0) {
+                                                    resultValue = resultValue + "," + $(this).parent().text();
+                                                } else {
+                                                    resultValue = $(this).parent().text();
+                                                }
+                                            }
+                                        );
+                                        return resultValue;
+                                    }
+                                }
                                 <#elseif column.htmlType == 5>
                                 <#--radio-->
-
+                                {
+                                    html:   <#list column.entryCodeBeanList as option>
+                                                "<label class='radio-inline'>" +
+                                                    "<input type='radio' name='${id!}_column_editor_${column_index}' value='${option.value}'> ${option.name}" +
+                                                "</label>" +
+                                            </#list>
+                                            "<script type='text/javascript'>" +
+                                                "$(\"input[name=${id!}_column_editor_${column_index}][value=###value###]\").attr('checked','checked');" +
+                                            "<\/script>"
+                                            ,
+                                    getHtml: function(value) {
+                                        return this.html.replace(/###value###/g, value);
+                                    },
+                                    getValue: function() {
+                                        return $("input[name=${id!}_column_editor_${column_index}]:checked").val();
+                                    },
+                                    getDisplayValue: function() {
+                                        return $("input[name=${id!}_column_editor_${column_index}]:checked").parent().text();
+                                    }
+                                }
                                 </#if>
                                 ,
                             </#list>

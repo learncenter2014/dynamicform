@@ -74,8 +74,10 @@
                         for(; index < jqTds.length - 1; index ++) {
                             var id = jqTds[index].id;
                             var hiddenObject = $("input[type='hidden'][name='"+id+"']")[0];
-                            hiddenObject.value = editors.getValue(index - 1)//jqInputs[index - 1].value;
+                            hiddenObject.value = editors.getValue(index - 1);//jqInputs[index - 1].value;
+                            console.log(editors.getValue(index - 1));
                             oTable.fnUpdate(editors.getDisplayValue(index - 1), nRow, index, false);
+
                         }
                         oTable.fnUpdate('<a class="edit" href="">编辑</a>', nRow, index, false);
                         oTable.fnDraw();
