@@ -1,9 +1,6 @@
 package actions;
 
-import bl.beans.DocumentBean;
-import bl.beans.StudyBean;
-import bl.beans.StudyDocumentBean;
-import bl.beans.StudyDocumentEntryBean;
+import bl.beans.*;
 import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
@@ -32,6 +29,25 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
     //这个是来自前台选择的document和对应的Entry
     private List<StudyDocumentBean> savedDocumentBeanList;
     private List<StudyDocumentEntryBean> savedDocumentEntryBeanList;
+    private StudyPlanBean subsequentPlan;
+    private StudyPlanBean telphonePlan;
+
+    public StudyPlanBean getSubsequentPlan() {
+        return subsequentPlan;
+    }
+
+    public void setSubsequentPlan(StudyPlanBean subsequentPlan) {
+        this.subsequentPlan = subsequentPlan;
+    }
+
+    public StudyPlanBean getTelphonePlan() {
+        return telphonePlan;
+    }
+
+    public void setTelphonePlan(StudyPlanBean telphonePlan) {
+        this.telphonePlan = telphonePlan;
+    }
+
     private static final DocumentBusiness dbs = (DocumentBusiness)SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
     private static final StudyBusiness sbs = (StudyBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
 
@@ -197,6 +213,14 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
 
     public String wizardPlan() throws Exception {
         this.edit();
+        List<StudyPlanBean> spbs = this.getStudy().getStudyPlanBeans();
+        for (int i = 0; spbs != null && i < spbs.size(); i++) {
+            if (spbs.get(i).getPlanType() == 0) {
+                this.subsequentPlan = spbs.get(i);
+            } else if (spbs.get(i).getPlanType() == 1) {
+                this.telphonePlan = spbs.get(i);
+            }
+        }
         return SUCCESS;
     }
 

@@ -254,7 +254,7 @@ $(document).ready(function() {
                 if(totalOptions > 0){
                     $('#${tableId} tbody tr').each( function (i) {
                         var nCloneTd = document.createElement( 'td' );
-                        $(this).append(nCloneTd);
+                        $(this).append('<td>ccc</td>');
                         for(var p in options){
                             $(nCloneTd).append(options[p].html);
                         }
