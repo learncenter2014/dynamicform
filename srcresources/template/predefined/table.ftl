@@ -53,7 +53,9 @@
                         <td>${row.name}</td>
                         <#list columns as column>
                             <td id="${row.code!}_${column.code!}" class="data-cell">
-                                <#if column.htmlType == 1>
+                                <#if column.htmlType == 0>
+                                    ${column.name}
+                                <#elseif column.htmlType == 1>
                                     ${"$"}{${row.code!}_${column.code!}!}
                                 <#elseif column.htmlType == 3 || column.htmlType == 5>
                                     <script type="text/javascript">
@@ -87,7 +89,21 @@
                 return {
                     data : [
                             <#list columns as column>
-                                <#if column.htmlType == 1>
+                                <#if column.htmlType == 0>
+                                <#--text-->
+                                {
+                                    html:"${column.name}",
+                                    getHtml: function(value) {
+                                        return this.html.replace(/###value###/g, value);
+                                    },
+                                    getValue : function() {
+                                        return "${column.name}";
+                                    },
+                                    getDisplayValue: function() {
+                                        return "${column.name}";
+                                    }
+                                }
+                                <#elseif column.htmlType == 1>
                                 <#--text-->
                                 {
                                     html:"<input id='${id!}_column_editor_${column_index}' type='text' value='###value###' class='form-control small'>",
