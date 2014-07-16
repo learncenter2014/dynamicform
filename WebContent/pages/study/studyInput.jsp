@@ -76,11 +76,13 @@
                             var hiddenObject = $("input[type='hidden'][name='"+id+"']")[0];
                             hiddenObject.value = editors.getValue(index - 1);//jqInputs[index - 1].value;
                             console.log(editors.getValue(index - 1));
-                            oTable.fnUpdate(editors.getDisplayValue(index - 1), nRow, index, false);
+                            jqTds[index].innerHTML = editors.getDisplayValue(index - 1);
+                            //oTable.fnUpdate(editors.getDisplayValue(index - 1), nRow, index, false);
 
                         }
-                        oTable.fnUpdate('<a class="edit" href="">编辑</a>', nRow, index, false);
-                        oTable.fnDraw();
+                        jqTds[index].innerHTML = '<a class="edit" href="">编辑</a>';
+                        //oTable.fnUpdate('<a class="edit" href="">编辑</a>', nRow, index, false);
+                        //oTable.fnDraw();
                     }
 
                     var oTable = eTable.dataTable({
