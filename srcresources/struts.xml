@@ -312,4 +312,21 @@
             <result name="success">/pages/department/deptsaveexcel.jsp</result>
         </action>
     </package>
+    <package name="unit" namespace="/unit" extends="default">
+        <action name="index" class="actions.UnitAction" method="index"/>
+        <action name="initTable" class="actions.UnitAction" method="initTable"/>
+        <action name="queryTable" class="actions.UnitAction" method="queryTable"/>
+        <action name="add" class="actions.UnitAction" method="add">
+            <result name="success">/pages/menu_unit/unitEdit.jsp</result>
+        </action>
+        <action name="edit" class="actions.UnitAction" method="edit">
+            <result name="success">/pages/menu_unit/unitEdit.jsp</result>
+        </action>
+        <action name="save" class="actions.UnitAction" method="save">
+            <result name="success" type="redirectAction">/unit/index</result>
+        </action>
+        <action name="delete" class="actions.UnitAction" method="delete">
+            <result name="success" type="redirectAction">/unit/index</result>
+        </action>
+    </package>
 </struts>

@@ -1,12 +1,18 @@
 package actions;
 
 import bl.beans.EntryBean;
+import bl.beans.UnitBean;
 import bl.common.BusinessResult;
+import bl.constants.BusTieConstant;
+import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.EntryBusiness;
+import bl.mongobus.UnitBusiness;
 import org.apache.commons.lang.StringUtils;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
 import vo.table.TableQueryVo;
+
+import java.util.List;
 
 /**
  * Created by peter on 14-6-21.
@@ -15,7 +21,16 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
 
     private EntryBean entry;
     private String documentId;
+    private List<UnitBean> unitBeanList;
+    private static UnitBusiness ub = (UnitBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_UNIT_BUSINESS);
 
+    public List<UnitBean> getUnitBeanList() {
+        return unitBeanList;
+    }
+
+    public void setUnitBeanList(List<UnitBean> unitBeanList) {
+        this.unitBeanList = unitBeanList;
+    }
 
     @Override
     public String getCustomJsp() {
@@ -66,6 +81,11 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
 
     public String edit() {
         entry = (EntryBean) getBusiness().getLeaf(getId()).getResponseData();
+        unitBeanList = (List<UnitBean>) ub.getAllLeaves().getResponseData();
+        UnitBean ubTemp = new UnitBean();
+        ubTemp.setName("");
+        ubTemp.setCode("");
+        unitBeanList.add(0,ubTemp);
         return SUCCESS;
     }
 
@@ -83,6 +103,11 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     public String add() {
         entry = new EntryBean();
         entry.setDocumentId(this.documentId);
+        unitBeanList = (List<UnitBean>) ub.getAllLeaves().getResponseData();
+        UnitBean ubTemp = new UnitBean();
+        ubTemp.setName("");
+        ubTemp.setCode("");
+        unitBeanList.add(0,ubTemp);
         return SUCCESS;
     }
     @Override

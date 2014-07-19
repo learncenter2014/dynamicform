@@ -68,6 +68,7 @@ public class EntryUploadExcelAction extends UploadExcelAction {
                     {"表单元素", "htmlType"},
                     {"实体缺省值", "defaultValue"},
                     {"标准分类", "standardEntry"},
+                    {"标准单位","pseudoReferenceUnitCode"},
                     {"最小值", "minValue"},
                     {"最大值", "maxValue"},
                     {"字段长度", "maxLength"},
