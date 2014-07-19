@@ -27,12 +27,22 @@
         <a id="top0"></a>
         <br>
         <br>
+        <a id="topposition"/>
         <%@include file="studyNavigation.jsp" %>
         <form id="studyForm" class="form-horizontal tasi-form" action="${rootPath}/study/savewizardDocument.action"
               method="post">
+            <%@ include file="/pages/study/studyAction.jsp" %>
             <input name="study.id" type="hidden" value="${study.id}"/>
             <input name="activeWizard" type="hidden" value="${activeWizard}"/>
+            <div class="stepy-tab" style="position:fixed;right:0px;bottom:20px;">
+                <ul class="stepy-titles clearfix" id="default-titles">
+                    <li class="current-step">
+                        <a href="#topposition"><div style="width:80px;height: 80px">置顶</div></a></li>
+                    <li class="current-step">
+                        <a href="#bottomposition"><div style="width:80px;height: 80px">置底</div></a></li>
 
+                </ul>
+            </div>
             <div class="mail-box">
                 <div class="sm-side" style="float:left;width:280px;">
                     <span><a href="#top0"><h3>模块选择</h3></a></span>
@@ -184,6 +194,7 @@
                     </s:iterator>
                 </div>
             </div>
+            <a id="bottomposition"/>
             <br>
             <br>
             <%@ include file="/pages/study/studyAction.jsp" %>
