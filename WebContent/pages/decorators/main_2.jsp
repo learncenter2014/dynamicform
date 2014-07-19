@@ -7,7 +7,7 @@
     <meta name="description" content="dynamic manager technique">
     <meta name="author" content="LiLimin,GuDong,WangRonghua">
     <meta name="keyword" content="dynamicform,template">
-    <title>动态表单管理系统</title>
+    <title>单病种随访</title>
 
     <link rel="shortcut icon" href="${rootPath}/jslib/flatlab/img/favicon.png">
 
