@@ -9,7 +9,7 @@ import java.util.List;
  * Created by wangronghua on 14-6-17.
  */
 @Entity(value = "entry")
-public class EntryBean extends Bean {
+public class EntryBean extends Bean implements Comparable<EntryBean>{
     private int sequence; //序号
     private String englishName; //实体变量名称
     private String code; //代码  作为后续生成数据存储模型的表的列名
@@ -226,5 +226,8 @@ public class EntryBean extends Bean {
         this.resolution = resolution;
     }
 
-
+    @Override
+    public int compareTo(EntryBean o) {
+        return Integer.valueOf(this.getSequence()).compareTo(o.getSequence());
+    }
 }

@@ -174,7 +174,7 @@
             <result name="success">/pages/entry/entryEdit.jsp</result>
         </action>
         <action name="save" class="actions.EntryAction" method="save">
-            <result name="success" type="redirectAction">/entry/index?documentId=${documentId}</result>
+            <result name="success" type="redirectAction">/entry/index?documentId=${documentId}&amp;subElementType=${entry.subElementType}</result>
         </action>
         <action name="delete" class="actions.EntryAction" method="delete">
             <result name="success" type="redirectAction">/entry/index?documentId=${documentId}</result>

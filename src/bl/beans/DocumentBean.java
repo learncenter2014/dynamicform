@@ -3,6 +3,8 @@ package bl.beans;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Transient;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,7 +36,9 @@ public class DocumentBean extends Bean{
         if(this.entryBeanList!=null){
             return this.entryBeanList;
         }
-        return super.getSubBeans(EntryBean.class,"documentId");
+        List<EntryBean> list = super.getSubBeans(EntryBean.class,"documentId");
+        Collections.sort(list);
+        return list;
     }
 
     public void setEntryBeanList(List<EntryBean> entryBeanList) {
