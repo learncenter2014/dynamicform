@@ -73,7 +73,7 @@
         <div class="navbar-collapse ">
             <ul class="nav navbar-nav">
                 <li class="dropdown"> <!--class="active"-->
-                    <a data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle " href="#">随访执行<b class=" fa fa-angle-down"></b></a>
+                    <a data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle " href="#">随访注册<b class=" fa fa-angle-down"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="${rootPath}/patient/index.action">随访注册</a></li>
                     </ul>
