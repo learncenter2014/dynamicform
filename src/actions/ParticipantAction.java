@@ -66,12 +66,11 @@ public class ParticipantAction extends BaseTableAction<ParticipantBusiness> {
     }
 
     public String registerSubmit() throws InvocationTargetException, IllegalAccessException {
-        if(null != patientId) {
+        if(null != patientId && null != participant) {
             PatientBean patientBean = (PatientBean) patientBus.getLeaf(patientId).getResponseData();
-            ParticipantBean participantBean = new ParticipantBean();
-            BeanUtils.copyProperties(participantBean, patientBean);
-            participantBean.set_id(null);
-            this.getBusiness().createLeaf(participantBean);
+            BeanUtils.copyProperties(participant, patientBean);
+            participant.set_id(null);
+            this.getBusiness().createLeaf(participant);
         }
         return SUCCESS;
     }
