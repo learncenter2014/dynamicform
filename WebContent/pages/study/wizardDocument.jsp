@@ -22,24 +22,26 @@
 </head>
 <body>
 <!--main content start-->
+<%@include file="studyNavigation.jsp" %>
+<a id="topposition"/>
 <section class="panel">
     <div class="panel-body">
-        <a id="top0"></a>
-        <br>
-        <br>
-        <a id="topposition"/>
-        <%@include file="studyNavigation.jsp" %>
         <form id="studyForm" class="form-horizontal tasi-form" action="${rootPath}/study/savewizardDocument.action"
               method="post">
             <%@ include file="/pages/study/studyAction.jsp" %>
             <input name="study.id" type="hidden" value="${study.id}"/>
             <input name="activeWizard" type="hidden" value="${activeWizard}"/>
+
             <div class="stepy-tab" style="position:fixed;right:0px;bottom:20px;">
                 <ul class="stepy-titles clearfix" id="default-titles">
                     <li class="current-step">
-                        <a href="#topposition"><div style="width:80px;height: 80px">置顶</div></a></li>
+                        <a href="#topposition">
+                            <div style="width:80px;height: 80px">置顶</div>
+                        </a></li>
                     <li class="current-step">
-                        <a href="#bottomposition"><div style="width:80px;height: 80px">置底</div></a></li>
+                        <a href="#bottomposition">
+                            <div style="width:80px;height: 80px">置底</div>
+                        </a></li>
 
                 </ul>
             </div>
@@ -49,25 +51,28 @@
                     <ul class="inbox-nav">
                         <s:iterator value="documentBeanList" status="dindex" var="documentBean">
                             <li>
-
-                                <s:set value="false" name="checkedDocument"/>
-                                <s:iterator value="study.studyDocumentBeanList">
-                                    <s:if test="%{documentId == #documentBean.id}">
-                                        <s:set value="true" name="checkedDocument"/>
-                                    </s:if>
-                                </s:iterator>
                                 <a href="#D<s:property value='id'/>">
-                                    <s:if test="%{#checkedDocument==true}">
+                                    <s:if test="study.studyDocumentBeanList.{?#this.documentId == #documentBean.id}.size!=0)">
                                         <input type="checkbox" checked="checked"
                                                name="savedDocumentBeanList[<s:property value="#dindex.index"/>].documentId"
                                                value="<s:property value="id"/>">
-                                        <span style="margin-left:20px"><s:property value="name"/></span>
+                                        <s:if test="#documentBean.type==1">
+                                            <i class="fa fa-bars" title="有子模块"></i>
+                                            <span style="background-color:#58c9f3"><s:property value="name"/></span></s:if>
+                                        <s:else>
+                                            <span style="margin-left:28px"><s:property value="name"/></span>
+                                        </s:else>
                                     </s:if>
                                     <s:else>
                                         <input type="checkbox"
                                                name="savedDocumentBeanList[<s:property value="#dindex.index"/>].documentId"
                                                value="<s:property value="id"/>">
-                                        <span style="margin-left:20px"><s:property value="name"/></span>
+                                        <s:if test="#documentBean.type==1">
+                                            <i class="fa fa-bars" title="有子模块"></i>
+                                            <span style="background-color:#58c9f3"><s:property value="name"/></span></s:if>
+                                        <s:else>
+                                            <span style="margin-left:28px"><s:property value="name"/></span>
+                                        </s:else>
                                     </s:else>
                                 </a>
                             </li>
@@ -148,46 +153,49 @@
                                             </s:if>
                                         </s:iterator>
                                     </fieldset>
-                                    <fieldset style="background-color:#ddddd8">
-                                        <legend><h5>子元素</h5></legend>
-                                        <s:iterator value="entryBeanList" status="eindex" var="entryBeanList">
-                                            <s:if test="#entryBeanList.subElementType!=0">
-                                                <s:set value="false" name="checkedDocumentEntry"/>
-                                                <s:iterator value="study.studyDocumentBeanList" var="studyDocumentBean">
-                                                    <s:if test="%{documentId == #documentBean.id}">
-                                                        <s:iterator
-                                                                value="#studyDocumentBean.studyDocumentEntryBeanList"
-                                                                var="studyDocumentEntry">
-                                                            <s:if test="%{#entryBeanList.id == #studyDocumentEntry.entryId}">
-                                                                <s:set value="true" name="checkedDocumentEntry"/>
-                                                            </s:if>
-                                                        </s:iterator>
-                                                    </s:if>
-                                                </s:iterator>
-                                                <div class="col-lg-4">
-                                                    <span><s:property value="sequence"/>.</span>
-                                                    <input type="hidden"
-                                                           name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].documentId"
-                                                           value="<s:property value="#documentBean.id"/>">
-                                                    <s:if test="%{#checkedDocumentEntry==true}">
-                                                        <input type="checkbox" checked="checked"
-                                                               name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].entryId"
-                                                               value="<s:property value="id"/>">
-                                                        <span><s:property value="code"/></span> <span><s:property
-                                                            value="name"/></span>
-                                                    </s:if>
-                                                    <s:else>
-                                                        <input type="checkbox"
-                                                               name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].entryId"
-                                                               value="<s:property value="id"/>">
-                                                        <span><s:property value="code"/></span> <span><s:property
-                                                            value="name"/></span>
-                                                    </s:else>
-                                                </div>
-                                                <s:set name="entryCounter" value="%{#entryCounter + 1}"/>
-                                            </s:if>
-                                        </s:iterator>
-                                    </fieldset>
+                                    <s:if test="#documentBean.type==1"> <!%-- 有子元素模块才显示 --!>
+                                        <fieldset style="background-color:#ddddd8">
+                                            <legend><h5>子元素</h5></legend>
+                                            <s:iterator value="entryBeanList" status="eindex" var="entryBeanList">
+                                                <s:if test="#entryBeanList.subElementType!=0">
+                                                    <s:set value="false" name="checkedDocumentEntry"/>
+                                                    <s:iterator value="study.studyDocumentBeanList"
+                                                                var="studyDocumentBean">
+                                                        <s:if test="%{documentId == #documentBean.id}">
+                                                            <s:iterator
+                                                                    value="#studyDocumentBean.studyDocumentEntryBeanList"
+                                                                    var="studyDocumentEntry">
+                                                                <s:if test="%{#entryBeanList.id == #studyDocumentEntry.entryId}">
+                                                                    <s:set value="true" name="checkedDocumentEntry"/>
+                                                                </s:if>
+                                                            </s:iterator>
+                                                        </s:if>
+                                                    </s:iterator>
+                                                    <div class="col-lg-4">
+                                                        <span><s:property value="sequence"/>.</span>
+                                                        <input type="hidden"
+                                                               name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].documentId"
+                                                               value="<s:property value="#documentBean.id"/>">
+                                                        <s:if test="%{#checkedDocumentEntry==true}">
+                                                            <input type="checkbox" checked="checked"
+                                                                   name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].entryId"
+                                                                   value="<s:property value="id"/>">
+                                                            <span><s:property value="code"/></span> <span><s:property
+                                                                value="name"/></span>
+                                                        </s:if>
+                                                        <s:else>
+                                                            <input type="checkbox"
+                                                                   name="savedDocumentEntryBeanList[<s:property value="#entryCounter"/>].entryId"
+                                                                   value="<s:property value="id"/>">
+                                                            <span><s:property value="code"/></span> <span><s:property
+                                                                value="name"/></span>
+                                                        </s:else>
+                                                    </div>
+                                                    <s:set name="entryCounter" value="%{#entryCounter + 1}"/>
+                                                </s:if>
+                                            </s:iterator>
+                                        </fieldset>
+                                    </s:if>
                                 </div>
                             </div>
                         </section>
