@@ -30,73 +30,74 @@
     <header class="panel-heading">
         Patient Edit
     </header>
-    <form role="form" class="form-horizontal tasi-form" action="${rootPath}/patient/save.action">
+    <div class="panel-body">
+        <form role="form" class="form-horizontal tasi-form" action="${rootPath}/patient/save.action" method="post">
 
-        <input name="patient.id" type="hidden" value="${patient.id}"/>
-        <input name="patient.name" type="hidden" value="${patient.name}"/>
+            <input name="patient.id" type="hidden" value="${patient.id}"/>
 
-        <div class="form-group">
-            <label class="col-lg-2 control-label">患者编号</label>
-            <div class="col-lg-10">
-                <input type="text" placeholder="" id="f-key" name="patient.patientKey" class="form-control" required="required" value="${patient.patientKey}">
-                <p class="help-block">请输入患者编号！</p>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">患者编号</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="" id="f-key" name="patient.patientKey" class="form-control" required="required" value="${patient.patientKey}">
+                    <p class="help-block">请输入患者编号！</p>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">患者姓名</label>
-            <div class="col-lg-10">
-                <input type="text" placeholder="" id="f-name" name="patient.patientName" class="form-control" required="required" value="${patient.patientName}">
-                <p class="help-block">请输入患者姓名！</p>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">患者姓名</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="" id="f-name" name="patient.name" class="form-control" required="required" value="${patient.patientName}">
+                    <p class="help-block">请输入患者姓名！</p>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">性别</label>
-            <div class="col-lg-10">
-                <select class="form-control m-bot15" name="patient.sex">
-                    <option value="1"
-                    <s:if test="patient.sex==1">
-                        selected="selected"
-                    </s:if>
-                    >Male</option>
-                    <option value="2"
-                    <s:if test="patient.sex==2">
-                        selected="selected"
-                    </s:if>
-                    >Female</option>
-                </select>
-                <p class="help-block">请输入性别！</p>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">性别</label>
+                <div class="col-lg-6">
+                    <select class="form-control m-bot15" name="patient.sex">
+                        <option value="1"
+                        <s:if test="patient.sex==1">
+                            selected="selected"
+                        </s:if>
+                        >男</option>
+                        <option value="2"
+                        <s:if test="patient.sex==2">
+                            selected="selected"
+                        </s:if>
+                        >女</option>
+                    </select>
+                    <p class="help-block">请输入性别！</p>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label class="col-lg-2 control-label">出生日期</label>
-            <div class="col-lg-10">
-                <input id="birthday" placeholder="" name="patient.birthday"  class="form-control" value="<s:date name='patient.birthday' format='MM/dd/yyyy'/>">
-                <script>
-                    $("#birthday").datepicker();
-                </script>
-                <p class="help-block">请输入出生日期！</p>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">出生日期</label>
+                <div class="col-lg-6">
+                    <input id="birthDay" placeholder="" name="patient.birthDay"  class="form-control" value="<s:date name='patient.birthDay' format="yyyy-MM-dd"/>">
+                    <script>
+                        $("#birthDay").datepicker({format: 'yyyy-mm-dd'});
+                    </script>
+                    <p class="help-block">请输入出生日期！</p>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label class="col-lg-2 control-label">手机号码</label>
-            <div class="col-lg-10">
-                <input  placeholder="" name="patient.cellphone"  class="form-control" value="${patient.cellphone}">
-                <p class="help-block">请输入手机号码！</p>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">手机号码</label>
+                <div class="col-lg-6">
+                    <input  placeholder="" name="patient.cellPhone"  class="form-control" value="${patient.cellPhone}">
+                    <p class="help-block">请输入手机号码！</p>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <button class="btn btn-danger" type="submit">提交</button>
-                <button class="btn btn-danger" onclick="handleCancel()">取消</button>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button class="btn btn-danger" type="submit">提交</button>
+                    <button class="btn btn-danger" onclick="handleCancel()">取消</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </section>
-<!--script for this page-->
-<script type="text/javascript" src="<%=request.getContextPath() %>/jslib/flatlab/js/jquery.validate.min.js"></script>
-<script src="<%=request.getContextPath() %>/jslib/flatlab/js/form-validation-script.js"></script>
+<%--<!--script for this page-->--%>
+<%--<script type="text/javascript" src="<%=request.getContextPath() %>/jslib/flatlab/js/jquery.validate.min.js"></script>--%>
+<%--<script src="<%=request.getContextPath() %>/jslib/flatlab/js/form-validation-script.js"></script>--%>
 </body>
 </html>

@@ -214,10 +214,15 @@
             <result name="success">/pages/patient/patientEdit.jsp</result>
         </action>
         <action name="save" class="actions.PatientAction" method="save">
-            <result name="success" type="redirectAction">index</result>
+            <result name="success" type="redirectAction">/patient/index</result>
+            <result name="input">/pages/patient/patientEdit.jsp</result>
         </action>
         <action name="delete" class="actions.PatientAction" method="delete">
-            <result name="success" type="redirectAction">index</result>
+            <result name="success" type="redirectAction">/patient/index</result>
+        </action>
+
+        <action name="register" class="actions.ParticipantAction" method="register">
+            <result name="success">/pages/participant/participantEdit.jsp</result>
         </action>
     </package>
 
@@ -227,6 +232,15 @@
         <action name="queryTable" class="actions.ParticipantAction" method="queryTable"/>
         <action name="studyInput" class="actions.StudyInputAction" method="input" >
             <result name="success">/pages/study/studyInput.jsp</result>
+        </action>
+        <action name="register" class="actions.ParticipantAction" method="register" >
+            <result name="success">/pages/participant/participantEdit.jsp</result>
+        </action>
+        <action name="registerSubmit" class="actions.ParticipantAction" method="registerSubmit">
+            <result name="success" type="chain">
+                <param name="actionName">index</param>
+                <param name="namespace">/patient</param>
+            </result>
         </action>
     </package>
 

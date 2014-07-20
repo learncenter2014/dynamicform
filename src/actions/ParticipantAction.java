@@ -1,13 +1,30 @@
 package actions;
 
+import bl.beans.ParticipantBean;
+import bl.beans.PatientBean;
+import bl.beans.StudyBean;
+import bl.constants.BusTieConstant;
+import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.ParticipantBusiness;
+import bl.mongobus.PatientBusiness;
+import bl.mongobus.StudyBusiness;
+import org.apache.commons.beanutils.BeanUtils;
 import vo.table.TableHeaderVo;
 import vo.table.TableInitVo;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * Created by wangronghua on 14-6-29.
  */
 public class ParticipantAction extends BaseTableAction<ParticipantBusiness> {
+    private static final StudyBusiness sbBus = (StudyBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_STUDYBUSINESS);
+    private static final PatientBusiness patientBus = (PatientBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_PATIENTBUSINESS);
+
+    private String patientId;
+    private ParticipantBean participant;
+    private List<StudyBean> studyList;
 
     @Override
     public String getActionPrex() {
@@ -42,4 +59,45 @@ public class ParticipantAction extends BaseTableAction<ParticipantBusiness> {
 
         return SUCCESS;
     }
+
+    public String register() {
+        studyList = (List<StudyBean>) sbBus.getAllLeaves().getResponseData();
+        return SUCCESS;
+    }
+
+    public String registerSubmit() throws InvocationTargetException, IllegalAccessException {
+        if(null != patientId) {
+            PatientBean patientBean = (PatientBean) patientBus.getLeaf(patientId).getResponseData();
+            ParticipantBean participantBean = new ParticipantBean();
+            BeanUtils.copyProperties(participantBean, patientBean);
+            participantBean.set_id(null);
+            this.getBusiness().createLeaf(participantBean);
+        }
+        return SUCCESS;
+    }
+
+    public List<StudyBean> getStudyList() {
+        return studyList;
+    }
+
+    public void setStudyList(List<StudyBean> studyList) {
+        this.studyList = studyList;
+    }
+
+    public ParticipantBean getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(ParticipantBean participant) {
+        this.participant = participant;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
+
 }

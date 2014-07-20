@@ -27,7 +27,7 @@ public class PatientBusiness extends MongoCommonBusiness<BeanContext, PatientBea
     if(null != result.getResponseData()) {
       List<PatientBean> patientBeanList = (List<PatientBean>) result.getResponseData();
       for(PatientBean patient: patientBeanList) {
-        Date birthDay = patient.getBirthday();
+        Date birthDay = patient.getBirthDay();
         Calendar cal = Calendar.getInstance();
         int thisYear = cal.get(Calendar.YEAR);
         cal.setTime(birthDay);

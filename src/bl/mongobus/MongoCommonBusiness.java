@@ -36,7 +36,7 @@ public class MongoCommonBusiness<F, L> implements BusinessInterface,
     }
 
   public String getDBName() {
-    String dbFlag = dbFlag = "form";
+    String dbFlag = "form";
     return dbFlag;
   }
 
