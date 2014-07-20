@@ -54,7 +54,6 @@ public class PatientAction extends BaseTableAction<PatientBusiness> {
             getBusiness().createLeaf(patient);
         } else {
             PatientBean origBean = (PatientBean) getBusiness().getLeaf(patient.getId().toString()).getResponseData();
-            BeanUtils.copyProperties(patient, origBean);
             getBusiness().updateLeaf(origBean, patient);
         }
         return SUCCESS;

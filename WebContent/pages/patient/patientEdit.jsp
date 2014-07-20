@@ -36,16 +36,16 @@
             <input name="patient.id" type="hidden" value="${patient.id}"/>
 
             <div class="form-group">
-                <label class="col-lg-2 control-label">患者编号</label>
+                <label class="col-lg-2 control-label">门诊号</label>
                 <div class="col-lg-6">
-                    <input type="text" placeholder="" id="f-key" name="patient.patientKey" class="form-control" required="required" value="${patient.patientKey}">
+                    <input type="text" placeholder="" id="f-key" name="patient.registerNo" class="form-control" required="required" value="${patient.registerNo}">
                     <p class="help-block">请输入患者编号！</p>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-lg-2 control-label">患者姓名</label>
                 <div class="col-lg-6">
-                    <input type="text" placeholder="" id="f-name" name="patient.name" class="form-control" required="required" value="${patient.patientName}">
+                    <input type="text" placeholder="" id="f-name" name="patient.name" class="form-control" required="required" value="${patient.name}">
                     <p class="help-block">请输入患者姓名！</p>
                 </div>
             </div>

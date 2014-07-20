@@ -48,10 +48,22 @@ public class ParticipantAction extends BaseTableAction<ParticipantBusiness> {
         init.getAoColumns().add(new TableHeaderVo("name", "姓名").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("birthDay", "出生年月"));
         init.getAoColumns().add(new TableHeaderVo("dischargeDate", "出院时间"));
+
+        List<StudyBean> studyList = (List<StudyBean>) sbBus.getAllLeaves().getResponseData();
+        String[][] studies = new String[2][studyList.size()];
+        if (studyList.size() > 0) {
+            for (int i = 0; i < studyList.size(); i++) {
+                studies[0][i] = String.valueOf(studyList.get(i).getId());
+                studies[1][i] = studyList.get(i).getName();
+            }
+        } else {
+            studies = null;
+        }
+        init.getAoColumns().add(new TableHeaderVo("studyId", "随访方案").addSearchOptions(studies));
         init.getAoColumns().add(new TableHeaderVo("diagnosis", "诊断"));
-        init.getAoColumns().add(new TableHeaderVo("studyId", "随访方案"));
         init.getAoColumns().add(new TableHeaderVo("participantCode", "对象编码"));
         init.getAoColumns().add(new TableHeaderVo("latestFollowUpDate", "最近一次随访时间"));
+
         return init;
     }
 

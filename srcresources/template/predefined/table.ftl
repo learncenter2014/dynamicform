@@ -202,6 +202,25 @@
                                         return $("input[name=${id!}_column_editor_${column_index}]:checked").parent().text();
                                     }
                                 }
+                                <#elseif column.htmlType == 6>
+                                <#--radio-->
+                                    {
+                                        html:
+                                                "<input name='{id!}_column_editor_${column_index}' data-date-format="${format!'mm/dd/yyyy'}" value="${"$"}{${document.code!}_${code!}!}">"
+                                                "<script type='text/javascript'>" +
+                                                "$(\"input[name=${id!}_column_editor_${column_index}][value=###value###]\").attr('checked','checked');" +
+                                                "<\/script>"
+                                        ,
+                                        getHtml: function(value) {
+                                            return this.html.replace(/###value###/g, value);
+                                        },
+                                        getValue: function() {
+                                            return $("input[name=${id!}_column_editor_${column_index}]:checked").val();
+                                        },
+                                        getDisplayValue: function() {
+                                            return $("input[name=${id!}_column_editor_${column_index}]:checked").parent().text();
+                                        }
+                                    }
                                 </#if>
                                 ,
                             </#list>
