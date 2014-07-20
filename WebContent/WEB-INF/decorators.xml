@@ -22,6 +22,7 @@
         <pattern>/study/*.action</pattern>
         <pattern>/department/*.action</pattern>
         <pattern>/disease/*.action</pattern>
+        <pattern>/unit/*.action</pattern>
         <pattern>/dataInput/inputViewSelectSubmit.action</pattern>
 	</decorator>
     <decorator name="maingrid" page="/pages/decorators/main_view_grid.jsp">

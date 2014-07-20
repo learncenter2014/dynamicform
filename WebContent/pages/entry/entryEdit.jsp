@@ -84,7 +84,14 @@
             <div class="form-group has-success">
                 <label class="col-lg-2 control-label">元素归类</label>
                 <div class="col-lg-6">
-                    <s:select cssClass="form-control" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素'}" value="entry.subElementType"/>
+
+                    <s:if test="entry.id.length() > 0">
+                        <s:select cssClass="form-control" disabled="true" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素', 4:'伪单位主元素'}" value="entry.subElementType"/>
+                        <input type="hidden" name="entry.subElementType" value="${entry.subElementType}"/>
+                    </s:if>
+                    <s:else>
+                        <s:select cssClass="form-control" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素',4:'伪单位主元素'}" value="entry.subElementType"/>
+                    </s:else>
                 </div>
             </div>
             <div class="form-group has-success">
@@ -103,6 +110,12 @@
                 <label class="col-lg-2 control-label">标准分类</label>
                 <div class="col-lg-6">
                     <s:select cssClass="form-control" name="entry.standardEntry" list="#{0:'CDISC',1:'机构标准',2:'非标准'}" value="entry.standardEntry"/>
+                </div>
+            </div>
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label">标准单位</label>
+                <div class="col-lg-6">
+                    <s:select cssClass="form-control" name="entry.pseudoReferenceUnitCode" list="unitBeanList" value="%{entry.pseudoReferenceUnitCode}" listKey="code" listValue="name"/>
                 </div>
             </div>
             <div class="form-group has-success">
@@ -157,7 +170,7 @@
                 <div class="col-lg-offset-2 col-lg-6">
                     <button class="btn btn-info" type="submit">保存</button>
 
-                    <a href="entry/index.action?documentId=${documentId}">
+                    <a href="entry/index.action?documentId=${documentId}&subElementType=${entry.subElementType}">
                         <div class="btn btn-info">取消</div>
                     </a>
                 </div>

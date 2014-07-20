@@ -224,24 +224,26 @@ public class StudyAction extends BaseTableAction<StudyBusiness> {
             //constructed all studyDocumentBeans.
             for (int i = 0; i < savedDocumentBeanList.size(); i++) {
                 StudyDocumentBean sdb = savedDocumentBeanList.get(i);
-                String sdbId = ObjectId.get().toString();
-                sdb.setId(sdbId);
-                sdb.setStudyId(this.study.getId());
-                //追加StudyDocumentEntryBean
-                ArrayList<StudyDocumentEntryBean> sdeb = new ArrayList<StudyDocumentEntryBean>();
-                for (int j = 0; j < this.savedDocumentEntryBeanList.size(); j++) {
-                    StudyDocumentEntryBean sdebRef = this.savedDocumentEntryBeanList.get(j);
-                    //documentId存在，且要被选中元素也存在
-                    if (sdebRef != null && sdebRef.getDocumentId().equals(sdb.getDocumentId()) && sdebRef.getEntryId() != null) {
-                        sdebRef.setId(ObjectId.get().toString());
-                        sdebRef.setStudyDocumentId(sdbId);
-                        sdebRef.setStudyId(this.study.getId());
-                        //加入引用
-                        sdeb.add(sdebRef);
+                if (sdb != null) {
+                    String sdbId = ObjectId.get().toString();
+                    sdb.setId(sdbId);
+                    sdb.setStudyId(this.study.getId());
+                    //追加StudyDocumentEntryBean
+                    ArrayList<StudyDocumentEntryBean> sdeb = new ArrayList<StudyDocumentEntryBean>();
+                    for (int j = 0; j < this.savedDocumentEntryBeanList.size(); j++) {
+                        StudyDocumentEntryBean sdebRef = this.savedDocumentEntryBeanList.get(j);
+                        //documentId存在，且要被选中元素也存在
+                        if (sdebRef != null && sdebRef.getDocumentId().equals(sdb.getDocumentId()) && sdebRef.getEntryId() != null) {
+                            sdebRef.setId(ObjectId.get().toString());
+                            sdebRef.setStudyDocumentId(sdbId);
+                            sdebRef.setStudyId(this.study.getId());
+                            //加入引用
+                            sdeb.add(sdebRef);
+                        }
                     }
+                    sdb.setStudyDocumentEntryBeanList(sdeb);
+                    sdbs.add(sdb);
                 }
-                sdb.setStudyDocumentEntryBeanList(sdeb);
-                sdbs.add(sdb);
             }
         }
         //持久studyDocument
