@@ -62,7 +62,7 @@
                         for(; index < jqTds.length - 1; index ++) {
                             var id = jqTds[index].id;
                             var hiddenObject = $("input[type='hidden'][name='"+id+"']")[0];
-                            $("#"+id).html(editors.get(index - 1, hiddenObject.value));//'<input type="text" class="form-control small" value="' + hiddenObject.value + '">';
+                            $("#"+id).html(editors.get(index - 1, id, hiddenObject.value));//'<input type="text" class="form-control small" value="' + hiddenObject.value + '">';
                         }
                         jqTds[index].innerHTML = '<a class="edit" href="">保存</a>&nbsp;<a class="cancel" href="">取消</a>';
                     }
@@ -74,9 +74,8 @@
                         for(; index < jqTds.length - 1; index ++) {
                             var id = jqTds[index].id;
                             var hiddenObject = $("input[type='hidden'][name='"+id+"']")[0];
-                            hiddenObject.value = editors.getValue(index - 1);//jqInputs[index - 1].value;
-                            console.log(editors.getValue(index - 1));
-                            jqTds[index].innerHTML = editors.getDisplayValue(index - 1);
+                            hiddenObject.value = editors.getValue(index - 1, id);//jqInputs[index - 1].value;
+                            jqTds[index].innerHTML = editors.getDisplayValue(index - 1, id);
                             //oTable.fnUpdate(editors.getDisplayValue(index - 1), nRow, index, false);
 
                         }

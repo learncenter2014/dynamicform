@@ -275,6 +275,9 @@
             <result name="success">/pages/study/studyInput.jsp</result>
         </action>
 
+        <action name="regenTemplate" class="actions.StudyInputAction" method="genTemplate">
+            <result name="success">//welcome.jsp</result>
+        </action>
     </package>
     <package name="view" namespace="/view" extends="default">
         <action name="index" class="actions.ViewAction" method="index"/>

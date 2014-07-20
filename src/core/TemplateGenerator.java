@@ -9,6 +9,8 @@ import bl.mongobus.StudyBusiness;
 import bl.mongobus.ViewBusiness;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -78,7 +80,7 @@ public class TemplateGenerator {
 
         for(StudyDocumentEntryBean bean : studyDocumentEntryBeanList) {
             EntryBean entryBean = (EntryBean)entryBus.getLeaf(bean.getEntryId()).getResponseData();
-            if(documentBean.getType() == 0 && null != entryBean) {
+            if((documentBean.getType() == 0 || entryBean.getSubElementType() == 5) && null != entryBean) {
                 entryBean.setDocument(documentBean);
                 entryBean.setResolution(resolution);
                 innerHTML.append(genTemplate(entryBean));
@@ -90,15 +92,34 @@ public class TemplateGenerator {
                 }
             }
         }
-        if(documentBean.getType() == 0) {
-            documentBean.setInnerHTML(innerHTML.toString());
-            return TemplateHelper.get().getTemplate(EntryType.DOCUMENT, documentBean);
-        } else {
+
+        if(documentBean.getType() != 0) {
+            this.sortEntryBySequence(rows);
+            this.sortEntryBySequence(columns);
+
             documentBean.setRows(rows);
             documentBean.setColumns(columns);
-            return TemplateHelper.get().getTemplate(EntryType.TABLE, documentBean);
+            innerHTML.append(TemplateHelper.get().getTemplate(EntryType.TABLE, documentBean));
         }
 
+        documentBean.setInnerHTML(innerHTML.toString());
+        return TemplateHelper.get().getTemplate(EntryType.DOCUMENT, documentBean);
+
+    }
+
+    private void sortEntryBySequence(List<EntryBean> entryList) {
+
+        Collections.sort(entryList, new Comparator<EntryBean>() {
+            @Override
+            public int compare(EntryBean o1, EntryBean o2) {
+                if(o1.getSequence() > o2.getSequence()){
+                    return 1;
+                } else if(o1.getSequence() == o2.getSequence()) {
+                    return 0;
+                }
+                return -1;
+            }
+        });
     }
 
     private String genTemplate(EntryBean entryBean) {

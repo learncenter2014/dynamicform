@@ -99,6 +99,7 @@
                         <li><a href="${rootPath}/department/index.action">部门管理</a></li>
                         <li><a href="${rootPath}/disease/index.action">单病种管理</a></li>
                         <li><a href="${rootPath}/unit/index.action">单位管理</a></li>
+                        <li><a href="${rootPath}/study/regenTemplate.action">重新生成模板</a></li>
                     </ul>
                 </li>
 

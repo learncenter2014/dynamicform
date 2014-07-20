@@ -1,11 +1,4 @@
-<section class="panel" id="${"$"}{viewId!}_${id!}" name="${"$"}{viewId!}_${id!}">
-    <header class="panel-heading">
-        ${name!}
-        <span class="tools pull-right">
-            <a class="fa fa-chevron-down" href="javascript:;"></a>
-        </span>
-    </header>
-    <div class="panel-body">
+
         <#list rows as row>
             <#list columns as column>
                 <input type="hidden" name="${row.code!}_${column.code!}" value="${"$"}{${row.code!}_${column.code!}!}">
@@ -53,7 +46,21 @@
                         <td>${row.name}</td>
                         <#list columns as column>
                             <td id="${row.code!}_${column.code!}" class="data-cell">
-                                <#if column.htmlType == 0>
+                                <#if column.subElementType == 2>
+                                    <#if row.pseudoReferenceLowerValue?? && row.pseudoReferenceUpperValue??>
+                                        ${row.pseudoReferenceLowerValue}~${row.pseudoReferenceUpperValue}
+                                    <#elseif row.pseudoReferenceLowerValue??>
+                                        >${row.pseudoReferenceLowerValue}
+                                    <#elseif row.pseudoReferenceUpperValue??>
+                                        <${row.pseudoReferenceUpperValue}
+                                    </#if>
+                                <#elseif column.subElementType == 4>
+                                    <#if row.pseudoReferenceUnitCode??>
+                                        ${row.pseudoReferenceUnitCode}
+                                    <#elseif column.pseudoReferenceUnitCode??>
+                                        ${column.pseudoReferenceUnitCode}
+                                    </#if>
+                                <#elseif column.htmlType == 0>
                                     ${column.name}
                                 <#elseif column.htmlType == 1>
                                     ${"$"}{${row.code!}_${column.code!}!}
@@ -92,28 +99,28 @@
                                 <#if column.htmlType == 0>
                                 <#--text-->
                                 {
-                                    html:"${column.name}",
-                                    getHtml: function(value) {
-                                        return this.html.replace(/###value###/g, value);
+                                    html:"",
+                                    getHtml: function(cellId, value) {
+                                        return $("#"+cellId).html();
                                     },
-                                    getValue : function() {
-                                        return "${column.name}";
+                                    getValue : function(cellId) {
+                                        return $("#"+cellId).html();
                                     },
-                                    getDisplayValue: function() {
-                                        return "${column.name}";
+                                    getDisplayValue: function(cellId) {
+                                        return $("#"+cellId).html();
                                     }
                                 }
                                 <#elseif column.htmlType == 1>
                                 <#--text-->
                                 {
                                     html:"<input id='${id!}_column_editor_${column_index}' type='text' value='###value###' class='form-control small'>",
-                                    getHtml: function(value) {
+                                    getHtml: function(cellId, value) {
                                         return this.html.replace(/###value###/g, value);
                                     },
-                                    getValue : function() {
+                                    getValue : function(cellId) {
                                         return $("#${id!}_column_editor_${column_index}").val();
                                     },
-                                    getDisplayValue: function() {
+                                    getDisplayValue: function(cellId) {
                                         return $("#${id!}_column_editor_${column_index}").val();
                                     }
                                 }
@@ -128,13 +135,13 @@
                                             "<script type='text/javascript'>" +
                                                 "$('#${id!}_column_editor_${column_index}').val('###value###');" +
                                             "<\/script>",
-                                    getHtml: function(value) {
+                                    getHtml: function(cellId, value) {
                                         return this.html.replace(/###value###/g, value);
                                     },
-                                    getValue: function() {
+                                    getValue: function(cellId) {
                                         return $("#${id!}_column_editor_${column_index}").val();
                                     },
-                                    getDisplayValue: function() {
+                                    getDisplayValue: function(cellId) {
                                         return $("#${id!}_column_editor_${column_index} option:selected").text();
                                     }
                                 }
@@ -154,10 +161,10 @@
                                                     "$(\"input[name=${id!}_column_editor_${column_index}][value=\"+checkedValues[index]+\"]\").attr('checked','checked');" +
                                                 "}" +
                                             "<\/script>",
-                                    getHtml: function(value) {
+                                    getHtml: function(cellId, value) {
                                         return this.html.replace(/###value###/g, value);
                                     },
-                                    getValue: function() {
+                                    getValue: function(cellId) {
                                         var resultValue = "";
                                         $("input[name=${id!}_column_editor_${column_index}]:checked").each(
                                             function(){
@@ -166,7 +173,7 @@
                                         );
                                         return resultValue;
                                     },
-                                    getDisplayValue: function() {
+                                    getDisplayValue: function(cellId) {
                                         var resultValue = "";
                                         $("input[name=${id!}_column_editor_${column_index}]:checked").each(
                                             function(){
@@ -192,57 +199,57 @@
                                                 "$(\"input[name=${id!}_column_editor_${column_index}][value=###value###]\").attr('checked','checked');" +
                                             "<\/script>"
                                             ,
-                                    getHtml: function(value) {
+                                    getHtml: function(cellId, value) {
                                         return this.html.replace(/###value###/g, value);
                                     },
-                                    getValue: function() {
+                                    getValue: function(cellId) {
                                         return $("input[name=${id!}_column_editor_${column_index}]:checked").val();
                                     },
-                                    getDisplayValue: function() {
+                                    getDisplayValue: function(cellId) {
                                         return $("input[name=${id!}_column_editor_${column_index}]:checked").parent().text();
                                     }
                                 }
                                 <#elseif column.htmlType == 6>
-                                <#--radio-->
-                                    {
-                                        html:
-                                                "<input name='{id!}_column_editor_${column_index}' data-date-format="${format!'mm/dd/yyyy'}" value="${"$"}{${document.code!}_${code!}!}">"
-                                                "<script type='text/javascript'>" +
-                                                "$(\"input[name=${id!}_column_editor_${column_index}][value=###value###]\").attr('checked','checked');" +
-                                                "<\/script>"
-                                        ,
-                                        getHtml: function(value) {
-                                            return this.html.replace(/###value###/g, value);
-                                        },
-                                        getValue: function() {
-                                            return $("input[name=${id!}_column_editor_${column_index}]:checked").val();
-                                        },
-                                        getDisplayValue: function() {
-                                            return $("input[name=${id!}_column_editor_${column_index}]:checked").parent().text();
-                                        }
+                                <#--date-->
+                                {
+                                    html:
+                                            "<input id='${id!}_column_editor_${column_index}' name='{id!}_column_editor_${column_index}' data-date-format="${format!'yyyy-mm-dd'}" value='###value###'>"
+                                            "<script type='text/javascript'>" +
+                                            "$('#${id!}_column_editor_${column_index}').datepicker({format: 'yyyy-mm-dd'});" +
+                                            "<\/script>"
+                                    ,
+                                    getHtml: function(cellId, value) {
+                                        return this.html.replace(/###value###/g, value);
+                                    },
+                                    getValue: function(cellId) {
+                                        return $('#${id!}_column_editor_${column_index}').val();
+                                    },
+                                    getDisplayValue: function(cellId) {
+                                        return $('#${id!}_column_editor_${column_index}').val();
                                     }
+                                }
                                 </#if>
                                 ,
                             </#list>
                             ],
 
-                    get : function(index, value) {
+                    get : function(index, cellId, value) {
                         if(index < this.data.length) {
-                            return this.data[index].getHtml(value);
+                            return this.data[index].getHtml(cellId, value);
                         }
                         return "";
                     } ,
 
-                    getValue : function(index) {
+                    getValue : function(index, cellId) {
                         if(index < this.data.length) {
-                            return this.data[index].getValue();
+                            return this.data[index].getValue(cellId);
                         }
                         return "";
                     } ,
 
-                    getDisplayValue : function(index) {
+                    getDisplayValue : function(index, cellId) {
                         if(index < this.data.length) {
-                            return this.data[index].getDisplayValue();
+                            return this.data[index].getDisplayValue(cellId);
                         }
                         return "";
                     }
@@ -250,5 +257,3 @@
             }
             EditableTable.init($("#grid_${id!}"), editor_${id!});
         </script>
-    </div>
-</section>

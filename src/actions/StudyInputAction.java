@@ -6,9 +6,11 @@ import bl.constants.DBConstants;
 import bl.beans.DynamicDataBean;
 import bl.instancepool.SingleBusinessPoolManager;
 import bl.mongobus.*;
+import core.TemplateGenerator;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
+import javax.swing.text.View;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -108,6 +110,14 @@ public class StudyInputAction extends BaseAction{
             return SUCCESS;
         }
         return FAILURE;
+    }
+
+    public String genTemplate(){
+        List<ViewBean> viewList = (List<ViewBean>) viewBus.getAllLeaves().getResponseData();
+        for(ViewBean view: viewList) {
+            TemplateGenerator.get().genTemplate(view);
+        }
+        return SUCCESS;
     }
 
     public List<ViewBean> getViewBeanList() {
