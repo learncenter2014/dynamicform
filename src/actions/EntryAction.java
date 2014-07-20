@@ -1,10 +1,12 @@
 package actions;
 
+import bl.beans.DocumentBean;
 import bl.beans.EntryBean;
 import bl.beans.UnitBean;
 import bl.common.BusinessResult;
 import bl.constants.BusTieConstant;
 import bl.instancepool.SingleBusinessPoolManager;
+import bl.mongobus.DocumentBusiness;
 import bl.mongobus.EntryBusiness;
 import bl.mongobus.UnitBusiness;
 import org.apache.commons.lang.StringUtils;
@@ -22,7 +24,8 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     private EntryBean entry;
     private String documentId;
     private List<UnitBean> unitBeanList;
-    private static UnitBusiness ub = (UnitBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_UNIT_BUSINESS);
+    private static final UnitBusiness ub = (UnitBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_UNIT_BUSINESS);
+    private static final DocumentBusiness dbs = (DocumentBusiness) SingleBusinessPoolManager.getBusObj(BusTieConstant.BUS_CPATH_DOCUMENTBUSINESS);
 
     public List<UnitBean> getUnitBeanList() {
         return unitBeanList;
@@ -49,7 +52,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
         init.getAoColumns().add(new TableHeaderVo("name", "实体名称").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("code", "实体编码").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("englishName", "实体英文名称").enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("subElementType", "元素归类").addSearchOptions(new String[][] { { "0", "1", "2", "3"}, { "主元素", "子元数", "伪参考值主元素", "伪检查值主元素"} }).enableSearch());
+        init.getAoColumns().add(new TableHeaderVo("subElementType", "元素归类").addSearchOptions(new String[][] { { "0", "1", "2", "3","4","5"}, { "主元素", "子元数", "伪参考值主元素", "伪检查值主元素", "伪单位主元素", "伪主元素"} }).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("elementType", "实体类型").addSearchOptions(new String[][] { { "0", "1"}, { "定性", "定量"} }).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("standardEntry", "标准分类").addSearchOptions(new String[][] { { "0", "1","2"}, { "CDISC", "机构标准","非标准"} }).enableSearch());
 
@@ -113,7 +116,8 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
     @Override
     public String getTableTitle() {
         String prefixPath = getRequest().getContextPath()+"/";
-        return "<ul class=\"breadcrumb\"><li>随访设计</li><li><a href=\""+prefixPath+"document/index.action\">系统模块</a></li><li class=\"active\"><a href=\""+prefixPath+"entry/index.action?documentId="+this.documentId+"\">实体</a></li></ul>";
+        DocumentBean db = (DocumentBean) dbs.getLeaf(this.documentId).getResponseData();
+        return "<ul class=\"breadcrumb\"><li>随访设计</li><li><a href=\""+prefixPath+"document/index.action\">系统模块[<i style='color:#58c9f3'>"+db.getName()+"</i>]</a></li><li class=\"active\"><a href=\""+prefixPath+"entry/index.action?documentId="+this.documentId+"\">实体</a></li></ul>";
     }
     @Override
     public TableQueryVo getModel() {
