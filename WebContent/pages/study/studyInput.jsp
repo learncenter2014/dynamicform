@@ -77,7 +77,6 @@
                             hiddenObject.value = editors.getValue(index - 1, id);//jqInputs[index - 1].value;
                             jqTds[index].innerHTML = editors.getDisplayValue(index - 1, id);
                             //oTable.fnUpdate(editors.getDisplayValue(index - 1), nRow, index, false);
-
                         }
                         jqTds[index].innerHTML = '<a class="edit" href="">编辑</a>';
                         //oTable.fnUpdate('<a class="edit" href="">编辑</a>', nRow, index, false);
@@ -89,6 +88,7 @@
                         "bPaginate": false,
                         "bScrollInfinite": true,
                         "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+                        "bSort": false,
                         "aoColumnDefs": [{
                             'bSortable': false,
                             'aTargets': [0]
