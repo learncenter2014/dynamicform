@@ -52,7 +52,7 @@
                         <s:iterator value="documentBeanList" status="dindex" var="documentBean">
                             <li>
                                 <a href="#D<s:property value='id'/>">
-                                    <s:if test="study.studyDocumentBeanList.{?#this.documentId == #documentBean.id}.size!=0)">
+                                    <s:if test="study.studyDocumentBeanList.{?#this.documentId == #documentBean.id}.size!=0">
                                         <input type="checkbox" checked="checked"
                                                name="savedDocumentBeanList[<s:property value="#dindex.index"/>].documentId"
                                                value="<s:property value="id"/>">

@@ -14,9 +14,61 @@ public class EntryBean extends Bean implements Comparable<EntryBean>{
     private String englishName; //实体变量名称
     private String code; //代码  作为后续生成数据存储模型的表的列名
     private short elementType; //0 定性有数据源1 定量表示没有数据源
+
+    public static enum ElementType {
+        QualitativeData(0), QuantitativeData(1);
+        private int value;
+
+        ElementType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+    }
     private short dataType;  //0  字符型 1 整数型 2浮点型 3 日期型
+
+    public static enum DataType {
+        String(0), Integer(1), Float(2), Date(3);
+        private int value;
+
+        DataType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+    }
     private short subElementType; //元素归类 0 主元素 1 子元数 2 伪参考值主元素 3 伪检查值主元素 4 伪单位主元素 5 伪主元素
+
+    public static enum SubElementType {
+        MainElement(0), SubElement(1), PseudoRefMainElement(2), PseudoCheckMainElement(3), PseudoUnitMainElement(4), PseudoMainElement(5);
+        private int value;
+
+        SubElementType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+    }
     private short htmlType; //0 label  1 text  2 textarea  3 select 4 checkbox 5 radio 6 date
+
+    public static enum HtmlType {
+        Label(0), Text(1), Textarea(2), Select(3), Checkbox(4), Radio(5), Date(6);
+        private int value;
+
+        HtmlType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+    }
     private String defaultValue; //缺省值负责一些默认的值业务
     private short standardEntry; //标准分类: 0:CDISC, 1:机构标准, 2:非标准
     private double minValue = 0; //验证最小值

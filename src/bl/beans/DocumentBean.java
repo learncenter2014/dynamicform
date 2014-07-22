@@ -16,6 +16,17 @@ public class DocumentBean extends Bean{
     private String tableName;
     private String englishName;
     private int type; //0:包含无子元素；1:包含有子元素
+
+    public static enum Type {
+        NoSub(0), HasSub(1);
+        private int value;
+
+        Type(int value) {
+            this.value = value;
+        }
+        public int getValue(){return this.value;}
+    }
+
     private String code; //代码
     private String abbreviation; //缩写
     private int columnCount;
