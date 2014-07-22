@@ -101,13 +101,13 @@
                                 {
                                     html:"",
                                     getHtml: function(cellId, value) {
-                                        return $("#"+cellId).html();
+                                        return $("#"+cellId).html().trim();
                                     },
                                     getValue : function(cellId) {
-                                        return $("#"+cellId).html();
+                                        return $("#"+cellId).html().trim();
                                     },
                                     getDisplayValue: function(cellId) {
-                                        return $("#"+cellId).html();
+                                        return $("#"+cellId).html().trim();
                                     }
                                 }
                                 <#elseif column.htmlType == 1>
