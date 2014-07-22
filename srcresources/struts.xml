@@ -167,6 +167,7 @@
         <action name="index" class="actions.EntryAction" method="index"/>
         <action name="initTable" class="actions.EntryAction" method="initTable"/>
         <action name="queryTable" class="actions.EntryAction" method="queryTable"/>
+        <action name="exportTable" class="actions.EntryAction" method="exportTable"/>
         <action name="add" class="actions.EntryAction" method="add">
             <result name="success">/pages/entry/entryEdit.jsp</result>
         </action>

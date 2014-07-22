@@ -319,6 +319,18 @@ $(document).ready(function() {
                         hiddenElement.attr("value",aoData[i].value);
                         form.append(hiddenElement);
                     }
+                    var parameters = "${addButtonParameter}";
+                    if(parameters!=null){
+                        var splits = parameters.split("&");
+                        for(var i=0;i<splits.length;i++){
+                            var splitEqual = splits[i].split("=");
+                            var hiddenElement = $("<input>");
+                            hiddenElement.attr("type","hidden");
+                            hiddenElement.attr("name",splitEqual[0]);
+                            hiddenElement.attr("value",splitEqual[1]);
+                            form.append(hiddenElement);
+                        }
+                    }
                     this.oApi._fnProcessingDisplay(oSettings,false);
                     form.submit();
                 }else{
@@ -353,9 +365,7 @@ window.actionPrex = "${actionPrex}";
 </s:if>
 
 <script>
-    <s:if test="#session['backendSessionUser'].name=='admin'">
-    operationButtons.push('<a class="btn btn-success" onclick=\'window.exportExcel=true;$("#${tableId}").dataTable()._fnAjaxUpdate()\'><i class="fa fa-plus"></i> 批量导出 </a>');
-    </s:if>
+
     // 格式化js时间
     var formatDateTime = function (obj, IsMi) {
         var myDate = new Date(obj);
