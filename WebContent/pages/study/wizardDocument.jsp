@@ -52,7 +52,7 @@
                         <s:iterator value="documentBeanList" status="dindex" var="documentBean">
                             <li>
                                 <a href="#D<s:property value='id'/>">
-                                    <s:if test="study.studyDocumentBeanList.{?#this.documentId == #documentBean.id}.size!=0)">
+                                    <s:if test="study.studyDocumentBeanList.{?#this.documentId == #documentBean.id}.size!=0">
                                         <input type="checkbox" checked="checked"
                                                name="savedDocumentBeanList[<s:property value="#dindex.index"/>].documentId"
                                                value="<s:property value="id"/>">
@@ -84,9 +84,9 @@
                     </span>
                     <s:set name="entryCounter" value="0"/>
                     <s:iterator value="documentBeanList" status="dindex" var="documentBean">
+                        <a id="D<s:property value='id'/>"></a>
                         <section clas="panel">
                             <header class="panel-heading" id="basicInfo">
-                                <a id="D<s:property value='id'/>"></a>
                                 <s:property value="name"/> &nbsp;&nbsp;&nbsp;
                                 <input type="button" class="btn btn-info" value="全选" id="selectAll${documentBean.id}"/>
                                 <input type="button" class="btn btn-info" value="全不选" id="unSelect${documentBean.id}"/>
@@ -116,7 +116,7 @@
                                     <fieldset>
                                         <legend><h5>主元素</h5></legend>
                                         <s:iterator value="entryBeanList" status="eindex" var="entryBeanList">
-                                            <s:if test="#entryBeanList.subElementType==0">
+                                            <s:if test="#entryBeanList.subElementType==0 || #entryBeanList.subElementType==5">
                                                 <s:set value="false" name="checkedDocumentEntry"/>
                                                 <s:iterator value="study.studyDocumentBeanList" var="studyDocumentBean">
                                                     <s:if test="%{documentId == #documentBean.id}">
@@ -157,7 +157,7 @@
                                         <fieldset style="background-color:#ddddd8">
                                             <legend><h5>子元素</h5></legend>
                                             <s:iterator value="entryBeanList" status="eindex" var="entryBeanList">
-                                                <s:if test="#entryBeanList.subElementType!=0">
+                                                <s:if test="#entryBeanList.subElementType!=0 && #entryBeanList.subElementType!=5">
                                                     <s:set value="false" name="checkedDocumentEntry"/>
                                                     <s:iterator value="study.studyDocumentBeanList"
                                                                 var="studyDocumentBean">

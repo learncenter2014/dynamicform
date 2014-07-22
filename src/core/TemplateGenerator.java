@@ -80,12 +80,12 @@ public class TemplateGenerator {
 
         for(StudyDocumentEntryBean bean : studyDocumentEntryBeanList) {
             EntryBean entryBean = (EntryBean)entryBus.getLeaf(bean.getEntryId()).getResponseData();
-            if((documentBean.getType() == 0 || entryBean.getSubElementType() == 5) && null != entryBean) {
+            if((documentBean.getType() == DocumentBean.Type.NoSub.getValue() || entryBean.getSubElementType() == EntryBean.SubElementType.PseudoMainElement.getValue()) && null != entryBean) {
                 entryBean.setDocument(documentBean);
                 entryBean.setResolution(resolution);
                 innerHTML.append(genTemplate(entryBean));
             } else {
-                if(entryBean.getSubElementType() == 1) {
+                if(entryBean.getSubElementType() == DocumentBean.Type.HasSub.getValue()) {
                     rows.add(entryBean);
                 } else {
                     columns.add(entryBean);
@@ -93,7 +93,7 @@ public class TemplateGenerator {
             }
         }
 
-        if(documentBean.getType() != 0) {
+        if(documentBean.getType() != DocumentBean.Type.NoSub.getValue()) {
             this.sortEntryBySequence(rows);
             this.sortEntryBySequence(columns);
 
@@ -124,7 +124,11 @@ public class TemplateGenerator {
 
     private String genTemplate(EntryBean entryBean) {
         EntryType type = EntryType.parse(entryBean.getHtmlType());
-        return TemplateHelper.get().getTemplate(type, entryBean);
+        if (type == EntryType.NULL) {
+            return "";
+        } else {
+            return TemplateHelper.get().getTemplate(type, entryBean);
+        }
     }
 
 //    public boolean genTemplate(String xmlFilePath, String templateId) {
