@@ -107,12 +107,12 @@ public class EntryUploadExcelAction extends UploadExcelAction {
                     }
                 } else if (foundHeaderRow != -1) {
                     //表头信息处理完毕
-                    String entryName = cellConvert(row.getCell(entryMappingExcelColumns[2], Row.RETURN_BLANK_AS_NULL));
+                    String entryCode = cellConvert(row.getCell(entryMappingExcelColumns[1], Row.RETURN_BLANK_AS_NULL));
                     //实体名称必须存在
-                    if (entryName == null && entryName.isEmpty()) {
+                    if (entryCode == null && entryCode.isEmpty()) {
                         continue;
                     }
-                    EntryBean entryFromDB = (EntryBean) enb.getLeafByName(entryName).getResponseData();
+                    EntryBean entryFromDB = (EntryBean) enb.searchEntryByDocumentAndCode(this.documentId, entryCode);
                     EntryBean entryBean = null;
 
                     if (entryFromDB != null) {

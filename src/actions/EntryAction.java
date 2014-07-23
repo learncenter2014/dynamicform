@@ -130,7 +130,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
                 for (int j = 0; j < listEntryCode.size(); j++) {
                     sbder.append(listEntryCode.get(j).getValue() + ":" + listEntryCode.get(j).getName());
                     if (j < listEntryCode.size() - 1) {
-                        sbder.append(",");
+                        sbder.append(";");
                     }
                 }
                 row.createCell(columnLengthData).setCellValue(sbder.toString());
