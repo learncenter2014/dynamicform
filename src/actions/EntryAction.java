@@ -64,7 +64,7 @@ public class EntryAction extends BaseTableAction<EntryBusiness> {
         init.getAoColumns().add(new TableHeaderVo("englishName", "实体英文名称").enableSearch());
         init.getAoColumns().add(new TableHeaderVo("elementType", "元素类型").addSearchOptions(new String[][]{{"0", "1"}, {"定性", "定量"}}).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("dataType", "数据类型").addSearchOptions(new String[][]{{"0", "1", "2", "3"}, {"字符型", "整数型", "浮点型", "日期型"}}).enableSearch());
-        init.getAoColumns().add(new TableHeaderVo("subElementType", "元素归类").addSearchOptions(new String[][]{{"0", "1", "2", "3", "4", "5"}, {"主元素", "子元数", "伪参考值主元素", "伪检查值主元素", "伪单位主元素", "伪主元素"}}).enableSearch());
+        init.getAoColumns().add(new TableHeaderVo("subElementType", "元素归类").addSearchOptions(new String[][]{{"0", "1", "2", "3", "4", "5", "6"}, {"主元素", "子元数", "伪参考值主元素", "伪检查值主元素", "伪单位主元素", "伪主元素","伪问卷主元素"}}).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("htmlType", "表单元素").addSearchOptions(new String[][]{{"0", "1", "2", "3", "4", "5", "6"}, {"标签", "文本框", "文本域", "下拉框", "复选框", "单选框", "日期"}}).enableSearch());
         init.getAoColumns().add(new TableHeaderVo("defaultValue", "实体缺省值").setHiddenColumn(true));
         init.getAoColumns().add(new TableHeaderVo("standardEntry", "标准分类").addSearchOptions(new String[][]{{"0", "1", "2"}, {"CDISC", "机构标准", "非标准"}}).enableSearch());
