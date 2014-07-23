@@ -41,7 +41,7 @@ public class EntryBean extends Bean implements Comparable<EntryBean>{
             return this.value;
         }
     }
-    private short subElementType; //元素归类 0 主元素 1 子元数 2 伪参考值主元素 3 伪检查值主元素 4 伪单位主元素 5 伪主元素
+    private short subElementType; //元素归类 0 主元素 1 子元数 2 伪参考值主元素 3 伪检查值主元素 4 伪单位主元素 5 伪主元素  6 伪问卷主元素
 
     public static enum SubElementType {
         MainElement(0), SubElement(1), PseudoRefMainElement(2), PseudoCheckMainElement(3), PseudoUnitMainElement(4), PseudoMainElement(5);
