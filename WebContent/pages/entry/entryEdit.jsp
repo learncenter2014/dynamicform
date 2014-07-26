@@ -86,11 +86,11 @@
                 <div class="col-lg-6">
 
                     <s:if test="entry.id.length() > 0">
-                        <s:select cssClass="form-control" disabled="true" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素', 4:'伪单位主元素', 5:'伪主元素'}" value="entry.subElementType"/>
+                        <s:select cssClass="form-control" disabled="true" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素', 4:'伪单位主元素', 5:'伪主元素', 6:'伪问卷主元素'}" value="entry.subElementType"/>
                         <input type="hidden" name="entry.subElementType" value="${entry.subElementType}"/>
                     </s:if>
                     <s:else>
-                        <s:select cssClass="form-control" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素',4:'伪单位主元素', 5:'伪主元素'}" value="entry.subElementType"/>
+                        <s:select cssClass="form-control" name="entry.subElementType" list="#{0:'主元素',1:'子元数',2:'伪参考值主元素', 3:'伪检查值主元素',4:'伪单位主元素', 5:'伪主元素', 6:'伪问卷主元素'}" value="entry.subElementType"/>
                     </s:else>
                 </div>
             </div>

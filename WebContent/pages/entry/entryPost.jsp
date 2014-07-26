@@ -18,5 +18,7 @@
     }
     <s:if test="#session['sessionUser'].name=='admin'">
       operationButtons.push('<a class="btn btn-success" href="'+window.actionPrex+'/batchimportentry.action?${addButtonParameter}"><i class="fa fa-plus"></i> 批量导入 </a>');
+      operationButtons.push('<a class="btn btn-success" onclick=\'window.exportExcel=true;$("#${tableId}").dataTable()._fnAjaxUpdate()\'><i class="fa fa-plus"></i> 批量导出 </a>');
     </s:if>
+
 </script>

@@ -78,16 +78,16 @@ public class EntryUploadExcelAction extends UploadExcelAction {
                     {"参考值下限", "pseudoReferenceLowerValue"},
                     {"参考值上限", "pseudoReferenceUpperValue"},
                     {"注解", "description"},
-                    {"元素代码", "entryCode"}
+                    {"元素代码", "entryCodeBeanList"}
             };
             int[] entryMappingExcelColumns = new int[entryMappingExcel.length];
-            int foundHeaderRow = 0;
+            int foundHeaderRow = -1;
             ArrayList<EntryBean> entryBeanArrayList = new ArrayList<EntryBean>();
             for (int rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
                 Row row = sheet.getRow(rowNum);
                 int lastColumn = row.getLastCellNum();
 
-                if (foundHeaderRow == 0) {
+                if (foundHeaderRow == -1) {
                     //简单的探查表头信息
                     for (int cn = 0; cn < lastColumn; cn++) {
                         Cell cell = row.getCell(cn, Row.RETURN_BLANK_AS_NULL);
@@ -107,12 +107,12 @@ public class EntryUploadExcelAction extends UploadExcelAction {
                     }
                 } else if (foundHeaderRow != -1) {
                     //表头信息处理完毕
-                    String entryName = cellConvert(row.getCell(entryMappingExcelColumns[2], Row.RETURN_BLANK_AS_NULL));
+                    String entryCode = cellConvert(row.getCell(entryMappingExcelColumns[1], Row.RETURN_BLANK_AS_NULL));
                     //实体名称必须存在
-                    if (entryName == null && entryName.isEmpty()) {
+                    if (entryCode == null && entryCode.isEmpty()) {
                         continue;
                     }
-                    EntryBean entryFromDB = (EntryBean) enb.getLeafByName(entryName).getResponseData();
+                    EntryBean entryFromDB = (EntryBean) enb.searchEntryByDocumentAndCode(this.documentId, entryCode);
                     EntryBean entryBean = null;
 
                     if (entryFromDB != null) {
@@ -130,7 +130,7 @@ public class EntryUploadExcelAction extends UploadExcelAction {
                     entryBeanArrayList.add(entryBean);
                     for (int i = 0; i < entryMappingExcel.length; i++) {
                         String cellValue = cellConvert(row.getCell(entryMappingExcelColumns[i], Row.RETURN_BLANK_AS_NULL));
-                        if (!entryMappingExcel[i][1].equals("entryCode")) {
+                        if (!entryMappingExcel[i][1].equals("entryCodeBeanList")) {
                             try {
                                 BeanUtils.setProperty(entryBean, entryMappingExcel[i][1], cellValue);
                             } catch (Exception ex) {

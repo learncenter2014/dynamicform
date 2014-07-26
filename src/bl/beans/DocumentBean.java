@@ -15,7 +15,7 @@ public class DocumentBean extends Bean{
 
     private String tableName;
     private String englishName;
-    private int type; //0:包含无子元素；1:包含有子元素
+    private int type; //0:包含无子元素；1:包含有子元素 2 问卷元素
 
     public static enum Type {
         NoSub(0), HasSub(1);

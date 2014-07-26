@@ -23,6 +23,12 @@ public class EntryBusiness extends MongoCommonBusiness<BeanContext, EntryBean> {
         this.dbName = "form";
         this.clazz = EntryBean.class;
     }
+    public EntryBean searchEntryByDocumentAndCode(String documentId, String code){
+        Datastore dc = MongoDBConnectionFactory.getDatastore(getDBName());
+        Query queryStudyEntry = dc.createQuery(EntryBean.class);
+        EntryBean eb = dc.find(EntryBean.class, "documentId", documentId).filter("code",code).get();
+        return eb;
+    }
 
     public void batchUpdateEntryList(String documentId, List<EntryBean> entryBeanList) {
         //delete all entryBean and entryCodeBean
