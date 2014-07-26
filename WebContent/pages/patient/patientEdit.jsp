@@ -19,6 +19,15 @@
         function handleCancel() {
             window.location.href = "patient/index.action"
         }
+
+        $().ready(function(){
+            $("#patientForm").validate({
+                rules:{
+                    patientNo:{
+                        required: true
+                    }
+                }});
+        });
     </script>
     <!--external css-->
     <title>Patient Edit</title>
@@ -31,14 +40,14 @@
         Patient Edit
     </header>
     <div class="panel-body">
-        <form role="form" class="form-horizontal tasi-form" action="${rootPath}/patient/save.action" method="post">
+        <form id="patientForm" role="form" class="form-horizontal tasi-form" action="${rootPath}/patient/save.action" method="post">
 
             <input name="patient.id" type="hidden" value="${patient.id}"/>
 
             <div class="form-group">
                 <label class="col-lg-2 control-label">门诊号</label>
                 <div class="col-lg-6">
-                    <input type="text" placeholder="" id="f-key" name="patient.registerNo" class="form-control" required="required" value="${patient.registerNo}">
+                    <input type="text" placeholder="" id="patientNo" name="patient.registerNo" class="form-control" required="required" value="${patient.registerNo}">
                     <p class="help-block">请输入患者编号！</p>
                 </div>
             </div>

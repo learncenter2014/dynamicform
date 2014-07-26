@@ -68,6 +68,7 @@
                     }
 
                     function saveRow(oTable, nRow) {
+                        if(!editors.validate()) return false;
                         var jqInputs = $('input', nRow);
                         var jqTds = $('>td', nRow);
                         var index = 1;
@@ -79,6 +80,7 @@
                             //oTable.fnUpdate(editors.getDisplayValue(index - 1), nRow, index, false);
                         }
                         jqTds[index].innerHTML = '<a class="edit" href="">编辑</a>';
+                        return true;
                         //oTable.fnUpdate('<a class="edit" href="">编辑</a>', nRow, index, false);
                         //oTable.fnDraw();
                     }
@@ -134,9 +136,9 @@
                             nEditing = nRow;
                         } else if (nEditing == nRow && this.innerHTML == "保存") {
                             /* Editing this row and want to save it */
-                            saveRow(oTable, nEditing);
-                            nEditing = null;
-//                                alert("Updated! Do not forget to do some ajax to sync with backend :)");
+                            if(saveRow(oTable, nEditing)) {
+                                nEditing = null;
+                            }
                         } else {
                             /* No edit in progress - let's start one */
                             editRow(oTable, nRow);

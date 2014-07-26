@@ -90,14 +90,16 @@
                 </#list>
             </tbody>
         </table>
+
         <script>
+            window.validationRules_${id!} = [];
 
             var editor_${id!} = new function() {
                 return {
                     data : [
                             <#list columns as column>
                                 <#if column.htmlType == 0>
-                                <#--text-->
+                                <#--label-->
                                 {
                                     html:"",
                                     getHtml: function(cellId, value) {
@@ -113,7 +115,19 @@
                                 <#elseif column.htmlType == 1>
                                 <#--text-->
                                 {
-                                    html:"<input id='${id!}_column_editor_${column_index}' type='text' value='###value###' class='form-control small'>",
+                                    html:   "<input id='${id!}_column_editor_${column_index}' name='${id!}_column_editor_${column_index}' type='text' value='###value###' class='form-control small'>" +
+                                            "<script type='text/javascript'>" +
+                                                "window.validationRules_${id!}['${id!}_column_editor_${column_index}'] = {" +
+                                                    "maxlength:${column.maxLength}" +
+                                                <#if column.dataType == 1>
+                                                    ", digits:true" +
+                                                    ", range:[${column.minValue},${column.maxValue}]" +
+                                                <#elseif column.dataType == 2>
+                                                    ", number:true" +
+                                                    ", range:[${column.minValue},${column.maxValue}]" +
+                                                </#if>
+                                                "};" +
+                                            "<\/script>",
                                     getHtml: function(cellId, value) {
                                         return this.html.replace(/###value###/g, value);
                                     },
@@ -252,6 +266,89 @@
                             return this.data[index].getDisplayValue(cellId);
                         }
                         return "";
+                    } ,
+
+                    validate : function() {
+                        var rules = window.validationRules_${id!};
+                        for(var ruleId in rules) {
+                            var rule = rules[ruleId];
+                            var objValue = $("#" + ruleId).val();
+                            if(rule.required) {
+                                if(!objValue || objValue.length < 1) {
+                                    this.showValidateMessage(0, ruleId);
+                                    return false;
+                                }
+                            }
+                            if(rule.maxlength) {
+                                if(objValue && objValue.length > rule.maxlength) {
+                                    this.showValidateMessage(1, ruleId, rule.maxlength);
+                                    return false;
+                                }
+                            }
+                            if(rule.number) {
+                                if (!(/^(\+|-)?\d+($|\.\d+$)/.test(objValue))) {
+                                    this.showValidateMessage(2, ruleId);
+                                    return false;
+                                }
+                            }
+                            if(rule.digits) {
+                                if (!(/^(\+|-)?\d+$/.test(objValue))) {
+                                    this.showValidateMessage(3, ruleId);
+                                    return false;
+                                }
+
+                            }
+
+                            if(rule.number || rule.digits) {
+                                if(rule.range && rule.range.length == 2) {
+                                    if(objValue < rule.range[0] || objValue > rule.range[1]) {
+                                        this.showValidateMessage(6, ruleId, rule.range[0], rule.range[1]);
+                                    }
+                                }
+                                if(rule.min) {
+                                    if(objValue < rule.min) {
+                                        this.showValidateMessage(4, ruleId, rule.min);
+                                    }
+                                }
+                                if(rule.max) {
+                                    if(objValue < rule.max) {
+                                        this.showValidateMessage(5, ruleId, rule.max);
+                                    }
+                                }
+                            }
+                        }
+                        return true;
+                    },
+
+                    showValidateMessage : function(type, objId, value1, value2) {
+                        //type 0: required; 1: maxlengeth; 2:number; 3:digits; 4: minValue; 5:maxValue; 6:range;
+                        var resultMsg;
+                        switch(type) {
+                            case 0:
+                                resultMsg = jQuery.validator.messages.required;
+                                break;
+                            case 1:
+                                resultMsg = jQuery.validator.messages.maxlength(value1);
+                                break;
+                            case 2:
+                                resultMsg = jQuery.validator.messages.number;
+                                break;
+                            case 3:
+                                resultMsg = jQuery.validator.messages.digits;
+                                break;
+                            case 4:
+                                resultMsg = jQuery.validator.messages.min(value1);
+                                break;
+                            case 5:
+                                resultMsg = jQuery.validator.messages.max(value1);
+                                break;
+                            case 6:
+                                resultMsg = jQuery.validator.messages.range(value1, value2);
+                                break;
+                        }
+                        var validateHtml = "<label for=" + objId + " class='error'>" + resultMsg + "</label>";
+                        $("label[for='"+objId+"']").remove();
+                        $("#"+objId).parent().append(validateHtml);
                     }
                 }
             }
